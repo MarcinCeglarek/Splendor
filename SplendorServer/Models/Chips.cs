@@ -1,6 +1,6 @@
 ﻿namespace SplendorServer.Models
 {
-    public class ChipState
+    public class Chips
     {
         public int White { get; set; }
 
@@ -14,9 +14,9 @@
 
         public int Gold { get; set; }
 
-        public static ChipState operator +(ChipState a, ChipState b)
+        public static Chips operator +(Chips a, Chips b)
         {
-            return new ChipState()
+            return new Chips()
                        {
                            White = a.White + b.White,
                            Black = a.Black + b.Black,
@@ -27,9 +27,9 @@
                        };
         }
 
-        public static ChipState operator -(ChipState a, ChipState b)
+        public static Chips operator -(Chips a, Chips b)
         {
-            return new ChipState()
+            return new Chips()
             {
                 White = a.White - b.White,
                 Black = a.Black - b.Black,

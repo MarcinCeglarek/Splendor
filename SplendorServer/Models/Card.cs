@@ -19,14 +19,14 @@
         public CardType Color { get; set; }
 
         [DataMember]
-        public ChipState Cost { get; set; }
+        public Chips Cost { get; set; }
 
         [DataMember]
         public int VictoryPoints { get; set; }
 
-        public bool CanBuy(ChipState chipState)
+        public bool CanBuy(Chips chips)
         {
-            var result = chipState - this.Cost;
+            var result = chips - this.Cost;
             var missingChips = 0;
             if (result.Black < 0)
             {
@@ -53,7 +53,7 @@
                 missingChips -= result.White;
             }
 
-            return missingChips <= chipState.Gold;
+            return missingChips <= chips.Gold;
         }
     }
 }
