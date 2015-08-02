@@ -1,13 +1,23 @@
 ﻿namespace MvcApplication1.Models
 {
+    using System;
+    using System.Runtime.Serialization;
+
+    [DataContract]
     public class Card
     {
-        public CardTier Tier { get; set; }
+        public Guid Id { get; set; }
 
+        [DataMember]
+        public int Tier { get; set; }
+
+        [DataMember]
         public CardType Type { get; set; }
 
+        [DataMember]
         public ChipState Cost { get; set; }
 
+        [DataMember]
         public int VictoryPoints { get; set; }
 
         public bool CanBuy(ChipState chipState)
