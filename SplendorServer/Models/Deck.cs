@@ -4,6 +4,8 @@
     using System.IO;
     using System.Linq;
 
+    using MvcApplication1.Helpers;
+
     using Newtonsoft.Json;
 
     public class Deck
@@ -21,7 +23,7 @@
 
             var jsonString = File.ReadAllText(deckFilePath);
 
-            this.cards = JsonConvert.DeserializeObject<List<Card>>(jsonString);
+            this.cards = JsonConvert.DeserializeObject<List<Card>>(jsonString).Shuffle();
         }
 
         public IDictionary<int, ICollection<Card>> GetVisibleCards()
@@ -29,7 +31,7 @@
             var retVal = new Dictionary<int, ICollection<Card>>();
             for (int i = 1; i <= 3; i++)
             {
-                retVal.Add(i, GetVisibleCardsOfTier(i));
+                retVal.Add(i, this.GetVisibleCardsOfTier(i));
             }
 
             return retVal;

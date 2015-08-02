@@ -131,6 +131,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\CardTier.cs" />
     <Compile Include="Models\CardType.cs" />

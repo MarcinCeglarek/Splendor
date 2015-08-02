@@ -21,7 +21,7 @@
         // GET api/game
         public IDictionary<int, ICollection<Card>> Get()
         {
-            return this.JSON(this.deck.GetVisibleCards());
+            return this.deck.GetVisibleCards();
         }
 
         // GET api/game/5
