@@ -1,4 +1,4 @@
-﻿namespace MvcApplication1
+﻿namespace SplendorServer
 {
     using System.Web.Optimization;
 

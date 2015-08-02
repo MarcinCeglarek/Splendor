@@ -1,4 +1,4 @@
-﻿namespace MvcApplication1.Helpers
+﻿namespace SplendorServer.Helpers
 {
     using System;
     using System.Collections.Generic;

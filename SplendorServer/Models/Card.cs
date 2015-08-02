@@ -1,7 +1,10 @@
-﻿namespace MvcApplication1.Models
+﻿namespace SplendorServer.Models
 {
     using System;
     using System.Runtime.Serialization;
+
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
 
     [DataContract]
     public class Card
@@ -12,7 +15,8 @@
         public int Tier { get; set; }
 
         [DataMember]
-        public CardType Type { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CardType Color { get; set; }
 
         [DataMember]
         public ChipState Cost { get; set; }

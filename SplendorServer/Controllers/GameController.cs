@@ -1,15 +1,16 @@
-﻿namespace MvcApplication1.Controllers
+﻿namespace SplendorServer.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web;
     using System.Web.Configuration;
     using System.Web.Http;
 
-    using MvcApplication1.Models;
+    using SplendorServer.Models;
 
     public class GameController : ApiController
     {
-        private Deck deck;
+        private readonly Deck deck;
 
         public GameController()
         {
@@ -22,12 +23,27 @@
         public IDictionary<int, ICollection<Card>> Get()
         {
             return this.deck.GetVisibleCards();
-        }
+        } 
 
         // GET api/game/5
-        public string Get(int id)
+        public IDictionary<string, ChipState> Get(int cardType)
         {
-            return "value";
+            var retVal = new Dictionary<string, ChipState>();
+            var cardsInTier = this.deck.AllCards.GroupBy(card => card.Tier);
+
+            foreach (var tier in cardsInTier)
+            {
+                var cardsByColor = tier.GroupBy(card => card.Color);
+                foreach (var color in cardsByColor)
+                {
+                    var thisColorCost = new ChipState();
+                    thisColorCost = color.Aggregate(thisColorCost, (current, card) => current + card.Cost);
+
+                    retVal.Add(string.Format("{0} {1}", color.First().Tier, color.First().Color), thisColorCost);
+                }
+            }
+
+            return retVal;
         }
 
         // POST api/game

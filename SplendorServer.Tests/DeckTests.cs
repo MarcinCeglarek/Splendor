@@ -1,13 +1,16 @@
 ﻿namespace SplendorServer.Tests
 {
+    using System.Diagnostics;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class UnitTest1
+    public class DeckTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void DeckHasValidNumberOfCards()
         {
+            Debug.WriteLine("");
         }
     }
 }

@@ -1,18 +1,20 @@
-﻿namespace MvcApplication1.Models
+﻿namespace SplendorServer.Models
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
 
-    using MvcApplication1.Helpers;
-
     using Newtonsoft.Json;
+
+    using SplendorServer.Helpers;
 
     public class Deck
     {
-        private ICollection<Card> cards;
+        private readonly IList<Card> allCards;
 
-        private const int visibleCardsCount = 4;
+        private readonly IList<Card> cardsInBank; 
+
+        private const int VisibleCardsCount = 4;
 
         public Deck(string deckFilePath)
         {
@@ -23,13 +25,22 @@
 
             var jsonString = File.ReadAllText(deckFilePath);
 
-            this.cards = JsonConvert.DeserializeObject<List<Card>>(jsonString).Shuffle();
+            this.allCards = JsonConvert.DeserializeObject<List<Card>>(jsonString);
+            this.cardsInBank = this.allCards.Shuffle();
         }
+
+        public IList<Card> AllCards
+        {
+            get
+            {
+                return this.allCards;
+            }
+        } 
 
         public IDictionary<int, ICollection<Card>> GetVisibleCards()
         {
             var retVal = new Dictionary<int, ICollection<Card>>();
-            for (int i = 1; i <= 3; i++)
+            for (var i = 1; i <= 3; i++)
             {
                 retVal.Add(i, this.GetVisibleCardsOfTier(i));
             }
@@ -39,7 +50,7 @@
 
         private ICollection<Card> GetVisibleCardsOfTier(int i)
         {
-            return this.cards.Where(card => card.Tier == i).Take(visibleCardsCount).ToArray();
+            return this.cardsInBank.Where(card => card.Tier == i).Take(VisibleCardsCount).ToArray();
         }
     }
 }

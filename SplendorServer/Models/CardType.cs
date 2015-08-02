@@ -1,4 +1,4 @@
-﻿namespace MvcApplication1.Models
+﻿namespace SplendorServer.Models
 {
     public enum CardType
     {

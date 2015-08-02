@@ -1,4 +1,4 @@
-﻿namespace MvcApplication1.Models
+﻿namespace SplendorServer.Models
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -21,11 +21,11 @@
             {
                 var retVal = new ChipState
                                  {
-                                     White = this.chipState.White + this.ownedCards.Count(o => o.Type == CardType.White), 
-                                     Blue = this.chipState.Blue + this.ownedCards.Count(o => o.Type == CardType.Blue), 
-                                     Green = this.chipState.Green + this.ownedCards.Count(o => o.Type == CardType.Green), 
-                                     Red = this.chipState.Red + this.ownedCards.Count(o => o.Type == CardType.Red), 
-                                     Black = this.chipState.Black + this.ownedCards.Count(o => o.Type == CardType.Black), 
+                                     White = this.chipState.White + this.ownedCards.Count(o => o.Color == CardType.White), 
+                                     Blue = this.chipState.Blue + this.ownedCards.Count(o => o.Color == CardType.Blue), 
+                                     Green = this.chipState.Green + this.ownedCards.Count(o => o.Color == CardType.Green), 
+                                     Red = this.chipState.Red + this.ownedCards.Count(o => o.Color == CardType.Red), 
+                                     Black = this.chipState.Black + this.ownedCards.Count(o => o.Color == CardType.Black), 
                                      Gold = this.chipState.Gold
                                  };
                 return retVal;

@@ -1,5 +1,6 @@
-﻿namespace MvcApplication1
+﻿namespace SplendorServer
 {
+    using System.Net.Http.Headers;
     using System.Web.Http;
 
     public static class WebApiConfig
@@ -10,6 +11,8 @@
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional });
+
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
         }
     }
 }
