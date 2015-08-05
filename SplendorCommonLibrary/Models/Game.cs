@@ -1,12 +1,15 @@
-﻿namespace SplendorServer.Models
+﻿namespace SplendorCommonLibrary.Models
 {
     using System;
     using System.Collections.Generic;
 
-    public class GameStatus
+    using SplendorCommonLibrary.Models.ChipsModels;
+
+    public class Game
     {
-        public GameStatus(Deck deck, IList<User> users)
+        public Game(Deck deck, IList<User> users)
         {
+            this.Id = new Guid();
             this.Deck = deck;
             this.Users = users;
 
@@ -27,6 +30,8 @@
 
             this.Bank = new Chips() { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = 5 };
         }
+
+        public Guid Id { get; private set; }
 
         public IList<User> Users { get; set; }
 

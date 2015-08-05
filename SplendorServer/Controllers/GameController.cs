@@ -1,10 +1,12 @@
-﻿namespace SplendorServer.Controllers
+﻿/*
+namespace SplendorServer.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
     using System.Web.Configuration;
     using System.Web.Http;
+    using System.Web.Providers.Entities;
 
     using SplendorServer.Models;
 
@@ -28,7 +30,7 @@
 
         // GET api/game
         [HttpGet]
-        public GameStatus Status()
+        public Game GameStatus()
         {
             return this.gameStatus;
         } 
@@ -71,3 +73,4 @@
         }
     }
 }
+*/

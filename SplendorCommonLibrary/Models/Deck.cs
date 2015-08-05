@@ -1,4 +1,4 @@
-﻿namespace SplendorServer.Models
+﻿namespace SplendorCommonLibrary.Models
 {
     using System.Collections.Generic;
     using System.IO;
@@ -6,7 +6,7 @@
 
     using Newtonsoft.Json;
 
-    using SplendorServer.Helpers;
+    using SplendorCommonLibrary.Helpers;
 
     public class Deck
     {
@@ -66,18 +66,22 @@
             {
                 return this.availableAristocrates;
             }
-        } 
-
-        public IDictionary<int, ICollection<Card>> GetVisibleCards()
-        {
-            var retVal = new Dictionary<int, ICollection<Card>>();
-            for (var i = 1; i <= 3; i++)
-            {
-                retVal.Add(i, this.GetVisibleCardsOfTier(i));
-            }
-
-            return retVal;
         }
+
+        public IDictionary<int, ICollection<Card>> AvailableCards
+        {
+            get
+            {
+                var retVal = new Dictionary<int, ICollection<Card>>();
+                for (var i = 1; i <= 3; i++)
+                {
+                    retVal.Add(i, this.GetVisibleCardsOfTier(i));
+                }
+
+                return retVal;
+            }
+        }
+
 
         private ICollection<Card> GetVisibleCardsOfTier(int i)
         {

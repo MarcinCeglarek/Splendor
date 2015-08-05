@@ -1,10 +1,13 @@
-﻿namespace SplendorServer.Models
+﻿namespace SplendorCommonLibrary.Models
 {
     using System;
     using System.Runtime.Serialization;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
+
+    using SplendorCommonLibrary.Helpers;
+    using SplendorCommonLibrary.Models.ChipsModels;
 
     [DataContract]
     public class Card
@@ -16,9 +19,10 @@
 
         [DataMember]
         [JsonConverter(typeof(StringEnumConverter))]
-        public CardType Color { get; set; }
+        public Color Color { get; set; }
 
         [DataMember]
+        [JsonConverter(typeof(CardCostConverter))]
         public Chips Cost { get; set; }
 
         [DataMember]

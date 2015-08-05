@@ -1,4 +1,4 @@
-﻿namespace SplendorServer.Helpers
+﻿namespace SplendorCommonLibrary.Helpers
 {
     using System;
     using System.Collections.Generic;

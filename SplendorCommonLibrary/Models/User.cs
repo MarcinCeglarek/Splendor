@@ -1,8 +1,10 @@
-﻿namespace SplendorServer.Models
+﻿namespace SplendorCommonLibrary.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
+    using SplendorCommonLibrary.Models.ChipsModels;
 
     public class User
     {
@@ -19,7 +21,7 @@
 
         #region Public Properties
 
-        public GameStatus GameStatus { get; set; }
+        public Game Game { get; set; }
 
         public User()
         {
@@ -31,11 +33,11 @@
             {
                 var retVal = new Chips
                                  {
-                                     White = this.chips.White + this.ownedCards.Count(o => o.Color == CardType.White), 
-                                     Blue = this.chips.Blue + this.ownedCards.Count(o => o.Color == CardType.Blue), 
-                                     Green = this.chips.Green + this.ownedCards.Count(o => o.Color == CardType.Green), 
-                                     Red = this.chips.Red + this.ownedCards.Count(o => o.Color == CardType.Red), 
-                                     Black = this.chips.Black + this.ownedCards.Count(o => o.Color == CardType.Black), 
+                                     White = this.chips.White + this.ownedCards.Count(o => o.Color == Color.White), 
+                                     Blue = this.chips.Blue + this.ownedCards.Count(o => o.Color == Color.Blue), 
+                                     Green = this.chips.Green + this.ownedCards.Count(o => o.Color == Color.Green), 
+                                     Red = this.chips.Red + this.ownedCards.Count(o => o.Color == Color.Red), 
+                                     Black = this.chips.Black + this.ownedCards.Count(o => o.Color == Color.Black), 
                                      Gold = this.chips.Gold
                                  };
                 return retVal;
@@ -60,7 +62,7 @@
 
         public bool CanReserveCard(Guid cardId)
         {
-            var cardToReserve = this.GameStatus.Deck.GetVisibleCards().SelectMany(o => o.Value).FirstOrDefault(card => card.Id == cardId);
+            var cardToReserve = this.Game.Deck.AvailableCards().SelectMany(o => o.Value).FirstOrDefault(card => card.Id == cardId);
 
             if (cardToReserve == null)
             {
@@ -74,7 +76,7 @@
         {
             if (this.CanReserveCard(cardId))
             {
-                var cardToReserve = this.GameStatus.Deck.GetVisibleCards().SelectMany(o => o.Value).FirstOrDefault(card => card.Id == cardId);
+                var cardToReserve = this.Game.Deck.AvailableCards().SelectMany(o => o.Value).FirstOrDefault(card => card.Id == cardId);
 
                 this.reservedCards.Add(cardToReserve);
                 this.chips.Gold++;

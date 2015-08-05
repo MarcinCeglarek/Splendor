@@ -1,6 +1,8 @@
-﻿namespace SplendorServer.Models
+﻿namespace SplendorCommonLibrary.Models
 {
     using System.Runtime.Serialization;
+
+    using SplendorCommonLibrary.Models.ChipsModels;
 
     [DataContract]
     public class Aristocrate
