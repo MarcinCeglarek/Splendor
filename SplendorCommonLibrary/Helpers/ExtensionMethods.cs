@@ -1,12 +1,18 @@
 ﻿namespace SplendorCommonLibrary.Helpers
 {
+    #region
+
     using System;
     using System.Collections.Generic;
     using System.Security.Cryptography;
 
+    #endregion
+
     public static class ExtensionMethods
     {
         // From https://stackoverflow.com/questions/273313/randomize-a-listt-in-c-sharp
+        #region Public Methods and Operators
+
         public static IList<T> Shuffle<T>(this IList<T> list)
         {
             var provider = new RNGCryptoServiceProvider();
@@ -18,7 +24,7 @@
                 {
                     provider.GetBytes(box);
                 }
-                while (!(box[0] < n * (Byte.MaxValue / n)));
+                while (!(box[0] < n * (byte.MaxValue / n)));
                 var k = box[0] % n;
                 n--;
 
@@ -29,5 +35,7 @@
 
             return list;
         }
+
+        #endregion
     }
 }

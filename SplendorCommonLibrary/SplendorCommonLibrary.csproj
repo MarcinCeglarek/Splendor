@@ -44,6 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Constants.cs" />
+    <Compile Include="Data\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Aristocrate.cs" />
     <Compile Include="Helpers\CardCostConverter.cs" />
     <Compile Include="Models\ChipsModels\BlackChip.cs" />
@@ -59,8 +64,10 @@
     <Compile Include="Models\ChipsModels\GreenChip.cs" />
     <Compile Include="Models\ChipsModels\RedChip.cs" />
     <Compile Include="Models\ChipsModels\WhiteChip.cs" />
+    <Compile Include="Models\Exceptions\SplendorGameException.cs" />
+    <Compile Include="Models\Exceptions\SplendorException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Player.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Aristocrates.js">
@@ -72,6 +79,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\Messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

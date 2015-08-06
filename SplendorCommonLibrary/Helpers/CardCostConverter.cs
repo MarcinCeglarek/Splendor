@@ -1,5 +1,7 @@
 namespace SplendorCommonLibrary.Helpers
 {
+    #region
+
     using System;
 
     using Newtonsoft.Json;
@@ -8,11 +10,15 @@ namespace SplendorCommonLibrary.Helpers
     using SplendorCommonLibrary.Models;
     using SplendorCommonLibrary.Models.ChipsModels;
 
+    #endregion
+
     public class CardCostConverter : JsonConverter
     {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        #region Public Methods and Operators
+
+        public override bool CanConvert(Type objectType)
         {
-            throw new NotImplementedException();
+            return objectType == typeof(Chips);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -54,9 +60,11 @@ namespace SplendorCommonLibrary.Helpers
             return result;
         }
 
-        public override bool CanConvert(Type objectType)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            return objectType == typeof(Chips);
+            throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

@@ -1,5 +1,7 @@
 ﻿namespace SplendorCommonLibrary.Models
 {
+    #region
+
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -8,40 +10,52 @@
 
     using SplendorCommonLibrary.Helpers;
 
+    #endregion
+
     public class Deck
     {
+        #region Constants
+
         private const int VisibleCardsCount = 4;
 
-        private readonly IList<Card> allCards;
+        #endregion
 
-        private readonly IList<Card> cardsInBank;
+        #region Fields
 
         private readonly IList<Aristocrate> allAristocrates;
 
-        private readonly IList<Aristocrate> availableAristocrates;
- 
-        public Deck(string deckFilePath, string aristocratesFilePath)
+        private readonly IList<Card> allCards;
+
+        private readonly Game game;
+
+        private IList<Card> cardsInBank;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public Deck(Game game, string deckFilePath, string aristocratesFilePath)
         {
+            this.game = game;
             var deckFileText = GetTextFromFile(deckFilePath);
 
             this.allCards = JsonConvert.DeserializeObject<List<Card>>(deckFileText);
-            this.cardsInBank = this.allCards.Shuffle();
 
             var aristocratesFileText = GetTextFromFile(aristocratesFilePath);
 
             this.allAristocrates = JsonConvert.DeserializeObject<List<Aristocrate>>(aristocratesFileText);
-            this.availableAristocrates = this.allAristocrates.Shuffle().Take(5).ToList();
         }
 
-        private static string GetTextFromFile(string deckFilePath)
-        {
-            if (!File.Exists(deckFilePath))
-            {
-                throw new FileNotFoundException("Data file not found: " + deckFilePath);
-            }
+        #endregion
 
-            var jsonString = File.ReadAllText(deckFilePath);
-            return jsonString;
+        #region Public Properties
+
+        public IList<Aristocrate> AllAristocrates
+        {
+            get
+            {
+                return this.allAristocrates;
+            }
         }
 
         public IList<Card> AllCards
@@ -52,21 +66,7 @@
             }
         }
 
-        public IList<Aristocrate> AllAristocrates
-        {
-            get
-            {
-                return this.allAristocrates;
-            }
-        }
-
-        public IList<Aristocrate> AvailableAristocrates
-        {
-            get
-            {
-                return this.availableAristocrates;
-            }
-        }
+        public IList<Aristocrate> AvailableAristocrates { get; private set; }
 
         public IDictionary<int, ICollection<Card>> AvailableCards
         {
@@ -82,10 +82,37 @@
             }
         }
 
+        #endregion
+
+        #region Public Methods and Operators
+
+        public void Initialize()
+        {
+            this.cardsInBank = this.allCards.Shuffle();
+            var numberOfAristocrates = this.game.Players.Count + 1;
+            this.AvailableAristocrates = this.allAristocrates.Shuffle().Take(numberOfAristocrates).ToList();
+        }
+
+        #endregion
+
+        #region Methods
+
+        private static string GetTextFromFile(string deckFilePath)
+        {
+            if (!File.Exists(deckFilePath))
+            {
+                throw new FileNotFoundException("Data file not found: " + deckFilePath);
+            }
+
+            var jsonString = File.ReadAllText(deckFilePath);
+            return jsonString;
+        }
 
         private ICollection<Card> GetVisibleCardsOfTier(int i)
         {
             return this.cardsInBank.Where(card => card.Tier == i).Take(VisibleCardsCount).ToArray();
         }
+
+        #endregion
     }
 }

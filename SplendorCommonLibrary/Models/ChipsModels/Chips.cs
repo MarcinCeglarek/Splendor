@@ -1,29 +1,35 @@
 ﻿namespace SplendorCommonLibrary.Models.ChipsModels
 {
+    #region
+
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using SplendorCommonLibrary.Data;
 
+    #endregion
+
     public class Chips : List<Chip>
     {
-        public int White
+        #region Public Properties
+
+        public int Black
         {
             get
             {
-                return this.Single(o => o.Color == Color.White).Value;
+                return this.Single(o => o.Color == Color.Black).Value;
             }
 
             set
             {
-                if (this.Any(o => o.Color == Color.White))
+                if (this.Any(o => o.Color == Color.Black))
                 {
-                    this.Single(o => o.Color == Color.White).Value = value;
+                    this.Single(o => o.Color == Color.Black).Value = value;
                 }
                 else
                 {
-                    this.Add(new WhiteChip(value));
+                    this.Add(new BlackChip(value));
                 }
             }
         }
@@ -44,6 +50,26 @@
                 else
                 {
                     this.Add(new BlueChip(value));
+                }
+            }
+        }
+
+        public int Gold
+        {
+            get
+            {
+                return this.Single(o => o.Color == Color.Gold).Value;
+            }
+
+            set
+            {
+                if (this.Any(o => o.Color == Color.Gold))
+                {
+                    this.Single(o => o.Color == Color.Gold).Value = value;
+                }
+                else
+                {
+                    this.Add(new GoldChip(value));
                 }
             }
         }
@@ -88,45 +114,29 @@
             }
         }
 
-        public int Black
+        public int White
         {
             get
             {
-                return this.Single(o => o.Color == Color.Black).Value;
+                return this.Single(o => o.Color == Color.White).Value;
             }
 
             set
             {
-                if (this.Any(o => o.Color == Color.Black))
+                if (this.Any(o => o.Color == Color.White))
                 {
-                    this.Single(o => o.Color == Color.Black).Value = value;
+                    this.Single(o => o.Color == Color.White).Value = value;
                 }
                 else
                 {
-                    this.Add(new BlackChip(value));
+                    this.Add(new WhiteChip(value));
                 }
             }
         }
 
-        public int Gold
-        {
-            get
-            {
-                return this.Single(o => o.Color == Color.Gold).Value;
-            }
+        #endregion
 
-            set
-            {
-                if (this.Any(o => o.Color == Color.Gold))
-                {
-                    this.Single(o => o.Color == Color.Gold).Value = value;
-                }
-                else
-                {
-                    this.Add(new GoldChip(value));
-                }
-            }
-        }
+        #region Public Methods and Operators
 
         public static Chips operator +(Chips chipsA, Chips chipsB)
         {
@@ -167,5 +177,7 @@
 
             return chipsA + negativeB;
         }
+
+        #endregion
     }
 }

@@ -2,6 +2,8 @@ namespace SplendorCommonLibrary.Models.ChipsModels
 {
     public class WhiteChip : Chip
     {
+        #region Constructors and Destructors
+
         public WhiteChip()
             : this(0)
         {
@@ -11,5 +13,7 @@ namespace SplendorCommonLibrary.Models.ChipsModels
             : base(Color.White, value)
         {
         }
+
+        #endregion
     }
 }

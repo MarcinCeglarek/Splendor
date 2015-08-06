@@ -1,35 +1,35 @@
 ﻿[
     {
         "VictoryPoints": 3,
-        "RequiredMines" : {
+        "RequiredMines": {
             "White": 4,
             "Blue": 4
         }
-    },{
+    }, {
         "VictoryPoints": 3,
         "RequiredMines": {
             "Blue": 4,
             "Green": 4
         }
-    },{
+    }, {
         "VictoryPoints": 3,
         "RequiredMines": {
             "Green": 4,
             "Red": 4
         }
-    },{
+    }, {
         "VictoryPoints": 3,
         "RequiredMines": {
             "Red": 4,
             "Black": 4
         }
-    },{
+    }, {
         "VictoryPoints": 3,
         "RequiredMines": {
             "White": 4,
             "Black": 4
         }
-    },{
+    }, {
         "VictoryPoints": 3,
         "RequiredMines": {
             "White": 3,

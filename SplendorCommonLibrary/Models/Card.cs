@@ -1,5 +1,7 @@
 ﻿namespace SplendorCommonLibrary.Models
 {
+    #region
+
     using System;
     using System.Runtime.Serialization;
 
@@ -9,13 +11,12 @@
     using SplendorCommonLibrary.Helpers;
     using SplendorCommonLibrary.Models.ChipsModels;
 
+    #endregion
+
     [DataContract]
     public class Card
     {
-        public Guid Id { get; set; }
-
-        [DataMember]
-        public int Tier { get; set; }
+        #region Public Properties
 
         [DataMember]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -25,8 +26,17 @@
         [JsonConverter(typeof(CardCostConverter))]
         public Chips Cost { get; set; }
 
+        public Guid Id { get; set; }
+
+        [DataMember]
+        public int Tier { get; set; }
+
         [DataMember]
         public int VictoryPoints { get; set; }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         public bool CanBuy(Chips chips)
         {
@@ -59,5 +69,7 @@
 
             return missingChips <= chips.Gold;
         }
+
+        #endregion
     }
 }

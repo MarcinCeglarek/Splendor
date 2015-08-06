@@ -1,16 +1,24 @@
 ﻿namespace SplendorCommonLibrary.Models
 {
+    #region
+
     using System.Runtime.Serialization;
 
     using SplendorCommonLibrary.Models.ChipsModels;
 
+    #endregion
+
     [DataContract]
     public class Aristocrate
     {
-        [DataMember]
-        public int VictoryPoints { get; set; }
+        #region Public Properties
 
         [DataMember]
         public Chips RequiredCards { get; set; }
+
+        [DataMember]
+        public int VictoryPoints { get; set; }
+
+        #endregion
     }
 }
