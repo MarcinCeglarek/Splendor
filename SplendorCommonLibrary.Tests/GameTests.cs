@@ -9,7 +9,7 @@
     public class GameTests
     {
         [TestMethod]
-        public void TwoPlayersQueue()
+        public void Game_TwoPlayersQueue()
         {
             var game = new Game();
             game.Deck = new Deck(game, Constants.DeckFilePath, Constants.AristocratesFilePath);
@@ -37,7 +37,7 @@
         }
 
         [TestMethod]
-        public void ThreePlayersQueue()
+        public void Game_ThreePlayersQueue()
         {
             var game = new Game();
             game.Deck = new Deck(game, Constants.DeckFilePath, Constants.AristocratesFilePath);
@@ -72,7 +72,7 @@
         }
 
         [TestMethod]
-        public void FourPlayersQueue()
+        public void Game_FourPlayersQueue()
         {
             var game = new Game();
             game.Deck = new Deck(game, Constants.DeckFilePath, Constants.AristocratesFilePath);

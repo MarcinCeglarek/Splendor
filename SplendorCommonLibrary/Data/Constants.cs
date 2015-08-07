@@ -6,7 +6,7 @@
 
         public const string AristocratesFilePath = "./Data/Aristocrates.js";
 
-        public const string ChipClassPath = "SplendorCommonLibrary.Models.ChipsModels.";
+        public const string ChipClassPath = "SplendorCommonLibrary.Models.";
 
         public const string DeckFilePath = "./Data/Deck.js";
 

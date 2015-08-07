@@ -8,7 +8,6 @@ namespace SplendorCommonLibrary.Helpers
     using Newtonsoft.Json.Linq;
 
     using SplendorCommonLibrary.Models;
-    using SplendorCommonLibrary.Models.ChipsModels;
 
     #endregion
 
@@ -34,27 +33,7 @@ namespace SplendorCommonLibrary.Helpers
             foreach (var property in jsonObject)
             {
                 var color = (Color)Enum.Parse(typeof(Color), property.Key);
-                switch (color)
-                {
-                    case Color.Black:
-                        result.Add(new BlackChip(property.Value.Value<int>()));
-                        break;
-                    case Color.Blue:
-                        result.Add(new BlueChip(property.Value.Value<int>()));
-                        break;
-                    case Color.Red:
-                        result.Add(new RedChip(property.Value.Value<int>()));
-                        break;
-                    case Color.Green:
-                        result.Add(new GreenChip(property.Value.Value<int>()));
-                        break;
-                    case Color.Gold:
-                        result.Add(new GoldChip(property.Value.Value<int>()));
-                        break;
-                    case Color.White:
-                        result.Add(new WhiteChip(property.Value.Value<int>()));
-                        break;
-                }
+                result[color] = property.Value.Value<int>();
             }
 
             return result;

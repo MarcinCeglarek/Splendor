@@ -8,7 +8,6 @@
 
     using SplendorCommonLibrary.Data;
     using SplendorCommonLibrary.Helpers;
-    using SplendorCommonLibrary.Models.ChipsModels;
     using SplendorCommonLibrary.Models.Exceptions;
 
     #endregion

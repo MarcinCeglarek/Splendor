@@ -7,13 +7,20 @@
 
     using SplendorCommonLibrary.Data;
     using SplendorCommonLibrary.Models;
-    using SplendorCommonLibrary.Models.ChipsModels;
+    using SplendorCommonLibrary.Models.Exceptions;
 
     [TestClass]
     public class DeckTests
     {
         [TestMethod]
-        public void DeckCardNumber()
+        [ExpectedException(typeof(SplendorFileNotFoundException))]
+        public void Deck_Exception()
+        {
+            var deck = new Deck(null, string.Empty, string.Empty);
+        }
+
+        [TestMethod]
+        public void Deck_CardsNumber()
         {
             var game = new Game();
             game.Deck = new Deck(game, Constants.DeckFilePath, Constants.AristocratesFilePath);
@@ -44,11 +51,10 @@
             Assert.AreEqual(90 / 5, deck.AllCards.Count(o => o.Color == Color.White));
 
             Assert.AreEqual(0, deck.AllCards.Count(o => o.Color == Color.Gold));
-
         }
 
         [TestMethod]
-        public void DeckCardPoints()
+        public void Deck_CarsdPoints()
         {
             var deck = new Deck(null, Constants.DeckFilePath, Constants.AristocratesFilePath);
 
@@ -58,25 +64,36 @@
                 Assert.AreEqual(11, deck.AllCards.Where(o => o.Tier == 2 && o.Color == color).Sum(c => c.VictoryPoints));
                 Assert.AreEqual(16, deck.AllCards.Where(o => o.Tier == 3 && o.Color == color).Sum(c => c.VictoryPoints));
             }
+
+            Assert.AreEqual(0, deck.AllCards.Where(o => o.Tier == 1 && o.Color == Color.Gold).Sum(c => c.VictoryPoints));
+            Assert.AreEqual(0, deck.AllCards.Where(o => o.Tier == 2 && o.Color == Color.Gold).Sum(c => c.VictoryPoints));
+            Assert.AreEqual(0, deck.AllCards.Where(o => o.Tier == 3 && o.Color == Color.Gold).Sum(c => c.VictoryPoints));
         }
 
         [TestMethod]
-        public void AristocratesNumber()
+        public void Deck_Aristocrates_Number()
         {
             var deck = new Deck(null, Constants.DeckFilePath, Constants.AristocratesFilePath);
 
             Assert.AreEqual(10, deck.AllAristocrates.Count);
             var sumOfAllCards = new Chips();
-            deck.AllAristocrates.Select(a => sumOfAllCards += a.RequiredCards);
 
-            foreach (var sumForColor in sumOfAllCards)
+            foreach (var aristocrate in deck.AllAristocrates)
             {
-                 Assert.AreEqual(17, sumForColor);
+                Assert.IsNotNull(aristocrate.RequiredCards);
+                sumOfAllCards += aristocrate.RequiredCards;
             }
+
+            foreach (var sumForColor in sumOfAllCards.Where(o => o.Key != Color.Gold))
+            {
+                 Assert.AreEqual(17, sumForColor.Value);
+            }
+
+            Assert.AreEqual(0, sumOfAllCards[Color.Gold]);
         }
 
         [TestMethod]
-        public void AristocratesVictoryPoints()
+        public void Deck_Aristocrates_VictoryPoints()
         {
             var deck = new Deck(null, Constants.DeckFilePath, Constants.AristocratesFilePath);
 

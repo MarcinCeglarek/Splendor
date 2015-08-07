@@ -9,6 +9,7 @@
     using Newtonsoft.Json;
 
     using SplendorCommonLibrary.Helpers;
+    using SplendorCommonLibrary.Models.Exceptions;
 
     #endregion
 
@@ -101,7 +102,7 @@
         {
             if (!File.Exists(deckFilePath))
             {
-                throw new FileNotFoundException("Data file not found: " + deckFilePath);
+                throw new SplendorFileNotFoundException("Data file not found: " + deckFilePath);
             }
 
             var jsonString = File.ReadAllText(deckFilePath);

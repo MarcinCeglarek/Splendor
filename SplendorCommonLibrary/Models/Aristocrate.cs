@@ -4,8 +4,6 @@
 
     using System.Runtime.Serialization;
 
-    using SplendorCommonLibrary.Models.ChipsModels;
-
     #endregion
 
     [DataContract]

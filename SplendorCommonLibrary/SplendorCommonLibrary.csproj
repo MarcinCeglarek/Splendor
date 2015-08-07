@@ -51,19 +51,12 @@
     </Compile>
     <Compile Include="Models\Aristocrate.cs" />
     <Compile Include="Helpers\CardCostConverter.cs" />
-    <Compile Include="Models\ChipsModels\BlackChip.cs" />
-    <Compile Include="Models\ChipsModels\BlueChip.cs" />
     <Compile Include="Models\Card.cs" />
-    <Compile Include="Models\ChipsModels\Chip.cs" />
     <Compile Include="Models\Color.cs" />
-    <Compile Include="Models\ChipsModels\Chips.cs" />
+    <Compile Include="Models\Chips.cs" />
     <Compile Include="Models\Deck.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
-    <Compile Include="Models\ChipsModels\GoldChip.cs" />
-    <Compile Include="Models\ChipsModels\GreenChip.cs" />
-    <Compile Include="Models\ChipsModels\RedChip.cs" />
-    <Compile Include="Models\ChipsModels\WhiteChip.cs" />
     <Compile Include="Models\Exceptions\SplendorGameException.cs" />
     <Compile Include="Models\Exceptions\SplendorException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

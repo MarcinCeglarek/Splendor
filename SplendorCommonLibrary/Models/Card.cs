@@ -9,7 +9,6 @@
     using Newtonsoft.Json.Converters;
 
     using SplendorCommonLibrary.Helpers;
-    using SplendorCommonLibrary.Models.ChipsModels;
 
     #endregion
 

@@ -6,8 +6,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using SplendorCommonLibrary.Models.ChipsModels;
-
     #endregion
 
     public class Player

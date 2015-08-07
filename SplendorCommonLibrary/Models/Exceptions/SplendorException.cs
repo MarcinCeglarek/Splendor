@@ -17,4 +17,12 @@
 
         #endregion
     }
+
+    public class SplendorFileNotFoundException : SplendorException
+    {
+        public SplendorFileNotFoundException(string message)
+            : base(message)
+        {
+        }
+    }
 }
