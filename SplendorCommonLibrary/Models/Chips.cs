@@ -10,7 +10,7 @@
 
     public class Chips : Dictionary<Color, int>
     {
-        #region Public Properties
+        #region Constructors and Destructors
 
         public Chips()
         {
@@ -29,6 +29,10 @@
             this.Add(Color.Black, black);
             this.Add(Color.Gold, gold);
         }
+
+        #endregion
+
+        #region Public Properties
 
         public int Black
         {

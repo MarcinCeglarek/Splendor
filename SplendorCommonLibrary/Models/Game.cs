@@ -47,7 +47,13 @@
 
         public Deck Deck { get; set; }
 
+        public bool HasFinished { get; private set; }
+
+        public bool HasStarted { get; private set; }
+
         public Guid Id { get; private set; }
+
+        public IList<Player> Players { get; set; }
 
         public int TotalNumberOfNormalChips
         {
@@ -66,12 +72,6 @@
                 throw new SplendorGameException("Unsupported number of players");
             }
         }
-
-        public IList<Player> Players { get; set; }
-
-        public bool HasFinished { get; private set; }
-
-        public bool HasStarted { get; private set; }
 
         #endregion
 
@@ -241,6 +241,23 @@
             this.HasFinished = true;
         }
 
+        private void PlayerFinished()
+        {
+            var currentUser = this.CurrentPlayer;
+            this.Players.RemoveAt(0);
+            this.Players.Insert(this.Players.Count, currentUser);
+
+            this.CheckEndGameCondition();
+        }
+
+        private void VerifyPlayerEligibleForMove(Player player)
+        {
+            if (player != this.CurrentPlayer)
+            {
+                throw new SplendorGameException(Messages.Error_PlayerNotEligibleForMove);
+            }
+        }
+
         private void VerifyThatGameIsActive()
         {
             if (!this.HasStarted)
@@ -252,23 +269,6 @@
             {
                 throw new SplendorGameException(Messages.Error_GameHasFinished);
             }
-        }
-
-        private void VerifyPlayerEligibleForMove(Player player)
-        {
-            if (player != this.CurrentPlayer)
-            {
-                throw new SplendorGameException(Messages.Error_PlayerNotEligibleForMove);
-            }
-        }
-
-        private void PlayerFinished()
-        {
-            var currentUser = this.CurrentPlayer;
-            this.Players.RemoveAt(0);
-            this.Players.Insert(this.Players.Count, currentUser);
-
-            this.CheckEndGameCondition();
         }
 
         #endregion
