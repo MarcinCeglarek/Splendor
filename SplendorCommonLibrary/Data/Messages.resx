@@ -129,6 +129,12 @@
   <data name="Error_GameIsAlreadyStarted" xml:space="preserve">
     <value>Game is already in progress</value>
   </data>
+  <data name="Error_MaximumNumberOfReservedCardsReached" xml:space="preserve">
+    <value>You're not allowed to reserve more cards</value>
+  </data>
+  <data name="Error_PlayerCantHoldOver10Chips" xml:space="preserve">
+    <value>You're not permitted to hold more than 10 chips at a time</value>
+  </data>
   <data name="Error_PlayerNotEligibleForMove" xml:space="preserve">
     <value>This player is not eligible for move right now</value>
   </data>
@@ -137,5 +143,11 @@
   </data>
   <data name="Error_ThereHaveToBeTwoPlayers" xml:space="preserve">
     <value>There have to be at least 2 players</value>
+  </data>
+  <data name="Error_ThisCardIsUnavailable" xml:space="preserve">
+    <value>This card is not available for you</value>
+  </data>
+  <data name="Errror_CantTakeGoldenChipsInThisMoveType" xml:space="preserve">
+    <value>You're not able to get gold chips</value>
   </data>
 </root>

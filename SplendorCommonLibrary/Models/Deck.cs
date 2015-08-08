@@ -69,14 +69,14 @@
 
         public IList<Aristocrate> AvailableAristocrates { get; private set; }
 
-        public IDictionary<int, ICollection<Card>> AvailableCards
+        public ICollection<Card> AvailableCards
         {
             get
             {
-                var retVal = new Dictionary<int, ICollection<Card>>();
+                var retVal = new List<Card>();
                 for (var i = 1; i <= 3; i++)
                 {
-                    retVal.Add(i, this.GetVisibleCardsOfTier(i));
+                    retVal.AddRange(this.GetVisibleCardsOfTier(i));
                 }
 
                 return retVal;
@@ -109,7 +109,7 @@
             return jsonString;
         }
 
-        private ICollection<Card> GetVisibleCardsOfTier(int i)
+        private IEnumerable<Card> GetVisibleCardsOfTier(int i)
         {
             return this.cardsInBank.Where(card => card.Tier == i).Take(VisibleCardsCount).ToArray();
         }

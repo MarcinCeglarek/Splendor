@@ -8,19 +8,16 @@
 
     using SplendorCommonLibrary.Data;
     using SplendorCommonLibrary.Helpers;
+    using SplendorCommonLibrary.Interfaces;
     using SplendorCommonLibrary.Models.Exceptions;
 
     #endregion
 
-    public class Game
+    public class Game : IGameActions
     {
         #region Fields
 
         private Player firstPlayer;
-
-        private bool hasFinished = false;
-
-        private bool isStarted = false;
 
         #endregion
 
@@ -30,6 +27,8 @@
         {
             this.Id = Guid.NewGuid();
             this.Players = new List<Player>();
+            this.HasStarted = false;
+            this.HasFinished = false;
         }
 
         #endregion
@@ -50,31 +49,142 @@
 
         public Guid Id { get; private set; }
 
+        public int TotalNumberOfNormalChips
+        {
+            get
+            {
+                switch (this.Players.Count)
+                {
+                    case 2:
+                        return Constants.Game.NumberOfNormalChips2Players;
+                    case 3:
+                        return Constants.Game.NumberOfNormalChips3Players;
+                    case 4:
+                        return Constants.Game.NumberOfNormalChips4Players;
+                }
+
+                throw new SplendorGameException("Unsupported number of players");
+            }
+        }
+
         public IList<Player> Players { get; set; }
+
+        public bool HasFinished { get; private set; }
+
+        public bool HasStarted { get; private set; }
 
         #endregion
 
         #region Public Methods and Operators
 
+        public bool CanPurchaseCard(Player player, Card card)
+        {
+            this.VerifyThatGameIsActive();
+            this.VerifyPlayerEligibleForMove(player);
+
+            return true;
+        }
+
+        public bool CanReserveCard(Player player, Card card)
+        {
+            this.VerifyThatGameIsActive();
+            this.VerifyPlayerEligibleForMove(player);
+
+            if (this.CurrentPlayer.ReservedCards.Count >= Constants.Game.MaximumNumberOfReservedCards)
+            {
+                throw new SplendorGameReserveActionException(Messages.Error_MaximumNumberOfReservedCardsReached);
+            }
+
+            if (!this.Deck.AvailableCards.Contains(card))
+            {
+                throw new SplendorGameReserveActionException(Messages.Error_ThisCardIsUnavailable);
+            }
+
+            return true;
+        }
+
+        public bool CanTakeChips(Player player, Chips chips)
+        {
+            this.VerifyThatGameIsActive();
+            this.VerifyPlayerEligibleForMove(player);
+
+            var diff = chips - player.Chips;
+
+            // simplyfying this would be greatly appreciated
+            if (diff.Gold != 0)
+            {
+                throw new SplendorGameTakeActionException(Messages.Errror_CantTakeGoldenChipsInThisMoveType);
+            }
+
+            if (chips.Where(c => c.Key != Color.Gold).Sum(c => c.Value) > 10)
+            {
+                throw new SplendorGameTakeActionException(Messages.Error_PlayerCantHoldOver10Chips);
+            }
+
+            if (diff.Count(o => o.Value > 0) > Constants.Game.MaximumNumberOfChipsTakenPerAction
+                || diff.Where(o => o.Value > 0).Sum(o => o.Value) > Constants.Game.MaximumNumberOfChipsTakenPerAction)
+            {
+                throw new SplendorGameTakeActionException("You cannot take more than 3 chips at a time");
+            }
+
+            if (diff.Any(o => o.Value > Constants.Game.MaximumNumberOfOneColorChipsTakerPerAction))
+            {
+                throw new SplendorGameTakeActionException("You cannot take 3 chips of the same color");
+            }
+
+            if (diff.Any(o => o.Value == Constants.Game.MaximumNumberOfOneColorChipsTakerPerAction))
+            {
+                if (diff.Count(o => o.Value > 0) != 1)
+                {
+                    throw new SplendorGameTakeActionException("You cannot take any additional chips if you took 2 of the same color");
+                }
+
+                var twoChips = diff.Single(o => o.Value == Constants.Game.MaximumNumberOfOneColorChipsTakerPerAction);
+                if (this.Bank[twoChips.Key] < Constants.Game.MinimumNumberOfChipsToAllowTwoChipsTake)
+                {
+                    throw new SplendorGameTakeActionException("You cannot take 2 chips if less then 4 are available");
+                }
+            }
+
+            if (this.Bank.Any(chip => this.Bank[chip.Key] < -chip.Value))
+            {
+                throw new SplendorGameTakeActionException("Bank doesn't have enough chips");
+            }
+
+            return true;
+        }
+
         public void PurchaseCard(Player player, Card card)
         {
-            this.IsGameActive();
-            this.IsPlayerEligibleForMove(player);
+            this.CanPurchaseCard(player, card);
 
             this.PlayerFinished();
         }
 
         public void ReserveCard(Player player, Card card)
         {
-            this.IsGameActive();
-            this.IsPlayerEligibleForMove(player);
+            this.CanReserveCard(player, card);
+
+            this.Deck.AllCards.Remove(card);
+            this.CurrentPlayer.ReservedCards.Add(card);
+
+            if (this.Bank.Gold > 0)
+            {
+                this.Bank.Gold--;
+                this.CurrentPlayer.Chips.Gold++;
+            }
 
             this.PlayerFinished();
         }
 
         public void Start()
         {
-            if (this.isStarted)
+            if (this.HasFinished)
+            {
+                throw new SplendorGameException(Messages.Error_GameHasFinished);
+            }
+
+            if (this.HasStarted)
             {
                 throw new SplendorGameException(Messages.Error_GameIsAlreadyStarted);
             }
@@ -94,31 +204,22 @@
                 throw new SplendorGameException(Messages.Error_ThereHaveToBeFourPlayers);
             }
 
-            this.isStarted = true;
+            this.HasStarted = true;
             this.Deck.Initialize();
             this.Players = this.Players.Shuffle();
             this.firstPlayer = this.Players.First();
 
-            var chipCount = 7;
-            switch (this.Players.Count)
-            {
-                case 2:
-                    chipCount = 4;
-                    break;
-                case 3:
-                    chipCount = 5;
-                    break;
-                case 4:
-                    break;
-            }
-
-            this.Bank = new Chips() { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = 5 };
+            var chipCount = this.TotalNumberOfNormalChips;
+            this.Bank = new Chips() { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = Constants.Game.NumberOfGoldChips };
         }
 
-        public void TakeChips(Player player)
+        public void TakeChips(Player player, Chips chips)
         {
-            this.IsGameActive();
-            this.IsPlayerEligibleForMove(player);
+            this.CanTakeChips(player, chips);
+
+            var diff = chips - player.Chips;
+            this.Bank -= diff;
+            this.CurrentPlayer.Chips += diff;
 
             this.PlayerFinished();
         }
@@ -137,23 +238,23 @@
 
         private void GameEnded()
         {
-            this.hasFinished = true;
+            this.HasFinished = true;
         }
 
-        private void IsGameActive()
+        private void VerifyThatGameIsActive()
         {
-            if (!this.isStarted)
+            if (!this.HasStarted)
             {
                 throw new SplendorGameException(Messages.Error_GameHasNotStartedYet);
             }
 
-            if (this.hasFinished)
+            if (this.HasFinished)
             {
                 throw new SplendorGameException(Messages.Error_GameHasFinished);
             }
         }
 
-        private void IsPlayerEligibleForMove(Player player)
+        private void VerifyPlayerEligibleForMove(Player player)
         {
             if (player != this.CurrentPlayer)
             {

@@ -97,6 +97,24 @@ namespace SplendorCommonLibrary.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You&apos;re not allowed to reserve more cards.
+        /// </summary>
+        internal static string Error_MaximumNumberOfReservedCardsReached {
+            get {
+                return ResourceManager.GetString("Error_MaximumNumberOfReservedCardsReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re not permitted to hold more than 10 chips at a time.
+        /// </summary>
+        internal static string Error_PlayerCantHoldOver10Chips {
+            get {
+                return ResourceManager.GetString("Error_PlayerCantHoldOver10Chips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This player is not eligible for move right now.
         /// </summary>
         internal static string Error_PlayerNotEligibleForMove {
@@ -120,6 +138,24 @@ namespace SplendorCommonLibrary.Data {
         internal static string Error_ThereHaveToBeTwoPlayers {
             get {
                 return ResourceManager.GetString("Error_ThereHaveToBeTwoPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This card is not available for you.
+        /// </summary>
+        internal static string Error_ThisCardIsUnavailable {
+            get {
+                return ResourceManager.GetString("Error_ThisCardIsUnavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re not able to get gold chips.
+        /// </summary>
+        internal static string Errror_CantTakeGoldenChipsInThisMoveType {
+            get {
+                return ResourceManager.GetString("Errror_CantTakeGoldenChipsInThisMoveType", resourceCulture);
             }
         }
     }

@@ -55,10 +55,13 @@
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\Chips.cs" />
     <Compile Include="Models\Deck.cs" />
+    <Compile Include="Models\Exceptions\SplendorGameReserveActionException.cs" />
+    <Compile Include="Models\Exceptions\SplendorGameTakeActionException.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Models\Exceptions\SplendorGameException.cs" />
     <Compile Include="Models\Exceptions\SplendorException.cs" />
+    <Compile Include="Interfaces\IGameActions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Player.cs" />
   </ItemGroup>

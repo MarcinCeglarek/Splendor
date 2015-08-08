@@ -20,6 +20,16 @@
             }
         }
 
+        public Chips(int white, int blue, int green, int red, int black, int gold)
+        {
+            this.Add(Color.White, white);
+            this.Add(Color.Blue, blue);
+            this.Add(Color.Green, green);
+            this.Add(Color.Red, red);
+            this.Add(Color.Black, black);
+            this.Add(Color.Gold, gold);
+        }
+
         public int Black
         {
             get

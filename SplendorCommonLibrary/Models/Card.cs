@@ -15,6 +15,15 @@
     [DataContract]
     public class Card
     {
+        #region Constructors and Destructors
+
+        public Card()
+        {
+            this.Id = Guid.NewGuid();
+        }
+
+        #endregion
+
         #region Public Properties
 
         [DataMember]

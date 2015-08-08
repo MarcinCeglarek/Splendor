@@ -10,7 +10,7 @@
     using SplendorCommonLibrary.Models.Exceptions;
 
     [TestClass]
-    public class DeckTests
+    public class DeckTests : TestsBase
     {
         [TestMethod]
         [ExpectedException(typeof(SplendorFileNotFoundException))]
@@ -22,20 +22,15 @@
         [TestMethod]
         public void Deck_CardsNumber()
         {
-            var game = new Game();
-            game.Deck = new Deck(game, Constants.DeckFilePath, Constants.AristocratesFilePath);
-            
-            game.Players.Add(new Player());
-            game.Players.Add(new Player());
-            game.Start();
+            var game = this.InitializeGame(2);
             var deck = game.Deck;
 
             Assert.AreEqual(90, deck.AllCards.Count);
-            Assert.AreEqual(3, deck.AvailableCards.Keys.Count);
+            Assert.AreEqual(3 * Constants.Deck.NumberOfVisibleCards, deck.AvailableCards.Count);
 
-            foreach (var visibleCard in deck.AvailableCards)
+            for (var i = 1; i <= 3; i++)
             {
-                Assert.AreEqual(4, visibleCard.Value.Count);
+                Assert.AreEqual(Constants.Deck.NumberOfVisibleCards, deck.AvailableCards.Count(o => o.Tier == i));
             }
 
             Assert.AreEqual(10, deck.AllAristocrates.Count);
@@ -56,7 +51,8 @@
         [TestMethod]
         public void Deck_CarsdPoints()
         {
-            var deck = new Deck(null, Constants.DeckFilePath, Constants.AristocratesFilePath);
+            var game = this.InitializeGame(2);
+            var deck = game.Deck;
 
             foreach (var color in Enum.GetValues(typeof(Color)).Cast<Color>().Where(c => c != Color.Gold))
             {
@@ -73,12 +69,12 @@
         [TestMethod]
         public void Deck_Aristocrates_Number()
         {
-            var deck = new Deck(null, Constants.DeckFilePath, Constants.AristocratesFilePath);
+            var game = this.InitializeGame(2);
 
-            Assert.AreEqual(10, deck.AllAristocrates.Count);
+            Assert.AreEqual(10, game.Deck.AllAristocrates.Count);
             var sumOfAllCards = new Chips();
 
-            foreach (var aristocrate in deck.AllAristocrates)
+            foreach (var aristocrate in game.Deck.AllAristocrates)
             {
                 Assert.IsNotNull(aristocrate.RequiredCards);
                 sumOfAllCards += aristocrate.RequiredCards;
@@ -95,9 +91,9 @@
         [TestMethod]
         public void Deck_Aristocrates_VictoryPoints()
         {
-            var deck = new Deck(null, Constants.DeckFilePath, Constants.AristocratesFilePath);
+            var game = this.InitializeGame(2);
 
-            foreach (var aristocrate in deck.AllAristocrates)
+            foreach (var aristocrate in game.Deck.AllAristocrates)
             {
                 Assert.AreEqual(3, aristocrate.VictoryPoints);
             }
