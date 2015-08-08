@@ -82,6 +82,16 @@
             this.VerifyThatGameIsActive();
             this.VerifyPlayerEligibleForMove(player);
 
+            if (!this.Deck.AvailableCards.Contains(card) && !this.CurrentPlayer.ReservedCards.Contains(card))
+            {
+                throw new SplendorGamePurchaseCardException(Messages.Error_ThisCardIsUnavailable);
+            }
+
+            if (!card.CanBuy(player.ChipsAndCards))
+            {
+                throw new SplendorGamePurchaseCardException(Messages.Error_PlayerCantAffordCard);
+            }
+
             return true;
         }
 
@@ -157,6 +167,22 @@
         public void PurchaseCard(Player player, Card card)
         {
             this.CanPurchaseCard(player, card);
+
+            this.Deck.AllCards.Remove(card);
+            this.CurrentPlayer.OwnedCards.Add(card);
+
+            var costWithoutMines = CurrentPlayer.Cards;
+            foreach (var costWithoutMine in costWithoutMines.Where(o => o.Value < 0))
+            {
+                costWithoutMine = 0;
+            }
+
+            this.CurrentPlayer.Chips -= card.Cost;
+
+            foreach (var chip in this.CurrentPlayer.Chips)
+            {
+                
+            }
 
             this.PlayerFinished();
         }
@@ -273,4 +299,4 @@
 
         #endregion
     }
-}
+} 

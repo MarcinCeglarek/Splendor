@@ -1,6 +1,7 @@
 ﻿namespace SplendorCommonLibrary.Tests
 {
     using System.Linq;
+    using System.Runtime.CompilerServices;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -362,6 +363,21 @@
         {
             var game = this.InitializeGame(2);
             game.ReserveCard(game.CurrentPlayer, game.Deck.AllCards.Last());
+        }
+
+        [TestMethod]
+        public void Game_PurchaseCard_Normal()
+        {
+            var game = this.InitializeGame(2);
+            var player = game.CurrentPlayer;
+            var card = game.Deck.AvailableCards.First();
+
+            game.CurrentPlayer.Chips += new Chips(4, 4, 4, 4, 4, 0);
+
+            game.PurchaseCard(player, card);
+            Assert.AreEqual(1, player.OwnedCards.Count);
+            Assert.AreEqual(card,player.OwnedCards.Single());
+            Assert.AreEqual(new Chips(4, 4, 4, 4, 4, 0), player.Chips + card.Cost);
         }
     }
 }

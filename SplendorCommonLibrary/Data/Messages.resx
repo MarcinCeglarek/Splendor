@@ -132,6 +132,9 @@
   <data name="Error_MaximumNumberOfReservedCardsReached" xml:space="preserve">
     <value>You're not allowed to reserve more cards</value>
   </data>
+  <data name="Error_PlayerCantAffordCard" xml:space="preserve">
+    <value>You cannot afford this card yet</value>
+  </data>
   <data name="Error_PlayerCantHoldOver10Chips" xml:space="preserve">
     <value>You're not permitted to hold more than 10 chips at a time</value>
   </data>

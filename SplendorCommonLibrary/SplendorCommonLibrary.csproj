@@ -55,6 +55,7 @@
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\Chips.cs" />
     <Compile Include="Models\Deck.cs" />
+    <Compile Include="Models\Exceptions\SplendorGamePurchaseCardException.cs" />
     <Compile Include="Models\Exceptions\SplendorGameReserveActionException.cs" />
     <Compile Include="Models\Exceptions\SplendorGameTakeActionException.cs" />
     <Compile Include="Models\Game.cs" />

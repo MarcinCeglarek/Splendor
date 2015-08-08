@@ -26,19 +26,25 @@
 
         public Chips Chips { get; set; }
 
+        public Chips Cards
+        {
+            get
+            {
+                return new Chips(
+                    this.OwnedCards.Count(o => o.Color == Color.White),
+                    this.OwnedCards.Count(o => o.Color == Color.Blue),
+                    this.OwnedCards.Count(o => o.Color == Color.Green),
+                    this.OwnedCards.Count(o => o.Color == Color.Red),
+                    this.OwnedCards.Count(o => o.Color == Color.Black),
+                    0);
+            }
+        }
+
         public Chips ChipsAndCards
         {
             get
             {
-                var retVal = new Chips
-                                 {
-                                     White = this.Chips.White + this.OwnedCards.Count(o => o.Color == Color.White), 
-                                     Blue = this.Chips.Blue + this.OwnedCards.Count(o => o.Color == Color.Blue), 
-                                     Green = this.Chips.Green + this.OwnedCards.Count(o => o.Color == Color.Green), 
-                                     Red = this.Chips.Red + this.OwnedCards.Count(o => o.Color == Color.Red), 
-                                     Black = this.Chips.Black + this.OwnedCards.Count(o => o.Color == Color.Black), 
-                                     Gold = this.Chips.Gold
-                                 };
+                var retVal = this.Chips + this.Cards;
                 return retVal;
             }
         }

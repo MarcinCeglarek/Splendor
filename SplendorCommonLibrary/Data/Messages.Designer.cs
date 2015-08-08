@@ -106,6 +106,15 @@ namespace SplendorCommonLibrary.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You cannot afford this card yet.
+        /// </summary>
+        internal static string Error_PlayerCantAffordCard {
+            get {
+                return ResourceManager.GetString("Error_PlayerCantAffordCard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You&apos;re not permitted to hold more than 10 chips at a time.
         /// </summary>
         internal static string Error_PlayerCantHoldOver10Chips {
