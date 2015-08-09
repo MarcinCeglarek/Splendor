@@ -156,7 +156,7 @@
                 return this.All(color => color.Value == chips[color.Key]);
             }
 
-            return true;
+            return false;
         }
 
         public override int GetHashCode()

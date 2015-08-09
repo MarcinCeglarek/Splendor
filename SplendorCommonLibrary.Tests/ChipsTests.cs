@@ -8,6 +8,28 @@
     public class ChipsTests
     {
         [TestMethod]
+        public void Chip_EualityTest()
+        {
+            var a1 = new Chips(1, 2, 3, 4, 5, 6);
+            var a2 = new Chips() { White = 1, Blue = 2, Green = 3, Red = 4, Black = 5, Gold = 6 };
+
+            Assert.AreEqual(a1, a2);
+
+            var b1 = new Chips(1, 0, 0, 0, 0, 2);
+            var b2 = new Chips(1, 0, 1, 0, 0, 2);
+
+            Assert.AreNotEqual(b1, b2);
+        }
+
+        [TestMethod]
+        public void Chip_DiffrentObject()
+        {
+            Assert.AreNotEqual(1, new Chips(1, 1, 1, 1, 1, 1));
+            Assert.AreNotEqual(0, new Chips());
+            Assert.AreNotEqual("String", new Chips(2, 2, 2, 2, 2, 2));
+        }
+
+        [TestMethod]
         public void Chip_SettersAndGetters()
         {
             var a = new Chips { Black = 5 };
