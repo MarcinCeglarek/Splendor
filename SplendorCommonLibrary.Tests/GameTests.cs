@@ -130,6 +130,27 @@
         }
 
         [TestMethod]
+        [ExpectedException(typeof(SplendorGameException))]
+        public void Game_Invalid_OnePlayer()
+        {
+            var game = this.InitializeGame(1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SplendorGameException))]
+        public void Game_Invalid_FivePlayer()
+        {
+            var game = this.InitializeGame(5);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SplendorGameException))]
+        public void Game_Invalid_TenPlayer()
+        {
+            var game = this.InitializeGame(10);
+        }
+
+        [TestMethod]
         public void Game_TakeChips_Take3()
         {
             var game = this.InitializeGame(2);
@@ -219,6 +240,29 @@
             var player = game.CurrentPlayer;
 
             game.TakeChips(player, player.Chips + new Chips() { Black = 1, Blue = 1, Red = 1, Green = 1});
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        public void Game_TakeChips_InvalidTakeOver10()
+        {
+            var game = this.InitializeGame(3);
+
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 1, Red = 0, White = 0 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 1, Green = 1, Red = 1, White = 0 });
+            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 0, Green = 1, Red = 1, White = 1 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 0, Green = 0, Red = 1, White = 1 });
+            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 0, Red = 0, White = 1 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 1, Red = 1, White = 0 });
+            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 1, Green = 1, Red = 1, White = 0 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 0, Green = 1, Red = 1, White = 1 });
+            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
         }
 
         [TestMethod]
@@ -372,12 +416,32 @@
             var player = game.CurrentPlayer;
             var card = game.Deck.AvailableCards.First();
 
-            game.CurrentPlayer.Chips += new Chips(4, 4, 4, 4, 4, 0);
+            var amountForPlayer = new Chips(4, 4, 4, 4, 4, 0);
+            game.Bank -= amountForPlayer;
+            game.CurrentPlayer.Chips += amountForPlayer;
 
             game.PurchaseCard(player, card);
             Assert.AreEqual(1, player.OwnedCards.Count);
             Assert.AreEqual(card,player.OwnedCards.Single());
-            Assert.AreEqual(new Chips(4, 4, 4, 4, 4, 0), player.Chips + card.Cost);
+            Assert.AreEqual(amountForPlayer, player.Chips + card.Cost);
+            this.VerityChipsCountIntegrity(game);
+        }
+
+        [TestMethod]
+        public void Game_PurchaseCard_WithGold()
+        {
+            var game = this.InitializeGame(2);
+            var player = game.CurrentPlayer;
+            var card = game.Deck.AvailableCards.First();
+
+            var amountForPlayer = new Chips(1, 0, 1, 0, 1, 4);
+            game.Bank -= amountForPlayer;
+            game.CurrentPlayer.Chips += amountForPlayer;
+
+            game.PurchaseCard(player, card);
+            Assert.AreEqual(1, player.OwnedCards.Count);
+            Assert.AreEqual(card, player.OwnedCards.Single());
+            this.VerityChipsCountIntegrity(game);
         }
 
         [TestMethod]
