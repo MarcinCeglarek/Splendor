@@ -87,10 +87,15 @@
                 throw new SplendorGamePurchaseCardException(Messages.Error_ThisCardIsUnavailable);
             }
 
+            // Two strategies - which one is better
+            // 1
             if (!card.CanBuy(player.ChipsAndCards))
             {
                 throw new SplendorGamePurchaseCardException(Messages.Error_PlayerCantAffordCard);
             }
+
+            // 2
+            var cost = this.CurrentPlayer.GetCardCost(card);
 
             return true;
         }
@@ -169,20 +174,11 @@
             this.CanPurchaseCard(player, card);
 
             this.Deck.AllCards.Remove(card);
+            var cost = this.CurrentPlayer.GetCardCost(card);
+
+            this.CurrentPlayer.Chips -= cost;
+            this.Bank += cost;
             this.CurrentPlayer.OwnedCards.Add(card);
-
-            var costWithoutMines = CurrentPlayer.Cards;
-            foreach (var costWithoutMine in costWithoutMines.Where(o => o.Value < 0))
-            {
-                costWithoutMine = 0;
-            }
-
-            this.CurrentPlayer.Chips -= card.Cost;
-
-            foreach (var chip in this.CurrentPlayer.Chips)
-            {
-                
-            }
 
             this.PlayerFinished();
         }
@@ -299,4 +295,4 @@
 
         #endregion
     }
-} 
+}

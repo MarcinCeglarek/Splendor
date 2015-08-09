@@ -148,6 +148,28 @@
             return result;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType().IsSubclassOf(this.GetType()) || obj.GetType() == this.GetType())
+            {
+                var chips = (Chips)obj;
+                return this.All(color => color.Value == chips[color.Key]);
+            }
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            var hash = 13;
+            foreach (var color in this)
+            {
+                hash = (hash * 9) + color.Value;
+            }
+
+            return hash;
+        }
+
         #endregion
     }
 }

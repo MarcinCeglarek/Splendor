@@ -6,6 +6,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using SplendorCommonLibrary.Models.Exceptions;
+
     #endregion
 
     public class Player
@@ -24,21 +26,21 @@
 
         #region Public Properties
 
-        public Chips Chips { get; set; }
-
         public Chips Cards
         {
             get
             {
                 return new Chips(
-                    this.OwnedCards.Count(o => o.Color == Color.White),
-                    this.OwnedCards.Count(o => o.Color == Color.Blue),
-                    this.OwnedCards.Count(o => o.Color == Color.Green),
-                    this.OwnedCards.Count(o => o.Color == Color.Red),
-                    this.OwnedCards.Count(o => o.Color == Color.Black),
+                    this.OwnedCards.Count(o => o.Color == Color.White), 
+                    this.OwnedCards.Count(o => o.Color == Color.Blue), 
+                    this.OwnedCards.Count(o => o.Color == Color.Green), 
+                    this.OwnedCards.Count(o => o.Color == Color.Red), 
+                    this.OwnedCards.Count(o => o.Color == Color.Black), 
                     0);
             }
         }
+
+        public Chips Chips { get; set; }
 
         public Chips ChipsAndCards
         {
@@ -55,7 +57,7 @@
 
         public string Name { get; set; }
 
-        public List<Card> OwnedCards { get; set; }
+        public IList<Card> OwnedCards { get; set; }
 
         public IList<Card> ReservedCards { get; set; }
 
@@ -74,6 +76,33 @@
         public bool Equals(Player obj)
         {
             return this.Id == obj.Id;
+        }
+
+        public Chips GetCardCost(Card card)
+        {
+            var result = new Chips();
+            var costWithoutMines = card.Cost - this.Cards;
+
+            foreach (var cardChipCost in costWithoutMines.Where(o => o.Value > 0))
+            {
+                if (cardChipCost.Value > this.Chips[cardChipCost.Key])
+                {
+                    var requiredGold = this.Chips[cardChipCost.Key] - cardChipCost.Value;
+                    if (requiredGold > this.Chips[Color.Gold])
+                    {
+                        throw new SplendorPlayerChipsException("Player has insufficient chips to purchace this card");
+                    }
+
+                    result[cardChipCost.Key] = this.Chips[cardChipCost.Key];
+                    result[Color.Gold] += requiredGold;
+                }
+                else
+                {
+                    result[cardChipCost.Key] = cardChipCost.Value;
+                }
+            }
+
+            return result;
         }
 
         #endregion

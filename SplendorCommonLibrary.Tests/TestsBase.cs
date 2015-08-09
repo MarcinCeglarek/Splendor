@@ -34,5 +34,10 @@
 
             Assert.AreEqual(Constants.Game.NumberOfGoldChips, game.Players.Sum(p => p.Chips[Color.Gold]) + game.Bank[Color.Gold]);
         }
+
+        protected Card GetInvalidCard(Game game)
+        {
+            return game.Deck.AllCards.First(card => !game.Deck.AvailableCards.Contains(card));
+        }
     }
 }

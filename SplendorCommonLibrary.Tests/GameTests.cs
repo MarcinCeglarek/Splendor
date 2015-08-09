@@ -379,5 +379,27 @@
             Assert.AreEqual(card,player.OwnedCards.Single());
             Assert.AreEqual(new Chips(4, 4, 4, 4, 4, 0), player.Chips + card.Cost);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(SplendorGamePurchaseCardException))]
+        public void Game_PurchaseCard_Insufficient()
+        {
+            var game = this.InitializeGame(2);
+            var player = game.CurrentPlayer;
+            var card = game.Deck.AvailableCards.First();
+
+            game.PurchaseCard(player, card);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SplendorGamePurchaseCardException))]
+        public void Game_PurchaseCard_InvalidCard()
+        {
+            var game = this.InitializeGame(2);
+            var player = game.CurrentPlayer;
+            var invalidCard = this.GetInvalidCard(game);
+
+            game.PurchaseCard(player, invalidCard);
+        }
     }
 }

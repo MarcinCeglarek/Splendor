@@ -1,16 +1,10 @@
 ﻿namespace SplendorCommonLibrary.Models.Exceptions
 {
-    #region
-
-    using System;
-
-    #endregion
-
-    public class SplendorException : Exception
+    public class SplendorFileNotFoundException : SplendorException
     {
         #region Constructors and Destructors
 
-        public SplendorException(string message)
+        public SplendorFileNotFoundException(string message)
             : base(message)
         {
         }
