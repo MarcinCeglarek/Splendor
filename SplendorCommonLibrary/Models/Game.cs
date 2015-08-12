@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Serialization;
 
     using SplendorCommonLibrary.Data;
     using SplendorCommonLibrary.Helpers;
@@ -13,6 +14,7 @@
 
     #endregion
 
+    [DataContract]
     public class Game : IGameActions
     {
         #region Fields
@@ -35,8 +37,10 @@
 
         #region Public Properties
 
+        [DataMember]
         public Chips Bank { get; set; }
 
+        [DataMember]
         public Player CurrentPlayer
         {
             get
@@ -45,15 +49,20 @@
             }
         }
 
+        [DataMember]
         public Deck Deck { get; set; }
 
+        [DataMember]
         public bool HasFinished { get; private set; }
 
+        [DataMember]
         public bool HasStarted { get; private set; }
 
+        [DataMember]
         public Guid Id { get; private set; }
 
-        public IList<Player> Players { get; set; }
+        [DataMember]
+        public List<Player> Players { get; set; }
 
         public int TotalNumberOfNormalChips
         {
@@ -228,7 +237,7 @@
 
             this.HasStarted = true;
             this.Deck.Initialize();
-            this.Players = this.Players.Shuffle();
+            this.Players = this.Players.Shuffle().ToList();
             this.firstPlayer = this.Players.First();
 
             var chipCount = this.TotalNumberOfNormalChips;

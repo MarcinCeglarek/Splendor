@@ -8,6 +8,8 @@
     {
         Connect,
 
+        StartGame,
+
         GetGameStatus,
 
         TakeChips,

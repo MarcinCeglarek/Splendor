@@ -1,4 +1,4 @@
-﻿namespace SplendorConsoleServer.Models.Abstract
+﻿namespace SplendorConsoleServer.Models
 {
     using SplendorConsoleServer.Models.Enums;
 

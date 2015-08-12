@@ -1,8 +1,8 @@
-﻿namespace SplendorConsoleServer.Models.Abstract
+﻿namespace SplendorConsoleServer.Models
 {
     using System;
 
-    public abstract class GameRequest : Request
+    public class ConnectResponse
     {
         public Guid GameId { get; set; }
 

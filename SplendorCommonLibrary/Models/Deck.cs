@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Runtime.Serialization;
 
     using Newtonsoft.Json;
 
@@ -13,6 +14,7 @@
 
     #endregion
 
+    [DataContract]
     public class Deck
     {
         #region Constants
@@ -67,9 +69,11 @@
             }
         }
 
-        public IList<Aristocrate> AvailableAristocrates { get; private set; }
+        [DataMember]
+        public List<Aristocrate> AvailableAristocrates { get; private set; }
 
-        public ICollection<Card> AvailableCards
+        [DataMember]
+        public List<Card> AvailableCards
         {
             get
             {

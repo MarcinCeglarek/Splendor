@@ -36,5 +36,18 @@
         {
             return this.games.Single(game => game.Id == id);
         }
+
+        public Game GetUnstartedGame()
+        {
+            var unstartedGames = this.games.Where(game => game.HasStarted == false && game.Players.Count < 4).ToArray();
+            if (unstartedGames.Any())
+            {
+                return unstartedGames.First();
+            }
+
+            var newGame = new Game();
+            this.games.Add(newGame);
+            return newGame;
+        }
     }
 }
