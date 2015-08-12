@@ -24,9 +24,7 @@
              * netsh http add urlacl url=http://+:8000/echo user=<username>
              */
             host.Open();
-
-            Console.Read();
-
+            Console.ReadLine();
             host.Close();
         }
 

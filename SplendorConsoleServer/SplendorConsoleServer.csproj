@@ -35,6 +35,10 @@
     <Reference Include="Microsoft.WebSockets">
       <HintPath>..\packages\Microsoft.WebSockets.0.2.3\lib\net45\Microsoft.WebSockets.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
@@ -46,12 +50,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EchoService.cs" />
+    <Compile Include="GameController.cs" />
+    <Compile Include="Models\ConnectRequest.cs" />
+    <Compile Include="Models\Abstract\GameRequest.cs" />
+    <Compile Include="Models\GetCardRequest.cs" />
+    <Compile Include="Models\Enums\MethodType.cs" />
+    <Compile Include="Models\Abstract\Request.cs" />
+    <Compile Include="Models\TakeChipsRequest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SplendorCommonLibrary\SplendorCommonLibrary.csproj">
+      <Project>{D36F7689-E5C6-4628-A9D5-329E955BD2EF}</Project>
+      <Name>SplendorCommonLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

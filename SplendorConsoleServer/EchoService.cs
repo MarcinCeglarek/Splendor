@@ -4,16 +4,34 @@
 
     using Microsoft.ServiceModel.WebSockets;
 
+    using Newtonsoft.Json;
+
+    using SplendorConsoleServer.Models;
+    using SplendorConsoleServer.Models.Abstract;
+    using SplendorConsoleServer.Models.Enums;
+
     public class EchoService : WebSocketService
     {
         #region Public Methods and Operators
 
         public override void OnMessage(string message)
         {
-            Console.WriteLine("Echoing to client:");
-            Console.WriteLine(message);
+            var method = JsonConvert.DeserializeObject<Request>(message).Method;
+
+            switch (method)
+            {
+                case MethodType.Connect:
+                    this.HandleConnectMessage(message);
+                    break;
+            }
 
             this.Send(message);
+        }
+
+        private void HandleConnectMessage(string message)
+        {
+            var connectRequest = JsonConvert.DeserializeObject<ConnectRequest>(message);
+
         }
 
         public override void OnOpen()
