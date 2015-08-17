@@ -1,5 +1,7 @@
 ﻿namespace SplendorCommonLibrary.Tests
 {
+    #region
+
     using System;
     using System.Linq;
 
@@ -8,8 +10,17 @@
     using SplendorCommonLibrary.Data;
     using SplendorCommonLibrary.Models;
 
+    #endregion
+
     public abstract class TestsBase
     {
+        #region Methods
+
+        protected Card GetInvalidCard(Game game)
+        {
+            return game.Deck.AllCards.First(card => !game.Deck.AvailableCards.Contains(card));
+        }
+
         protected Game InitializeGame(int numberOfPlayers = 2)
         {
             var game = new Game();
@@ -29,15 +40,12 @@
         {
             foreach (var color in Enum.GetValues(typeof(Color)).Cast<Color>().Where(o => o != Color.Gold))
             {
-                Assert.AreEqual(game.TotalNumberOfNormalChips, game.Players.Sum(p => p.Chips[color]) + game.Bank[color]); 
+                Assert.AreEqual(game.TotalNumberOfNormalChips, game.Players.Sum(p => p.Chips[color]) + game.Bank[color]);
             }
 
             Assert.AreEqual(Constants.Game.NumberOfGoldChips, game.Players.Sum(p => p.Chips[Color.Gold]) + game.Bank[Color.Gold]);
         }
 
-        protected Card GetInvalidCard(Game game)
-        {
-            return game.Deck.AllCards.First(card => !game.Deck.AvailableCards.Contains(card));
-        }
+        #endregion
     }
 }

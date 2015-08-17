@@ -2,14 +2,18 @@
 {
     public interface IBroadcastMessages
     {
-        void GameStarted();
+        #region Public Methods and Operators
 
-        void GameEnded();
-
-        void ChipsTaken();
+        void CardPurchased();
 
         void CardReserved();
 
-        void CardPurchased();
+        void ChipsTaken();
+
+        void GameEnded();
+
+        void GameStarted();
+
+        #endregion
     }
 }

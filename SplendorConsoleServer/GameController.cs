@@ -1,29 +1,51 @@
 ﻿namespace SplendorConsoleServer
 {
+    #region
+
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using SplendorCommonLibrary.Models;
 
+    #endregion
+
     public class GameController
     {
+        #region Static Fields
+
         private static GameController instance;
 
+        #endregion
+
+        #region Fields
+
         private readonly List<Game> games;
- 
+
+        #endregion
+
+        #region Constructors and Destructors
+
         private GameController()
         {
             this.games = new List<Game>();
         }
 
-        public static GameController Instance 
+        #endregion
+
+        #region Public Properties
+
+        public static GameController Instance
         {
             get
             {
                 return instance ?? (instance = new GameController());
             }
         }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         public Game CreateGame()
         {
@@ -49,5 +71,7 @@
             this.games.Add(newGame);
             return newGame;
         }
+
+        #endregion
     }
 }

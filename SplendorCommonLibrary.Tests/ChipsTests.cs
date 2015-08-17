@@ -1,12 +1,26 @@
 ﻿namespace SplendorCommonLibrary.Tests
 {
+    #region
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using SplendorCommonLibrary.Models;
 
+    #endregion
+
     [TestClass]
     public class ChipsTests
     {
+        #region Public Methods and Operators
+
+        [TestMethod]
+        public void Chip_DiffrentObject()
+        {
+            Assert.AreNotEqual(1, new Chips(1, 1, 1, 1, 1, 1));
+            Assert.AreNotEqual(0, new Chips());
+            Assert.AreNotEqual("String", new Chips(2, 2, 2, 2, 2, 2));
+        }
+
         [TestMethod]
         public void Chip_EualityTest()
         {
@@ -22,36 +36,9 @@
         }
 
         [TestMethod]
-        public void Chip_DiffrentObject()
-        {
-            Assert.AreNotEqual(1, new Chips(1, 1, 1, 1, 1, 1));
-            Assert.AreNotEqual(0, new Chips());
-            Assert.AreNotEqual("String", new Chips(2, 2, 2, 2, 2, 2));
-        }
-
-        [TestMethod]
-        public void Chip_SettersAndGetters()
-        {
-            var a = new Chips { Black = 5 };
-
-            Assert.AreEqual(5, a.Black);
-            Assert.AreEqual(5, a[Color.Black]);
-
-            a.Gold = 2;
-
-            Assert.AreEqual(2, a.Gold);
-            Assert.AreEqual(2, a[Color.Gold]);
-
-            a.Black = 12;
-
-            Assert.AreEqual(12, a.Black, 12);
-            Assert.AreEqual(12, a[Color.Black]);
-        }
-
-        [TestMethod]
         public void Chip_ListsOperatorsAddition()
         {
-            var a = new Chips() { Black = 2, Blue = 2, Green = 2};
+            var a = new Chips() { Black = 2, Blue = 2, Green = 2 };
             var b = new Chips() { Red = 2, White = 2 };
 
             var result = a + b;
@@ -81,7 +68,7 @@
         [TestMethod]
         public void Chip_ListsOperatorsSubstraction()
         {
-            var a = new Chips() { Black = 2, Blue = 2, Red = 2, Green = 2};
+            var a = new Chips() { Black = 2, Blue = 2, Red = 2, Green = 2 };
             var b = new Chips() { Blue = 1, Red = 3, White = 3 };
 
             var result = a - b;
@@ -93,5 +80,26 @@
             Assert.AreEqual(-1, result.Red);
             Assert.AreEqual(-3, result.White);
         }
+
+        [TestMethod]
+        public void Chip_SettersAndGetters()
+        {
+            var a = new Chips { Black = 5 };
+
+            Assert.AreEqual(5, a.Black);
+            Assert.AreEqual(5, a[Color.Black]);
+
+            a.Gold = 2;
+
+            Assert.AreEqual(2, a.Gold);
+            Assert.AreEqual(2, a[Color.Gold]);
+
+            a.Black = 12;
+
+            Assert.AreEqual(12, a.Black, 12);
+            Assert.AreEqual(12, a[Color.Black]);
+        }
+
+        #endregion
     }
 }

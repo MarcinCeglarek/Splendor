@@ -11,7 +11,11 @@
 
     public class Program
     {
-        public static List<EchoService> Clients { get; set; } 
+        #region Public Properties
+
+        public static List<EchoService> Clients { get; set; }
+
+        #endregion
 
         #region Methods
 

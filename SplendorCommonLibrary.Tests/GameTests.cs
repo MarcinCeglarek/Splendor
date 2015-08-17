@@ -1,7 +1,8 @@
 ﻿namespace SplendorCommonLibrary.Tests
 {
+    #region
+
     using System.Linq;
-    using System.Runtime.CompilerServices;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -9,91 +10,12 @@
     using SplendorCommonLibrary.Models;
     using SplendorCommonLibrary.Models.Exceptions;
 
+    #endregion
+
     [TestClass]
     public class GameTests : TestsBase
     {
-        [TestMethod]
-        [ExpectedException(typeof(SplendorGameException))]
-        public void Game_Start_AlreadyStartedException()
-        {
-            var game = this.InitializeGame(2);
-            game.Start();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(SplendorGameException))]
-        public void Game_Start_InsufficientPlayersException()
-        {
-            var game = this.InitializeGame(1);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(SplendorGameException))]
-        public void Game_Start_TooMuchPlayersException()
-        {
-            var game = this.InitializeGame(5);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(SplendorGameException))]
-        public void Game_Start_DeckNotPresentException()
-        {
-            var game = new Game();
-            game.Players.Add(new Player());
-            game.Players.Add(new Player());
-            game.Start();
-        }
-
-        [TestMethod]
-        public void Game_TwoPlayersQueue()
-        {
-            var game = this.InitializeGame(2);
-
-            var firstPlayer = game.CurrentPlayer;
-
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 2 });
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Blue = 2 });
-            Assert.AreEqual(firstPlayer, game.CurrentPlayer);
-
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-            Assert.AreEqual(firstPlayer, game.CurrentPlayer);
-
-            /*game.PurchaseCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.PurchaseCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-            Assert.AreEqual(firstPlayer, game.CurrentPlayer);*/
-        }
-
-        [TestMethod]
-        public void Game_ThreePlayersQueue()
-        {
-            var game = this.InitializeGame(3);
-            var firstPlayer = game.CurrentPlayer;
-
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 2 });
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Blue = 2 });
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Green = 2 });
-            Assert.AreEqual(firstPlayer, game.CurrentPlayer);
-
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-            Assert.AreEqual(firstPlayer, game.CurrentPlayer);
-
-            /*game.PurchaseCard(game.CurrentPlayer, new Card());
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.PurchaseCard(game.CurrentPlayer, new Card());
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.PurchaseCard(game.CurrentPlayer, new Card());
-            Assert.AreEqual(firstPlayer, game.CurrentPlayer);*/
-        }
+        #region Public Methods and Operators
 
         [TestMethod]
         public void Game_FourPlayersQueue()
@@ -131,16 +53,16 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameException))]
-        public void Game_Invalid_OnePlayer()
+        public void Game_Invalid_FivePlayer()
         {
-            var game = this.InitializeGame(1);
+            var game = this.InitializeGame(5);
         }
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameException))]
-        public void Game_Invalid_FivePlayer()
+        public void Game_Invalid_OnePlayer()
         {
-            var game = this.InitializeGame(5);
+            var game = this.InitializeGame(1);
         }
 
         [TestMethod]
@@ -151,194 +73,59 @@
         }
 
         [TestMethod]
-        public void Game_TakeChips_Take3()
+        [ExpectedException(typeof(SplendorGamePurchaseCardException))]
+        public void Game_PurchaseCard_Insufficient()
         {
             var game = this.InitializeGame(2);
             var player = game.CurrentPlayer;
+            var card = game.Deck.AvailableCards.First();
 
-            game.TakeChips(player, player.Chips + new Chips() { Blue = 1, Black = 1, Green = 1 });
-            Assert.AreEqual(1, player.Chips.Blue);
-            Assert.AreEqual(1, player.Chips.Black);
-            Assert.AreEqual(1, player.Chips.Green);
-            Assert.AreEqual(0, player.Chips.Red);
-            Assert.AreEqual(0, player.Chips.White);
-            Assert.AreEqual(0, player.Chips.Gold);
-            this.VerityChipsCountIntegrity(game);
-
-            game.TakeChips(game.CurrentPlayer, new Chips() { Blue = 1, Black = 1, Green = 1 });
-            this.VerityChipsCountIntegrity(game);
-
-            game.TakeChips(player, player.Chips + new Chips() { Red = 1, White = 1, Green = 1 });
-            Assert.AreEqual(1, player.Chips.Black);
-            Assert.AreEqual(1, player.Chips.Blue);
-            Assert.AreEqual(2, player.Chips.Green);
-            Assert.AreEqual(1, player.Chips.Red);
-            Assert.AreEqual(1, player.Chips.White);
-            Assert.AreEqual(0, player.Chips.Gold);
-            this.VerityChipsCountIntegrity(game);
+            game.PurchaseCard(player, card);
         }
 
         [TestMethod]
-        public void Game_TakeChips_Take2()
+        [ExpectedException(typeof(SplendorGamePurchaseCardException))]
+        public void Game_PurchaseCard_InvalidCard()
         {
             var game = this.InitializeGame(2);
             var player = game.CurrentPlayer;
+            var invalidCard = this.GetInvalidCard(game);
 
-            game.TakeChips(player, player.Chips + new Chips() { Blue = 2 });
-            Assert.AreEqual(2, player.Chips.Blue);
-            Assert.AreEqual(0, player.Chips.Black);
-            Assert.AreEqual(0, player.Chips.Green);
-            Assert.AreEqual(0, player.Chips.Red);
-            Assert.AreEqual(0, player.Chips.White);
-            Assert.AreEqual(0, player.Chips.Gold);
-            this.VerityChipsCountIntegrity(game);
-
-            game.TakeChips(game.CurrentPlayer, new Chips() { Red = 2 });
-            this.VerityChipsCountIntegrity(game);
-
-            game.TakeChips(player, player.Chips + new Chips() { Black = 2 });
-            Assert.AreEqual(2, player.Chips.Black);
-            Assert.AreEqual(2, player.Chips.Blue);
-            Assert.AreEqual(0, player.Chips.Green);
-            Assert.AreEqual(0, player.Chips.Red);
-            Assert.AreEqual(0, player.Chips.White);
-            Assert.AreEqual(0, player.Chips.Gold);
-            this.VerityChipsCountIntegrity(game);
+            game.PurchaseCard(player, invalidCard);
         }
 
         [TestMethod]
-        public void Game_TakeChips_Take1()
+        public void Game_PurchaseCard_Normal()
         {
             var game = this.InitializeGame(2);
             var player = game.CurrentPlayer;
+            var card = game.Deck.AvailableCards.First();
 
-            game.TakeChips(player, player.Chips + new Chips() { Blue = 1 });
-            Assert.AreEqual(1, player.Chips.Blue);
-            Assert.AreEqual(0, player.Chips.Black);
-            Assert.AreEqual(0, player.Chips.Green);
-            Assert.AreEqual(0, player.Chips.Red);
-            Assert.AreEqual(0, player.Chips.White);
-            Assert.AreEqual(0, player.Chips.Gold);
+            var amountForPlayer = new Chips(4, 4, 4, 4, 4, 0);
+            game.Bank -= amountForPlayer;
+            game.CurrentPlayer.Chips += amountForPlayer;
+
+            game.PurchaseCard(player, card);
+            Assert.AreEqual(1, player.OwnedCards.Count);
+            Assert.AreEqual(card, player.OwnedCards.Single());
+            Assert.AreEqual(amountForPlayer, player.Chips + card.Cost);
             this.VerityChipsCountIntegrity(game);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_InvalidTake3()
-        {
-            var game = this.InitializeGame(4);
-            var player = game.CurrentPlayer;
-
-            game.TakeChips(player, player.Chips + new Chips() { Blue = 3 });
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_InvalidTake4()
-        {
-            var game = this.InitializeGame(4);
-            var player = game.CurrentPlayer;
-
-            game.TakeChips(player, player.Chips + new Chips() { Black = 1, Blue = 1, Red = 1, Green = 1});
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_InvalidTakeOver10()
-        {
-            var game = this.InitializeGame(3);
-
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 1, Red = 0, White = 0 });
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 1, Green = 1, Red = 1, White = 0 });
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 0, Green = 1, Red = 1, White = 1 });
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 0, Green = 0, Red = 1, White = 1 });
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 0, Red = 0, White = 1 });
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 1, Red = 1, White = 0 });
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 1, Green = 1, Red = 1, White = 0 });
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 0, Green = 1, Red = 1, White = 1 });
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_InvalidTakeGold()
-        {
-            var game = this.InitializeGame(4);
-            var player = game.CurrentPlayer;
-
-            game.TakeChips(player, player.Chips + new Chips() { Black = 1, Green = 1, Gold = 1 });
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_InvalidTakeGold2()
-        {
-            var game = this.InitializeGame(4);
-            var player = game.CurrentPlayer;
-
-            game.TakeChips(player, player.Chips + new Chips() { Gold = 2 });
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_InvalidTakeGold3()
-        {
-            var game = this.InitializeGame(4);
-            var player = game.CurrentPlayer;
-
-            game.TakeChips(player, player.Chips + new Chips() { Gold = 1 });
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_ExhaustBank1()
+        public void Game_PurchaseCard_WithGold()
         {
             var game = this.InitializeGame(2);
             var player = game.CurrentPlayer;
+            var card = game.Deck.AvailableCards.First();
 
-            game.TakeChips(player, player.Chips + new Chips() { Blue = 2 });
-            Assert.AreEqual(2, player.Chips.Blue);
-            Assert.AreEqual(0, player.Chips.Black);
-            Assert.AreEqual(0, player.Chips.Green);
-            Assert.AreEqual(0, player.Chips.Red);
-            Assert.AreEqual(0, player.Chips.White);
-            Assert.AreEqual(0, player.Chips.Gold);
-            this.VerityChipsCountIntegrity(game);
+            var amountForPlayer = new Chips(1, 0, 1, 0, 1, 4);
+            game.Bank -= amountForPlayer;
+            game.CurrentPlayer.Chips += amountForPlayer;
 
-            game.TakeChips(game.CurrentPlayer, new Chips() { Blue = 2 });
-            this.VerityChipsCountIntegrity(game);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_ExhaustBank2()
-        {
-            var game = this.InitializeGame(2);
-            var player = game.CurrentPlayer;
-
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 1, Red = 1});
-            this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 0, Blue = 1, Red = 1, Green = 1});
-            this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 0, Blue = 0, Red = 1, Green = 1, White = 1});
-            this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 0, Red = 0, Green = 1, White = 1 });
-            this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 1, Red = 0, Green = 0, White = 1 });
-            this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 1, Red = 1, Green = 0, White = 0 });
-            this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 0, Blue = 1, Red = 1, Green = 1, White = 0 });
-            this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 0, Blue = 0, Red = 1, Green = 1, White = 1 });
-            this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 0, Red = 0, Green = 1, White = 1 });
+            game.PurchaseCard(player, card);
+            Assert.AreEqual(1, player.OwnedCards.Count);
+            Assert.AreEqual(card, player.OwnedCards.Single());
             this.VerityChipsCountIntegrity(game);
         }
 
@@ -410,60 +197,280 @@
         }
 
         [TestMethod]
-        public void Game_PurchaseCard_Normal()
+        [ExpectedException(typeof(SplendorGameException))]
+        public void Game_Start_AlreadyStartedException()
+        {
+            var game = this.InitializeGame(2);
+            game.Start();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SplendorGameException))]
+        public void Game_Start_DeckNotPresentException()
+        {
+            var game = new Game();
+            game.Players.Add(new Player());
+            game.Players.Add(new Player());
+            game.Start();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SplendorGameException))]
+        public void Game_Start_InsufficientPlayersException()
+        {
+            var game = this.InitializeGame(1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SplendorGameException))]
+        public void Game_Start_TooMuchPlayersException()
+        {
+            var game = this.InitializeGame(5);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        public void Game_TakeChips_ExhaustBank1()
         {
             var game = this.InitializeGame(2);
             var player = game.CurrentPlayer;
-            var card = game.Deck.AvailableCards.First();
 
-            var amountForPlayer = new Chips(4, 4, 4, 4, 4, 0);
-            game.Bank -= amountForPlayer;
-            game.CurrentPlayer.Chips += amountForPlayer;
+            game.TakeChips(player, player.Chips + new Chips() { Blue = 2 });
+            Assert.AreEqual(2, player.Chips.Blue);
+            Assert.AreEqual(0, player.Chips.Black);
+            Assert.AreEqual(0, player.Chips.Green);
+            Assert.AreEqual(0, player.Chips.Red);
+            Assert.AreEqual(0, player.Chips.White);
+            Assert.AreEqual(0, player.Chips.Gold);
+            this.VerityChipsCountIntegrity(game);
 
-            game.PurchaseCard(player, card);
-            Assert.AreEqual(1, player.OwnedCards.Count);
-            Assert.AreEqual(card,player.OwnedCards.Single());
-            Assert.AreEqual(amountForPlayer, player.Chips + card.Cost);
+            game.TakeChips(game.CurrentPlayer, new Chips() { Blue = 2 });
             this.VerityChipsCountIntegrity(game);
         }
 
         [TestMethod]
-        public void Game_PurchaseCard_WithGold()
+        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        public void Game_TakeChips_ExhaustBank2()
         {
             var game = this.InitializeGame(2);
             var player = game.CurrentPlayer;
-            var card = game.Deck.AvailableCards.First();
 
-            var amountForPlayer = new Chips(1, 0, 1, 0, 1, 4);
-            game.Bank -= amountForPlayer;
-            game.CurrentPlayer.Chips += amountForPlayer;
-
-            game.PurchaseCard(player, card);
-            Assert.AreEqual(1, player.OwnedCards.Count);
-            Assert.AreEqual(card, player.OwnedCards.Single());
+            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 1, Red = 1 });
+            this.VerityChipsCountIntegrity(game);
+            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 0, Blue = 1, Red = 1, Green = 1 });
+            this.VerityChipsCountIntegrity(game);
+            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 0, Blue = 0, Red = 1, Green = 1, White = 1 });
+            this.VerityChipsCountIntegrity(game);
+            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 0, Red = 0, Green = 1, White = 1 });
+            this.VerityChipsCountIntegrity(game);
+            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 1, Red = 0, Green = 0, White = 1 });
+            this.VerityChipsCountIntegrity(game);
+            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 1, Red = 1, Green = 0, White = 0 });
+            this.VerityChipsCountIntegrity(game);
+            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 0, Blue = 1, Red = 1, Green = 1, White = 0 });
+            this.VerityChipsCountIntegrity(game);
+            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 0, Blue = 0, Red = 1, Green = 1, White = 1 });
+            this.VerityChipsCountIntegrity(game);
+            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 0, Red = 0, Green = 1, White = 1 });
             this.VerityChipsCountIntegrity(game);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGamePurchaseCardException))]
-        public void Game_PurchaseCard_Insufficient()
+        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        public void Game_TakeChips_InvalidTake3()
         {
-            var game = this.InitializeGame(2);
+            var game = this.InitializeGame(4);
             var player = game.CurrentPlayer;
-            var card = game.Deck.AvailableCards.First();
 
-            game.PurchaseCard(player, card);
+            game.TakeChips(player, player.Chips + new Chips() { Blue = 3 });
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGamePurchaseCardException))]
-        public void Game_PurchaseCard_InvalidCard()
+        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        public void Game_TakeChips_InvalidTake4()
+        {
+            var game = this.InitializeGame(4);
+            var player = game.CurrentPlayer;
+
+            game.TakeChips(player, player.Chips + new Chips() { Black = 1, Blue = 1, Red = 1, Green = 1 });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        public void Game_TakeChips_InvalidTakeGold()
+        {
+            var game = this.InitializeGame(4);
+            var player = game.CurrentPlayer;
+
+            game.TakeChips(player, player.Chips + new Chips() { Black = 1, Green = 1, Gold = 1 });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        public void Game_TakeChips_InvalidTakeGold2()
+        {
+            var game = this.InitializeGame(4);
+            var player = game.CurrentPlayer;
+
+            game.TakeChips(player, player.Chips + new Chips() { Gold = 2 });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        public void Game_TakeChips_InvalidTakeGold3()
+        {
+            var game = this.InitializeGame(4);
+            var player = game.CurrentPlayer;
+
+            game.TakeChips(player, player.Chips + new Chips() { Gold = 1 });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        public void Game_TakeChips_InvalidTakeOver10()
+        {
+            var game = this.InitializeGame(3);
+
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 1, Red = 0, White = 0 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 1, Green = 1, Red = 1, White = 0 });
+            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 0, Green = 1, Red = 1, White = 1 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 0, Green = 0, Red = 1, White = 1 });
+            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 0, Red = 0, White = 1 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 1, Red = 1, White = 0 });
+            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 1, Green = 1, Red = 1, White = 0 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 0, Green = 1, Red = 1, White = 1 });
+            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+        }
+
+        [TestMethod]
+        public void Game_TakeChips_Take1()
         {
             var game = this.InitializeGame(2);
             var player = game.CurrentPlayer;
-            var invalidCard = this.GetInvalidCard(game);
 
-            game.PurchaseCard(player, invalidCard);
+            game.TakeChips(player, player.Chips + new Chips() { Blue = 1 });
+            Assert.AreEqual(1, player.Chips.Blue);
+            Assert.AreEqual(0, player.Chips.Black);
+            Assert.AreEqual(0, player.Chips.Green);
+            Assert.AreEqual(0, player.Chips.Red);
+            Assert.AreEqual(0, player.Chips.White);
+            Assert.AreEqual(0, player.Chips.Gold);
+            this.VerityChipsCountIntegrity(game);
         }
+
+        [TestMethod]
+        public void Game_TakeChips_Take2()
+        {
+            var game = this.InitializeGame(2);
+            var player = game.CurrentPlayer;
+
+            game.TakeChips(player, player.Chips + new Chips() { Blue = 2 });
+            Assert.AreEqual(2, player.Chips.Blue);
+            Assert.AreEqual(0, player.Chips.Black);
+            Assert.AreEqual(0, player.Chips.Green);
+            Assert.AreEqual(0, player.Chips.Red);
+            Assert.AreEqual(0, player.Chips.White);
+            Assert.AreEqual(0, player.Chips.Gold);
+            this.VerityChipsCountIntegrity(game);
+
+            game.TakeChips(game.CurrentPlayer, new Chips() { Red = 2 });
+            this.VerityChipsCountIntegrity(game);
+
+            game.TakeChips(player, player.Chips + new Chips() { Black = 2 });
+            Assert.AreEqual(2, player.Chips.Black);
+            Assert.AreEqual(2, player.Chips.Blue);
+            Assert.AreEqual(0, player.Chips.Green);
+            Assert.AreEqual(0, player.Chips.Red);
+            Assert.AreEqual(0, player.Chips.White);
+            Assert.AreEqual(0, player.Chips.Gold);
+            this.VerityChipsCountIntegrity(game);
+        }
+
+        [TestMethod]
+        public void Game_TakeChips_Take3()
+        {
+            var game = this.InitializeGame(2);
+            var player = game.CurrentPlayer;
+
+            game.TakeChips(player, player.Chips + new Chips() { Blue = 1, Black = 1, Green = 1 });
+            Assert.AreEqual(1, player.Chips.Blue);
+            Assert.AreEqual(1, player.Chips.Black);
+            Assert.AreEqual(1, player.Chips.Green);
+            Assert.AreEqual(0, player.Chips.Red);
+            Assert.AreEqual(0, player.Chips.White);
+            Assert.AreEqual(0, player.Chips.Gold);
+            this.VerityChipsCountIntegrity(game);
+
+            game.TakeChips(game.CurrentPlayer, new Chips() { Blue = 1, Black = 1, Green = 1 });
+            this.VerityChipsCountIntegrity(game);
+
+            game.TakeChips(player, player.Chips + new Chips() { Red = 1, White = 1, Green = 1 });
+            Assert.AreEqual(1, player.Chips.Black);
+            Assert.AreEqual(1, player.Chips.Blue);
+            Assert.AreEqual(2, player.Chips.Green);
+            Assert.AreEqual(1, player.Chips.Red);
+            Assert.AreEqual(1, player.Chips.White);
+            Assert.AreEqual(0, player.Chips.Gold);
+            this.VerityChipsCountIntegrity(game);
+        }
+
+        [TestMethod]
+        public void Game_ThreePlayersQueue()
+        {
+            var game = this.InitializeGame(3);
+            var firstPlayer = game.CurrentPlayer;
+
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 2 });
+            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Blue = 2 });
+            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Green = 2 });
+            Assert.AreEqual(firstPlayer, game.CurrentPlayer);
+
+            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
+            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
+            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            Assert.AreEqual(firstPlayer, game.CurrentPlayer);
+
+            /*game.PurchaseCard(game.CurrentPlayer, new Card());
+            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
+            game.PurchaseCard(game.CurrentPlayer, new Card());
+            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
+            game.PurchaseCard(game.CurrentPlayer, new Card());
+            Assert.AreEqual(firstPlayer, game.CurrentPlayer);*/
+        }
+
+        [TestMethod]
+        public void Game_TwoPlayersQueue()
+        {
+            var game = this.InitializeGame(2);
+
+            var firstPlayer = game.CurrentPlayer;
+
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 2 });
+            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Blue = 2 });
+            Assert.AreEqual(firstPlayer, game.CurrentPlayer);
+
+            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
+            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            Assert.AreEqual(firstPlayer, game.CurrentPlayer);
+
+            /*game.PurchaseCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
+            game.PurchaseCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            Assert.AreEqual(firstPlayer, game.CurrentPlayer);*/
+        }
+
+        #endregion
     }
 }
