@@ -19,6 +19,8 @@
     {
         #region Fields
 
+        private readonly List<IBroadcastMessages> subscribers;
+
         private Player firstPlayer;
 
         #endregion
@@ -29,6 +31,7 @@
         {
             this.Id = Guid.NewGuid();
             this.Players = new List<Player>();
+            this.subscribers = new List<IBroadcastMessages>();
             this.HasStarted = false;
             this.HasFinished = false;
         }
@@ -190,6 +193,7 @@
             this.CurrentPlayer.OwnedCards.Add(card);
 
             this.PlayerFinished();
+            this.subscribers.ForEach(subscriber => subscriber.CardPurchased());
         }
 
         public void ReserveCard(Player player, Card card)
@@ -206,6 +210,7 @@
             }
 
             this.PlayerFinished();
+            this.subscribers.ForEach(subscriber => subscriber.CardReserved());
         }
 
         public void Start()
@@ -242,6 +247,13 @@
 
             var chipCount = this.TotalNumberOfNormalChips;
             this.Bank = new Chips() { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = Constants.Game.NumberOfGoldChips };
+
+            this.subscribers.ForEach(subscriber => subscriber.GameStarted());
+        }
+
+        public void Subscribe(IBroadcastMessages subscriber)
+        {
+            this.subscribers.Add(subscriber);
         }
 
         public void TakeChips(Player player, Chips chips)
@@ -253,6 +265,12 @@
             this.CurrentPlayer.Chips += diff;
 
             this.PlayerFinished();
+            this.subscribers.ForEach(subscriber => subscriber.ChipsTaken());
+        }
+
+        public void Unsubscribe(IBroadcastMessages subscriber)
+        {
+            this.subscribers.Remove(subscriber);
         }
 
         #endregion
@@ -270,6 +288,7 @@
         private void GameEnded()
         {
             this.HasFinished = true;
+            this.subscribers.ForEach(subscriber => subscriber.GameEnded());
         }
 
         private void PlayerFinished()

@@ -68,6 +68,8 @@
     </Compile>
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\Enums\ResponseType.cs" />
+    <Compile Include="Models\Exceptions\SplendorServiceException.cs" />
+    <Compile Include="Models\Exceptions\SplendorServiceInvalidRequestException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

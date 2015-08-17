@@ -49,6 +49,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IBroadcastMessages.cs" />
     <Compile Include="Models\Aristocrate.cs" />
     <Compile Include="Helpers\CardCostConverter.cs" />
     <Compile Include="Models\Card.cs" />

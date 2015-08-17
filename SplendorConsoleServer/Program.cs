@@ -3,6 +3,7 @@
     #region
 
     using System;
+    using System.Collections.Generic;
 
     using Microsoft.ServiceModel.WebSockets;
 
@@ -10,9 +11,11 @@
 
     public class Program
     {
+        public static List<EchoService> Clients { get; set; } 
+
         #region Methods
 
-        private static void Main(string[] args)
+        private static void Main()
         {
             var host = new WebSocketHost<EchoService>(new Uri("ws://localhost:8000/echo"));
             host.AddWebSocketEndpoint();
