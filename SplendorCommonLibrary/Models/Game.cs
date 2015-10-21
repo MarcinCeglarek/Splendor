@@ -32,6 +32,8 @@
             this.Id = Guid.NewGuid();
             this.Players = new List<Player>();
             this.subscribers = new List<IBroadcastMessages>();
+            this.Chat = new List<ChatEntry>();
+            this.History = new List<HistoryEntry>();
             this.HasStarted = false;
             this.HasFinished = false;
         }
@@ -42,6 +44,9 @@
 
         [DataMember]
         public Chips Bank { get; set; }
+
+        [DataMember]
+        public List<ChatEntry> Chat { get; set; }
 
         [DataMember]
         public Player CurrentPlayer
@@ -60,6 +65,9 @@
 
         [DataMember]
         public bool HasStarted { get; private set; }
+
+        [DataMember]
+        public List<HistoryEntry> History { get; set; }
 
         [DataMember]
         public Guid Id { get; private set; }
@@ -181,6 +189,20 @@
             return true;
         }
 
+        public void ChatMessage(Player player, string message)
+        {
+            if (this.Players.Contains(player))
+            {
+                var entry = new ChatEntry(player, message);
+                this.Chat.Add(entry);
+                this.subscribers.ForEach(subscriber => subscriber.ChatMessage(entry));
+            }
+            else
+            {
+                throw new SplendorGameException("Player not found");
+            }
+        }
+
         public void PurchaseCard(Player player, Card card)
         {
             this.CanPurchaseCard(player, card);
@@ -193,7 +215,7 @@
             this.CurrentPlayer.OwnedCards.Add(card);
 
             this.PlayerFinished();
-            this.subscribers.ForEach(subscriber => subscriber.CardPurchased());
+            this.subscribers.ForEach(subscriber => subscriber.CardPurchased(this));
         }
 
         public void ReserveCard(Player player, Card card)
@@ -210,7 +232,7 @@
             }
 
             this.PlayerFinished();
-            this.subscribers.ForEach(subscriber => subscriber.CardReserved());
+            this.subscribers.ForEach(subscriber => subscriber.CardReserved(this));
         }
 
         public void Start()
@@ -248,7 +270,7 @@
             var chipCount = this.TotalNumberOfNormalChips;
             this.Bank = new Chips() { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = Constants.Game.NumberOfGoldChips };
 
-            this.subscribers.ForEach(subscriber => subscriber.GameStarted());
+            this.subscribers.ForEach(subscriber => subscriber.GameStarted(this));
         }
 
         public void Subscribe(IBroadcastMessages subscriber)
@@ -265,7 +287,7 @@
             this.CurrentPlayer.Chips += diff;
 
             this.PlayerFinished();
-            this.subscribers.ForEach(subscriber => subscriber.ChipsTaken());
+            this.subscribers.ForEach(subscriber => subscriber.ChipsTaken(this));
         }
 
         public void Unsubscribe(IBroadcastMessages subscriber)
@@ -288,7 +310,7 @@
         private void GameEnded()
         {
             this.HasFinished = true;
-            this.subscribers.ForEach(subscriber => subscriber.GameEnded());
+            this.subscribers.ForEach(subscriber => subscriber.GameEnded(this));
         }
 
         private void PlayerFinished()

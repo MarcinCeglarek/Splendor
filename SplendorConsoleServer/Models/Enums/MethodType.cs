@@ -10,6 +10,8 @@
     [JsonConverter(typeof(StringEnumConverter))]
     public enum MethodType
     {
+        Invalid, 
+
         Connect, 
 
         StartGame, 
@@ -20,6 +22,8 @@
 
         ReserveCard, 
 
-        PurchaseCard
+        PurchaseCard, 
+
+        ChatMessage
     }
 }

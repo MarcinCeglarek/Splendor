@@ -35,6 +35,7 @@
         public EchoService()
         {
             Program.Clients.Add(this);
+            this.Log("Client added");
         }
 
         #endregion
@@ -61,33 +62,46 @@
 
         #region Public Methods and Operators
 
-        public void CardPurchased()
+        public void CardPurchased(Game game)
         {
+            this.Log("CardPurchased");
+
             throw new NotImplementedException();
         }
 
-        public void CardReserved()
+        public void CardReserved(Game game)
         {
+            this.Log("CardRserverd");
             throw new NotImplementedException();
         }
 
-        public void ChipsTaken()
+        public void ChatMessage(ChatEntry chatEntry)
         {
+            this.Log("ChatMessage");
+            this.SendObject(chatEntry);
+        }
+
+        public void ChipsTaken(Game game)
+        {
+            this.Log("ChipsTaken");
             throw new NotImplementedException();
         }
 
-        public void GameEnded()
+        public void GameEnded(Game game)
         {
+            this.Log("GameEnded");
             throw new NotImplementedException();
         }
 
-        public void GameStarted()
+        public void GameStarted(Game game)
         {
+            this.Log("GameStarted");
             throw new NotImplementedException();
         }
 
         public override void OnMessage(string message)
         {
+            this.Log("OnMessage:" + message);
             var method = JsonConvert.DeserializeObject<Request>(message).Method;
 
             switch (method)
@@ -110,9 +124,12 @@
                 case MethodType.TakeChips:
                     this.HandleTakeChips(message);
                     break;
+                case MethodType.ChatMessage:
+                    this.HandleChatMessage(message);
+                    break;
+                default:
+                    throw new Exception("Invalid message");
             }
-
-            this.Send(message);
         }
 
         public override void OnOpen()
@@ -173,6 +190,14 @@
             this.game.Subscribe(this);
         }
 
+        private void HandleChatMessage(string message)
+        {
+            var request = JsonConvert.DeserializeObject<ChatMessage>(message);
+            this.ValidateRequest(request);
+
+            this.game.ChatMessage(this.player, request.Message);
+        }
+
         private void HandleConnectMessage(string message)
         {
             this.Log("HandleConnect Request: " + message);
@@ -181,9 +206,7 @@
             this.GetGameFromRequest(request);
 
             var response = new ConnectResponse() { GameId = this.game.Id, UserId = this.player.Id };
-            var responseJson = JsonConvert.SerializeObject(response);
-            this.Log("HandleConnect Response: " + responseJson);
-            this.Send(responseJson);
+            this.SendObject(response);
         }
 
         private void HandleGetGameStatus(string message)
@@ -243,11 +266,23 @@
             Console.WriteLine(message);
         }
 
+        private void SendObject(object objectToSend)
+        {
+            var responseJson = JsonConvert.SerializeObject(objectToSend);
+            this.Log("Sending: " + responseJson);
+            this.Send(responseJson);
+        }
+
         private void ValidateRequest(GameRequest request)
         {
             if (this.GameId != request.GameId)
             {
-                throw new SplendorServiceInvalidRequestException();
+                throw new SplendorServiceInvalidRequestException("Invalid game");
+            }
+
+            if (this.game.CurrentPlayer.Id != request.UserId)
+            {
+                throw new SplendorServiceInvalidRequestException("Invalid user");
             }
         }
 

@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="EchoService.cs" />
     <Compile Include="GameController.cs" />
+    <Compile Include="Models\ChatMessage.cs" />
     <Compile Include="Models\ConnectRequest.cs" />
     <Compile Include="Models\ConnectResponse.cs" />
     <Compile Include="Models\GameRequest.cs" />

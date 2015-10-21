@@ -1,18 +1,26 @@
 ﻿namespace SplendorCommonLibrary.Interfaces
 {
+    #region
+
+    using SplendorCommonLibrary.Models;
+
+    #endregion
+
     public interface IBroadcastMessages
     {
         #region Public Methods and Operators
 
-        void CardPurchased();
+        void CardPurchased(Game game);
 
-        void CardReserved();
+        void CardReserved(Game game);
 
-        void ChipsTaken();
+        void ChatMessage(ChatEntry chatEntry);
 
-        void GameEnded();
+        void ChipsTaken(Game game);
 
-        void GameStarted();
+        void GameEnded(Game game);
+
+        void GameStarted(Game game);
 
         #endregion
     }

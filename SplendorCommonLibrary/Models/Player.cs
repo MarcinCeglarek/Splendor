@@ -5,11 +5,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Serialization;
 
     using SplendorCommonLibrary.Models.Exceptions;
 
     #endregion
 
+    [DataContract]
     public class Player
     {
         #region Constructors and Destructors
@@ -55,12 +57,14 @@
 
         public Guid Id { get; private set; }
 
+        [DataMember]
         public string Name { get; set; }
 
         public IList<Card> OwnedCards { get; set; }
 
         public IList<Card> ReservedCards { get; set; }
 
+        [DataMember]
         public int VictoryPoints
         {
             get

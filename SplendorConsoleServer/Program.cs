@@ -21,7 +21,10 @@
 
         private static void Main()
         {
-            var host = new WebSocketHost<EchoService>(new Uri("ws://localhost:8000/echo"));
+            const string Uri = "ws://localhost:8000/echo";
+
+            Clients = new List<EchoService>();
+            var host = new WebSocketHost<EchoService>(new Uri(Uri));
             host.AddWebSocketEndpoint();
 
             /*
