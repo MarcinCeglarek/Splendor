@@ -19,7 +19,7 @@
         #region Public Methods and Operators
 
         [TestMethod]
-        public void Deck_Aristocrates_Number()
+        public void AristocratesNumber()
         {
             var game = this.InitializeGame(2);
 
@@ -41,7 +41,7 @@
         }
 
         [TestMethod]
-        public void Deck_Aristocrates_VictoryPoints()
+        public void AristocratesVictoryPoints()
         {
             var game = this.InitializeGame(2);
 
@@ -52,7 +52,7 @@
         }
 
         [TestMethod]
-        public void Deck_CardsNumber()
+        public void CardsNumber()
         {
             var game = this.InitializeGame(2);
             var deck = game.Deck;
@@ -81,7 +81,7 @@
         }
 
         [TestMethod]
-        public void Deck_CarsdPoints()
+        public void CarsdPoints()
         {
             var game = this.InitializeGame(2);
             var deck = game.Deck;
@@ -100,7 +100,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorFileNotFoundException))]
-        public void Deck_Exception()
+        public void Exception()
         {
             var deck = new Deck(null, string.Empty, string.Empty);
         }

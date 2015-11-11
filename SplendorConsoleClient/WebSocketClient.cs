@@ -87,7 +87,7 @@ namespace SplendorConsoleClient
             }
         }
 
-        private static async Task Receive(ClientWebSocket webSocket)
+        public static async Task Receive(ClientWebSocket webSocket)
         {
             var buffer = new byte[ReceiveChunkSize];
             while (webSocket.State == WebSocketState.Open)
@@ -104,7 +104,7 @@ namespace SplendorConsoleClient
             }
         }
 
-        private static async Task Send(ClientWebSocket webSocket, string message)
+        public static async Task Send(ClientWebSocket webSocket, string message)
         {
             var buffer = Encoder.GetBytes(message);
             await webSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);

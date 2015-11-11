@@ -20,9 +20,11 @@
 
     #endregion
 
-    public class EchoService : WebSocketService, IBroadcastMessages
+    public class SplendorService : WebSocketService, IBroadcastMessages
     {
         #region Fields
+
+        private readonly Logger log;
 
         private Game game;
 
@@ -32,10 +34,11 @@
 
         #region Constructors and Destructors
 
-        public EchoService()
+        public SplendorService()
         {
             Program.Clients.Add(this);
-            this.Log("Client added");
+            this.log = new Logger();
+            this.log.Message("Client added");
         }
 
         #endregion
@@ -64,78 +67,95 @@
 
         public void CardPurchased(Game game)
         {
-            this.Log("CardPurchased");
+            this.log.Message("CardPurchased");
 
             throw new NotImplementedException();
         }
 
         public void CardReserved(Game game)
         {
-            this.Log("CardRserverd");
+            this.log.Message("CardRserverd");
             throw new NotImplementedException();
         }
 
         public void ChatMessage(ChatEntry chatEntry)
         {
-            this.Log("ChatMessage");
+            this.log.Message("ChatMessage");
             this.SendObject(chatEntry);
         }
 
         public void ChipsTaken(Game game)
         {
-            this.Log("ChipsTaken");
+            this.log.Message("ChipsTaken");
             throw new NotImplementedException();
         }
 
         public void GameEnded(Game game)
         {
-            this.Log("GameEnded");
+            this.log.Message("GameEnded");
             throw new NotImplementedException();
         }
 
         public void GameStarted(Game game)
         {
-            this.Log("GameStarted");
+            this.log.Message("GameStarted");
             throw new NotImplementedException();
         }
 
         public override void OnMessage(string message)
         {
-            this.Log("OnMessage:" + message);
-            var method = JsonConvert.DeserializeObject<Request>(message).Method;
-
-            switch (method)
+            this.log.Message("OnMessage:" + message);
+            MethodType method;
+            try
             {
-                case MethodType.Connect:
-                    this.HandleConnectMessage(message);
-                    break;
-                case MethodType.StartGame:
-                    this.HandleStartGame(message);
-                    break;
-                case MethodType.GetGameStatus:
-                    this.HandleGetGameStatus(message);
-                    break;
-                case MethodType.PurchaseCard:
-                    this.HandlePurchaseCard(message);
-                    break;
-                case MethodType.ReserveCard:
-                    this.HandleReserveCard(message);
-                    break;
-                case MethodType.TakeChips:
-                    this.HandleTakeChips(message);
-                    break;
-                case MethodType.ChatMessage:
-                    this.HandleChatMessage(message);
-                    break;
-                default:
-                    throw new Exception("Invalid message");
+                method = JsonConvert.DeserializeObject<Request>(message).Method;
+            }
+            catch (JsonSerializationException e)
+            {
+                this.log.Error(e.Message);
+                return;
+            }
+
+            try
+            {
+                switch (method)
+                {
+                    case MethodType.Connect:
+                        this.HandleConnectMessage(message);
+                        break;
+                    case MethodType.StartGame:
+                        this.HandleStartGame(message);
+                        break;
+                    case MethodType.GetGameStatus:
+                        this.HandleGetGameStatus(message);
+                        break;
+                    case MethodType.PurchaseCard:
+                        this.HandlePurchaseCard(message);
+                        break;
+                    case MethodType.ReserveCard:
+                        this.HandleReserveCard(message);
+                        break;
+                    case MethodType.TakeChips:
+                        this.HandleTakeChips(message);
+                        break;
+                    case MethodType.ChatMessage:
+                        this.HandleChatMessage(message);
+                        break;
+                    default:
+                        this.HandleInvalidMessage(message);
+                        break;
+                }
+            }
+            catch (SplendorServiceException e)
+            {
+                this.log.Error(e.Message);
             }
         }
 
         public override void OnOpen()
         {
             base.OnOpen();
-            this.Log("Socket opened");
+            this.log.Message("Socket opened");
         }
 
         #endregion
@@ -160,12 +180,12 @@
         protected override void OnClose()
         {
             base.OnClose();
-            this.Log("Socket closed");
+            this.log.Message("Socket closed");
         }
 
         protected override void OnError()
         {
-            this.Log("Socket error occured.");
+            this.log.Message("Socket error occured.");
             base.OnError();
         }
 
@@ -200,7 +220,7 @@
 
         private void HandleConnectMessage(string message)
         {
-            this.Log("HandleConnect Request: " + message);
+            this.log.Message("HandleConnect Request: " + message);
             var request = JsonConvert.DeserializeObject<ConnectRequest>(message);
 
             this.GetGameFromRequest(request);
@@ -215,6 +235,12 @@
             this.ValidateRequest(request);
 
             throw new NotImplementedException();
+        }
+
+        private void HandleInvalidMessage(string message)
+        {
+            this.log.Message("HandleInvalidMessage");
+            this.Send("Invalid message");
         }
 
         private void HandlePurchaseCard(string message)
@@ -235,20 +261,20 @@
 
         private void HandleStartGame(string message)
         {
-            this.Log("HandleStartGame Request: " + message);
+            this.log.Message("HandleStartGame Request: " + message);
             var request = JsonConvert.DeserializeObject<GameRequest>(message);
 
             try
             {
                 this.game.Start();
                 var response = JsonConvert.SerializeObject(new Response() { Type = ResponseType.Ok, Message = Messages.GameStarted });
-                this.Log("HandleStartGame Response: " + response);
+                this.log.Message("HandleStartGame Response: " + response);
                 this.Send(response);
             }
             catch (SplendorGameException exception)
             {
                 var response = JsonConvert.SerializeObject(new Response() { Type = ResponseType.Error, Message = exception.Message });
-                this.Log("HandleStartGame Response: " + response);
+                this.log.Message("HandleStartGame Response: " + response);
                 this.Send(response);
             }
         }
@@ -261,15 +287,10 @@
             throw new NotImplementedException();
         }
 
-        private void Log(string message)
-        {
-            Console.WriteLine(message);
-        }
-
         private void SendObject(object objectToSend)
         {
             var responseJson = JsonConvert.SerializeObject(objectToSend);
-            this.Log("Sending: " + responseJson);
+            this.log.Debug("Sending: " + responseJson);
             this.Send(responseJson);
         }
 
@@ -277,12 +298,16 @@
         {
             if (this.GameId != request.GameId)
             {
-                throw new SplendorServiceInvalidRequestException("Invalid game");
+                var message = "Invalid game ID: " + request.GameId;
+                this.Send(message);
+                throw new SplendorServiceInvalidRequestException(message);
             }
 
             if (this.game.CurrentPlayer.Id != request.UserId)
             {
-                throw new SplendorServiceInvalidRequestException("Invalid user");
+                var message = "Invalid user ID: " + request.UserId;
+                this.Send(message);
+                throw new SplendorServiceInvalidRequestException(message);
             }
         }
 

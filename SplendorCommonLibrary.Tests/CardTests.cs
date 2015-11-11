@@ -14,7 +14,7 @@
         #region Public Methods and Operators
 
         [TestMethod]
-        public void Card_CanBuy_NegativeTest()
+        public void CanBuyNegativeTest()
         {
             var card = new Card() { Color = Color.White, Cost = new Chips() { Black = 2, Blue = 2, Green = 2, Red = 2, White = 2 } };
 
@@ -44,7 +44,7 @@
         }
 
         [TestMethod]
-        public void Card_CanBuy_NormalTest()
+        public void CanBuyNormalTest()
         {
             var card = new Card() { Color = Color.White, Cost = new Chips() { Black = 2, Blue = 2, Green = 2, Red = 2, White = 2 } };
 
@@ -58,7 +58,7 @@
         }
 
         [TestMethod]
-        public void Card_CanBuy_UseGoldTest()
+        public void CanBuyUseGoldTest()
         {
             var card = new Card() { Color = Color.White, Cost = new Chips() { Black = 2, Blue = 2, Green = 2, Red = 2, White = 2 } };
 

@@ -18,7 +18,7 @@
         #region Public Methods and Operators
 
         [TestMethod]
-        public void Game_FourPlayersQueue()
+        public void FourPlayersQueue()
         {
             var game = this.InitializeGame(4);
             var firstPlayer = game.CurrentPlayer;
@@ -53,30 +53,30 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameException))]
-        public void Game_Invalid_FivePlayer()
+        public void InvalidFivePlayer()
         {
-            var game = this.InitializeGame(5);
+            this.InitializeGame(5);
         }
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameException))]
-        public void Game_Invalid_OnePlayer()
+        public void InvalidOnePlayer()
         {
-            var game = this.InitializeGame(1);
+            this.InitializeGame(1);
         }
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameException))]
-        public void Game_Invalid_TenPlayer()
+        public void InvalidTenPlayers()
         {
-            var game = this.InitializeGame(10);
+            this.InitializeGame(10);
         }
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGamePurchaseCardException))]
-        public void Game_PurchaseCard_Insufficient()
+        public void PurchaseCardInsufficient()
         {
-            var game = this.InitializeGame(2);
+            var game = this.InitializeGame();
             var player = game.CurrentPlayer;
             var card = game.Deck.AvailableCards.First();
 
@@ -85,9 +85,9 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGamePurchaseCardException))]
-        public void Game_PurchaseCard_InvalidCard()
+        public void PurchaseCardInvalidCard()
         {
-            var game = this.InitializeGame(2);
+            var game = this.InitializeGame();
             var player = game.CurrentPlayer;
             var invalidCard = this.GetInvalidCard(game);
 
@@ -95,9 +95,9 @@
         }
 
         [TestMethod]
-        public void Game_PurchaseCard_Normal()
+        public void PurchaseCardNormal()
         {
-            var game = this.InitializeGame(2);
+            var game = this.InitializeGame();
             var player = game.CurrentPlayer;
             var card = game.Deck.AvailableCards.First();
 
@@ -113,9 +113,9 @@
         }
 
         [TestMethod]
-        public void Game_PurchaseCard_WithGold()
+        public void PurchaseCardWithGold()
         {
-            var game = this.InitializeGame(2);
+            var game = this.InitializeGame();
             var player = game.CurrentPlayer;
             var card = game.Deck.AvailableCards.First();
 
@@ -130,9 +130,9 @@
         }
 
         [TestMethod]
-        public void Game_ReserveCard_1()
+        public void ReserveCard1()
         {
-            var game = this.InitializeGame(2);
+            var game = this.InitializeGame();
             var player = game.CurrentPlayer;
             var card = game.Deck.AvailableCards.First();
 
@@ -167,9 +167,9 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameReserveActionException))]
-        public void Game_ReserveCard_Reserve4()
+        public void ReserveCardReserve4()
         {
-            var game = this.InitializeGame(2);
+            var game = this.InitializeGame();
             var player1 = game.CurrentPlayer;
             game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
             var player2 = game.CurrentPlayer;
@@ -190,23 +190,23 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameReserveActionException))]
-        public void Game_ReserveCard_ReserveUnavailableCard()
+        public void ReserveCardReserveUnavailableCard()
         {
-            var game = this.InitializeGame(2);
+            var game = this.InitializeGame();
             game.ReserveCard(game.CurrentPlayer, game.Deck.AllCards.Last());
         }
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameException))]
-        public void Game_Start_AlreadyStartedException()
+        public void StartAlreadyStartedException()
         {
-            var game = this.InitializeGame(2);
+            var game = this.InitializeGame();
             game.Start();
         }
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameException))]
-        public void Game_Start_DeckNotPresentException()
+        public void StartDeckNotPresentException()
         {
             var game = new Game();
             game.Players.Add(new Player());
@@ -216,21 +216,21 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameException))]
-        public void Game_Start_InsufficientPlayersException()
+        public void StartInsufficientPlayersException()
         {
             var game = this.InitializeGame(1);
         }
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameException))]
-        public void Game_Start_TooMuchPlayersException()
+        public void StartTooMuchPlayersException()
         {
             var game = this.InitializeGame(5);
         }
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_ExhaustBank1()
+        public void TakeChipsExhaustBank1()
         {
             var game = this.InitializeGame(2);
             var player = game.CurrentPlayer;
@@ -250,7 +250,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_ExhaustBank2()
+        public void TakeChipsExhaustBank2()
         {
             var game = this.InitializeGame(2);
             var player = game.CurrentPlayer;
@@ -277,7 +277,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_InvalidTake3()
+        public void TakeChipsInvalidTake3()
         {
             var game = this.InitializeGame(4);
             var player = game.CurrentPlayer;
@@ -287,7 +287,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_InvalidTake4()
+        public void TakeChipsInvalidTake4()
         {
             var game = this.InitializeGame(4);
             var player = game.CurrentPlayer;
@@ -297,7 +297,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_InvalidTakeGold()
+        public void TakeChipsInvalidTakeGold()
         {
             var game = this.InitializeGame(4);
             var player = game.CurrentPlayer;
@@ -307,7 +307,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_InvalidTakeGold2()
+        public void TakeChipsInvalidTakeGold2()
         {
             var game = this.InitializeGame(4);
             var player = game.CurrentPlayer;
@@ -317,7 +317,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_InvalidTakeGold3()
+        public void TakeChipsInvalidTakeGold3()
         {
             var game = this.InitializeGame(4);
             var player = game.CurrentPlayer;
@@ -327,7 +327,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(SplendorGameTakeActionException))]
-        public void Game_TakeChips_InvalidTakeOver10()
+        public void TakeChipsInvalidTakeOver10()
         {
             var game = this.InitializeGame(3);
 
@@ -349,9 +349,9 @@
         }
 
         [TestMethod]
-        public void Game_TakeChips_Take1()
+        public void TakeChipsTake1()
         {
-            var game = this.InitializeGame(2);
+            var game = this.InitializeGame();
             var player = game.CurrentPlayer;
 
             game.TakeChips(player, player.Chips + new Chips() { Blue = 1 });
@@ -365,9 +365,9 @@
         }
 
         [TestMethod]
-        public void Game_TakeChips_Take2()
+        public void TakeChipsTake2()
         {
-            var game = this.InitializeGame(2);
+            var game = this.InitializeGame();
             var player = game.CurrentPlayer;
 
             game.TakeChips(player, player.Chips + new Chips() { Blue = 2 });
@@ -393,9 +393,9 @@
         }
 
         [TestMethod]
-        public void Game_TakeChips_Take3()
+        public void TakeChipsTake3()
         {
-            var game = this.InitializeGame(2);
+            var game = this.InitializeGame();
             var player = game.CurrentPlayer;
 
             game.TakeChips(player, player.Chips + new Chips() { Blue = 1, Black = 1, Green = 1 });
@@ -421,7 +421,7 @@
         }
 
         [TestMethod]
-        public void Game_ThreePlayersQueue()
+        public void ThreePlayersQueue()
         {
             var game = this.InitializeGame(3);
             var firstPlayer = game.CurrentPlayer;
@@ -449,9 +449,9 @@
         }
 
         [TestMethod]
-        public void Game_TwoPlayersQueue()
+        public void TwoPlayersQueue()
         {
-            var game = this.InitializeGame(2);
+            var game = this.InitializeGame();
 
             var firstPlayer = game.CurrentPlayer;
 

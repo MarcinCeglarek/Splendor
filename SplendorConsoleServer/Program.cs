@@ -13,7 +13,7 @@
     {
         #region Public Properties
 
-        public static List<EchoService> Clients { get; set; }
+        public static List<SplendorService> Clients { get; set; }
 
         #endregion
 
@@ -23,8 +23,8 @@
         {
             const string Uri = "ws://localhost:8000/echo";
 
-            Clients = new List<EchoService>();
-            var host = new WebSocketHost<EchoService>(new Uri(Uri));
+            Clients = new List<SplendorService>();
+            var host = new WebSocketHost<SplendorService>(new Uri(Uri));
             host.AddWebSocketEndpoint();
 
             /*

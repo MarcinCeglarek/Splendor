@@ -58,9 +58,9 @@
     <Compile Include="TestsBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SplendorCommonLibrary\SplendorCommonLibrary.csproj">
+    <ProjectReference Include="..\SplendorCommonLibrary\Core.csproj">
       <Project>{D36F7689-E5C6-4628-A9D5-329E955BD2EF}</Project>
-      <Name>SplendorCommonLibrary</Name>
+      <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
