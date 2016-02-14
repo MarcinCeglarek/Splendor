@@ -1,6 +1,6 @@
-﻿namespace SplendorCommonLibrary.Data
+﻿namespace SplendorCore.Data
 {
-    public static class Constants
+    public static class CoreConstants
     {
         #region Constants
 

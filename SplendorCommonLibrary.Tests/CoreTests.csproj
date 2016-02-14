@@ -6,8 +6,8 @@
     <ProjectGuid>{3C47387B-44B1-4C49-ACFC-B890BB851803}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SplendorCommonLibrary.Tests</RootNamespace>
-    <AssemblyName>SplendorCommonLibrary.Tests</AssemblyName>
+    <RootNamespace>SplendorCore.Tests</RootNamespace>
+    <AssemblyName>SplendorCore.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -50,12 +50,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CardTests.cs" />
-    <Compile Include="ChipsTests.cs" />
-    <Compile Include="DeckTests.cs" />
-    <Compile Include="GameTests.cs" />
+    <Compile Include="Library\CardTests.cs" />
+    <Compile Include="Library\ChipsTests.cs" />
+    <Compile Include="Library\DeckTests.cs" />
+    <Compile Include="Library\GameTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestsBase.cs" />
+    <Compile Include="Library\TestsBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SplendorCommonLibrary\Core.csproj">

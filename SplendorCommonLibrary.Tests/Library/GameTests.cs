@@ -1,4 +1,4 @@
-﻿namespace SplendorCommonLibrary.Tests
+﻿namespace SplendorCore.Tests.Library
 {
     #region
 
@@ -6,9 +6,9 @@
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using SplendorCommonLibrary.Data;
-    using SplendorCommonLibrary.Models;
-    using SplendorCommonLibrary.Models.Exceptions;
+    using SplendorCore.Data;
+    using SplendorCore.Models;
+    using SplendorCore.Models.Exceptions;
 
     #endregion
 
@@ -137,7 +137,7 @@
             var card = game.Deck.AvailableCards.First();
 
             game.ReserveCard(player, card);
-            Assert.AreEqual(3 * Constants.Deck.NumberOfVisibleCards, game.Deck.AvailableCards.Count);
+            Assert.AreEqual(3 * CoreConstants.Deck.NumberOfVisibleCards, game.Deck.AvailableCards.Count);
             Assert.AreEqual(1, player.ReservedCards.Count);
             Assert.IsTrue(player.ReservedCards.Contains(card));
             Assert.AreEqual(1, player.Chips.Gold);
@@ -146,7 +146,7 @@
 
             card = game.Deck.AvailableCards.First();
             game.ReserveCard(player, card);
-            Assert.AreEqual(3 * Constants.Deck.NumberOfVisibleCards, game.Deck.AvailableCards.Count);
+            Assert.AreEqual(3 * CoreConstants.Deck.NumberOfVisibleCards, game.Deck.AvailableCards.Count);
             Assert.AreEqual(2, player.ReservedCards.Count);
             Assert.IsTrue(player.ReservedCards.Contains(card));
             Assert.AreEqual(2, player.Chips.Gold);
@@ -155,7 +155,7 @@
 
             card = game.Deck.AvailableCards.First();
             game.ReserveCard(player, card);
-            Assert.AreEqual(3 * Constants.Deck.NumberOfVisibleCards, game.Deck.AvailableCards.Count);
+            Assert.AreEqual(3 * CoreConstants.Deck.NumberOfVisibleCards, game.Deck.AvailableCards.Count);
             Assert.AreEqual(3, player.ReservedCards.Count);
             Assert.IsTrue(player.ReservedCards.Contains(card));
             Assert.AreEqual(3, player.Chips.Gold);

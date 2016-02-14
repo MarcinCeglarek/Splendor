@@ -1,4 +1,4 @@
-﻿namespace SplendorCommonLibrary.Models.Exceptions
+﻿namespace SplendorCore.Models.Exceptions
 {
     public class SplendorGamePurchaseCardException : SplendorGameException
     {

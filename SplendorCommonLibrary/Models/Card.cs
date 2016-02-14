@@ -1,4 +1,4 @@
-﻿namespace SplendorCommonLibrary.Models
+﻿namespace SplendorCore.Models
 {
     #region
 
@@ -8,7 +8,7 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
-    using SplendorCommonLibrary.Helpers;
+    using SplendorCore.Helpers;
 
     #endregion
 

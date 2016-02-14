@@ -1,10 +1,10 @@
-﻿namespace SplendorCommonLibrary.Tests
+﻿namespace SplendorCore.Tests.Library
 {
     #region
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using SplendorCommonLibrary.Models;
+    using SplendorCore.Models;
 
     #endregion
 

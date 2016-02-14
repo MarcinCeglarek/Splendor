@@ -1,4 +1,4 @@
-﻿namespace SplendorCommonLibrary.Models
+﻿namespace SplendorCore.Models
 {
     #region
 
@@ -7,10 +7,10 @@
     using System.Linq;
     using System.Runtime.Serialization;
 
-    using SplendorCommonLibrary.Data;
-    using SplendorCommonLibrary.Helpers;
-    using SplendorCommonLibrary.Interfaces;
-    using SplendorCommonLibrary.Models.Exceptions;
+    using SplendorCore.Data;
+    using SplendorCore.Helpers;
+    using SplendorCore.Interfaces;
+    using SplendorCore.Models.Exceptions;
 
     #endregion
 
@@ -82,11 +82,11 @@
                 switch (this.Players.Count)
                 {
                     case 2:
-                        return Constants.Game.NumberOfNormalChips2Players;
+                        return CoreConstants.Game.NumberOfNormalChips2Players;
                     case 3:
-                        return Constants.Game.NumberOfNormalChips3Players;
+                        return CoreConstants.Game.NumberOfNormalChips3Players;
                     case 4:
-                        return Constants.Game.NumberOfNormalChips4Players;
+                        return CoreConstants.Game.NumberOfNormalChips4Players;
                 }
 
                 throw new SplendorGameException("Unsupported number of players");
@@ -125,7 +125,7 @@
             this.VerifyThatGameIsActive();
             this.VerifyPlayerEligibleForMove(player);
 
-            if (this.CurrentPlayer.ReservedCards.Count >= Constants.Game.MaximumNumberOfReservedCards)
+            if (this.CurrentPlayer.ReservedCards.Count >= CoreConstants.Game.MaximumNumberOfReservedCards)
             {
                 throw new SplendorGameReserveActionException(Messages.Error_MaximumNumberOfReservedCardsReached);
             }
@@ -156,26 +156,26 @@
                 throw new SplendorGameTakeActionException(Messages.Error_PlayerCantHoldOver10Chips);
             }
 
-            if (diff.Count(o => o.Value > 0) > Constants.Game.MaximumNumberOfChipsTakenPerAction
-                || diff.Where(o => o.Value > 0).Sum(o => o.Value) > Constants.Game.MaximumNumberOfChipsTakenPerAction)
+            if (diff.Count(o => o.Value > 0) > CoreConstants.Game.MaximumNumberOfChipsTakenPerAction
+                || diff.Where(o => o.Value > 0).Sum(o => o.Value) > CoreConstants.Game.MaximumNumberOfChipsTakenPerAction)
             {
                 throw new SplendorGameTakeActionException("You cannot take more than 3 chips at a time");
             }
 
-            if (diff.Any(o => o.Value > Constants.Game.MaximumNumberOfOneColorChipsTakerPerAction))
+            if (diff.Any(o => o.Value > CoreConstants.Game.MaximumNumberOfOneColorChipsTakerPerAction))
             {
                 throw new SplendorGameTakeActionException("You cannot take 3 chips of the same color");
             }
 
-            if (diff.Any(o => o.Value == Constants.Game.MaximumNumberOfOneColorChipsTakerPerAction))
+            if (diff.Any(o => o.Value == CoreConstants.Game.MaximumNumberOfOneColorChipsTakerPerAction))
             {
                 if (diff.Count(o => o.Value > 0) != 1)
                 {
                     throw new SplendorGameTakeActionException("You cannot take any additional chips if you took 2 of the same color");
                 }
 
-                var twoChips = diff.Single(o => o.Value == Constants.Game.MaximumNumberOfOneColorChipsTakerPerAction);
-                if (this.Bank[twoChips.Key] < Constants.Game.MinimumNumberOfChipsToAllowTwoChipsTake)
+                var twoChips = diff.Single(o => o.Value == CoreConstants.Game.MaximumNumberOfOneColorChipsTakerPerAction);
+                if (this.Bank[twoChips.Key] < CoreConstants.Game.MinimumNumberOfChipsToAllowTwoChipsTake)
                 {
                     throw new SplendorGameTakeActionException("You cannot take 2 chips if less then 4 are available");
                 }
@@ -268,7 +268,7 @@
             this.firstPlayer = this.Players.First();
 
             var chipCount = this.TotalNumberOfNormalChips;
-            this.Bank = new Chips() { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = Constants.Game.NumberOfGoldChips };
+            this.Bank = new Chips() { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = CoreConstants.Game.NumberOfGoldChips };
 
             this.subscribers.ForEach(subscriber => subscriber.GameStarted(this));
         }

@@ -1,4 +1,4 @@
-namespace SplendorCommonLibrary.Helpers
+namespace SplendorCore.Helpers
 {
     #region
 
@@ -7,7 +7,7 @@ namespace SplendorCommonLibrary.Helpers
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    using SplendorCommonLibrary.Models;
+    using SplendorCore.Models;
 
     #endregion
 

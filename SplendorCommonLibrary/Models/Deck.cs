@@ -1,4 +1,4 @@
-﻿namespace SplendorCommonLibrary.Models
+﻿namespace SplendorCore.Models
 {
     #region
 
@@ -9,8 +9,8 @@
 
     using Newtonsoft.Json;
 
-    using SplendorCommonLibrary.Helpers;
-    using SplendorCommonLibrary.Models.Exceptions;
+    using SplendorCore.Helpers;
+    using SplendorCore.Models.Exceptions;
 
     #endregion
 

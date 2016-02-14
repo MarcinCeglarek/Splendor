@@ -1,4 +1,4 @@
-﻿namespace SplendorCommonLibrary.Tests
+﻿namespace SplendorCore.Tests.Library
 {
     #region
 
@@ -7,9 +7,9 @@
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using SplendorCommonLibrary.Data;
-    using SplendorCommonLibrary.Models;
-    using SplendorCommonLibrary.Models.Exceptions;
+    using SplendorCore.Data;
+    using SplendorCore.Models;
+    using SplendorCore.Models.Exceptions;
 
     #endregion
 
@@ -58,11 +58,11 @@
             var deck = game.Deck;
 
             Assert.AreEqual(90, deck.AllCards.Count);
-            Assert.AreEqual(3 * Constants.Deck.NumberOfVisibleCards, deck.AvailableCards.Count);
+            Assert.AreEqual(3 * CoreConstants.Deck.NumberOfVisibleCards, deck.AvailableCards.Count);
 
             for (var i = 1; i <= 3; i++)
             {
-                Assert.AreEqual(Constants.Deck.NumberOfVisibleCards, deck.AvailableCards.Count(o => o.Tier == i));
+                Assert.AreEqual(CoreConstants.Deck.NumberOfVisibleCards, deck.AvailableCards.Count(o => o.Tier == i));
             }
 
             Assert.AreEqual(10, deck.AllAristocrates.Count);

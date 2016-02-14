@@ -1,4 +1,4 @@
-﻿namespace SplendorCommonLibrary.Helpers
+﻿namespace SplendorCore.Helpers
 {
     #region
 

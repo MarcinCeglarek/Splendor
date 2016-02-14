@@ -7,8 +7,8 @@
     <ProjectGuid>{D36F7689-E5C6-4628-A9D5-329E955BD2EF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SplendorCommonLibrary</RootNamespace>
-    <AssemblyName>SplendorCommonLibrary</AssemblyName>
+    <RootNamespace>SplendorCore</RootNamespace>
+    <AssemblyName>SplendorCore</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,7 +39,7 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Constants.cs" />
+    <Compile Include="Data\CoreConstants.cs" />
     <Compile Include="Data\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -9,14 +9,16 @@
 
     using Newtonsoft.Json;
 
-    using SplendorCommonLibrary.Interfaces;
-    using SplendorCommonLibrary.Models;
-    using SplendorCommonLibrary.Models.Exceptions;
+    using SplendorConnector;
 
     using SplendorConsoleServer.Models;
     using SplendorConsoleServer.Models.Enums;
     using SplendorConsoleServer.Models.Exceptions;
     using SplendorConsoleServer.Resources;
+
+    using SplendorCore.Interfaces;
+    using SplendorCore.Models;
+    using SplendorCore.Models.Exceptions;
 
     #endregion
 
@@ -37,7 +39,7 @@
         public SplendorService()
         {
             Program.Clients.Add(this);
-            this.log = new Logger();
+            this.log = Logger.Instance();
             this.log.Message("Client added");
         }
 

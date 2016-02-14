@@ -1,4 +1,4 @@
-﻿namespace SplendorCommonLibrary.Tests
+﻿namespace SplendorCore.Tests.Library
 {
     #region
 
@@ -7,8 +7,8 @@
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using SplendorCommonLibrary.Data;
-    using SplendorCommonLibrary.Models;
+    using SplendorCore.Data;
+    using SplendorCore.Models;
 
     #endregion
 
@@ -24,7 +24,7 @@
         protected Game InitializeGame(int numberOfPlayers = 2)
         {
             var game = new Game();
-            game.Deck = new Deck(game, Constants.DeckFilePath, Constants.AristocratesFilePath);
+            game.Deck = new Deck(game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
 
             for (var i = 0; i < numberOfPlayers; i++)
             {
@@ -43,7 +43,7 @@
                 Assert.AreEqual(game.TotalNumberOfNormalChips, game.Players.Sum(p => p.Chips[color]) + game.Bank[color]);
             }
 
-            Assert.AreEqual(Constants.Game.NumberOfGoldChips, game.Players.Sum(p => p.Chips[Color.Gold]) + game.Bank[Color.Gold]);
+            Assert.AreEqual(CoreConstants.Game.NumberOfGoldChips, game.Players.Sum(p => p.Chips[Color.Gold]) + game.Bank[Color.Gold]);
         }
 
         #endregion

@@ -1,4 +1,4 @@
-﻿namespace SplendorCommonLibrary.Models
+﻿namespace SplendorCore.Models
 {
     #region
 

@@ -1,4 +1,4 @@
-﻿namespace SplendorCommonLibrary.Models
+﻿namespace SplendorCore.Models
 {
     #region
 
@@ -7,7 +7,7 @@
     using System.Linq;
     using System.Runtime.Serialization;
 
-    using SplendorCommonLibrary.Models.Exceptions;
+    using SplendorCore.Models.Exceptions;
 
     #endregion
 

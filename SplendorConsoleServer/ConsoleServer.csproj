@@ -77,6 +77,10 @@
       <Project>{D36F7689-E5C6-4628-A9D5-329E955BD2EF}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SplendorConnector\Connector.csproj">
+      <Project>{51A4743A-E49C-4B3B-928D-3F8465C3E241}</Project>
+      <Name>Connector</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Messages.resx">
