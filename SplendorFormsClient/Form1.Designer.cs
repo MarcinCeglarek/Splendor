@@ -30,73 +30,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this.userControl11 = new UserControl1();
+            this.userControl11 = new SplendorFormsClient.Panels.UserControl1();
             this.elementHost2 = new System.Windows.Forms.Integration.ElementHost();
-            this.userControl12 = new UserControl1();
+            this.userControl12 = new SplendorFormsClient.Panels.UserControl1();
             this.elementHost3 = new System.Windows.Forms.Integration.ElementHost();
-            this.userControl13 = new UserControl1();
+            this.userControl13 = new SplendorFormsClient.Panels.UserControl1();
             this.elementHost4 = new System.Windows.Forms.Integration.ElementHost();
-            this.userControl14 = new UserControl1();
+            this.userControl14 = new SplendorFormsClient.Panels.UserControl1();
             this.elementHost5 = new System.Windows.Forms.Integration.ElementHost();
-            this.userControl15 = new UserControl1();
+            this.userControl15 = new SplendorFormsClient.Panels.UserControl1();
             this.elementHost6 = new System.Windows.Forms.Integration.ElementHost();
-            this.userControl16 = new UserControl1();
+            this.userControl16 = new SplendorFormsClient.Panels.UserControl1();
             this.elementHost7 = new System.Windows.Forms.Integration.ElementHost();
-            this.userControl17 = new UserControl1();
+            this.userControl17 = new SplendorFormsClient.Panels.UserControl1();
             this.elementHost8 = new System.Windows.Forms.Integration.ElementHost();
-            this.userControl18 = new UserControl1();
+            this.userControl18 = new SplendorFormsClient.Panels.UserControl1();
             this.elementHost9 = new System.Windows.Forms.Integration.ElementHost();
-            this.userControl19 = new UserControl1();
+            this.userControl19 = new SplendorFormsClient.Panels.UserControl1();
             this.elementHost10 = new System.Windows.Forms.Integration.ElementHost();
-            this.userControl110 = new UserControl1();
+            this.userControl110 = new SplendorFormsClient.Panels.UserControl1();
             this.elementHost11 = new System.Windows.Forms.Integration.ElementHost();
-            this.userControl111 = new UserControl1();
+            this.userControl111 = new SplendorFormsClient.Panels.UserControl1();
             this.elementHost12 = new System.Windows.Forms.Integration.ElementHost();
-            this.userControl112 = new UserControl1();
+            this.userControl112 = new SplendorFormsClient.Panels.UserControl1();
+            this.playerPanel1 = new SplendorFormsClient.Panels.PlayerPanel(this.game.CurrentPlayer);
+            this.playerPanel2 = new SplendorFormsClient.Panels.PlayerPanel(this.game.CurrentPlayer);
+            this.playerPanel3 = new SplendorFormsClient.Panels.PlayerPanel(this.game.CurrentPlayer);
+            this.playerPanel4 = new SplendorFormsClient.Panels.PlayerPanel(this.game.CurrentPlayer);
             this.SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Location = new System.Drawing.Point(12, 891);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(279, 268);
-            this.groupBox1.TabIndex = 17;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Player 1";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Location = new System.Drawing.Point(297, 891);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(279, 268);
-            this.groupBox2.TabIndex = 18;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Player 2";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Location = new System.Drawing.Point(867, 891);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(279, 268);
-            this.groupBox3.TabIndex = 20;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Player 4";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Location = new System.Drawing.Point(582, 891);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(279, 268);
-            this.groupBox4.TabIndex = 19;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Player 3";
             // 
             // button1
             // 
@@ -226,11 +190,47 @@
             this.elementHost12.Text = "elementHost12";
             this.elementHost12.Child = this.userControl112;
             // 
+            // playerPanel1
+            // 
+            this.playerPanel1.Location = new System.Drawing.Point(12, 867);
+            this.playerPanel1.Name = "playerPanel1";
+            this.playerPanel1.Player = null;
+            this.playerPanel1.Size = new System.Drawing.Size(287, 273);
+            this.playerPanel1.TabIndex = 35;
+            // 
+            // playerPanel2
+            // 
+            this.playerPanel2.Location = new System.Drawing.Point(305, 867);
+            this.playerPanel2.Name = "playerPanel2";
+            this.playerPanel2.Player = null;
+            this.playerPanel2.Size = new System.Drawing.Size(287, 273);
+            this.playerPanel2.TabIndex = 36;
+            // 
+            // playerPanel3
+            // 
+            this.playerPanel3.Location = new System.Drawing.Point(598, 867);
+            this.playerPanel3.Name = "playerPanel3";
+            this.playerPanel3.Player = null;
+            this.playerPanel3.Size = new System.Drawing.Size(287, 273);
+            this.playerPanel3.TabIndex = 37;
+            // 
+            // playerPanel4
+            // 
+            this.playerPanel4.Location = new System.Drawing.Point(891, 867);
+            this.playerPanel4.Name = "playerPanel4";
+            this.playerPanel4.Player = null;
+            this.playerPanel4.Size = new System.Drawing.Size(287, 273);
+            this.playerPanel4.TabIndex = 38;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1208, 1171);
+            this.Controls.Add(this.playerPanel4);
+            this.Controls.Add(this.playerPanel3);
+            this.Controls.Add(this.playerPanel2);
+            this.Controls.Add(this.playerPanel1);
             this.Controls.Add(this.elementHost9);
             this.Controls.Add(this.elementHost10);
             this.Controls.Add(this.elementHost11);
@@ -245,10 +245,6 @@
             this.Controls.Add(this.elementHost1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -257,10 +253,6 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Integration.ElementHost elementHost1;
@@ -287,6 +279,10 @@
         private UserControl1 userControl111;
         private System.Windows.Forms.Integration.ElementHost elementHost12;
         private UserControl1 userControl112;
+        private PlayerPanel playerPanel1;
+        private PlayerPanel playerPanel2;
+        private PlayerPanel playerPanel3;
+        private PlayerPanel playerPanel4;
     }
 }
 

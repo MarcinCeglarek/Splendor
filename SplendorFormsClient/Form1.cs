@@ -12,13 +12,19 @@
 
     public partial class Form1 : Form
     {
-        private Game game = new Game();
-        
-        private Player player1 = new Player();
-        private Player player2 = new Player();
-        private Player player3 = new Player();
-        private Player player4 = new Player();
+        #region Fields
 
+        private readonly Game game = new Game();
+
+        private readonly Player player1 = new Player();
+
+        private readonly Player player2 = new Player();
+
+        private readonly Player player3 = new Player();
+
+        private readonly Player player4 = new Player();
+
+        #endregion
 
         #region Constructors and Destructors
 
@@ -30,18 +36,6 @@
         #endregion
 
         #region Methods
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.game.Players.Add(this.player1);
-            this.game.Players.Add(this.player2);
-            this.game.Players.Add(this.player3);
-            this.game.Players.Add(this.player4);
-
-
-            this.game.Deck = new Deck(this.game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
-            this.game.Start();
-        }
 
         private void FillDeck()
         {
@@ -61,11 +55,32 @@
             this.userControl112.Card = this.game.Deck.AvailableCards[11];
         }
 
-        #endregion
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.game.Players.Add(this.player1);
+            this.game.Players.Add(this.player2);
+            this.game.Players.Add(this.player3);
+            this.game.Players.Add(this.player4);
+
+            this.playerPanel1.Player = this.player1;
+            this.playerPanel1.CurrentPlayer = this.game.CurrentPlayer;
+
+            this.playerPanel2.Player = this.player2;
+            this.playerPanel2.CurrentPlayer = this.game.CurrentPlayer;
+            this.playerPanel3.Player = this.player3;
+            this.playerPanel3.CurrentPlayer = this.game.CurrentPlayer;
+            this.playerPanel4.Player = this.player4;
+            this.playerPanel4.CurrentPlayer = this.game.CurrentPlayer;
+
+            this.game.Deck = new Deck(this.game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
+            this.game.Start();
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
             this.FillDeck();
         }
+
+        #endregion
     }
 }

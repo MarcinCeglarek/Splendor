@@ -54,6 +54,7 @@
     <Compile Include="Library\ChipsTests.cs" />
     <Compile Include="Library\DeckTests.cs" />
     <Compile Include="Library\GameTests.cs" />
+    <Compile Include="Library\PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Library\TestsBase.cs" />
   </ItemGroup>
