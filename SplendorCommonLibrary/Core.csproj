@@ -53,15 +53,33 @@
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\Chips.cs" />
     <Compile Include="Models\Deck.cs" />
-    <Compile Include="Models\Exceptions\SplendorFileNotFoundException.cs" />
-    <Compile Include="Models\Exceptions\SplendorGamePurchaseCardException.cs" />
-    <Compile Include="Models\Exceptions\SplendorGameReserveActionException.cs" />
-    <Compile Include="Models\Exceptions\SplendorGameTakeActionException.cs" />
-    <Compile Include="Models\Exceptions\SplendorPlayerChipsException.cs" />
+    <Compile Include="Models\Exceptions\AbstractExceptions\SplendorCardException.cs" />
+    <Compile Include="Models\Exceptions\AbstractExceptions\SplendorDeckException.cs" />
+    <Compile Include="Models\Exceptions\AbstractExceptions\SplendorFileException.cs" />
+    <Compile Include="Models\Exceptions\AbstractExceptions\SplendorChipOperationException.cs" />
+    <Compile Include="Models\Exceptions\ChipOperationExceptions\BankResourcesExhaustedException.cs" />
+    <Compile Include="Models\Exceptions\ChipOperationExceptions\InvalidTakeActionException.cs" />
+    <Compile Include="Models\Exceptions\ChipOperationExceptions\ResourcesOverflowException.cs" />
+    <Compile Include="Models\Exceptions\ChipOperationExceptions\TakeGoldChipsNotAllowed.cs" />
+    <Compile Include="Models\Exceptions\ChipOperationExceptions\TwoChipsOperationNotPermitted.cs" />
+    <Compile Include="Models\Exceptions\GameExceptions\DeckNotPresentException.cs" />
+    <Compile Include="Models\Exceptions\GameExceptions\GameNotStartedException.cs" />
+    <Compile Include="Models\Exceptions\AbstractExceptions\SplendorCardOperationException.cs" />
+    <Compile Include="Models\Exceptions\AbstractExceptions\SplendorPlayerException.cs" />
+    <Compile Include="Models\Exceptions\CardOperationExceptions\CardReservationException.cs" />
+    <Compile Include="Models\Exceptions\CardExceptions\CardUnavailableException.cs" />
+    <Compile Include="Models\Exceptions\FileExceptions\DeckFileNotFoundException.cs" />
+    <Compile Include="Models\Exceptions\GameExceptions\GameAlreadyStartedException.cs" />
+    <Compile Include="Models\Exceptions\GameExceptions\GameFinishedException.cs" />
+    <Compile Include="Models\Exceptions\GameExceptions\InvalidNumberOfPlayersException.cs" />
+    <Compile Include="Models\Exceptions\PlayerExceptions\InvalidPlayerException.cs" />
+    <Compile Include="Models\Exceptions\CardOperationExceptions\PurchaseCardException.cs" />
+    <Compile Include="Models\Exceptions\CardOperationExceptions\TakeChipsActionException.cs" />
+    <Compile Include="Models\Exceptions\CardOperationExceptions\InsuficentPlayerResourcesException.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
-    <Compile Include="Models\Exceptions\SplendorGameException.cs" />
-    <Compile Include="Models\Exceptions\SplendorException.cs" />
+    <Compile Include="Models\Exceptions\AbstractExceptions\SplendorGameException.cs" />
+    <Compile Include="Models\Exceptions\AbstractExceptions\SplendorException.cs" />
     <Compile Include="Interfaces\IGameActions.cs" />
     <Compile Include="Models\HistoryEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,6 +102,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

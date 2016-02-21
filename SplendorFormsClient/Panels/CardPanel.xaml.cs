@@ -41,19 +41,19 @@
                 switch (this.card.Color)
                 {
                     case SplendorCore.Models.Color.Black:
-                        this.Color.Background = Constants.Black.Brush;
+                        this.Color.Background = FormsClientConstants.Black.Brush;
                         break;
                     case SplendorCore.Models.Color.Blue:
-                        this.Color.Background = Constants.Blue.Brush;
+                        this.Color.Background = FormsClientConstants.Blue.Brush;
                         break;
                     case SplendorCore.Models.Color.White:
-                        this.Color.Background = Constants.White.Brush;
+                        this.Color.Background = FormsClientConstants.White.Brush;
                         break;
                     case SplendorCore.Models.Color.Red:
-                        this.Color.Background = Constants.Red.Brush;
+                        this.Color.Background = FormsClientConstants.Red.Brush;
                         break;
                     case SplendorCore.Models.Color.Green:
-                        this.Color.Background = Constants.Green.Brush;
+                        this.Color.Background = FormsClientConstants.Green.Brush;
                         break;
                 }
                 

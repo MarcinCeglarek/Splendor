@@ -1,8 +1,10 @@
 ﻿namespace SplendorFormsClient
 {
+    using SplendorCore.Models;
+
     using SplendorFormsClient.Panels;
 
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -30,6 +32,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.game = new Game();
+            this.player1 = new Player();
+            this.player2 = new Player();
+            this.player3 = new Player();
+            this.player4 = new Player();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
@@ -253,6 +260,15 @@
 
         #endregion
 
+        private Game game;
+
+        private Player player1;
+
+        private Player player2;
+
+        private Player player3;
+
+        private Player player4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Integration.ElementHost elementHost1;
@@ -283,6 +299,10 @@
         private PlayerPanel playerPanel2;
         private PlayerPanel playerPanel3;
         private PlayerPanel playerPanel4;
+        #region Fields
+
+
+        #endregion
     }
 }
 

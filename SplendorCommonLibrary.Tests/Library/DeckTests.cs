@@ -10,6 +10,7 @@
     using SplendorCore.Data;
     using SplendorCore.Models;
     using SplendorCore.Models.Exceptions;
+    using SplendorCore.Models.Exceptions.FileExceptions;
 
     #endregion
 
@@ -99,7 +100,7 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorFileNotFoundException))]
+        [ExpectedException(typeof(DeckFileNotFoundException))]
         public void Exception()
         {
             var deck = new Deck(null, string.Empty, string.Empty);

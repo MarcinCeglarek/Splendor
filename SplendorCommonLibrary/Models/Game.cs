@@ -10,7 +10,12 @@
     using SplendorCore.Data;
     using SplendorCore.Helpers;
     using SplendorCore.Interfaces;
-    using SplendorCore.Models.Exceptions;
+    using SplendorCore.Models.Exceptions.CardExceptions;
+    using SplendorCore.Models.Exceptions.ChipOperationExceptions;
+    using SplendorCore.Models.Exceptions.DeckExceptions;
+    using SplendorCore.Models.Exceptions.GameExceptions;
+    using SplendorCore.Models.Exceptions.OperationExceptions;
+    using SplendorCore.Models.Exceptions.PlayerExceptions;
 
     #endregion
 
@@ -89,7 +94,7 @@
                         return CoreConstants.Game.NumberOfNormalChips4Players;
                 }
 
-                throw new SplendorGameException("Unsupported number of players");
+                throw new InvalidNumberOfPlayersException(this);
             }
         }
 
@@ -102,16 +107,16 @@
             this.VerifyThatGameIsActive();
             this.VerifyPlayerEligibleForMove(player);
 
-            if (!this.Deck.AvailableCards.Contains(card) && !this.CurrentPlayer.ReservedCards.Contains(card))
+            if (!this.Deck.AvailableCards.Contains(card))
             {
-                throw new SplendorGamePurchaseCardException(Messages.Error_ThisCardIsUnavailable);
+                throw new CardUnavailableException(card);
             }
 
             // Two strategies - which one is better
             // 1
             if (!card.CanBuy(player.ChipsAndCards))
             {
-                throw new SplendorGamePurchaseCardException(Messages.Error_PlayerCantAffordCard);
+                throw new InsuficentPlayerResourcesException(player, card);
             }
 
             // 2
@@ -127,12 +132,12 @@
 
             if (this.CurrentPlayer.ReservedCards.Count >= CoreConstants.Game.MaximumNumberOfReservedCards)
             {
-                throw new SplendorGameReserveActionException(Messages.Error_MaximumNumberOfReservedCardsReached);
+                throw new CardReservationException(player, card);
             }
 
             if (!this.Deck.AvailableCards.Contains(card))
             {
-                throw new SplendorGameReserveActionException(Messages.Error_ThisCardIsUnavailable);
+                throw new CardUnavailableException(card);
             }
 
             return true;
@@ -148,42 +153,42 @@
             // simplyfying this would be greatly appreciated
             if (diff.Gold != 0)
             {
-                throw new SplendorGameTakeActionException(Messages.Errror_CantTakeGoldenChipsInThisMoveType);
+                throw new TakeGoldChipsNotAllowed(player, chips);
             }
 
             if (chips.Where(c => c.Key != Color.Gold).Sum(c => c.Value) > 10)
             {
-                throw new SplendorGameTakeActionException(Messages.Error_PlayerCantHoldOver10Chips);
+                throw new ResourcesOverflowException(player, chips);
             }
 
             if (diff.Count(o => o.Value > 0) > CoreConstants.Game.MaximumNumberOfChipsTakenPerAction
                 || diff.Where(o => o.Value > 0).Sum(o => o.Value) > CoreConstants.Game.MaximumNumberOfChipsTakenPerAction)
             {
-                throw new SplendorGameTakeActionException("You cannot take more than 3 chips at a time");
+                throw new InvalidTakeActionException(player, chips);
             }
 
             if (diff.Any(o => o.Value > CoreConstants.Game.MaximumNumberOfOneColorChipsTakerPerAction))
             {
-                throw new SplendorGameTakeActionException("You cannot take 3 chips of the same color");
+                throw new InvalidTakeActionException(player, chips);
             }
 
             if (diff.Any(o => o.Value == CoreConstants.Game.MaximumNumberOfOneColorChipsTakerPerAction))
             {
                 if (diff.Count(o => o.Value > 0) != 1)
                 {
-                    throw new SplendorGameTakeActionException("You cannot take any additional chips if you took 2 of the same color");
+                    throw new InvalidTakeActionException(player, chips);
                 }
 
                 var twoChips = diff.Single(o => o.Value == CoreConstants.Game.MaximumNumberOfOneColorChipsTakerPerAction);
                 if (this.Bank[twoChips.Key] < CoreConstants.Game.MinimumNumberOfChipsToAllowTwoChipsTake)
                 {
-                    throw new SplendorGameTakeActionException("You cannot take 2 chips if less then 4 are available");
+                    throw new TwoChipsOperationNotPermitted(player, chips);
                 }
             }
 
-            if (this.Bank.Any(chip => this.Bank[chip.Key] < -chip.Value))
+            if (this.Bank.Any(chip => this.Bank[chip.Key] < diff[chip.Key]))
             {
-                throw new SplendorGameTakeActionException("Bank doesn't have enough chips");
+                throw new BankResourcesExhaustedException(player, chips);
             }
 
             return true;
@@ -199,7 +204,7 @@
             }
             else
             {
-                throw new SplendorGameException("Player not found");
+                throw new InvalidPlayerException(player);
             }
         }
 
@@ -239,27 +244,22 @@
         {
             if (this.HasFinished)
             {
-                throw new SplendorGameException(Messages.Error_GameHasFinished);
+                throw new GameFinishedException(this);
             }
 
             if (this.HasStarted)
             {
-                throw new SplendorGameException(Messages.Error_GameIsAlreadyStarted);
+                throw new GameAlreadyStartedException(this);
             }
 
             if (this.Deck == null)
             {
-                throw new SplendorGameException(Messages.Error_DeckIsNotPresent);
+                throw new DeckNotPresentException(this);
             }
 
-            if (this.Players.Count < 2)
+            if (this.Players.Count < 2 || this.Players.Count > 4)
             {
-                throw new SplendorGameException(Messages.Error_ThereHaveToBeTwoPlayers);
-            }
-
-            if (this.Players.Count > 4)
-            {
-                throw new SplendorGameException(Messages.Error_ThereHaveToBeFourPlayers);
+                throw new InvalidNumberOfPlayersException(this);
             }
 
             this.HasStarted = true;
@@ -326,7 +326,7 @@
         {
             if (player != this.CurrentPlayer)
             {
-                throw new SplendorGameException(Messages.Error_PlayerNotEligibleForMove);
+                throw new InvalidPlayerException(player);
             }
         }
 
@@ -334,12 +334,12 @@
         {
             if (!this.HasStarted)
             {
-                throw new SplendorGameException(Messages.Error_GameHasNotStartedYet);
+                throw new GameNotStartedException(this);
             }
 
             if (this.HasFinished)
             {
-                throw new SplendorGameException(Messages.Error_GameHasFinished);
+                throw new GameFinishedException(this);
             }
         }
 

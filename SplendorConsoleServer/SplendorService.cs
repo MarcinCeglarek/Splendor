@@ -19,6 +19,8 @@
     using SplendorCore.Interfaces;
     using SplendorCore.Models;
     using SplendorCore.Models.Exceptions;
+    using SplendorCore.Models.Exceptions.AbstractExceptions;
+    using SplendorCore.Models.Exceptions.GameExceptions;
 
     #endregion
 

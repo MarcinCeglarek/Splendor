@@ -2,6 +2,7 @@
 {
     #region
 
+    using System;
     using System.Linq;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,6 +10,12 @@
     using SplendorCore.Data;
     using SplendorCore.Models;
     using SplendorCore.Models.Exceptions;
+    using SplendorCore.Models.Exceptions.AbstractExceptions;
+    using SplendorCore.Models.Exceptions.CardExceptions;
+    using SplendorCore.Models.Exceptions.ChipOperationExceptions;
+    using SplendorCore.Models.Exceptions.DeckExceptions;
+    using SplendorCore.Models.Exceptions.GameExceptions;
+    using SplendorCore.Models.Exceptions.OperationExceptions;
 
     #endregion
 
@@ -52,28 +59,28 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameException))]
+        [ExpectedException(typeof(InvalidNumberOfPlayersException))]
         public void InvalidFivePlayer()
         {
             this.InitializeGame(5);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameException))]
+        [ExpectedException(typeof(InvalidNumberOfPlayersException))]
         public void InvalidOnePlayer()
         {
             this.InitializeGame(1);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameException))]
+        [ExpectedException(typeof(InvalidNumberOfPlayersException))]
         public void InvalidTenPlayers()
         {
             this.InitializeGame(10);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGamePurchaseCardException))]
+        [ExpectedException(typeof(InsuficentPlayerResourcesException))]
         public void PurchaseCardInsufficient()
         {
             var game = this.InitializeGame();
@@ -84,7 +91,7 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGamePurchaseCardException))]
+        [ExpectedException(typeof(CardUnavailableException))]
         public void PurchaseCardInvalidCard()
         {
             var game = this.InitializeGame();
@@ -166,7 +173,7 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameReserveActionException))]
+        [ExpectedException(typeof(CardReservationException))]
         public void ReserveCardReserve4()
         {
             var game = this.InitializeGame();
@@ -189,7 +196,7 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameReserveActionException))]
+        [ExpectedException(typeof(CardUnavailableException))]
         public void ReserveCardReserveUnavailableCard()
         {
             var game = this.InitializeGame();
@@ -197,7 +204,7 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameException))]
+        [ExpectedException(typeof(GameAlreadyStartedException))]
         public void StartAlreadyStartedException()
         {
             var game = this.InitializeGame();
@@ -205,7 +212,7 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameException))]
+        [ExpectedException(typeof(DeckNotPresentException))]
         public void StartDeckNotPresentException()
         {
             var game = new Game();
@@ -215,21 +222,21 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameException))]
+        [ExpectedException(typeof(InvalidNumberOfPlayersException))]
         public void StartInsufficientPlayersException()
         {
             var game = this.InitializeGame(1);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameException))]
+        [ExpectedException(typeof(InvalidNumberOfPlayersException))]
         public void StartTooMuchPlayersException()
         {
             var game = this.InitializeGame(5);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        [ExpectedException(typeof(TwoChipsOperationNotPermitted))]
         public void TakeChipsExhaustBank1()
         {
             var game = this.InitializeGame(2);
@@ -249,34 +256,26 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        [ExpectedException(typeof(BankResourcesExhaustedException))]
         public void TakeChipsExhaustBank2()
         {
             var game = this.InitializeGame(2);
             var player = game.CurrentPlayer;
 
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 1, Red = 1 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Red = 1, Green = 0, White = 0 });
             this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 0, Blue = 1, Red = 1, Green = 1 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Red = 1, Green = 0, White = 0 });
             this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 0, Blue = 0, Red = 1, Green = 1, White = 1 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Red = 1, Green = 0, White = 0 });
             this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 0, Red = 0, Green = 1, White = 1 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Red = 1, Green = 0, White = 0 });
             this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 1, Red = 0, Green = 0, White = 1 });
-            this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 1, Red = 1, Green = 0, White = 0 });
-            this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 0, Blue = 1, Red = 1, Green = 1, White = 0 });
-            this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 0, Blue = 0, Red = 1, Green = 1, White = 1 });
-            this.VerityChipsCountIntegrity(game);
-            game.TakeChips(game.CurrentPlayer, player.Chips + new Chips() { Black = 1, Blue = 0, Red = 0, Green = 1, White = 1 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Red = 1, Green = 0, White = 0 });
             this.VerityChipsCountIntegrity(game);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        [ExpectedException(typeof(InvalidTakeActionException))]
         public void TakeChipsInvalidTake3()
         {
             var game = this.InitializeGame(4);
@@ -286,7 +285,7 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        [ExpectedException(typeof(InvalidTakeActionException))]
         public void TakeChipsInvalidTake4()
         {
             var game = this.InitializeGame(4);
@@ -296,7 +295,7 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        [ExpectedException(typeof(TakeGoldChipsNotAllowed))]
         public void TakeChipsInvalidTakeGold()
         {
             var game = this.InitializeGame(4);
@@ -306,7 +305,7 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        [ExpectedException(typeof(TakeGoldChipsNotAllowed))]
         public void TakeChipsInvalidTakeGold2()
         {
             var game = this.InitializeGame(4);
@@ -316,7 +315,7 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        [ExpectedException(typeof(TakeGoldChipsNotAllowed))]
         public void TakeChipsInvalidTakeGold3()
         {
             var game = this.InitializeGame(4);
@@ -326,7 +325,7 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SplendorGameTakeActionException))]
+        [ExpectedException(typeof(ResourcesOverflowException))]
         public void TakeChipsInvalidTakeOver10()
         {
             var game = this.InitializeGame(3);
@@ -340,7 +339,7 @@
             game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
 
             game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 0, Red = 0, White = 1 });
-            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 1, Red = 1, White = 0 });
+            game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 1, Red = 0, White = 0 });
             game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
 
             game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 1, Green = 1, Red = 1, White = 0 });

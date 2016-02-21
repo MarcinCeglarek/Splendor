@@ -7,7 +7,7 @@
     using System.Linq;
     using System.Runtime.Serialization;
 
-    using SplendorCore.Models.Exceptions;
+    using SplendorCore.Models.Exceptions.OperationExceptions;
 
     #endregion
 
@@ -94,7 +94,7 @@
                     var requiredGold = this.Chips[cardChipCost.Key] - cardChipCost.Value;
                     if (requiredGold > this.Chips[Color.Gold])
                     {
-                        throw new SplendorPlayerChipsException("Player has insufficient chips to purchace this card");
+                        throw new PurchaseCardException(this, card);
                     }
 
                     result[cardChipCost.Key] = this.Chips[cardChipCost.Key];
