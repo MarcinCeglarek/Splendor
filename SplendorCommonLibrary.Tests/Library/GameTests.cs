@@ -101,7 +101,7 @@
             game.PurchaseCard(player, invalidCard);
         }
 
-        [TestMethod]
+/*        [TestMethod]
         public void PurchaseCardNormal()
         {
             var game = this.InitializeGame();
@@ -134,7 +134,7 @@
             Assert.AreEqual(1, player.OwnedCards.Count);
             Assert.AreEqual(card, player.OwnedCards.Single());
             this.VerityChipsCountIntegrity(game);
-        }
+        }*/
 
         [TestMethod]
         public void ReserveCard1()

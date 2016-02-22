@@ -60,9 +60,9 @@
         [DataMember]
         public string Name { get; set; }
 
-        public IList<Card> OwnedCards { get; set; }
+        public IList<Card> OwnedCards { get; private set; }
 
-        public IList<Card> ReservedCards { get; set; }
+        public IList<Card> ReservedCards { get; private set; }
 
         [DataMember]
         public int VictoryPoints

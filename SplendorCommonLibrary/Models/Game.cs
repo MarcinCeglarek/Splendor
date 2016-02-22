@@ -10,6 +10,7 @@
     using SplendorCore.Data;
     using SplendorCore.Helpers;
     using SplendorCore.Interfaces;
+    using SplendorCore.Models.Exceptions.AbstractExceptions;
     using SplendorCore.Models.Exceptions.CardExceptions;
     using SplendorCore.Models.Exceptions.ChipOperationExceptions;
     using SplendorCore.Models.Exceptions.DeckExceptions;
@@ -25,6 +26,8 @@
         #region Fields
 
         private readonly List<IBroadcastMessages> subscribers;
+
+        private Chips bank;
 
         private Player firstPlayer;
 
@@ -48,7 +51,13 @@
         #region Public Properties
 
         [DataMember]
-        public Chips Bank { get; set; }
+        public Chips Bank
+        {
+            get
+            {
+                return new Chips(this.bank.White, this.bank.Blue, this.bank.Green, this.bank.Red, this.bank.Black, this.bank.Gold);
+            }
+        }
 
         [DataMember]
         public List<ChatEntry> Chat { get; set; }
@@ -104,94 +113,41 @@
 
         public bool CanPurchaseCard(Player player, Card card)
         {
-            this.VerifyThatGameIsActive();
-            this.VerifyPlayerEligibleForMove(player);
-
-            if (!this.Deck.AvailableCards.Contains(card))
+            try
             {
-                throw new CardUnavailableException(card);
+                this.PurchaseCardVerification(player, card);
+                return true;
             }
-
-            // Two strategies - which one is better
-            // 1
-            if (!card.CanBuy(player.ChipsAndCards))
+            catch (SplendorCardOperationException)
             {
-                throw new InsuficentPlayerResourcesException(player, card);
+                return false;
             }
-
-            // 2
-            var cost = this.CurrentPlayer.GetCardCost(card);
-
-            return true;
         }
 
         public bool CanReserveCard(Player player, Card card)
         {
-            this.VerifyThatGameIsActive();
-            this.VerifyPlayerEligibleForMove(player);
-
-            if (this.CurrentPlayer.ReservedCards.Count >= CoreConstants.Game.MaximumNumberOfReservedCards)
+            try
             {
-                throw new CardReservationException(player, card);
+                this.ReserveCardVerification(player, card);
+                return true;
             }
-
-            if (!this.Deck.AvailableCards.Contains(card))
+            catch (SplendorCardOperationException)
             {
-                throw new CardUnavailableException(card);
+                return false;
             }
-
-            return true;
         }
 
         public bool CanTakeChips(Player player, Chips chips)
         {
-            this.VerifyThatGameIsActive();
-            this.VerifyPlayerEligibleForMove(player);
-
-            var diff = chips - player.Chips;
-
-            // simplyfying this would be greatly appreciated
-            if (diff.Gold != 0)
+            try
             {
-                throw new TakeGoldChipsNotAllowed(player, chips);
+                this.TakeChipVerification(player, chips);
+                return true;
             }
-
-            if (chips.Where(c => c.Key != Color.Gold).Sum(c => c.Value) > 10)
+            catch (SplendorChipOperationException)
             {
-                throw new ResourcesOverflowException(player, chips);
+                return false;
             }
-
-            if (diff.Count(o => o.Value > 0) > CoreConstants.Game.MaximumNumberOfChipsTakenPerAction
-                || diff.Where(o => o.Value > 0).Sum(o => o.Value) > CoreConstants.Game.MaximumNumberOfChipsTakenPerAction)
-            {
-                throw new InvalidTakeActionException(player, chips);
-            }
-
-            if (diff.Any(o => o.Value > CoreConstants.Game.MaximumNumberOfOneColorChipsTakerPerAction))
-            {
-                throw new InvalidTakeActionException(player, chips);
-            }
-
-            if (diff.Any(o => o.Value == CoreConstants.Game.MaximumNumberOfOneColorChipsTakerPerAction))
-            {
-                if (diff.Count(o => o.Value > 0) != 1)
-                {
-                    throw new InvalidTakeActionException(player, chips);
-                }
-
-                var twoChips = diff.Single(o => o.Value == CoreConstants.Game.MaximumNumberOfOneColorChipsTakerPerAction);
-                if (this.Bank[twoChips.Key] < CoreConstants.Game.MinimumNumberOfChipsToAllowTwoChipsTake)
-                {
-                    throw new TwoChipsOperationNotPermitted(player, chips);
-                }
-            }
-
-            if (this.Bank.Any(chip => this.Bank[chip.Key] < diff[chip.Key]))
-            {
-                throw new BankResourcesExhaustedException(player, chips);
-            }
-
-            return true;
         }
 
         public void ChatMessage(Player player, string message)
@@ -210,13 +166,13 @@
 
         public void PurchaseCard(Player player, Card card)
         {
-            this.CanPurchaseCard(player, card);
+            this.PurchaseCardVerification(player, card);
 
             this.Deck.AllCards.Remove(card);
             var cost = this.CurrentPlayer.GetCardCost(card);
 
             this.CurrentPlayer.Chips -= cost;
-            this.Bank += cost;
+            this.bank += cost;
             this.CurrentPlayer.OwnedCards.Add(card);
 
             this.PlayerFinished();
@@ -230,9 +186,9 @@
             this.Deck.AllCards.Remove(card);
             this.CurrentPlayer.ReservedCards.Add(card);
 
-            if (this.Bank.Gold > 0)
+            if (this.bank.Gold > 0)
             {
-                this.Bank.Gold--;
+                this.bank.Gold--;
                 this.CurrentPlayer.Chips.Gold++;
             }
 
@@ -268,7 +224,7 @@
             this.firstPlayer = this.Players.First();
 
             var chipCount = this.TotalNumberOfNormalChips;
-            this.Bank = new Chips() { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = CoreConstants.Game.NumberOfGoldChips };
+            this.bank = new Chips() { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = CoreConstants.Game.NumberOfGoldChips };
 
             this.subscribers.ForEach(subscriber => subscriber.GameStarted(this));
         }
@@ -280,10 +236,10 @@
 
         public void TakeChips(Player player, Chips chips)
         {
-            this.CanTakeChips(player, chips);
+            this.TakeChipVerification(player, chips);
 
             var diff = chips - player.Chips;
-            this.Bank -= diff;
+            this.bank -= diff;
             this.CurrentPlayer.Chips += diff;
 
             this.PlayerFinished();
@@ -320,6 +276,89 @@
             this.Players.Insert(this.Players.Count, currentUser);
 
             this.CheckEndGameCondition();
+        }
+
+        private void PurchaseCardVerification(Player player, Card card)
+        {
+            this.VerifyThatGameIsActive();
+            this.VerifyPlayerEligibleForMove(player);
+
+            if (!this.Deck.AvailableCards.Contains(card))
+            {
+                throw new CardUnavailableException(card);
+            }
+
+            // Two strategies - which one is better
+            // 1
+            if (!card.CanBuy(player.ChipsAndCards))
+            {
+                throw new InsuficentPlayerResourcesException(player, card);
+            }
+        }
+
+        private void ReserveCardVerification(Player player, Card card)
+        {
+            this.VerifyThatGameIsActive();
+            this.VerifyPlayerEligibleForMove(player);
+
+            if (this.CurrentPlayer.ReservedCards.Count >= CoreConstants.Game.MaximumNumberOfReservedCards)
+            {
+                throw new CardReservationException(player, card);
+            }
+
+            if (!this.Deck.AvailableCards.Contains(card))
+            {
+                throw new CardUnavailableException(card);
+            }
+        }
+
+        private void TakeChipVerification(Player player, Chips chips)
+        {
+            this.VerifyThatGameIsActive();
+            this.VerifyPlayerEligibleForMove(player);
+
+            var diff = chips - player.Chips;
+
+            // simplyfying this would be greatly appreciated
+            if (diff.Gold != 0)
+            {
+                throw new TakeGoldChipsNotAllowed(player, chips);
+            }
+
+            if (chips.Where(c => c.Key != Color.Gold).Sum(c => c.Value) > 10)
+            {
+                throw new ResourcesOverflowException(player, chips);
+            }
+
+            if (diff.Count(o => o.Value > 0) > CoreConstants.Game.MaximumNumberOfChipsTakenPerAction
+                || diff.Where(o => o.Value > 0).Sum(o => o.Value) > CoreConstants.Game.MaximumNumberOfChipsTakenPerAction)
+            {
+                throw new InvalidTakeActionException(player, chips);
+            }
+
+            if (diff.Any(o => o.Value > CoreConstants.Game.MaximumNumberOfOneColorChipsTakerPerAction))
+            {
+                throw new InvalidTakeActionException(player, chips);
+            }
+
+            if (diff.Any(o => o.Value == CoreConstants.Game.MaximumNumberOfOneColorChipsTakerPerAction))
+            {
+                if (diff.Count(o => o.Value > 0) != 1)
+                {
+                    throw new InvalidTakeActionException(player, chips);
+                }
+
+                var twoChips = diff.Single(o => o.Value == CoreConstants.Game.MaximumNumberOfOneColorChipsTakerPerAction);
+                if (this.bank[twoChips.Key] < CoreConstants.Game.MinimumNumberOfChipsToAllowTwoChipsTake)
+                {
+                    throw new TwoChipsOperationNotPermitted(player, chips);
+                }
+            }
+
+            if (this.bank.Any(chip => this.bank[chip.Key] < diff[chip.Key]))
+            {
+                throw new BankResourcesExhaustedException(player, chips);
+            }
         }
 
         private void VerifyPlayerEligibleForMove(Player player)

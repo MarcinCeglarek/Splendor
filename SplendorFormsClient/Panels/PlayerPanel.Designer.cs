@@ -15,22 +15,9 @@
             base.Dispose(disposing);
         }
 
-        private Player player;
+        public Player Player { get; set; }
 
         public string Name { get; set; }
-
-        public Player Player
-        {
-            get
-            {
-                return this.player;
-            }
-            set
-            {
-                this.player = value;
-                this.Update();
-            }
-        }
 
         #region Component Designer generated code
 
@@ -112,7 +99,7 @@
             this.ChipsGreen.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ChipsGreen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.ChipsGreen.BackColor = System.Drawing.Color.Green;
             this.ChipsGreen.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ChipsGreen.ForeColor = System.Drawing.Color.White;
             this.ChipsGreen.Location = new System.Drawing.Point(117, 111);
@@ -186,7 +173,7 @@
             this.CardsGreen.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CardsGreen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.CardsGreen.BackColor = System.Drawing.Color.Green;
             this.CardsGreen.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.CardsGreen.ForeColor = System.Drawing.Color.White;
             this.CardsGreen.Location = new System.Drawing.Point(117, 49);
@@ -260,7 +247,6 @@
             this.Controls.Add(this.panel1);
             this.Name = "PlayerPanel";
             this.Size = new System.Drawing.Size(287, 273);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.PlayerPanel_Paint);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
