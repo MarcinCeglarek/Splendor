@@ -181,7 +181,7 @@
 
         public void ReserveCard(Player player, Card card)
         {
-            this.CanReserveCard(player, card);
+            this.ReserveCardVerification(player, card);
 
             this.Deck.AllCards.Remove(card);
             this.CurrentPlayer.ReservedCards.Add(card);

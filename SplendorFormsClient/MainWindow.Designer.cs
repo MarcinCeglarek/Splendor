@@ -34,8 +34,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.AddPlayer = new System.Windows.Forms.Button();
+            this.StartGame = new System.Windows.Forms.Button();
             this.BankPanel = new System.Windows.Forms.GroupBox();
             this.GoldChips = new System.Windows.Forms.Button();
             this.BlackChips = new System.Windows.Forms.Button();
@@ -50,6 +50,10 @@
             this.TakenWhiteChips = new System.Windows.Forms.Button();
             this.TakenGreenChips = new System.Windows.Forms.Button();
             this.TakenBlueChips = new System.Windows.Forms.Button();
+            this.playerPanel4 = new SplendorFormsClient.Panels.PlayerPanel();
+            this.playerPanel3 = new SplendorFormsClient.Panels.PlayerPanel();
+            this.playerPanel2 = new SplendorFormsClient.Panels.PlayerPanel();
+            this.playerPanel1 = new SplendorFormsClient.Panels.PlayerPanel();
             this.Card34 = new SplendorFormsClient.Panels.CardPanel();
             this.Card33 = new SplendorFormsClient.Panels.CardPanel();
             this.Card32 = new SplendorFormsClient.Panels.CardPanel();
@@ -66,25 +70,25 @@
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // AddPlayer
             // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 53);
-            this.button1.TabIndex = 21;
-            this.button1.Text = "Initialize";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.AddPlayer.Location = new System.Drawing.Point(12, 21);
+            this.AddPlayer.Name = "AddPlayer";
+            this.AddPlayer.Size = new System.Drawing.Size(99, 53);
+            this.AddPlayer.TabIndex = 21;
+            this.AddPlayer.Text = "Add Player";
+            this.AddPlayer.UseVisualStyleBackColor = true;
+            this.AddPlayer.Click += new System.EventHandler(this.AddPlayer_Click);
             // 
-            // button2
+            // StartGame
             // 
-            this.button2.Location = new System.Drawing.Point(117, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(99, 53);
-            this.button2.TabIndex = 22;
-            this.button2.Text = "Shuffle";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.StartGame.Location = new System.Drawing.Point(126, 21);
+            this.StartGame.Name = "StartGame";
+            this.StartGame.Size = new System.Drawing.Size(99, 53);
+            this.StartGame.TabIndex = 22;
+            this.StartGame.Text = "Start Game";
+            this.StartGame.UseVisualStyleBackColor = true;
+            this.StartGame.Click += new System.EventHandler(this.StartGame_Click);
             // 
             // BankPanel
             // 
@@ -266,6 +270,42 @@
             this.TakenBlueChips.UseVisualStyleBackColor = false;
             this.TakenBlueChips.Click += new System.EventHandler(this.TakenBlueChips_Click);
             // 
+            // playerPanel4
+            // 
+            this.playerPanel4.Location = new System.Drawing.Point(891, 783);
+            this.playerPanel4.Name = "playerPanel4";
+            this.playerPanel4.Player = null;
+            this.playerPanel4.Size = new System.Drawing.Size(287, 256);
+            this.playerPanel4.TabIndex = 61;
+            this.playerPanel4.Visible = false;
+            // 
+            // playerPanel3
+            // 
+            this.playerPanel3.Location = new System.Drawing.Point(598, 783);
+            this.playerPanel3.Name = "playerPanel3";
+            this.playerPanel3.Player = null;
+            this.playerPanel3.Size = new System.Drawing.Size(287, 256);
+            this.playerPanel3.TabIndex = 60;
+            this.playerPanel3.Visible = false;
+            // 
+            // playerPanel2
+            // 
+            this.playerPanel2.Location = new System.Drawing.Point(305, 783);
+            this.playerPanel2.Name = "playerPanel2";
+            this.playerPanel2.Player = null;
+            this.playerPanel2.Size = new System.Drawing.Size(287, 256);
+            this.playerPanel2.TabIndex = 59;
+            this.playerPanel2.Visible = false;
+            // 
+            // playerPanel1
+            // 
+            this.playerPanel1.Location = new System.Drawing.Point(12, 783);
+            this.playerPanel1.Name = "playerPanel1";
+            this.playerPanel1.Player = null;
+            this.playerPanel1.Size = new System.Drawing.Size(287, 256);
+            this.playerPanel1.TabIndex = 58;
+            this.playerPanel1.Visible = false;
+            // 
             // Card34
             // 
             this.Card34.Card = null;
@@ -273,6 +313,7 @@
             this.Card34.Name = "Card34";
             this.Card34.Size = new System.Drawing.Size(197, 223);
             this.Card34.TabIndex = 57;
+            this.Card34.Click += new System.EventHandler(this.Card34_Click);
             // 
             // Card33
             // 
@@ -281,6 +322,7 @@
             this.Card33.Name = "Card33";
             this.Card33.Size = new System.Drawing.Size(197, 223);
             this.Card33.TabIndex = 56;
+            this.Card33.Click += new System.EventHandler(this.Card33_Click);
             // 
             // Card32
             // 
@@ -289,6 +331,7 @@
             this.Card32.Name = "Card32";
             this.Card32.Size = new System.Drawing.Size(197, 223);
             this.Card32.TabIndex = 55;
+            this.Card32.Click += new System.EventHandler(this.Card32_Click);
             // 
             // Card31
             // 
@@ -297,6 +340,7 @@
             this.Card31.Name = "Card31";
             this.Card31.Size = new System.Drawing.Size(197, 223);
             this.Card31.TabIndex = 54;
+            this.Card31.Click += new System.EventHandler(this.Card31_Click);
             // 
             // Card24
             // 
@@ -305,6 +349,7 @@
             this.Card24.Name = "Card24";
             this.Card24.Size = new System.Drawing.Size(197, 224);
             this.Card24.TabIndex = 53;
+            this.Card24.Click += new System.EventHandler(this.Card24_Click);
             // 
             // Card23
             // 
@@ -313,6 +358,7 @@
             this.Card23.Name = "Card23";
             this.Card23.Size = new System.Drawing.Size(197, 224);
             this.Card23.TabIndex = 52;
+            this.Card23.Click += new System.EventHandler(this.Card23_Click);
             // 
             // Card22
             // 
@@ -321,6 +367,7 @@
             this.Card22.Name = "Card22";
             this.Card22.Size = new System.Drawing.Size(197, 224);
             this.Card22.TabIndex = 51;
+            this.Card22.Click += new System.EventHandler(this.Card22_Click);
             // 
             // Card21
             // 
@@ -329,6 +376,7 @@
             this.Card21.Name = "Card21";
             this.Card21.Size = new System.Drawing.Size(197, 224);
             this.Card21.TabIndex = 50;
+            this.Card21.Click += new System.EventHandler(this.Card21_Click);
             // 
             // Card14
             // 
@@ -337,7 +385,7 @@
             this.Card14.Name = "Card14";
             this.Card14.Size = new System.Drawing.Size(197, 226);
             this.Card14.TabIndex = 49;
-            this.Card11.Click += new System.EventHandler(this.Card14_Click);
+            this.Card14.Click += new System.EventHandler(this.Card14_Click);
             // 
             // Card13
             // 
@@ -346,7 +394,7 @@
             this.Card13.Name = "Card13";
             this.Card13.Size = new System.Drawing.Size(197, 226);
             this.Card13.TabIndex = 48;
-            this.Card11.Click += new System.EventHandler(this.Card13_Click);
+            this.Card13.Click += new System.EventHandler(this.Card13_Click);
             // 
             // Card12
             // 
@@ -355,7 +403,7 @@
             this.Card12.Name = "Card12";
             this.Card12.Size = new System.Drawing.Size(197, 226);
             this.Card12.TabIndex = 47;
-            this.Card11.Click += new System.EventHandler(this.Card12_Click);
+            this.Card12.Click += new System.EventHandler(this.Card12_Click);
             // 
             // Card11
             // 
@@ -371,6 +419,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1208, 1092);
+            this.Controls.Add(this.playerPanel4);
+            this.Controls.Add(this.playerPanel3);
+            this.Controls.Add(this.playerPanel2);
+            this.Controls.Add(this.playerPanel1);
             this.Controls.Add(this.Card34);
             this.Controls.Add(this.Card33);
             this.Controls.Add(this.Card32);
@@ -385,8 +437,8 @@
             this.Controls.Add(this.Card11);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.BankPanel);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.StartGame);
+            this.Controls.Add(this.AddPlayer);
             this.Name = "MainWindow";
             this.Text = "Form1";
             this.BankPanel.ResumeLayout(false);
@@ -397,21 +449,8 @@
 
         #endregion
 
-        private Game game;
-
-        private Player player1;
-
-        private Player player2;
-
-        private Player player3;
-
-        private Player player4;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private PlayerPanel playerPanel1 = new PlayerPanel(null);
-        private PlayerPanel playerPanel2 = new PlayerPanel(null);
-        private PlayerPanel playerPanel3 = new PlayerPanel(null);
-        private PlayerPanel playerPanel4 = new PlayerPanel(null);
+        private System.Windows.Forms.Button AddPlayer;
+        private System.Windows.Forms.Button StartGame;
         private System.Windows.Forms.GroupBox BankPanel;
         private System.Windows.Forms.Button BlackChips;
         private System.Windows.Forms.Button RedChips;
@@ -438,6 +477,10 @@
         private CardPanel Card33= new CardPanel();
         private CardPanel Card32= new CardPanel();
         private CardPanel Card31= new CardPanel();
+        private PlayerPanel playerPanel1;
+        private PlayerPanel playerPanel2;
+        private PlayerPanel playerPanel3;
+        private PlayerPanel playerPanel4;
         #region Fields
 
 

@@ -20,6 +20,8 @@
     {
         #region Fields
 
+        private readonly Game game;
+
         private Chips bankChips = new Chips();
 
         private Chips chipsToTake = new Chips();
@@ -30,16 +32,61 @@
 
         public MainWindow()
         {
-            this.playerPanel1 = new PlayerPanel(null);
-            this.playerPanel2 = new PlayerPanel(null);
-            this.playerPanel3 = new PlayerPanel(null);
-            this.playerPanel4 = new PlayerPanel(null);
+            this.playerPanel1 = new PlayerPanel();
+            this.playerPanel2 = new PlayerPanel();
+            this.playerPanel3 = new PlayerPanel();
+            this.playerPanel4 = new PlayerPanel();
+            this.game = new Game();
+            this.PlayerList = new List<Player>();
             this.InitializeComponent();
         }
 
         #endregion
 
+        #region Public Properties
+
+        public List<Player> PlayerList { get; set; }
+
+        #endregion
+
         #region Methods
+
+        private void AddPlayer_Click(object sender, EventArgs e)
+        {
+            var player = new Player();
+            this.PlayerList.Add(player);
+            this.game.Players.Add(player);
+
+            if (this.PlayerList.Count > 2)
+            {
+                this.StartGame.Enabled = true;
+            }
+
+            if (this.PlayerList.Count == 4)
+            {
+                this.AddPlayer.Enabled = false;
+            }
+
+            switch (this.PlayerList.Count)
+            {
+                case 4:
+                    this.playerPanel4.Player = this.PlayerList[3];
+                    this.playerPanel4.Visible = true;
+                    break;
+                case 3:
+                    this.playerPanel3.Player = this.PlayerList[2];
+                    this.playerPanel3.Visible = true;
+                    break;
+                case 2:
+                    this.playerPanel2.Player = this.PlayerList[1];
+                    this.playerPanel2.Visible = true;
+                    break;
+                case 1:
+                    this.playerPanel1.Player = this.PlayerList[0];
+                    this.playerPanel1.Visible = true;
+                    break;
+            }
+        }
 
         private void BankTakeButton_Click(object sender, EventArgs e)
         {
@@ -70,6 +117,81 @@
             }
 
             this.RefreshBank();
+        }
+
+        private void Card11_Click(object sender, EventArgs e)
+        {
+            this.CardClick(this.game.CurrentPlayer, this.Card11.Card);
+        }
+
+        private void Card12_Click(object sender, EventArgs e)
+        {
+            this.CardClick(this.game.CurrentPlayer, this.Card12.Card);
+        }
+
+        private void Card13_Click(object sender, EventArgs e)
+        {
+            this.CardClick(this.game.CurrentPlayer, this.Card13.Card);
+        }
+
+        private void Card14_Click(object sender, EventArgs e)
+        {
+            this.CardClick(this.game.CurrentPlayer, this.Card14.Card);
+        }
+
+        private void Card21_Click(object sender, EventArgs e)
+        {
+            this.CardClick(this.game.CurrentPlayer, this.Card21.Card);
+        }
+
+        private void Card22_Click(object sender, EventArgs e)
+        {
+            this.CardClick(this.game.CurrentPlayer, this.Card22.Card);
+        }
+
+        private void Card23_Click(object sender, EventArgs e)
+        {
+            this.CardClick(this.game.CurrentPlayer, this.Card23.Card);
+        }
+
+        private void Card24_Click(object sender, EventArgs e)
+        {
+            this.CardClick(this.game.CurrentPlayer, this.Card24.Card);
+        }
+
+        private void Card31_Click(object sender, EventArgs e)
+        {
+            this.CardClick(this.game.CurrentPlayer, this.Card31.Card);
+        }
+
+        private void Card32_Click(object sender, EventArgs e)
+        {
+            this.CardClick(this.game.CurrentPlayer, this.Card32.Card);
+        }
+
+        private void Card33_Click(object sender, EventArgs e)
+        {
+            this.CardClick(this.game.CurrentPlayer, this.Card33.Card);
+        }
+
+        private void Card34_Click(object sender, EventArgs e)
+        {
+            this.CardClick(this.game.CurrentPlayer, this.Card34.Card);
+        }
+
+        private void CardClick(Player currentPlayer, Card card)
+        {
+            if (this.game.CanPurchaseCard(currentPlayer, card))
+            {
+                this.game.PurchaseCard(currentPlayer, card);
+            }
+            else if (this.game.CanReserveCard(currentPlayer, card))
+            {
+                this.game.ReserveCard(currentPlayer, card);
+            }
+
+            this.FillDeck();
+            this.RefreshCurrentPlayer();
         }
 
         private void FillDeck()
@@ -165,6 +287,21 @@
             this.playerPanel4.BackColor = this.playerPanel4.Player == this.game.CurrentPlayer ? System.Drawing.Color.LightPink : SystemColors.Control;
         }
 
+        private void StartGame_Click(object sender, EventArgs e)
+        {
+            this.game.Deck = new Deck(this.game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
+            this.game.Start();
+
+            this.bankChips = this.game.Bank;
+            this.WhiteChips.Text = this.bankChips[Color.White].ToString();
+            this.BlueChips.Text = this.bankChips[Color.Blue].ToString();
+            this.GreenChips.Text = this.bankChips[Color.Green].ToString();
+            this.RedChips.Text = this.bankChips[Color.Red].ToString();
+            this.BlackChips.Text = this.bankChips[Color.Black].ToString();
+            this.RefreshCurrentPlayer();
+            this.FillDeck();
+        }
+
         private void TakenBlackChips_Click(object sender, EventArgs e)
         {
             if (this.chipsToTake[Color.Black] > 0)
@@ -231,73 +368,6 @@
             this.RefreshBank();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.game = new Game();
-
-            var list = new List<Player>() { new Player(), new Player(), new Player(), new Player() };
-            
-            this.playerPanel1.Player = list[0];
-            this.playerPanel2.Player = list[1];
-            this.playerPanel3.Player = list[2];
-            this.playerPanel4.Player = list[3];
-
-            System.Threading.Thread.Sleep(100);
-            this.game.Players = list;
-
-            this.game.Deck = new Deck(this.game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
-            this.game.Start();
-
-            this.bankChips = this.game.Bank;
-            this.WhiteChips.Text = this.bankChips[Color.White].ToString();
-            this.BlueChips.Text = this.bankChips[Color.Blue].ToString();
-            this.GreenChips.Text = this.bankChips[Color.Green].ToString();
-            this.RedChips.Text = this.bankChips[Color.Red].ToString();
-            this.BlackChips.Text = this.bankChips[Color.Black].ToString();
-            this.RefreshCurrentPlayer();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            this.FillDeck();
-        }
-
         #endregion
-
-        private void Card11_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card11.Card);
-        }
-
-        private void Card12_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card12.Card);
-        }
-
-        private void Card13_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card13.Card);
-        }
-
-        private void Card14_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card14.Card);
-        }
-
-        private void CardClick(Player currentPlayer, Card card)
-        {
-            if (this.game.CanPurchaseCard(currentPlayer, card))
-            {
-                this.game.PurchaseCard(currentPlayer, card);
-            }
-            else if (this.game.CanReserveCard(currentPlayer, card))
-            {
-                this.game.ReserveCard(currentPlayer, card);
-            }
-
-            this.FillDeck();
-            this.RefreshCurrentPlayer();
-        }
-
     }
 }

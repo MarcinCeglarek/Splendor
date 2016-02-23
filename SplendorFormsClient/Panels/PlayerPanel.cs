@@ -12,11 +12,16 @@
     {
         #region Constructors and Destructors
 
-        public PlayerPanel(Player player)
+        public PlayerPanel()
         {
-            this.Player = player;
             this.InitializeComponent();
         }
+
+        #endregion
+
+        #region Public Properties
+
+        public Player Player { get; set; }
 
         #endregion
 
@@ -41,5 +46,10 @@
         }
 
         #endregion
+
+        private void CardsBlue_Click(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }
