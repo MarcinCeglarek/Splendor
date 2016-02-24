@@ -37,17 +37,11 @@
             this.playerPanel3 = new PlayerPanel();
             this.playerPanel4 = new PlayerPanel();
             this.game = new Game();
-            this.PlayerList = new List<Player>();
             this.InitializeComponent();
         }
 
         #endregion
 
-        #region Public Properties
-
-        public List<Player> PlayerList { get; set; }
-
-        #endregion
 
         #region Public Methods and Operators
 
@@ -76,12 +70,7 @@
                 this.Log(string.Format("Player {0} purchases card {1}", this.game.CurrentPlayer, card));
                 this.game.PurchaseCard(currentPlayer, card);
             }
-            else
-            {
-                this.Log(string.Format("Player {0} can't purchase card {1}", this.game.CurrentPlayer, card));
-            }
-
-            if (this.game.CanReserveCard(currentPlayer, card))
+            else if (this.game.CanReserveCard(currentPlayer, card))
             {
                 this.Log(string.Format("Player {0} reserves card {1}", this.game.CurrentPlayer, card));
                 this.game.ReserveCard(currentPlayer, card);
@@ -89,7 +78,7 @@
             }
             else
             {
-                this.Log(string.Format("Player {0} can't reserve card {1}", this.game.CurrentPlayer, card));
+                this.Log(string.Format("Player {0} can't purchase nor reserve card {1}", this.game.CurrentPlayer, card));
             }
 
             this.FillDeck();
@@ -105,37 +94,32 @@
         {
             var player = new Player { Name = this.PlayerNameBox.Text };
 
-            this.PlayerList.Add(player);
             this.game.Players.Add(player);
 
             this.Log(string.Format("Player {0} joins game", player));
 
-            if (this.PlayerList.Count >= 2)
+            if (this.game.Players.Count >= 2)
             {
                 this.StartGame.Enabled = true;
             }
 
-            if (this.PlayerList.Count == 4)
+            if (this.game.Players.Count == 4)
             {
                 this.AddPlayer.Enabled = false;
             }
 
-            switch (this.PlayerList.Count)
+            switch (this.game.Players.Count)
             {
                 case 4:
-                    this.playerPanel4.Player = this.PlayerList[3];
                     this.playerPanel4.Visible = true;
                     break;
                 case 3:
-                    this.playerPanel3.Player = this.PlayerList[2];
                     this.playerPanel3.Visible = true;
                     break;
                 case 2:
-                    this.playerPanel2.Player = this.PlayerList[1];
                     this.playerPanel2.Visible = true;
                     break;
                 case 1:
-                    this.playerPanel1.Player = this.PlayerList[0];
                     this.playerPanel1.Visible = true;
                     break;
             }
@@ -296,8 +280,22 @@
 
             this.game.Deck = new Deck(this.game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
             this.game.Start();
+            this.Log("Shuffling players, order: " + string.Join(", ", this.game.Players));
 
             this.bankChips = this.game.Bank;
+
+            this.playerPanel1.Player = this.game.Players[0];
+            this.playerPanel2.Player = this.game.Players[1];
+
+            if (this.game.Players.Count > 2)
+            {
+                this.playerPanel3.Player = this.game.Players[2];
+
+                if (this.game.Players.Count > 3)
+                {
+                    this.playerPanel4.Player = this.game.Players[3];
+                }
+            }
 
             this.RefreshCurrentPlayer();
             this.RefreshBank();
