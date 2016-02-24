@@ -36,14 +36,12 @@
             this.Green = new System.Windows.Forms.Label();
             this.Blue = new System.Windows.Forms.Label();
             this.White = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.Points);
             this.panel1.Controls.Add(this.Color);
             this.panel1.Controls.Add(this.Black);
@@ -55,16 +53,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(188, 216);
             this.panel1.TabIndex = 7;
+            this.panel1.Click += new System.EventHandler(this.panel1_Click);
             // 
             // Points
             // 
             this.Points.BackColor = System.Drawing.Color.White;
             this.Points.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Points.Location = new System.Drawing.Point(151, 17);
+            this.Points.Location = new System.Drawing.Point(151, 23);
             this.Points.Name = "Points";
             this.Points.Size = new System.Drawing.Size(24, 31);
             this.Points.TabIndex = 13;
             this.Points.Text = "0";
+            this.Points.Click += new System.EventHandler(this.Points_Click);
             // 
             // Color
             // 
@@ -73,6 +73,7 @@
             this.Color.Name = "Color";
             this.Color.Size = new System.Drawing.Size(188, 75);
             this.Color.TabIndex = 12;
+            this.Color.Click += new System.EventHandler(this.Color_Click);
             // 
             // Black
             // 
@@ -85,6 +86,7 @@
             this.Black.TabIndex = 11;
             this.Black.Text = "0";
             this.Black.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Black.Click += new System.EventHandler(this.Black_Click);
             // 
             // Red
             // 
@@ -97,6 +99,7 @@
             this.Red.TabIndex = 10;
             this.Red.Text = "0";
             this.Red.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Red.Click += new System.EventHandler(this.Red_Click);
             // 
             // Green
             // 
@@ -109,6 +112,7 @@
             this.Green.TabIndex = 9;
             this.Green.Text = "0";
             this.Green.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Green.Click += new System.EventHandler(this.Green_Click);
             // 
             // Blue
             // 
@@ -121,6 +125,7 @@
             this.Blue.TabIndex = 8;
             this.Blue.Text = "0";
             this.Blue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Blue.Click += new System.EventHandler(this.Blue_Click);
             // 
             // White
             // 
@@ -132,15 +137,7 @@
             this.White.TabIndex = 7;
             this.White.Text = "0";
             this.White.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(31, 77);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(152, 134);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.White.Click += new System.EventHandler(this.White_Click);
             // 
             // CardPanel
             // 
@@ -164,6 +161,5 @@
         private System.Windows.Forms.Label Green;
         private System.Windows.Forms.Label Blue;
         private System.Windows.Forms.Label White;
-        private System.Windows.Forms.Button button1;
     }
 }

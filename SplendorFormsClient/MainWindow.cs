@@ -49,6 +49,22 @@
 
         #endregion
 
+        #region Public Methods and Operators
+
+        public void BuyReservedCard(Card reservedCard)
+        {
+            if (this.game.CanPurchaseCard(this.game.CurrentPlayer, reservedCard))
+            {
+                this.game.PurchaseCard(this.game.CurrentPlayer, reservedCard);
+            }
+
+            this.FillDeck();
+            this.RefreshBank();
+            this.RefreshCurrentPlayer();
+        }
+
+        #endregion
+
         #region Methods
 
         private void AddPlayer_Click(object sender, EventArgs e)
@@ -119,81 +135,6 @@
             this.RefreshBank();
         }
 
-        private void Card11_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card11.Card);
-        }
-
-        private void Card12_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card12.Card);
-        }
-
-        private void Card13_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card13.Card);
-        }
-
-        private void Card14_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card14.Card);
-        }
-
-        private void Card21_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card21.Card);
-        }
-
-        private void Card22_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card22.Card);
-        }
-
-        private void Card23_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card23.Card);
-        }
-
-        private void Card24_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card24.Card);
-        }
-
-        private void Card31_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card31.Card);
-        }
-
-        private void Card32_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card32.Card);
-        }
-
-        private void Card33_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card33.Card);
-        }
-
-        private void Card34_Click(object sender, EventArgs e)
-        {
-            this.CardClick(this.game.CurrentPlayer, this.Card34.Card);
-        }
-
-        private void CardClick(Player currentPlayer, Card card)
-        {
-            if (this.game.CanPurchaseCard(currentPlayer, card))
-            {
-                this.game.PurchaseCard(currentPlayer, card);
-            }
-            else if (this.game.CanReserveCard(currentPlayer, card))
-            {
-                this.game.ReserveCard(currentPlayer, card);
-            }
-
-            this.FillDeck();
-            this.RefreshCurrentPlayer();
-        }
-
         private void FillDeck()
         {
             this.Card11.Card = this.game.Deck.AvailableCards[0];
@@ -238,6 +179,8 @@
 
         private void RefreshBank()
         {
+            this.bankChips = this.game.Bank;
+
             this.WhiteChips.Text = this.bankChips[Color.White].ToString();
             this.TakenWhiteChips.Text = this.chipsToTake[Color.White].ToString();
 
@@ -298,6 +241,7 @@
             this.GreenChips.Text = this.bankChips[Color.Green].ToString();
             this.RedChips.Text = this.bankChips[Color.Red].ToString();
             this.BlackChips.Text = this.bankChips[Color.Black].ToString();
+            this.GoldChips.Text = this.bankChips[Color.Gold].ToString();
             this.RefreshCurrentPlayer();
             this.FillDeck();
         }
@@ -369,5 +313,22 @@
         }
 
         #endregion
+
+        public void PurchaseOrReserveCard(Card card)
+        {
+            var currentPlayer = this.game.CurrentPlayer;
+            if (this.game.CanPurchaseCard(currentPlayer, card))
+            {
+                this.game.PurchaseCard(currentPlayer, card);
+            }
+            else if (this.game.CanReserveCard(currentPlayer, card))
+            {
+                this.game.ReserveCard(currentPlayer, card);
+            }
+
+            this.FillDeck();
+            this.RefreshBank();
+            this.RefreshCurrentPlayer();
+        }
     }
 }

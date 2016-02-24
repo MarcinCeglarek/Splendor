@@ -313,7 +313,6 @@
             this.Card34.Name = "Card34";
             this.Card34.Size = new System.Drawing.Size(197, 223);
             this.Card34.TabIndex = 57;
-            this.Card34.Click += new System.EventHandler(this.Card34_Click);
             // 
             // Card33
             // 
@@ -322,7 +321,6 @@
             this.Card33.Name = "Card33";
             this.Card33.Size = new System.Drawing.Size(197, 223);
             this.Card33.TabIndex = 56;
-            this.Card33.Click += new System.EventHandler(this.Card33_Click);
             // 
             // Card32
             // 
@@ -331,7 +329,6 @@
             this.Card32.Name = "Card32";
             this.Card32.Size = new System.Drawing.Size(197, 223);
             this.Card32.TabIndex = 55;
-            this.Card32.Click += new System.EventHandler(this.Card32_Click);
             // 
             // Card31
             // 
@@ -340,7 +337,6 @@
             this.Card31.Name = "Card31";
             this.Card31.Size = new System.Drawing.Size(197, 223);
             this.Card31.TabIndex = 54;
-            this.Card31.Click += new System.EventHandler(this.Card31_Click);
             // 
             // Card24
             // 
@@ -349,7 +345,6 @@
             this.Card24.Name = "Card24";
             this.Card24.Size = new System.Drawing.Size(197, 224);
             this.Card24.TabIndex = 53;
-            this.Card24.Click += new System.EventHandler(this.Card24_Click);
             // 
             // Card23
             // 
@@ -358,7 +353,6 @@
             this.Card23.Name = "Card23";
             this.Card23.Size = new System.Drawing.Size(197, 224);
             this.Card23.TabIndex = 52;
-            this.Card23.Click += new System.EventHandler(this.Card23_Click);
             // 
             // Card22
             // 
@@ -367,7 +361,6 @@
             this.Card22.Name = "Card22";
             this.Card22.Size = new System.Drawing.Size(197, 224);
             this.Card22.TabIndex = 51;
-            this.Card22.Click += new System.EventHandler(this.Card22_Click);
             // 
             // Card21
             // 
@@ -376,7 +369,6 @@
             this.Card21.Name = "Card21";
             this.Card21.Size = new System.Drawing.Size(197, 224);
             this.Card21.TabIndex = 50;
-            this.Card21.Click += new System.EventHandler(this.Card21_Click);
             // 
             // Card14
             // 
@@ -385,7 +377,6 @@
             this.Card14.Name = "Card14";
             this.Card14.Size = new System.Drawing.Size(197, 226);
             this.Card14.TabIndex = 49;
-            this.Card14.Click += new System.EventHandler(this.Card14_Click);
             // 
             // Card13
             // 
@@ -394,7 +385,6 @@
             this.Card13.Name = "Card13";
             this.Card13.Size = new System.Drawing.Size(197, 226);
             this.Card13.TabIndex = 48;
-            this.Card13.Click += new System.EventHandler(this.Card13_Click);
             // 
             // Card12
             // 
@@ -403,7 +393,6 @@
             this.Card12.Name = "Card12";
             this.Card12.Size = new System.Drawing.Size(197, 226);
             this.Card12.TabIndex = 47;
-            this.Card12.Click += new System.EventHandler(this.Card12_Click);
             // 
             // Card11
             // 
@@ -412,7 +401,6 @@
             this.Card11.Name = "Card11";
             this.Card11.Size = new System.Drawing.Size(197, 226);
             this.Card11.TabIndex = 46;
-            this.Card11.Click += new System.EventHandler(this.Card11_Click);
             // 
             // MainWindow
             // 

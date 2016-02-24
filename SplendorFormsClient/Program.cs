@@ -9,6 +9,12 @@
 
     internal static class Program
     {
+        #region Public Properties
+
+        public static MainWindow MainWindow { get; private set; }
+
+        #endregion
+
         #region Methods
 
         [STAThread]
@@ -16,7 +22,8 @@
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWindow());
+            MainWindow = new MainWindow();
+            Application.Run(MainWindow);
         }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿namespace SplendorFormsClient.Panels
 {
+    using System;
     using System.Windows.Forms;
 
     using SplendorCore.Models;
@@ -65,6 +66,46 @@
                 }
 
             }
+        }
+
+        private void panel1_Click(object sender, System.EventArgs e)
+        {
+            Program.MainWindow.PurchaseOrReserveCard(this.card);
+        }
+
+        private void Color_Click(object sender, System.EventArgs e)
+        {
+            Program.MainWindow.PurchaseOrReserveCard(this.card);
+        }
+
+        private void Points_Click(object sender, System.EventArgs e)
+        {
+            Program.MainWindow.PurchaseOrReserveCard(this.card);
+        }
+
+        private void White_Click(object sender, System.EventArgs e)
+        {
+            Program.MainWindow.PurchaseOrReserveCard(this.card);
+        }
+
+        private void Blue_Click(object sender, System.EventArgs e)
+        {
+            Program.MainWindow.PurchaseOrReserveCard(this.card);
+        }
+
+        private void Green_Click(object sender, System.EventArgs e)
+        {
+            Program.MainWindow.PurchaseOrReserveCard(this.card);
+        }
+
+        private void Red_Click(object sender, System.EventArgs e)
+        {
+            Program.MainWindow.PurchaseOrReserveCard(this.card);
+        }
+
+        private void Black_Click(object sender, System.EventArgs e)
+        {
+            Program.MainWindow.PurchaseOrReserveCard(this.card);
         }
     }
 }

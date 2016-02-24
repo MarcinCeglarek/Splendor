@@ -182,14 +182,19 @@
             var player2 = game.CurrentPlayer;
             game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
 
+            Assert.AreEqual(3, game.Bank.Gold);
+
             game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
             game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+
+            Assert.AreEqual(1, game.Bank.Gold);
 
             game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
             game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
 
             Assert.AreEqual(3, player1.Chips.Gold);
             Assert.AreEqual(2, player2.Chips.Gold);
+            Assert.AreEqual(0, game.Bank.Gold);
 
             game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
             game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
