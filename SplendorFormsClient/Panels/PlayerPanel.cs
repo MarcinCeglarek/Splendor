@@ -34,62 +34,73 @@
         {
             if (this.Player != null)
             {
-                this.CardsWhite.Text = this.Player.Cards.White.ToString();
-                this.CardsBlue.Text = this.Player.Cards.Blue.ToString();
-                this.CardsBlack.Text = this.Player.Cards.Black.ToString();
-                this.CardsGreen.Text = this.Player.Cards.Green.ToString();
-                this.CardsRed.Text = this.Player.Cards.Red.ToString();
+                this.PlayerName.Text = this.Player.Name;
 
+                this.PopulateButton(this.CardsWhite, this.Player.Cards.White);
+                this.PopulateButton(this.CardsBlue, this.Player.Cards.Blue);
+                this.PopulateButton(this.CardsBlack, this.Player.Cards.Black);
+                this.PopulateButton(this.CardsGreen, this.Player.Cards.Green);
+                this.PopulateButton(this.CardsRed, this.Player.Cards.Red);
 
-                this.ChipsWhite.Text = this.Player.Chips.White.ToString();
-                this.ChipsBlue.Text = this.Player.Chips.Blue.ToString();
-                this.ChipsBlack.Text = this.Player.Chips.Black.ToString();
-                this.ChipsGreen.Text = this.Player.Chips.Green.ToString();
-                this.ChipsRed.Text = this.Player.Chips.Red.ToString();
-                this.ChipsGold.Text = this.Player.Chips.Gold.ToString();
+                this.PopulateButton(this.ChipsWhite, this.Player.Chips.White);
+                this.PopulateButton(this.ChipsBlue, this.Player.Chips.Blue);
+                this.PopulateButton(this.ChipsBlack, this.Player.Chips.Black);
+                this.PopulateButton(this.ChipsGreen, this.Player.Chips.Green);
+                this.PopulateButton(this.ChipsRed, this.Player.Chips.Red);
+                this.PopulateButton(this.ChipsGold, this.Player.Chips.Gold);
+
+                if (this.Player.VictoryPoints > 0)
+                {
+                    this.VictoryPoints.Visible = true;
+                    this.VictoryPoints.Text = this.Player.VictoryPoints.ToString();
+                }
+                else
+                {
+                    this.VictoryPoints.Visible = false;
+                }
 
                 if (this.Player.ReservedCards.Count == 3)
                 {
-                    this.reservedCard1.Enabled = true;
+                    this.reservedCard1.Visible = true;
                     this.reservedCard1.BackColor = this.GetColor(this.Player.ReservedCards[0].Color);
 
-                    this.reservedCard2.Enabled = true;
+                    this.reservedCard2.Visible = true;
                     this.reservedCard2.BackColor = this.GetColor(this.Player.ReservedCards[1].Color);
 
-                    this.reservedCard3.Enabled = true;
+                    this.reservedCard3.Visible = true;
                     this.reservedCard3.BackColor = this.GetColor(this.Player.ReservedCards[2].Color);
                 }
                 else if (this.Player.ReservedCards.Count == 2)
                 {
-                    this.reservedCard1.Enabled = true;
+                    this.reservedCard1.Visible = true;
                     this.reservedCard1.BackColor = this.GetColor(this.Player.ReservedCards[0].Color);
 
-                    this.reservedCard2.Enabled = true;
+                    this.reservedCard2.Visible = true;
                     this.reservedCard2.BackColor = this.GetColor(this.Player.ReservedCards[1].Color);
 
-                    this.reservedCard3.Enabled = false;
+                    this.reservedCard3.Visible = false;
                     this.reservedCard3.BackColor = DefaultBackColor;
                 }
                 else if (this.Player.ReservedCards.Count == 1)
                 {
-                    this.reservedCard1.Enabled = true;
+                    this.reservedCard1.Visible = true;
                     this.reservedCard1.BackColor = this.GetColor(this.Player.ReservedCards[0].Color);
 
-                    this.reservedCard2.Enabled = false;
+                    this.reservedCard2.Visible = false;
                     this.reservedCard2.BackColor = DefaultBackColor;
 
-                    this.reservedCard3.Enabled = false;
+                    this.reservedCard3.Visible = false;
                     this.reservedCard3.BackColor = DefaultBackColor;
                 }
                 else
                 {
-                    this.reservedCard1.Enabled = false;
+                    this.reservedCard1.Visible = false;
                     this.reservedCard1.BackColor = DefaultBackColor;
 
-                    this.reservedCard2.Enabled = false;
+                    this.reservedCard2.Visible = false;
                     this.reservedCard2.BackColor = DefaultBackColor;
 
-                    this.reservedCard3.Enabled = false;
+                    this.reservedCard3.Visible = false;
                     this.reservedCard3.BackColor = DefaultBackColor;
                 }
             }
@@ -98,10 +109,6 @@
         #endregion
 
         #region Methods
-
-        private void CardsBlue_Click(object sender, EventArgs e)
-        {
-        }
 
         private Color GetColor(SplendorCore.Models.Color color)
         {
@@ -129,7 +136,18 @@
             throw new NotSupportedException();
         }
 
-        #endregion
+        private void PopulateButton(Button button, int amount)
+        {
+            if (amount > 0)
+            {
+                button.Visible = true;
+                button.Text = amount.ToString();
+            }
+            else
+            {
+                button.Visible = false;
+            }
+        }
 
         private void reservedCard1_Click(object sender, EventArgs e)
         {
@@ -145,5 +163,7 @@
         {
             Program.MainWindow.BuyReservedCard(this.Player.ReservedCards[2]);
         }
+
+        #endregion
     }
 }

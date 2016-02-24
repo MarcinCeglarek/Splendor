@@ -50,6 +50,7 @@
             this.TakenWhiteChips = new System.Windows.Forms.Button();
             this.TakenGreenChips = new System.Windows.Forms.Button();
             this.TakenBlueChips = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.playerPanel4 = new SplendorFormsClient.Panels.PlayerPanel();
             this.playerPanel3 = new SplendorFormsClient.Panels.PlayerPanel();
             this.playerPanel2 = new SplendorFormsClient.Panels.PlayerPanel();
@@ -66,15 +67,17 @@
             this.Card13 = new SplendorFormsClient.Panels.CardPanel();
             this.Card12 = new SplendorFormsClient.Panels.CardPanel();
             this.Card11 = new SplendorFormsClient.Panels.CardPanel();
+            this.PlayerNameBox = new System.Windows.Forms.TextBox();
             this.BankPanel.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // AddPlayer
             // 
-            this.AddPlayer.Location = new System.Drawing.Point(12, 21);
+            this.AddPlayer.Enabled = false;
+            this.AddPlayer.Location = new System.Drawing.Point(200, 35);
             this.AddPlayer.Name = "AddPlayer";
-            this.AddPlayer.Size = new System.Drawing.Size(99, 53);
+            this.AddPlayer.Size = new System.Drawing.Size(99, 20);
             this.AddPlayer.TabIndex = 21;
             this.AddPlayer.Text = "Add Player";
             this.AddPlayer.UseVisualStyleBackColor = true;
@@ -82,9 +85,10 @@
             // 
             // StartGame
             // 
-            this.StartGame.Location = new System.Drawing.Point(126, 21);
+            this.StartGame.Enabled = false;
+            this.StartGame.Location = new System.Drawing.Point(305, 35);
             this.StartGame.Name = "StartGame";
-            this.StartGame.Size = new System.Drawing.Size(99, 53);
+            this.StartGame.Size = new System.Drawing.Size(99, 20);
             this.StartGame.TabIndex = 22;
             this.StartGame.Text = "Start Game";
             this.StartGame.UseVisualStyleBackColor = true;
@@ -120,6 +124,7 @@
             // BlackChips
             // 
             this.BlackChips.BackColor = System.Drawing.Color.Black;
+            this.BlackChips.Enabled = false;
             this.BlackChips.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.BlackChips.ForeColor = System.Drawing.Color.White;
             this.BlackChips.Location = new System.Drawing.Point(218, 19);
@@ -133,6 +138,7 @@
             // RedChips
             // 
             this.RedChips.BackColor = System.Drawing.Color.Red;
+            this.RedChips.Enabled = false;
             this.RedChips.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.RedChips.ForeColor = System.Drawing.Color.White;
             this.RedChips.Location = new System.Drawing.Point(165, 19);
@@ -146,6 +152,7 @@
             // GreenChips
             // 
             this.GreenChips.BackColor = System.Drawing.Color.Green;
+            this.GreenChips.Enabled = false;
             this.GreenChips.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.GreenChips.ForeColor = System.Drawing.Color.White;
             this.GreenChips.Location = new System.Drawing.Point(112, 19);
@@ -159,6 +166,7 @@
             // BlueChips
             // 
             this.BlueChips.BackColor = System.Drawing.Color.Blue;
+            this.BlueChips.Enabled = false;
             this.BlueChips.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.BlueChips.ForeColor = System.Drawing.Color.White;
             this.BlueChips.Location = new System.Drawing.Point(59, 19);
@@ -172,6 +180,7 @@
             // WhiteChips
             // 
             this.WhiteChips.BackColor = System.Drawing.Color.White;
+            this.WhiteChips.Enabled = false;
             this.WhiteChips.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.WhiteChips.Location = new System.Drawing.Point(6, 19);
             this.WhiteChips.Name = "WhiteChips";
@@ -217,6 +226,7 @@
             this.TakenBlackChips.TabIndex = 11;
             this.TakenBlackChips.Text = "0";
             this.TakenBlackChips.UseVisualStyleBackColor = false;
+            this.TakenBlackChips.Visible = false;
             this.TakenBlackChips.Click += new System.EventHandler(this.TakenBlackChips_Click);
             // 
             // TakenRedChips
@@ -230,6 +240,7 @@
             this.TakenRedChips.TabIndex = 10;
             this.TakenRedChips.Text = "0";
             this.TakenRedChips.UseVisualStyleBackColor = false;
+            this.TakenRedChips.Visible = false;
             this.TakenRedChips.Click += new System.EventHandler(this.TakenRedChips_Click);
             // 
             // TakenWhiteChips
@@ -242,6 +253,7 @@
             this.TakenWhiteChips.TabIndex = 7;
             this.TakenWhiteChips.Text = "0";
             this.TakenWhiteChips.UseVisualStyleBackColor = false;
+            this.TakenWhiteChips.Visible = false;
             this.TakenWhiteChips.Click += new System.EventHandler(this.TakenWhiteChips_Click);
             // 
             // TakenGreenChips
@@ -255,6 +267,7 @@
             this.TakenGreenChips.TabIndex = 9;
             this.TakenGreenChips.Text = "0";
             this.TakenGreenChips.UseVisualStyleBackColor = false;
+            this.TakenGreenChips.Visible = false;
             this.TakenGreenChips.Click += new System.EventHandler(this.TakenGreenChips_Click);
             // 
             // TakenBlueChips
@@ -268,7 +281,20 @@
             this.TakenBlueChips.TabIndex = 8;
             this.TakenBlueChips.Text = "0";
             this.TakenBlueChips.UseVisualStyleBackColor = false;
+            this.TakenBlueChips.Visible = false;
             this.TakenBlueChips.Click += new System.EventHandler(this.TakenBlueChips_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(836, 261);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(360, 516);
+            this.textBox1.TabIndex = 62;
             // 
             // playerPanel4
             // 
@@ -402,11 +428,21 @@
             this.Card11.Size = new System.Drawing.Size(197, 226);
             this.Card11.TabIndex = 46;
             // 
+            // PlayerNameBox
+            // 
+            this.PlayerNameBox.Location = new System.Drawing.Point(12, 35);
+            this.PlayerNameBox.Name = "PlayerNameBox";
+            this.PlayerNameBox.Size = new System.Drawing.Size(182, 20);
+            this.PlayerNameBox.TabIndex = 63;
+            this.PlayerNameBox.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1208, 1092);
+            this.Controls.Add(this.PlayerNameBox);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.playerPanel4);
             this.Controls.Add(this.playerPanel3);
             this.Controls.Add(this.playerPanel2);
@@ -432,6 +468,7 @@
             this.BankPanel.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -469,6 +506,8 @@
         private PlayerPanel playerPanel2;
         private PlayerPanel playerPanel3;
         private PlayerPanel playerPanel4;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox PlayerNameBox;
         #region Fields
 
 

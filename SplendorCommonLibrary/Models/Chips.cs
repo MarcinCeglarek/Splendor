@@ -30,6 +30,11 @@
             this.Add(Color.Gold, gold);
         }
 
+        public override string ToString()
+        {
+            return string.Format("{0}W/{1}B/{2}G/{3}R/{4}B/{5}G", this.White, this.Blue, this.Green, this.Red, this.Black, this.Gold);
+        }
+
         #endregion
 
         #region Public Properties

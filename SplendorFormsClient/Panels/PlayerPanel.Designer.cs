@@ -20,11 +20,13 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.VictoryPoints = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.reservedCard3 = new System.Windows.Forms.Button();
             this.reservedCard2 = new System.Windows.Forms.Button();
             this.reservedCard1 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.ChipsGold = new System.Windows.Forms.Button();
             this.ChipsBlack = new System.Windows.Forms.Button();
             this.ChipsRed = new System.Windows.Forms.Button();
             this.ChipsGreen = new System.Windows.Forms.Button();
@@ -37,8 +39,7 @@
             this.CardsGreen = new System.Windows.Forms.Button();
             this.CardsRed = new System.Windows.Forms.Button();
             this.CardsBlack = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.ChipsGold = new System.Windows.Forms.Button();
+            this.PlayerName = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -51,15 +52,27 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Controls.Add(this.VictoryPoints);
             this.panel1.Controls.Add(this.groupBox4);
             this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.PlayerName);
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(281, 250);
             this.panel1.TabIndex = 0;
+            // 
+            // VictoryPoints
+            // 
+            this.VictoryPoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.VictoryPoints.Location = new System.Drawing.Point(254, 1);
+            this.VictoryPoints.Name = "VictoryPoints";
+            this.VictoryPoints.Size = new System.Drawing.Size(25, 23);
+            this.VictoryPoints.TabIndex = 29;
+            this.VictoryPoints.Text = "0";
+            this.VictoryPoints.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VictoryPoints.Visible = false;
             // 
             // groupBox4
             // 
@@ -81,6 +94,7 @@
             this.reservedCard3.Size = new System.Drawing.Size(83, 100);
             this.reservedCard3.TabIndex = 2;
             this.reservedCard3.UseVisualStyleBackColor = true;
+            this.reservedCard3.Visible = false;
             this.reservedCard3.Click += new System.EventHandler(this.reservedCard3_Click);
             // 
             // reservedCard2
@@ -91,6 +105,7 @@
             this.reservedCard2.Size = new System.Drawing.Size(83, 100);
             this.reservedCard2.TabIndex = 1;
             this.reservedCard2.UseVisualStyleBackColor = true;
+            this.reservedCard2.Visible = false;
             this.reservedCard2.Click += new System.EventHandler(this.reservedCard2_Click);
             // 
             // reservedCard1
@@ -101,6 +116,7 @@
             this.reservedCard1.Size = new System.Drawing.Size(83, 100);
             this.reservedCard1.TabIndex = 0;
             this.reservedCard1.UseVisualStyleBackColor = true;
+            this.reservedCard1.Visible = false;
             this.reservedCard1.Click += new System.EventHandler(this.reservedCard1_Click);
             // 
             // groupBox3
@@ -118,6 +134,22 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Chips";
             // 
+            // ChipsGold
+            // 
+            this.ChipsGold.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ChipsGold.BackColor = System.Drawing.Color.Gold;
+            this.ChipsGold.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ChipsGold.ForeColor = System.Drawing.Color.Black;
+            this.ChipsGold.Location = new System.Drawing.Point(230, 12);
+            this.ChipsGold.Name = "ChipsGold";
+            this.ChipsGold.Size = new System.Drawing.Size(40, 23);
+            this.ChipsGold.TabIndex = 28;
+            this.ChipsGold.Text = "0";
+            this.ChipsGold.UseVisualStyleBackColor = false;
+            this.ChipsGold.Visible = false;
+            // 
             // ChipsBlack
             // 
             this.ChipsBlack.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -132,6 +164,7 @@
             this.ChipsBlack.TabIndex = 27;
             this.ChipsBlack.Text = "0";
             this.ChipsBlack.UseVisualStyleBackColor = false;
+            this.ChipsBlack.Visible = false;
             // 
             // ChipsRed
             // 
@@ -147,6 +180,7 @@
             this.ChipsRed.TabIndex = 26;
             this.ChipsRed.Text = "0";
             this.ChipsRed.UseVisualStyleBackColor = false;
+            this.ChipsRed.Visible = false;
             // 
             // ChipsGreen
             // 
@@ -162,6 +196,7 @@
             this.ChipsGreen.TabIndex = 25;
             this.ChipsGreen.Text = "0";
             this.ChipsGreen.UseVisualStyleBackColor = false;
+            this.ChipsGreen.Visible = false;
             // 
             // ChipsBlue
             // 
@@ -177,6 +212,7 @@
             this.ChipsBlue.TabIndex = 24;
             this.ChipsBlue.Text = "0";
             this.ChipsBlue.UseVisualStyleBackColor = false;
+            this.ChipsBlue.Visible = false;
             // 
             // ChipsWhite
             // 
@@ -191,6 +227,7 @@
             this.ChipsWhite.TabIndex = 23;
             this.ChipsWhite.Text = "0";
             this.ChipsWhite.UseVisualStyleBackColor = false;
+            this.ChipsWhite.Visible = false;
             // 
             // groupBox2
             // 
@@ -228,6 +265,7 @@
             this.CardsWhite.TabIndex = 3;
             this.CardsWhite.Text = "0";
             this.CardsWhite.UseVisualStyleBackColor = false;
+            this.CardsWhite.Visible = false;
             // 
             // CardsBlue
             // 
@@ -243,7 +281,7 @@
             this.CardsBlue.TabIndex = 4;
             this.CardsBlue.Text = "0";
             this.CardsBlue.UseVisualStyleBackColor = false;
-            this.CardsBlue.Click += new System.EventHandler(this.CardsBlue_Click);
+            this.CardsBlue.Visible = false;
             // 
             // CardsGreen
             // 
@@ -259,6 +297,7 @@
             this.CardsGreen.TabIndex = 5;
             this.CardsGreen.Text = "0";
             this.CardsGreen.UseVisualStyleBackColor = false;
+            this.CardsGreen.Visible = false;
             // 
             // CardsRed
             // 
@@ -274,6 +313,7 @@
             this.CardsRed.TabIndex = 6;
             this.CardsRed.Text = "0";
             this.CardsRed.UseVisualStyleBackColor = false;
+            this.CardsRed.Visible = false;
             // 
             // CardsBlack
             // 
@@ -289,31 +329,17 @@
             this.CardsBlack.TabIndex = 7;
             this.CardsBlack.Text = "0";
             this.CardsBlack.UseVisualStyleBackColor = false;
+            this.CardsBlack.Visible = false;
             // 
-            // label1
+            // PlayerName
             // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(275, 23);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Player";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ChipsGold
-            // 
-            this.ChipsGold.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ChipsGold.BackColor = System.Drawing.Color.Gold;
-            this.ChipsGold.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.ChipsGold.ForeColor = System.Drawing.Color.Black;
-            this.ChipsGold.Location = new System.Drawing.Point(230, 12);
-            this.ChipsGold.Name = "ChipsGold";
-            this.ChipsGold.Size = new System.Drawing.Size(40, 23);
-            this.ChipsGold.TabIndex = 28;
-            this.ChipsGold.Text = "0";
-            this.ChipsGold.UseVisualStyleBackColor = false;
+            this.PlayerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.PlayerName.Location = new System.Drawing.Point(3, 0);
+            this.PlayerName.Name = "PlayerName";
+            this.PlayerName.Size = new System.Drawing.Size(275, 23);
+            this.PlayerName.TabIndex = 0;
+            this.PlayerName.Text = "Player";
+            this.PlayerName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // PlayerPanel
             // 
@@ -339,7 +365,7 @@
         private System.Windows.Forms.Button CardsGreen;
         private System.Windows.Forms.Button CardsBlue;
         private System.Windows.Forms.Button CardsWhite;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label PlayerName;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button reservedCard3;
@@ -353,5 +379,6 @@
         private System.Windows.Forms.Button ChipsWhite;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button ChipsGold;
+        private System.Windows.Forms.Label VictoryPoints;
     }
 }

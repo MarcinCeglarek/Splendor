@@ -44,6 +44,11 @@
 
         #endregion
 
+        public override string ToString()
+        {
+            return string.Format("{0}: {1} ({2} pts.)", this.RomanTier(), this.Color, this.VictoryPoints);
+        }
+
         #region Public Methods and Operators
 
         public bool CanBuy(Chips chips)
@@ -76,6 +81,24 @@
             }
 
             return missingChips <= chips.Gold;
+        }
+
+        private string RomanTier()
+        {
+            switch (this.Tier)
+            {
+                case 1:
+                    return "I";
+                    break;
+                case 2:
+                    return "II";
+                    break;
+                case 3:
+                    return "III";
+                    break;
+            }
+
+            throw new NotSupportedException();
         }
 
         #endregion

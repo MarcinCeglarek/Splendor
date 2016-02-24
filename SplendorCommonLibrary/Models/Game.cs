@@ -283,13 +283,11 @@
             this.VerifyThatGameIsActive();
             this.VerifyPlayerEligibleForMove(player);
 
-            if (!this.Deck.AvailableCards.Contains(card))
+            if (!this.Deck.AvailableCards.Contains(card) && !this.Players.Single(o => o == player).ReservedCards.Contains(card))
             {
                 throw new CardUnavailableException(card);
             }
 
-            // Two strategies - which one is better
-            // 1
             if (!card.CanBuy(player.ChipsAndCards))
             {
                 throw new InsuficentPlayerResourcesException(player, card);

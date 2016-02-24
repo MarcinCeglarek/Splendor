@@ -1,18 +1,32 @@
 ﻿namespace SplendorFormsClient.Panels
 {
+    #region
+
     using System;
     using System.Windows.Forms;
 
     using SplendorCore.Models;
 
+    #endregion
+
     public partial class CardPanel : UserControl
     {
+        #region Fields
+
         private Card card;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         public CardPanel()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
+
+        #endregion
+
+        #region Public Properties
 
         public Card Card
         {
@@ -30,12 +44,13 @@
                     return;
                 }
 
-                this.Black.Text = this.card.Cost.Black.ToString();
-                this.Blue.Text = this.card.Cost.Blue.ToString();
-                this.White.Text = this.card.Cost.White.ToString();
-                this.Green.Text = this.card.Cost.Green.ToString();
-                this.Red.Text = this.card.Cost.Red.ToString();
-                this.Points.Text = this.card.VictoryPoints.ToString();
+                this.PopulateLabel(this.Black, this.card.Cost.Black);
+                this.PopulateLabel(this.Blue, this.card.Cost.Blue);
+                this.PopulateLabel(this.White, this.card.Cost.White);
+                this.PopulateLabel(this.Green, this.card.Cost.Green);
+                this.PopulateLabel(this.Red, this.card.Cost.Red);
+                this.PopulateLabel(this.Points, this.card.VictoryPoints);
+
                 switch (this.card.Color)
                 {
                     case SplendorCore.Models.Color.Black:
@@ -64,48 +79,66 @@
                         this.Points.ForeColor = System.Drawing.Color.White;
                         break;
                 }
-
             }
         }
 
-        private void panel1_Click(object sender, System.EventArgs e)
+        #endregion
+
+        #region Methods
+
+        private void Black_Click(object sender, EventArgs e)
         {
             Program.MainWindow.PurchaseOrReserveCard(this.card);
         }
 
-        private void Color_Click(object sender, System.EventArgs e)
+        private void Blue_Click(object sender, EventArgs e)
         {
             Program.MainWindow.PurchaseOrReserveCard(this.card);
         }
 
-        private void Points_Click(object sender, System.EventArgs e)
+        private void Color_Click(object sender, EventArgs e)
         {
             Program.MainWindow.PurchaseOrReserveCard(this.card);
         }
 
-        private void White_Click(object sender, System.EventArgs e)
+        private void Green_Click(object sender, EventArgs e)
         {
             Program.MainWindow.PurchaseOrReserveCard(this.card);
         }
 
-        private void Blue_Click(object sender, System.EventArgs e)
+        private void Points_Click(object sender, EventArgs e)
         {
             Program.MainWindow.PurchaseOrReserveCard(this.card);
         }
 
-        private void Green_Click(object sender, System.EventArgs e)
+        private void PopulateLabel(Label label, int amount)
+        {
+            if (amount > 0)
+            {
+                label.Visible = true;
+                label.Text = amount.ToString();
+            }
+            else
+            {
+                label.Visible = false;
+            }
+        }
+
+        private void Red_Click(object sender, EventArgs e)
         {
             Program.MainWindow.PurchaseOrReserveCard(this.card);
         }
 
-        private void Red_Click(object sender, System.EventArgs e)
+        private void White_Click(object sender, EventArgs e)
         {
             Program.MainWindow.PurchaseOrReserveCard(this.card);
         }
 
-        private void Black_Click(object sender, System.EventArgs e)
+        private void panel1_Click(object sender, EventArgs e)
         {
             Program.MainWindow.PurchaseOrReserveCard(this.card);
         }
+
+        #endregion
     }
 }

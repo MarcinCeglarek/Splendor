@@ -55,7 +55,41 @@
         {
             if (this.game.CanPurchaseCard(this.game.CurrentPlayer, reservedCard))
             {
+                this.Log(string.Format("Player {0} purchases previously reserved card {1}", this.game.CurrentPlayer, reservedCard));
                 this.game.PurchaseCard(this.game.CurrentPlayer, reservedCard);
+            }
+            else
+            {
+                this.Log(string.Format("Player {0} can't purchase previously reserved card {1}", this.game.CurrentPlayer, reservedCard));
+            }
+
+            this.FillDeck();
+            this.RefreshBank();
+            this.RefreshCurrentPlayer();
+        }
+
+        public void PurchaseOrReserveCard(Card card)
+        {
+            var currentPlayer = this.game.CurrentPlayer;
+            if (this.game.CanPurchaseCard(currentPlayer, card))
+            {
+                this.Log(string.Format("Player {0} purchases card {1}", this.game.CurrentPlayer, card));
+                this.game.PurchaseCard(currentPlayer, card);
+            }
+            else
+            {
+                this.Log(string.Format("Player {0} can't purchase card {1}", this.game.CurrentPlayer, card));
+            }
+
+            if (this.game.CanReserveCard(currentPlayer, card))
+            {
+                this.Log(string.Format("Player {0} reserves card {1}", this.game.CurrentPlayer, card));
+                this.game.ReserveCard(currentPlayer, card);
+                this.bankChips.Gold = this.game.Bank.Gold;
+            }
+            else
+            {
+                this.Log(string.Format("Player {0} can't reserve card {1}", this.game.CurrentPlayer, card));
             }
 
             this.FillDeck();
@@ -69,11 +103,14 @@
 
         private void AddPlayer_Click(object sender, EventArgs e)
         {
-            var player = new Player();
+            var player = new Player { Name = this.PlayerNameBox.Text };
+
             this.PlayerList.Add(player);
             this.game.Players.Add(player);
 
-            if (this.PlayerList.Count > 2)
+            this.Log(string.Format("Player {0} joins game", player));
+
+            if (this.PlayerList.Count >= 2)
             {
                 this.StartGame.Enabled = true;
             }
@@ -102,13 +139,25 @@
                     this.playerPanel1.Visible = true;
                     break;
             }
+
+            this.PlayerNameBox.Text = string.Empty;
+            this.AddPlayer.Enabled = false;
         }
 
         private void BankTakeButton_Click(object sender, EventArgs e)
         {
-            this.game.TakeChips(this.game.CurrentPlayer, this.game.CurrentPlayer.Chips + this.chipsToTake);
-            this.bankChips = this.game.Bank;
-            this.chipsToTake = new Chips();
+            if (this.game.CanTakeChips(this.game.CurrentPlayer, this.game.CurrentPlayer.Chips + this.chipsToTake))
+            {
+                this.Log(string.Format("Player {0} takes {1}", this.game.CurrentPlayer, this.chipsToTake));
+                this.game.TakeChips(this.game.CurrentPlayer, this.game.CurrentPlayer.Chips + this.chipsToTake);
+                this.bankChips = this.game.Bank;
+                this.chipsToTake = new Chips();
+            }
+            else
+            {
+                this.Log(string.Format("Player {0} can't take {1}", this.game.CurrentPlayer, this.chipsToTake));
+            }
+            
             this.RefreshBank();
             this.RefreshCurrentPlayer();
         }
@@ -133,6 +182,19 @@
             }
 
             this.RefreshBank();
+        }
+
+        private void FillButton(Button button, int amount)
+        {
+            if (amount > 0)
+            {
+                button.Visible = true;
+                button.Text = amount.ToString();
+            }
+            else
+            {
+                button.Visible = false;
+            }
         }
 
         private void FillDeck()
@@ -179,24 +241,18 @@
 
         private void RefreshBank()
         {
-            this.bankChips = this.game.Bank;
+            this.FillButton(this.WhiteChips, this.bankChips.White);
+            this.FillButton(this.BlueChips, this.bankChips.Blue);
+            this.FillButton(this.BlackChips, this.bankChips.Black);
+            this.FillButton(this.GreenChips, this.bankChips.Green);
+            this.FillButton(this.RedChips, this.bankChips.Red);
+            this.FillButton(this.GoldChips, this.bankChips.Gold);
 
-            this.WhiteChips.Text = this.bankChips[Color.White].ToString();
-            this.TakenWhiteChips.Text = this.chipsToTake[Color.White].ToString();
-
-            this.BlueChips.Text = this.bankChips[Color.Blue].ToString();
-            this.TakenBlueChips.Text = this.chipsToTake[Color.Blue].ToString();
-
-            this.GreenChips.Text = this.bankChips[Color.Green].ToString();
-            this.TakenGreenChips.Text = this.chipsToTake[Color.Green].ToString();
-
-            this.RedChips.Text = this.bankChips[Color.Red].ToString();
-            this.TakenRedChips.Text = this.chipsToTake[Color.Red].ToString();
-
-            this.BlackChips.Text = this.bankChips[Color.Black].ToString();
-            this.TakenBlackChips.Text = this.chipsToTake[Color.Black].ToString();
-
-            this.GoldChips.Text = this.bankChips[Color.Gold].ToString();
+            this.FillButton(this.TakenWhiteChips, this.chipsToTake.White);
+            this.FillButton(this.TakenBlackChips, this.chipsToTake.Black);
+            this.FillButton(this.TakenBlueChips, this.chipsToTake.Blue);
+            this.FillButton(this.TakenGreenChips, this.chipsToTake.Green);
+            this.FillButton(this.TakenRedChips, this.chipsToTake.Red);
 
             if (this.game.HasStarted && !this.game.HasFinished)
             {
@@ -232,17 +288,19 @@
 
         private void StartGame_Click(object sender, EventArgs e)
         {
+            this.Log("Game started");
+
+            this.PlayerNameBox.Visible = false;
+            this.AddPlayer.Visible = false;
+            this.StartGame.Visible = false;
+
             this.game.Deck = new Deck(this.game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
             this.game.Start();
 
             this.bankChips = this.game.Bank;
-            this.WhiteChips.Text = this.bankChips[Color.White].ToString();
-            this.BlueChips.Text = this.bankChips[Color.Blue].ToString();
-            this.GreenChips.Text = this.bankChips[Color.Green].ToString();
-            this.RedChips.Text = this.bankChips[Color.Red].ToString();
-            this.BlackChips.Text = this.bankChips[Color.Black].ToString();
-            this.GoldChips.Text = this.bankChips[Color.Gold].ToString();
+
             this.RefreshCurrentPlayer();
+            this.RefreshBank();
             this.FillDeck();
         }
 
@@ -312,23 +370,15 @@
             this.RefreshBank();
         }
 
+        private void Log(string message)
+        {
+            this.textBox1.AppendText(message + Environment.NewLine);
+        }
         #endregion
 
-        public void PurchaseOrReserveCard(Card card)
+        private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            var currentPlayer = this.game.CurrentPlayer;
-            if (this.game.CanPurchaseCard(currentPlayer, card))
-            {
-                this.game.PurchaseCard(currentPlayer, card);
-            }
-            else if (this.game.CanReserveCard(currentPlayer, card))
-            {
-                this.game.ReserveCard(currentPlayer, card);
-            }
-
-            this.FillDeck();
-            this.RefreshBank();
-            this.RefreshCurrentPlayer();
+            this.AddPlayer.Enabled = !string.IsNullOrWhiteSpace(this.PlayerNameBox.Text);
         }
     }
 }
