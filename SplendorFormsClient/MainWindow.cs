@@ -277,6 +277,7 @@
             this.FillButton(this.TakenGreenChips, this.chipsToTake.Green);
             this.FillButton(this.TakenRedChips, this.chipsToTake.Red);
 
+
             if (this.game.HasStarted && !this.game.HasFinished)
             {
                 this.WhiteChips.Enabled = true;
@@ -329,6 +330,8 @@
             this.Card32.Visible = true;
             this.Card33.Visible = true;
             this.Card34.Visible = true;
+
+            this.BankTakeButton.Enabled = true;
 
             this.game.Deck = new Deck(this.game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
             this.game.Start();

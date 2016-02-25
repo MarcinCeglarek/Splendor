@@ -38,7 +38,7 @@
                 case SplendorColor.Blue:
                     return White;
                 case SplendorColor.Gold:
-                    return White;
+                    return Black;
                 case SplendorColor.Green:
                     return White;
                 case SplendorColor.Red:

@@ -187,6 +187,7 @@
             // 
             // BankTakeButton
             // 
+            this.BankTakeButton.Enabled = false;
             this.BankTakeButton.Location = new System.Drawing.Point(6, 67);
             this.BankTakeButton.Name = "BankTakeButton";
             this.BankTakeButton.Size = new System.Drawing.Size(348, 31);
@@ -290,36 +291,44 @@
             // playerPanel4
             // 
             this.playerPanel4.Location = new System.Drawing.Point(978, 897);
+            this.playerPanel4.MaximumSize = new System.Drawing.Size(293, 260);
+            this.playerPanel4.MinimumSize = new System.Drawing.Size(293, 260);
             this.playerPanel4.Name = "playerPanel4";
             this.playerPanel4.Player = null;
-            this.playerPanel4.Size = new System.Drawing.Size(289, 258);
+            this.playerPanel4.Size = new System.Drawing.Size(293, 260);
             this.playerPanel4.TabIndex = 61;
             this.playerPanel4.Visible = false;
             // 
             // playerPanel3
             // 
             this.playerPanel3.Location = new System.Drawing.Point(656, 897);
+            this.playerPanel3.MaximumSize = new System.Drawing.Size(293, 260);
+            this.playerPanel3.MinimumSize = new System.Drawing.Size(293, 260);
             this.playerPanel3.Name = "playerPanel3";
             this.playerPanel3.Player = null;
-            this.playerPanel3.Size = new System.Drawing.Size(289, 258);
+            this.playerPanel3.Size = new System.Drawing.Size(293, 260);
             this.playerPanel3.TabIndex = 60;
             this.playerPanel3.Visible = false;
             // 
             // playerPanel2
             // 
             this.playerPanel2.Location = new System.Drawing.Point(334, 897);
+            this.playerPanel2.MaximumSize = new System.Drawing.Size(293, 260);
+            this.playerPanel2.MinimumSize = new System.Drawing.Size(293, 260);
             this.playerPanel2.Name = "playerPanel2";
             this.playerPanel2.Player = null;
-            this.playerPanel2.Size = new System.Drawing.Size(289, 258);
+            this.playerPanel2.Size = new System.Drawing.Size(293, 260);
             this.playerPanel2.TabIndex = 59;
             this.playerPanel2.Visible = false;
             // 
             // playerPanel1
             // 
             this.playerPanel1.Location = new System.Drawing.Point(12, 897);
+            this.playerPanel1.MaximumSize = new System.Drawing.Size(293, 260);
+            this.playerPanel1.MinimumSize = new System.Drawing.Size(293, 260);
             this.playerPanel1.Name = "playerPanel1";
             this.playerPanel1.Player = null;
-            this.playerPanel1.Size = new System.Drawing.Size(289, 258);
+            this.playerPanel1.Size = new System.Drawing.Size(293, 260);
             this.playerPanel1.TabIndex = 58;
             this.playerPanel1.Visible = false;
             // 

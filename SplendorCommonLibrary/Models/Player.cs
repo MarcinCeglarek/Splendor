@@ -94,7 +94,7 @@
             {
                 if (cardChipCost.Value > this.Chips[cardChipCost.Key])
                 {
-                    var requiredGold = this.Chips[cardChipCost.Key] - cardChipCost.Value;
+                    var requiredGold = cardChipCost.Value - this.Chips[cardChipCost.Key];
                     if (requiredGold > this.Chips[Color.Gold])
                     {
                         throw new PurchaseCardException(this, card);

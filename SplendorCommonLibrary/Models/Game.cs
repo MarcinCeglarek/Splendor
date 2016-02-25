@@ -122,6 +122,10 @@
             {
                 return false;
             }
+            catch (SplendorCardException)
+            {
+                return false;
+            }
         }
 
         public bool CanReserveCard(Player player, Card card)
@@ -169,6 +173,8 @@
             this.PurchaseCardVerification(player, card);
 
             this.Deck.AllCards.Remove(card);
+            this.CurrentPlayer.ReservedCards.Remove(card);
+
             var cost = this.CurrentPlayer.GetCardCost(card);
 
             this.CurrentPlayer.Chips -= cost;
@@ -333,7 +339,6 @@
 
             var diff = chips - player.Chips;
 
-            // simplyfying this would be greatly appreciated
             if (diff.Gold != 0)
             {
                 throw new TakeGoldChipsNotAllowed(player, chips);
