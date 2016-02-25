@@ -3,6 +3,7 @@
     #region
 
     using System;
+    using System.Linq;
     using System.Windows.Forms;
 
     using SplendorCore.Models;
@@ -44,42 +45,99 @@
                     return;
                 }
 
-                this.PopulateLabel(this.Black, this.card.Cost.Black);
-                this.PopulateLabel(this.Blue, this.card.Cost.Blue);
-                this.PopulateLabel(this.White, this.card.Cost.White);
-                this.PopulateLabel(this.Green, this.card.Cost.Green);
-                this.PopulateLabel(this.Red, this.card.Cost.Red);
+                var costList = this.card.Cost.Where(cost => cost.Value != 0).ToList();
+                switch (costList.Count())
+                {
+                    case 1:
+                        this.ColorizeLabel(this.L1, costList[0].Key);
+                        this.PopulateLabel(this.L1, costList[0].Value);
+                        this.PopulateLabel(this.L2, 0);
+                        this.PopulateLabel(this.L3, 0);
+                        this.PopulateLabel(this.L4, 0);
+                        this.PopulateLabel(this.L5, 0);
+                        break;
+                    case 2:
+                        this.ColorizeLabel(this.L1, costList[0].Key);
+                        this.PopulateLabel(this.L1, costList[0].Value);
+                        this.ColorizeLabel(this.L2, costList[1].Key);
+                        this.PopulateLabel(this.L2, costList[1].Value);
+                        this.PopulateLabel(this.L3, 0);
+                        this.PopulateLabel(this.L4, 0);
+                        this.PopulateLabel(this.L5, 0);
+                        break;
+                    case 3:
+                        this.ColorizeLabel(this.L1, costList[0].Key);
+                        this.PopulateLabel(this.L1, costList[0].Value);
+                        this.ColorizeLabel(this.L2, costList[1].Key);
+                        this.PopulateLabel(this.L2, costList[1].Value);
+                        this.ColorizeLabel(this.L3, costList[2].Key);
+                        this.PopulateLabel(this.L3, costList[2].Value);
+                        this.PopulateLabel(this.L4, 0);
+                        this.PopulateLabel(this.L5, 0);
+                        break;
+                    case 4:
+                        this.ColorizeLabel(this.L1, costList[0].Key);
+                        this.PopulateLabel(this.L1, costList[0].Value);
+                        this.ColorizeLabel(this.L2, costList[1].Key);
+                        this.PopulateLabel(this.L2, costList[1].Value);
+                        this.ColorizeLabel(this.L3, costList[2].Key);
+                        this.PopulateLabel(this.L3, costList[2].Value);
+                        this.ColorizeLabel(this.L4, costList[3].Key);
+                        this.PopulateLabel(this.L4, costList[3].Value);
+                        this.PopulateLabel(this.L5, 0);
+
+                        break;
+                    case 5:
+                        this.ColorizeLabel(this.L1, costList[0].Key);
+                        this.PopulateLabel(this.L1, costList[0].Value);
+                        this.ColorizeLabel(this.L2, costList[1].Key);
+                        this.PopulateLabel(this.L2, costList[1].Value);
+                        this.ColorizeLabel(this.L3, costList[2].Key);
+                        this.PopulateLabel(this.L3, costList[2].Value);
+                        this.ColorizeLabel(this.L4, costList[3].Key);
+                        this.PopulateLabel(this.L4, costList[3].Value);
+                        this.ColorizeLabel(this.L5, costList[4].Key);
+                        this.PopulateLabel(this.L5, costList[4].Value);
+                        break;
+                }
+
                 this.PopulateLabel(this.Points, this.card.VictoryPoints);
 
                 switch (this.card.Color)
                 {
                     case SplendorCore.Models.Color.Black:
-                        this.Color.BackColor = System.Drawing.Color.Black;
-                        this.Points.BackColor = System.Drawing.Color.Black;
-                        this.Points.ForeColor = System.Drawing.Color.White;
+                        this.Color.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Black);
+                        this.Points.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Black);
+                        this.Points.ForeColor = FormsColor.ForeColor(SplendorCore.Models.Color.Black);
                         break;
                     case SplendorCore.Models.Color.Blue:
-                        this.Color.BackColor = System.Drawing.Color.Blue;
-                        this.Points.BackColor = System.Drawing.Color.Blue;
-                        this.Points.ForeColor = System.Drawing.Color.White;
+                        this.Color.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Blue);
+                        this.Points.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Blue);
+                        this.Points.ForeColor = FormsColor.ForeColor(SplendorCore.Models.Color.Blue);
                         break;
                     case SplendorCore.Models.Color.White:
-                        this.Color.BackColor = System.Drawing.Color.White;
-                        this.Points.BackColor = System.Drawing.Color.White;
-                        this.Points.ForeColor = System.Drawing.Color.Black;
+                        this.Color.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.White);
+                        this.Points.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.White);
+                        this.Points.ForeColor = FormsColor.ForeColor(SplendorCore.Models.Color.White);
                         break;
                     case SplendorCore.Models.Color.Red:
-                        this.Color.BackColor = System.Drawing.Color.Red;
-                        this.Points.BackColor = System.Drawing.Color.Red;
-                        this.Points.ForeColor = System.Drawing.Color.White;
+                        this.Color.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Red);
+                        this.Points.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Red);
+                        this.Points.ForeColor = FormsColor.ForeColor(SplendorCore.Models.Color.Red);
                         break;
                     case SplendorCore.Models.Color.Green:
-                        this.Color.BackColor = System.Drawing.Color.Green;
-                        this.Points.BackColor = System.Drawing.Color.Green;
-                        this.Points.ForeColor = System.Drawing.Color.White;
+                        this.Color.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Green);
+                        this.Points.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Green);
+                        this.Points.ForeColor = FormsColor.ForeColor(SplendorCore.Models.Color.Green);
                         break;
                 }
             }
+        }
+
+        private void ColorizeLabel(Label label, Color color)
+        {
+            label.ForeColor = FormsColor.ForeColor(color);
+            label.BackColor = FormsColor.BackColor(color);
         }
 
         #endregion

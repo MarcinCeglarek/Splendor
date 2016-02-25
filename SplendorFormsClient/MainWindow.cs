@@ -3,7 +3,6 @@
     #region
 
     using System;
-    using System.Collections.Generic;
     using System.Drawing;
     using System.Windows.Forms;
 
@@ -38,10 +37,33 @@
             this.playerPanel4 = new PlayerPanel();
             this.game = new Game();
             this.InitializeComponent();
+
+            this.BlackChips.ForeColor = FormsColor.ForeColor(Color.Black);
+            this.BlackChips.BackColor = FormsColor.BackColor(Color.Black);
+            this.BlueChips.ForeColor = FormsColor.ForeColor(Color.Blue);
+            this.BlueChips.BackColor = FormsColor.BackColor(Color.Blue);
+            this.GoldChips.ForeColor = FormsColor.ForeColor(Color.Gold);
+            this.GoldChips.BackColor = FormsColor.BackColor(Color.Gold);
+            this.GreenChips.ForeColor = FormsColor.ForeColor(Color.Green);
+            this.GreenChips.BackColor = FormsColor.BackColor(Color.Green);
+            this.RedChips.ForeColor = FormsColor.ForeColor(Color.Red);
+            this.RedChips.BackColor = FormsColor.BackColor(Color.Red);
+            this.WhiteChips.ForeColor = FormsColor.ForeColor(Color.White);
+            this.WhiteChips.BackColor = FormsColor.BackColor(Color.White);
+
+            this.TakenBlackChips.ForeColor = FormsColor.ForeColor(Color.Black);
+            this.TakenBlackChips.BackColor = FormsColor.BackColor(Color.Black);
+            this.TakenBlueChips.ForeColor = FormsColor.ForeColor(Color.Blue);
+            this.TakenBlueChips.BackColor = FormsColor.BackColor(Color.Blue);
+            this.TakenGreenChips.ForeColor = FormsColor.ForeColor(Color.Green);
+            this.TakenGreenChips.BackColor = FormsColor.BackColor(Color.Green);
+            this.TakenRedChips.ForeColor = FormsColor.ForeColor(Color.Red);
+            this.TakenRedChips.BackColor = FormsColor.BackColor(Color.Red);
+            this.TakenWhiteChips.ForeColor = FormsColor.ForeColor(Color.White);
+            this.TakenWhiteChips.BackColor = FormsColor.BackColor(Color.White);
         }
 
         #endregion
-
 
         #region Public Methods and Operators
 
@@ -57,6 +79,7 @@
                 this.Log(string.Format("Player {0} can't purchase previously reserved card {1}", this.game.CurrentPlayer, reservedCard));
             }
 
+            this.RefreshAristocrates();
             this.FillDeck();
             this.RefreshBank();
             this.RefreshCurrentPlayer();
@@ -81,6 +104,7 @@
                 this.Log(string.Format("Player {0} can't purchase nor reserve card {1}", this.game.CurrentPlayer, card));
             }
 
+            this.RefreshAristocrates();
             this.FillDeck();
             this.RefreshBank();
             this.RefreshCurrentPlayer();
@@ -141,9 +165,19 @@
             {
                 this.Log(string.Format("Player {0} can't take {1}", this.game.CurrentPlayer, this.chipsToTake));
             }
-            
+
+            this.RefreshAristocrates();
             this.RefreshBank();
             this.RefreshCurrentPlayer();
+        }
+
+        private void RefreshAristocrates()
+        {
+            this.aristocrate1.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate1.Aristocrate);
+            this.aristocrate2.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate2.Aristocrate);
+            this.aristocrate3.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate3.Aristocrate);
+            this.aristocrate4.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate4.Aristocrate);
+            this.aristocrate5.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate5.Aristocrate);
         }
 
         private void BlackChips_Click(object sender, EventArgs e)
@@ -212,6 +246,11 @@
             this.RefreshBank();
         }
 
+        private void Log(string message)
+        {
+            this.textBox1.AppendText(message + Environment.NewLine);
+        }
+
         private void RedChips_Click(object sender, EventArgs e)
         {
             if (this.bankChips[Color.Red] > 0)
@@ -278,6 +317,19 @@
             this.AddPlayer.Visible = false;
             this.StartGame.Visible = false;
 
+            this.Card11.Visible = true;
+            this.Card12.Visible = true;
+            this.Card13.Visible = true;
+            this.Card14.Visible = true;
+            this.Card21.Visible = true;
+            this.Card22.Visible = true;
+            this.Card23.Visible = true;
+            this.Card24.Visible = true;
+            this.Card31.Visible = true;
+            this.Card32.Visible = true;
+            this.Card33.Visible = true;
+            this.Card34.Visible = true;
+
             this.game.Deck = new Deck(this.game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
             this.game.Start();
             this.Log("Shuffling players, order: " + string.Join(", ", this.game.Players));
@@ -287,13 +339,24 @@
             this.playerPanel1.Player = this.game.Players[0];
             this.playerPanel2.Player = this.game.Players[1];
 
+            this.aristocrate1.Aristocrate = this.game.Deck.AvailableAristocrates[0];
+            this.aristocrate2.Aristocrate = this.game.Deck.AvailableAristocrates[1];
+            this.aristocrate3.Aristocrate = this.game.Deck.AvailableAristocrates[2];
+            this.aristocrate1.Visible = true;
+            this.aristocrate2.Visible = true;
+            this.aristocrate3.Visible = true;
+
             if (this.game.Players.Count > 2)
             {
                 this.playerPanel3.Player = this.game.Players[2];
+                this.aristocrate4.Aristocrate = this.game.Deck.AvailableAristocrates[3];
+                this.aristocrate4.Visible = true;
 
                 if (this.game.Players.Count > 3)
                 {
                     this.playerPanel4.Player = this.game.Players[3];
+                    this.aristocrate5.Aristocrate = this.game.Deck.AvailableAristocrates[4];
+                    this.aristocrate5.Visible = true;
                 }
             }
 
@@ -368,15 +431,11 @@
             this.RefreshBank();
         }
 
-        private void Log(string message)
-        {
-            this.textBox1.AppendText(message + Environment.NewLine);
-        }
-        #endregion
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void PlayerNameBox_TextChanged(object sender, EventArgs e)
         {
             this.AddPlayer.Enabled = !string.IsNullOrWhiteSpace(this.PlayerNameBox.Text);
         }
+
+        #endregion
     }
 }

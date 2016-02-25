@@ -22,6 +22,7 @@
             this.Chips = new Chips();
             this.OwnedCards = new List<Card>();
             this.ReservedCards = new List<Card>();
+            this.OwnedAristocrates = new List<Aristocrate>();
         }
 
         #endregion
@@ -60,6 +61,8 @@
         [DataMember]
         public string Name { get; set; }
 
+        public IList<Aristocrate> OwnedAristocrates { get; private set; }
+
         public IList<Card> OwnedCards { get; private set; }
 
         public IList<Card> ReservedCards { get; private set; }
@@ -69,7 +72,7 @@
         {
             get
             {
-                return this.OwnedCards.Sum(card => card.VictoryPoints);
+                return this.OwnedCards.Sum(card => card.VictoryPoints) + this.OwnedAristocrates.Sum(aristocrate => aristocrate.VictoryPoints);
             }
         }
 

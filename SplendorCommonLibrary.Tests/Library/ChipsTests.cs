@@ -82,6 +82,60 @@
         }
 
         [TestMethod]
+        public void OperatorsLessThen()
+        {
+            var c1 = new Chips(2, 2, 2, 1, 1, 1);
+            var c2 = new Chips(3, 0, 0, 0, 0, 0);
+            var c3 = new Chips(1, 1, 1, 0, 0, 0);
+            var c4 = new Chips(1, 0, 0, 0, 0, 0);
+            Assert.IsFalse(c1 < c2);
+            Assert.IsFalse(c2 < c1);
+
+            Assert.IsFalse(c1 < c3);
+            Assert.IsTrue(c3 < c1);
+
+            Assert.IsFalse(c1 < c4);
+            Assert.IsTrue(c4 < c1);
+
+            Assert.IsFalse(c2 < c3);
+            Assert.IsFalse(c3 < c2);
+
+            Assert.IsFalse(c2 < c4);
+            Assert.IsTrue(c4 < c2);
+
+            Assert.IsFalse(c3 < c4);
+            Assert.IsFalse(c4 < c3);
+        }
+
+        [TestMethod]
+        public void OperatorsGreaterThen()
+        {
+            var c1 = new Chips(2, 2, 2, 1, 1, 1);
+            var c2 = new Chips(3, 0, 0, 0, 0, 0);
+            var c3 = new Chips(1, 1, 1, 0, 0, 0);
+            var c4 = new Chips(1, 0, 0, 0, 0, 0);
+
+            Assert.IsFalse(c1 > c2);
+            Assert.IsFalse(c2 > c1);
+
+            Assert.IsTrue(c1 > c3);
+            Assert.IsFalse(c3 > c1);
+
+            Assert.IsTrue(c1 > c4);
+            Assert.IsFalse(c4 > c1);
+
+            Assert.IsFalse(c2 > c3);
+            Assert.IsFalse(c3 > c2);
+
+            Assert.IsTrue(c2 > c4);
+            Assert.IsFalse(c4 > c2);
+
+            Assert.IsFalse(c3 > c4);
+            Assert.IsFalse(c4 > c3);
+        }
+
+
+        [TestMethod]
         public void SettersAndGetters()
         {
             var a = new Chips { Black = 5 };

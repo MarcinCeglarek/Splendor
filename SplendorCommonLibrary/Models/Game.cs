@@ -271,11 +271,27 @@
 
         private void PlayerFinished()
         {
+            this.CheckAristocrates();
             var currentUser = this.CurrentPlayer;
             this.Players.RemoveAt(0);
             this.Players.Insert(this.Players.Count, currentUser);
 
             this.CheckEndGameCondition();
+        }
+
+        private void CheckAristocrates()
+        {
+            var eligableAristocrates = this.Deck.AvailableAristocrates.Where(aristocrate => this.CurrentPlayer.Cards >= aristocrate.RequiredCards).ToList();
+
+            if (!eligableAristocrates.Any())
+            {
+                return;
+            }
+
+            var firstAristocrate = eligableAristocrates.First();
+
+            this.Deck.AvailableAristocrates.Remove(firstAristocrate);
+            this.CurrentPlayer.OwnedAristocrates.Add(firstAristocrate);
         }
 
         private void PurchaseCardVerification(Player player, Card card)

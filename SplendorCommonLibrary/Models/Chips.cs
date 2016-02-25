@@ -30,11 +30,6 @@
             this.Add(Color.Gold, gold);
         }
 
-        public override string ToString()
-        {
-            return string.Format("{0}W/{1}B/{2}G/{3}R/{4}B/{5}G", this.White, this.Blue, this.Green, this.Red, this.Black, this.Gold);
-        }
-
         #endregion
 
         #region Public Properties
@@ -137,6 +132,34 @@
             return result;
         }
 
+        public static bool operator >(Chips a, Chips b)
+        {
+            return ((a.Black == 0 && b.Black == 0) || a.Black > b.Black) && ((a.Blue == 0 && b.Blue == 0) || a.Blue > b.Blue) && ((a.Gold == 0 && b.Gold == 0) || a.Gold > b.Gold)
+                   && ((a.Green == 0 && b.Green == 0) || a.Green > b.Green) && ((a.Red == 0 && b.Red == 0) || a.Red > b.Red)
+                   && ((a.White == 0 && b.White == 0) || a.White > b.White);
+        }
+
+        public static bool operator >=(Chips a, Chips b)
+        {
+            return ((a.Black == 0 && b.Black == 0) || a.Black >= b.Black) && ((a.Blue == 0 && b.Blue == 0) || a.Blue >= b.Blue)
+                   && ((a.Gold == 0 && b.Gold == 0) || a.Gold >= b.Gold) && ((a.Green == 0 && b.Green == 0) || a.Green >= b.Green) && ((a.Red == 0 && b.Red == 0) || a.Red >= b.Red)
+                   && ((a.White == 0 && b.White == 0) || a.White >= b.White);
+        }
+
+        public static bool operator <(Chips a, Chips b)
+        {
+            return ((a.Black == 0 && b.Black == 0) || a.Black < b.Black) && ((a.Blue == 0 && b.Blue == 0) || a.Blue < b.Blue) && ((a.Gold == 0 && b.Gold == 0) || a.Gold < b.Gold)
+                   && ((a.Green == 0 && b.Green == 0) || a.Green < b.Green) && ((a.Red == 0 && b.Red == 0) || a.Red < b.Red)
+                   && ((a.White == 0 && b.White == 0) || a.White < b.White);
+        }
+
+        public static bool operator <=(Chips a, Chips b)
+        {
+            return ((a.Black == 0 && b.Black == 0) || a.Black <= b.Black) && ((a.Blue == 0 && b.Blue == 0) || a.Blue <= b.Blue)
+                   && ((a.Gold == 0 && b.Gold == 0) || a.Gold <= b.Gold) && ((a.Green == 0 && b.Green == 0) || a.Green <= b.Green) && ((a.Red == 0 && b.Red == 0) || a.Red <= b.Red)
+                   && ((a.White == 0 && b.White == 0) || a.White <= b.White);
+        }
+
         public static Chips operator -(Chips chipsA, Chips chipsB)
         {
             var result = new Chips();
@@ -173,6 +196,11 @@
             }
 
             return hash;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}W/{1}B/{2}G/{3}R/{4}B/{5}G", this.White, this.Blue, this.Green, this.Red, this.Black, this.Gold);
         }
 
         #endregion

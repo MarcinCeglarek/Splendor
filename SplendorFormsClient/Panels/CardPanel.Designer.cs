@@ -31,11 +31,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.Points = new System.Windows.Forms.Label();
             this.Color = new System.Windows.Forms.Label();
-            this.Black = new System.Windows.Forms.Label();
-            this.Red = new System.Windows.Forms.Label();
-            this.Green = new System.Windows.Forms.Label();
-            this.Blue = new System.Windows.Forms.Label();
-            this.White = new System.Windows.Forms.Label();
+            this.L1 = new System.Windows.Forms.Label();
+            this.L2 = new System.Windows.Forms.Label();
+            this.L3 = new System.Windows.Forms.Label();
+            this.L4 = new System.Windows.Forms.Label();
+            this.L5 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,11 +44,11 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.Points);
             this.panel1.Controls.Add(this.Color);
-            this.panel1.Controls.Add(this.Black);
-            this.panel1.Controls.Add(this.Red);
-            this.panel1.Controls.Add(this.Green);
-            this.panel1.Controls.Add(this.Blue);
-            this.panel1.Controls.Add(this.White);
+            this.panel1.Controls.Add(this.L1);
+            this.panel1.Controls.Add(this.L2);
+            this.panel1.Controls.Add(this.L3);
+            this.panel1.Controls.Add(this.L4);
+            this.panel1.Controls.Add(this.L5);
             this.panel1.Location = new System.Drawing.Point(4, 5);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(188, 216);
@@ -57,7 +57,6 @@
             // 
             // Points
             // 
-            this.Points.BackColor = System.Drawing.Color.White;
             this.Points.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.Points.Location = new System.Drawing.Point(151, 23);
             this.Points.Name = "Points";
@@ -68,76 +67,76 @@
             // 
             // Color
             // 
-            this.Color.BackColor = System.Drawing.Color.White;
             this.Color.Location = new System.Drawing.Point(-1, -1);
             this.Color.Name = "Color";
             this.Color.Size = new System.Drawing.Size(188, 75);
             this.Color.TabIndex = 12;
             this.Color.Click += new System.EventHandler(this.Color_Click);
             // 
-            // Black
+            // L1
             // 
-            this.Black.BackColor = System.Drawing.Color.Black;
-            this.Black.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Black.ForeColor = System.Drawing.Color.White;
-            this.Black.Location = new System.Drawing.Point(3, 193);
-            this.Black.Name = "Black";
-            this.Black.Size = new System.Drawing.Size(21, 19);
-            this.Black.TabIndex = 11;
-            this.Black.Text = "0";
-            this.Black.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Black.Click += new System.EventHandler(this.Black_Click);
+            this.L1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.L1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.L1.Location = new System.Drawing.Point(3, 193);
+            this.L1.Name = "L1";
+            this.L1.Size = new System.Drawing.Size(21, 19);
+            this.L1.TabIndex = 11;
+            this.L1.Text = "0";
+            this.L1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.L1.Visible = false;
+            this.L1.Click += new System.EventHandler(this.Black_Click);
             // 
-            // Red
+            // L2
             // 
-            this.Red.BackColor = System.Drawing.Color.Red;
-            this.Red.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Red.ForeColor = System.Drawing.Color.White;
-            this.Red.Location = new System.Drawing.Point(3, 174);
-            this.Red.Name = "Red";
-            this.Red.Size = new System.Drawing.Size(21, 19);
-            this.Red.TabIndex = 10;
-            this.Red.Text = "0";
-            this.Red.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Red.Click += new System.EventHandler(this.Red_Click);
+            this.L2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.L2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.L2.Location = new System.Drawing.Point(3, 173);
+            this.L2.Name = "L2";
+            this.L2.Size = new System.Drawing.Size(21, 19);
+            this.L2.TabIndex = 10;
+            this.L2.Text = "0";
+            this.L2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.L2.Visible = false;
+            this.L2.Click += new System.EventHandler(this.Red_Click);
             // 
-            // Green
+            // L3
             // 
-            this.Green.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.Green.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Green.ForeColor = System.Drawing.Color.White;
-            this.Green.Location = new System.Drawing.Point(3, 155);
-            this.Green.Name = "Green";
-            this.Green.Size = new System.Drawing.Size(21, 19);
-            this.Green.TabIndex = 9;
-            this.Green.Text = "0";
-            this.Green.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Green.Click += new System.EventHandler(this.Green_Click);
+            this.L3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.L3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.L3.Location = new System.Drawing.Point(3, 153);
+            this.L3.Name = "L3";
+            this.L3.Size = new System.Drawing.Size(21, 19);
+            this.L3.TabIndex = 9;
+            this.L3.Text = "0";
+            this.L3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.L3.Visible = false;
+            this.L3.Click += new System.EventHandler(this.Green_Click);
             // 
-            // Blue
+            // L4
             // 
-            this.Blue.BackColor = System.Drawing.Color.Blue;
-            this.Blue.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Blue.ForeColor = System.Drawing.Color.White;
-            this.Blue.Location = new System.Drawing.Point(3, 136);
-            this.Blue.Name = "Blue";
-            this.Blue.Size = new System.Drawing.Size(21, 19);
-            this.Blue.TabIndex = 8;
-            this.Blue.Text = "0";
-            this.Blue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Blue.Click += new System.EventHandler(this.Blue_Click);
+            this.L4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.L4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.L4.Location = new System.Drawing.Point(3, 133);
+            this.L4.Name = "L4";
+            this.L4.Size = new System.Drawing.Size(21, 19);
+            this.L4.TabIndex = 8;
+            this.L4.Text = "0";
+            this.L4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.L4.Visible = false;
+            this.L4.Click += new System.EventHandler(this.Blue_Click);
             // 
-            // White
+            // L5
             // 
-            this.White.BackColor = System.Drawing.Color.White;
-            this.White.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.White.Location = new System.Drawing.Point(3, 117);
-            this.White.Name = "White";
-            this.White.Size = new System.Drawing.Size(21, 19);
-            this.White.TabIndex = 7;
-            this.White.Text = "0";
-            this.White.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.White.Click += new System.EventHandler(this.White_Click);
+            this.L5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.L5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.L5.Location = new System.Drawing.Point(3, 113);
+            this.L5.Name = "L5";
+            this.L5.Size = new System.Drawing.Size(21, 19);
+            this.L5.TabIndex = 7;
+            this.L5.Text = "0";
+            this.L5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.L5.Visible = false;
+            this.L5.Click += new System.EventHandler(this.White_Click);
             // 
             // CardPanel
             // 
@@ -156,10 +155,10 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label Points;
         private System.Windows.Forms.Label Color;
-        private System.Windows.Forms.Label Black;
-        private System.Windows.Forms.Label Red;
-        private System.Windows.Forms.Label Green;
-        private System.Windows.Forms.Label Blue;
-        private System.Windows.Forms.Label White;
+        private System.Windows.Forms.Label L1;
+        private System.Windows.Forms.Label L2;
+        private System.Windows.Forms.Label L3;
+        private System.Windows.Forms.Label L4;
+        private System.Windows.Forms.Label L5;
     }
 }

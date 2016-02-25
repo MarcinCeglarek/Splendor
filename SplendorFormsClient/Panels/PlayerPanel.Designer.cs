@@ -52,6 +52,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.VictoryPoints);
             this.panel1.Controls.Add(this.groupBox4);
             this.panel1.Controls.Add(this.groupBox3);
@@ -60,15 +61,15 @@
             this.panel1.Controls.Add(this.PlayerName);
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(281, 250);
+            this.panel1.Size = new System.Drawing.Size(287, 254);
             this.panel1.TabIndex = 0;
             // 
             // VictoryPoints
             // 
             this.VictoryPoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.VictoryPoints.Location = new System.Drawing.Point(254, 1);
+            this.VictoryPoints.Location = new System.Drawing.Point(236, 5);
             this.VictoryPoints.Name = "VictoryPoints";
-            this.VictoryPoints.Size = new System.Drawing.Size(25, 23);
+            this.VictoryPoints.Size = new System.Drawing.Size(40, 23);
             this.VictoryPoints.TabIndex = 29;
             this.VictoryPoints.Text = "0";
             this.VictoryPoints.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -79,7 +80,7 @@
             this.groupBox4.Controls.Add(this.reservedCard3);
             this.groupBox4.Controls.Add(this.reservedCard2);
             this.groupBox4.Controls.Add(this.reservedCard1);
-            this.groupBox4.Location = new System.Drawing.Point(7, 120);
+            this.groupBox4.Location = new System.Drawing.Point(6, 122);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(272, 125);
             this.groupBox4.TabIndex = 28;
@@ -88,7 +89,6 @@
             // 
             // reservedCard3
             // 
-            this.reservedCard3.Enabled = false;
             this.reservedCard3.Location = new System.Drawing.Point(183, 19);
             this.reservedCard3.Name = "reservedCard3";
             this.reservedCard3.Size = new System.Drawing.Size(83, 100);
@@ -99,7 +99,6 @@
             // 
             // reservedCard2
             // 
-            this.reservedCard2.Enabled = false;
             this.reservedCard2.Location = new System.Drawing.Point(94, 19);
             this.reservedCard2.Name = "reservedCard2";
             this.reservedCard2.Size = new System.Drawing.Size(83, 100);
@@ -110,7 +109,6 @@
             // 
             // reservedCard1
             // 
-            this.reservedCard1.Enabled = false;
             this.reservedCard1.Location = new System.Drawing.Point(5, 19);
             this.reservedCard1.Name = "reservedCard1";
             this.reservedCard1.Size = new System.Drawing.Size(83, 100);
@@ -127,7 +125,7 @@
             this.groupBox3.Controls.Add(this.ChipsGreen);
             this.groupBox3.Controls.Add(this.ChipsBlue);
             this.groupBox3.Controls.Add(this.ChipsWhite);
-            this.groupBox3.Location = new System.Drawing.Point(6, 26);
+            this.groupBox3.Location = new System.Drawing.Point(6, 28);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(272, 41);
             this.groupBox3.TabIndex = 23;
@@ -245,7 +243,7 @@
             this.groupBox1.Controls.Add(this.CardsGreen);
             this.groupBox1.Controls.Add(this.CardsRed);
             this.groupBox1.Controls.Add(this.CardsBlack);
-            this.groupBox1.Location = new System.Drawing.Point(6, 73);
+            this.groupBox1.Location = new System.Drawing.Point(6, 75);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(272, 41);
             this.groupBox1.TabIndex = 13;
@@ -334,7 +332,7 @@
             // PlayerName
             // 
             this.PlayerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.PlayerName.Location = new System.Drawing.Point(3, 0);
+            this.PlayerName.Location = new System.Drawing.Point(5, 4);
             this.PlayerName.Name = "PlayerName";
             this.PlayerName.Size = new System.Drawing.Size(275, 23);
             this.PlayerName.TabIndex = 0;
@@ -346,8 +344,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
+            this.MaximumSize = new System.Drawing.Size(293, 260);
+            this.MinimumSize = new System.Drawing.Size(293, 260);
             this.Name = "PlayerPanel";
-            this.Size = new System.Drawing.Size(287, 256);
+            this.Size = new System.Drawing.Size(293, 260);
             this.panel1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);

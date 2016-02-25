@@ -7,8 +7,6 @@
 
     using SplendorCore.Models;
 
-    using Color = System.Drawing.Color;
-
     #endregion
 
     public partial class PlayerPanel : UserControl
@@ -18,6 +16,34 @@
         public PlayerPanel()
         {
             this.InitializeComponent();
+
+            this.CardsBlack.BackColor = FormsColor.BackColor(Color.Black);
+            this.CardsBlack.ForeColor = FormsColor.ForeColor(Color.Black);
+            this.ChipsBlack.BackColor = FormsColor.BackColor(Color.Black);
+            this.ChipsBlack.ForeColor = FormsColor.ForeColor(Color.Black);
+            
+            this.CardsBlue.BackColor = FormsColor.BackColor(Color.Blue);
+            this.CardsBlue.ForeColor = FormsColor.ForeColor(Color.Blue);
+            this.ChipsBlue.BackColor = FormsColor.BackColor(Color.Blue);
+            this.ChipsBlue.ForeColor = FormsColor.ForeColor(Color.Blue);
+            
+            this.ChipsGold.BackColor = FormsColor.BackColor(Color.Gold);
+            this.ChipsGold.ForeColor = FormsColor.ForeColor(Color.Gold);
+            
+            this.CardsGreen.BackColor = FormsColor.BackColor(Color.Green);
+            this.CardsGreen.ForeColor = FormsColor.ForeColor(Color.Green);
+            this.ChipsGreen.BackColor = FormsColor.BackColor(Color.Green);
+            this.ChipsGreen.ForeColor = FormsColor.ForeColor(Color.Green);
+            
+            this.CardsRed.BackColor = FormsColor.BackColor(Color.Red);
+            this.CardsRed.ForeColor = FormsColor.ForeColor(Color.Red);
+            this.ChipsRed.BackColor = FormsColor.BackColor(Color.Red);
+            this.ChipsRed.ForeColor = FormsColor.ForeColor(Color.Red);
+
+            this.CardsWhite.BackColor = FormsColor.BackColor(Color.White);
+            this.CardsWhite.ForeColor = FormsColor.ForeColor(Color.White);
+            this.ChipsWhite.BackColor = FormsColor.BackColor(Color.White);
+            this.ChipsWhite.ForeColor = FormsColor.ForeColor(Color.White);
         }
 
         #endregion
@@ -62,21 +88,21 @@
                 if (this.Player.ReservedCards.Count == 3)
                 {
                     this.reservedCard1.Visible = true;
-                    this.reservedCard1.BackColor = this.GetColor(this.Player.ReservedCards[0].Color);
+                    this.reservedCard1.BackColor = FormsColor.BackColor(this.Player.ReservedCards[0].Color);
 
                     this.reservedCard2.Visible = true;
-                    this.reservedCard2.BackColor = this.GetColor(this.Player.ReservedCards[1].Color);
+                    this.reservedCard2.BackColor = FormsColor.BackColor(this.Player.ReservedCards[1].Color);
 
                     this.reservedCard3.Visible = true;
-                    this.reservedCard3.BackColor = this.GetColor(this.Player.ReservedCards[2].Color);
+                    this.reservedCard3.BackColor = FormsColor.BackColor(this.Player.ReservedCards[2].Color);
                 }
                 else if (this.Player.ReservedCards.Count == 2)
                 {
                     this.reservedCard1.Visible = true;
-                    this.reservedCard1.BackColor = this.GetColor(this.Player.ReservedCards[0].Color);
+                    this.reservedCard1.BackColor = FormsColor.BackColor(this.Player.ReservedCards[0].Color);
 
                     this.reservedCard2.Visible = true;
-                    this.reservedCard2.BackColor = this.GetColor(this.Player.ReservedCards[1].Color);
+                    this.reservedCard2.BackColor = FormsColor.BackColor(this.Player.ReservedCards[1].Color);
 
                     this.reservedCard3.Visible = false;
                     this.reservedCard3.BackColor = DefaultBackColor;
@@ -84,7 +110,7 @@
                 else if (this.Player.ReservedCards.Count == 1)
                 {
                     this.reservedCard1.Visible = true;
-                    this.reservedCard1.BackColor = this.GetColor(this.Player.ReservedCards[0].Color);
+                    this.reservedCard1.BackColor = FormsColor.BackColor(this.Player.ReservedCards[0].Color);
 
                     this.reservedCard2.Visible = false;
                     this.reservedCard2.BackColor = DefaultBackColor;
@@ -109,32 +135,6 @@
         #endregion
 
         #region Methods
-
-        private Color GetColor(SplendorCore.Models.Color color)
-        {
-            switch (color)
-            {
-                case SplendorCore.Models.Color.Black:
-                    return Color.Black;
-                    break;
-                case SplendorCore.Models.Color.Blue:
-                    return Color.Blue;
-                    break;
-                case SplendorCore.Models.Color.Gold:
-                    return Color.Gold;
-                    break;
-                case SplendorCore.Models.Color.Green:
-                    return Color.Green;
-                    break;
-                case SplendorCore.Models.Color.Red:
-                    return Color.Red;
-                    break;
-                case SplendorCore.Models.Color.White:
-                    return Color.White;
-            }
-
-            throw new NotSupportedException();
-        }
 
         private void PopulateButton(Button button, int amount)
         {
