@@ -6,8 +6,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
-
-    using SplendorCore.Models.Exceptions.OperationExceptions;
+    using Exceptions.OperationExceptions;
 
     #endregion
 
@@ -34,11 +33,11 @@
             get
             {
                 return new Chips(
-                    this.OwnedCards.Count(o => o.Color == Color.White), 
-                    this.OwnedCards.Count(o => o.Color == Color.Blue), 
-                    this.OwnedCards.Count(o => o.Color == Color.Green), 
-                    this.OwnedCards.Count(o => o.Color == Color.Red), 
-                    this.OwnedCards.Count(o => o.Color == Color.Black), 
+                    this.OwnedCards.Count(o => o.Color == Color.White),
+                    this.OwnedCards.Count(o => o.Color == Color.Blue),
+                    this.OwnedCards.Count(o => o.Color == Color.Green),
+                    this.OwnedCards.Count(o => o.Color == Color.Red),
+                    this.OwnedCards.Count(o => o.Color == Color.Black),
                     0);
             }
         }
@@ -70,27 +69,24 @@
         [DataMember]
         public int VictoryPoints
         {
-            get
-            {
-                return this.OwnedCards.Sum(card => card.VictoryPoints) + this.OwnedAristocrates.Sum(aristocrate => aristocrate.VictoryPoints);
-            }
+            get { return this.OwnedCards.Sum(card => card.VictoryPoints) + this.OwnedAristocrates.Sum(aristocrate => aristocrate.VictoryPoints); }
         }
 
         #endregion
 
         #region Public Methods and Operators
 
-        public bool Equals(Player obj)
+        public bool Equals(Player player)
         {
-            return this.Id == obj.Id;
+            return this.Id == player.Id;
         }
 
         public Chips GetCardCost(Card card)
         {
             var result = new Chips();
-            var costWithoutMines = card.Cost - this.Cards;
+            var costReducesOfMines = card.Cost - this.Cards;
 
-            foreach (var cardChipCost in costWithoutMines.Where(o => o.Value > 0))
+            foreach (var cardChipCost in costReducesOfMines.Where(color => color.Value > 0))
             {
                 if (cardChipCost.Value > this.Chips[cardChipCost.Key])
                 {

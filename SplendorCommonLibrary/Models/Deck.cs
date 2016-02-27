@@ -6,11 +6,9 @@
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization;
-
     using Newtonsoft.Json;
-
-    using SplendorCore.Helpers;
-    using SplendorCore.Models.Exceptions.FileExceptions;
+    using Helpers;
+    using Exceptions.FileExceptions;
 
     #endregion
 
@@ -20,6 +18,32 @@
         #region Constants
 
         private const int VisibleCardsCount = 4;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public Deck(Game game, string deckFilePath, string aristocratesFilePath)
+        {
+            this.game = game;
+
+            var deckFileText = GetTextFromFile(deckFilePath);
+            this.allCards = JsonConvert.DeserializeObject<List<Card>>(deckFileText);
+
+            var aristocratesFileText = GetTextFromFile(aristocratesFilePath);
+            this.allAristocrates = JsonConvert.DeserializeObject<List<Aristocrate>>(aristocratesFileText);
+        }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public void Initialize()
+        {
+            this.cardsInBank = this.allCards.Shuffle();
+            var numberOfAristocrates = this.game.Players.Count + 1;
+            this.AvailableAristocrates = this.allAristocrates.Shuffle().Take(numberOfAristocrates).ToList();
+        }
 
         #endregion
 
@@ -35,38 +59,16 @@
 
         #endregion
 
-        #region Constructors and Destructors
-
-        public Deck(Game game, string deckFilePath, string aristocratesFilePath)
-        {
-            this.game = game;
-            var deckFileText = GetTextFromFile(deckFilePath);
-
-            this.allCards = JsonConvert.DeserializeObject<List<Card>>(deckFileText);
-
-            var aristocratesFileText = GetTextFromFile(aristocratesFilePath);
-
-            this.allAristocrates = JsonConvert.DeserializeObject<List<Aristocrate>>(aristocratesFileText);
-        }
-
-        #endregion
-
         #region Public Properties
 
         public IList<Aristocrate> AllAristocrates
         {
-            get
-            {
-                return this.allAristocrates;
-            }
+            get { return this.allAristocrates; }
         }
 
         public IList<Card> AllCards
         {
-            get
-            {
-                return this.allCards;
-            }
+            get { return this.allCards; }
         }
 
         [DataMember]
@@ -85,17 +87,6 @@
 
                 return retVal;
             }
-        }
-
-        #endregion
-
-        #region Public Methods and Operators
-
-        public void Initialize()
-        {
-            this.cardsInBank = this.allCards.Shuffle();
-            var numberOfAristocrates = this.game.Players.Count + 1;
-            this.AvailableAristocrates = this.allAristocrates.Shuffle().Take(numberOfAristocrates).ToList();
         }
 
         #endregion

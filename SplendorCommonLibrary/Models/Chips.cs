@@ -151,7 +151,10 @@
 
         public override bool Equals(object obj)
         {
-            if (obj.GetType().IsSubclassOf(this.GetType()) || obj.GetType() == this.GetType())
+            var givenType = obj.GetType();
+            var thisType = this.GetType();
+
+            if (givenType.IsSubclassOf(thisType) || givenType == thisType)
             {
                 var chips = (Chips) obj;
                 return this.All(color => color.Value == chips[color.Key]);
