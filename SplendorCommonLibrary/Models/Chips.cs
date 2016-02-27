@@ -14,10 +14,15 @@
 
         public Chips()
         {
-            foreach (var color in Enum.GetValues(typeof(Color)).Cast<Color>())
+            foreach (var color in Enum.GetValues(typeof (Color)).Cast<Color>())
             {
                 this.Add(color, 0);
             }
+        }
+
+        public Chips(Chips other)
+            : this(other.White, other.Blue, other.Green, other.Red, other.Black, other.Gold)
+        {
         }
 
         public Chips(int white, int blue, int green, int red, int black, int gold)
@@ -36,80 +41,44 @@
 
         public int Black
         {
-            get
-            {
-                return this[Color.Black];
-            }
+            get { return this[Color.Black]; }
 
-            set
-            {
-                this[Color.Black] = value;
-            }
+            set { this[Color.Black] = value; }
         }
 
         public int Blue
         {
-            get
-            {
-                return this[Color.Blue];
-            }
+            get { return this[Color.Blue]; }
 
-            set
-            {
-                this[Color.Blue] = value;
-            }
+            set { this[Color.Blue] = value; }
         }
 
         public int Gold
         {
-            get
-            {
-                return this[Color.Gold];
-            }
+            get { return this[Color.Gold]; }
 
-            set
-            {
-                this[Color.Gold] = value;
-            }
+            set { this[Color.Gold] = value; }
         }
 
         public int Green
         {
-            get
-            {
-                return this[Color.Green];
-            }
+            get { return this[Color.Green]; }
 
-            set
-            {
-                this[Color.Green] = value;
-            }
+            set { this[Color.Green] = value; }
         }
 
         public int Red
         {
-            get
-            {
-                return this[Color.Red];
-            }
+            get { return this[Color.Red]; }
 
-            set
-            {
-                this[Color.Red] = value;
-            }
+            set { this[Color.Red] = value; }
         }
 
         public int White
         {
-            get
-            {
-                return this[Color.White];
-            }
+            get { return this[Color.White]; }
 
-            set
-            {
-                this[Color.White] = value;
-            }
+            set { this[Color.White] = value; }
         }
 
         #endregion
@@ -134,7 +103,8 @@
 
         public static bool operator >(Chips a, Chips b)
         {
-            return ((a.Black == 0 && b.Black == 0) || a.Black > b.Black) && ((a.Blue == 0 && b.Blue == 0) || a.Blue > b.Blue) && ((a.Gold == 0 && b.Gold == 0) || a.Gold > b.Gold)
+            return ((a.Black == 0 && b.Black == 0) || a.Black > b.Black) && ((a.Blue == 0 && b.Blue == 0) || a.Blue > b.Blue) &&
+                   ((a.Gold == 0 && b.Gold == 0) || a.Gold > b.Gold)
                    && ((a.Green == 0 && b.Green == 0) || a.Green > b.Green) && ((a.Red == 0 && b.Red == 0) || a.Red > b.Red)
                    && ((a.White == 0 && b.White == 0) || a.White > b.White);
         }
@@ -142,13 +112,15 @@
         public static bool operator >=(Chips a, Chips b)
         {
             return ((a.Black == 0 && b.Black == 0) || a.Black >= b.Black) && ((a.Blue == 0 && b.Blue == 0) || a.Blue >= b.Blue)
-                   && ((a.Gold == 0 && b.Gold == 0) || a.Gold >= b.Gold) && ((a.Green == 0 && b.Green == 0) || a.Green >= b.Green) && ((a.Red == 0 && b.Red == 0) || a.Red >= b.Red)
+                   && ((a.Gold == 0 && b.Gold == 0) || a.Gold >= b.Gold) && ((a.Green == 0 && b.Green == 0) || a.Green >= b.Green) &&
+                   ((a.Red == 0 && b.Red == 0) || a.Red >= b.Red)
                    && ((a.White == 0 && b.White == 0) || a.White >= b.White);
         }
 
         public static bool operator <(Chips a, Chips b)
         {
-            return ((a.Black == 0 && b.Black == 0) || a.Black < b.Black) && ((a.Blue == 0 && b.Blue == 0) || a.Blue < b.Blue) && ((a.Gold == 0 && b.Gold == 0) || a.Gold < b.Gold)
+            return ((a.Black == 0 && b.Black == 0) || a.Black < b.Black) && ((a.Blue == 0 && b.Blue == 0) || a.Blue < b.Blue) &&
+                   ((a.Gold == 0 && b.Gold == 0) || a.Gold < b.Gold)
                    && ((a.Green == 0 && b.Green == 0) || a.Green < b.Green) && ((a.Red == 0 && b.Red == 0) || a.Red < b.Red)
                    && ((a.White == 0 && b.White == 0) || a.White < b.White);
         }
@@ -156,7 +128,8 @@
         public static bool operator <=(Chips a, Chips b)
         {
             return ((a.Black == 0 && b.Black == 0) || a.Black <= b.Black) && ((a.Blue == 0 && b.Blue == 0) || a.Blue <= b.Blue)
-                   && ((a.Gold == 0 && b.Gold == 0) || a.Gold <= b.Gold) && ((a.Green == 0 && b.Green == 0) || a.Green <= b.Green) && ((a.Red == 0 && b.Red == 0) || a.Red <= b.Red)
+                   && ((a.Gold == 0 && b.Gold == 0) || a.Gold <= b.Gold) && ((a.Green == 0 && b.Green == 0) || a.Green <= b.Green) &&
+                   ((a.Red == 0 && b.Red == 0) || a.Red <= b.Red)
                    && ((a.White == 0 && b.White == 0) || a.White <= b.White);
         }
 
@@ -180,7 +153,7 @@
         {
             if (obj.GetType().IsSubclassOf(this.GetType()) || obj.GetType() == this.GetType())
             {
-                var chips = (Chips)obj;
+                var chips = (Chips) obj;
                 return this.All(color => color.Value == chips[color.Key]);
             }
 
@@ -192,7 +165,7 @@
             var hash = 13;
             foreach (var color in this)
             {
-                hash = (hash * 9) + color.Value;
+                hash = (hash*9) + color.Value;
             }
 
             return hash;

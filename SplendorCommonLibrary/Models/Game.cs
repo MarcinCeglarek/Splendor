@@ -6,33 +6,22 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
-
-    using SplendorCore.Data;
-    using SplendorCore.Helpers;
-    using SplendorCore.Interfaces;
-    using SplendorCore.Models.Exceptions.AbstractExceptions;
-    using SplendorCore.Models.Exceptions.CardExceptions;
-    using SplendorCore.Models.Exceptions.ChipOperationExceptions;
-    using SplendorCore.Models.Exceptions.DeckExceptions;
-    using SplendorCore.Models.Exceptions.GameExceptions;
-    using SplendorCore.Models.Exceptions.OperationExceptions;
-    using SplendorCore.Models.Exceptions.PlayerExceptions;
+    using Data;
+    using Helpers;
+    using Interfaces;
+    using Exceptions.AbstractExceptions;
+    using Exceptions.CardExceptions;
+    using Exceptions.ChipOperationExceptions;
+    using Exceptions.DeckExceptions;
+    using Exceptions.GameExceptions;
+    using Exceptions.OperationExceptions;
+    using Exceptions.PlayerExceptions;
 
     #endregion
 
     [DataContract]
     public class Game : IGameActions
     {
-        #region Fields
-
-        private readonly List<IBroadcastMessages> subscribers;
-
-        private Chips bank;
-
-        private Player firstPlayer;
-
-        #endregion
-
         #region Constructors and Destructors
 
         public Game()
@@ -48,15 +37,22 @@
 
         #endregion
 
+        #region Fields
+
+        private readonly List<IBroadcastMessages> subscribers;
+
+        private Chips bank;
+
+        private Player firstPlayer;
+
+        #endregion
+
         #region Public Properties
 
         [DataMember]
         public Chips Bank
         {
-            get
-            {
-                return new Chips(this.bank.White, this.bank.Blue, this.bank.Green, this.bank.Red, this.bank.Black, this.bank.Gold);
-            }
+            get { return new Chips(this.bank); }
         }
 
         [DataMember]
@@ -65,10 +61,7 @@
         [DataMember]
         public Player CurrentPlayer
         {
-            get
-            {
-                return this.Players.FirstOrDefault();
-            }
+            get { return this.Players.FirstOrDefault(); }
         }
 
         [DataMember]
@@ -230,7 +223,15 @@
             this.firstPlayer = this.Players.First();
 
             var chipCount = this.TotalNumberOfNormalChips;
-            this.bank = new Chips() { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = CoreConstants.Game.NumberOfGoldChips };
+            this.bank = new Chips
+            {
+                White = chipCount,
+                Blue = chipCount,
+                Green = chipCount,
+                Red = chipCount,
+                Black = chipCount,
+                Gold = CoreConstants.Game.NumberOfGoldChips
+            };
 
             this.subscribers.ForEach(subscriber => subscriber.GameStarted(this));
         }
@@ -287,7 +288,8 @@
 
         private void CheckAristocrates()
         {
-            var eligableAristocrates = this.Deck.AvailableAristocrates.Where(aristocrate => this.CurrentPlayer.Cards >= aristocrate.RequiredCards).ToList();
+            var eligableAristocrates =
+                this.Deck.AvailableAristocrates.Where(aristocrate => this.CurrentPlayer.Cards >= aristocrate.RequiredCards).ToList();
 
             if (!eligableAristocrates.Any())
             {

@@ -3,8 +3,7 @@
     #region
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-    using SplendorCore.Models;
+    using Models;
 
     #endregion
 
@@ -14,7 +13,7 @@
         #region Public Methods and Operators
 
         [TestMethod]
-        public void DiffrentObject()
+        public void DifferentObject()
         {
             Assert.AreNotEqual(1, new Chips(1, 1, 1, 1, 1, 1));
             Assert.AreNotEqual(0, new Chips());
@@ -22,10 +21,10 @@
         }
 
         [TestMethod]
-        public void EualityTest()
+        public void EqualityTest()
         {
             var a1 = new Chips(1, 2, 3, 4, 5, 6);
-            var a2 = new Chips() { White = 1, Blue = 2, Green = 3, Red = 4, Black = 5, Gold = 6 };
+            var a2 = new Chips { White = 1, Blue = 2, Green = 3, Red = 4, Black = 5, Gold = 6 };
 
             Assert.AreEqual(a1, a2);
 
@@ -36,10 +35,19 @@
         }
 
         [TestMethod]
+        public void EqualityTestWithCopyConstructor()
+        {
+            var chips1 = new Chips(1, 2, 3, 4, 5, 6);
+            var chips2 = new Chips(chips1);
+
+            Assert.AreEqual(chips1, chips2);
+        }
+
+        [TestMethod]
         public void ListsOperatorsAddition()
         {
-            var a = new Chips() { Black = 2, Blue = 2, Green = 2 };
-            var b = new Chips() { Red = 2, White = 2 };
+            var a = new Chips { Black = 2, Blue = 2, Green = 2 };
+            var b = new Chips { Red = 2, White = 2 };
 
             var result = a + b;
 
@@ -68,8 +76,8 @@
         [TestMethod]
         public void ListsOperatorsSubstraction()
         {
-            var a = new Chips() { Black = 2, Blue = 2, Red = 2, Green = 2 };
-            var b = new Chips() { Blue = 1, Red = 3, White = 3 };
+            var a = new Chips { Black = 2, Blue = 2, Red = 2, Green = 2 };
+            var b = new Chips { Blue = 1, Red = 3, White = 3 };
 
             var result = a - b;
 
