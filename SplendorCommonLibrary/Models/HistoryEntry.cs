@@ -69,10 +69,10 @@
     {
         #region Constructors and Destructors
 
-        public TakeChipsEntry(Player player)
+        public TakeChipsEntry(Player player, Chips chips)
             : base(player)
         {
-            this.Chips = new Chips() + player.Chips;
+            this.Chips = new Chips(chips) + player.Chips;
         }
 
         #endregion

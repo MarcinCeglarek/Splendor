@@ -4,11 +4,9 @@
 
     using System;
     using System.Runtime.Serialization;
-
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
-
-    using SplendorCore.Helpers;
+    using Helpers;
 
     #endregion
 
@@ -24,14 +22,19 @@
 
         #endregion
 
+        public override string ToString()
+        {
+            return string.Format("{0}: {1} ({2} pts.)", this.RomanTier(), this.Color, this.VictoryPoints);
+        }
+
         #region Public Properties
 
         [DataMember]
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof (StringEnumConverter))]
         public Color Color { get; set; }
 
         [DataMember]
-        [JsonConverter(typeof(CardCostConverter))]
+        [JsonConverter(typeof (CardCostConverter))]
         public Chips Cost { get; set; }
 
         public Guid Id { get; set; }
@@ -43,11 +46,6 @@
         public int VictoryPoints { get; set; }
 
         #endregion
-
-        public override string ToString()
-        {
-            return string.Format("{0}: {1} ({2} pts.)", this.RomanTier(), this.Color, this.VictoryPoints);
-        }
 
         #region Public Methods and Operators
 
@@ -89,16 +87,13 @@
             {
                 case 1:
                     return "I";
-                    break;
                 case 2:
                     return "II";
-                    break;
                 case 3:
                     return "III";
-                    break;
+                default:
+                    throw new NotSupportedException();
             }
-
-            throw new NotSupportedException();
         }
 
         #endregion
