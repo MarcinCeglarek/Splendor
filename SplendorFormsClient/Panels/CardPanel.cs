@@ -3,6 +3,7 @@
     #region
 
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Forms;
 
@@ -45,99 +46,51 @@
                     return;
                 }
 
+                this.UpdateLabelValue(this.Points, this.card.VictoryPoints);
+                this.Color.BackColor = FormsColor.BackColor(this.card.Color);
+                this.Points.BackColor = FormsColor.BackColor(this.card.Color);
+                this.Points.ForeColor = FormsColor.ForeColor(this.card.Color);
                 var costList = this.card.Cost.Where(cost => cost.Value != 0).ToList();
                 switch (costList.Count())
                 {
                     case 1:
-                        this.ColorizeLabel(this.L1, costList[0].Key);
-                        this.PopulateLabel(this.L1, costList[0].Value);
-                        this.PopulateLabel(this.L2, 0);
-                        this.PopulateLabel(this.L3, 0);
-                        this.PopulateLabel(this.L4, 0);
-                        this.PopulateLabel(this.L5, 0);
+                        this.FillCardCost(this.L1, costList[0]);
+                        this.FillCardCost(this.L2);
+                        this.FillCardCost(this.L3);
+                        this.FillCardCost(this.L4);
+                        this.FillCardCost(this.L5);
                         break;
                     case 2:
-                        this.ColorizeLabel(this.L1, costList[0].Key);
-                        this.PopulateLabel(this.L1, costList[0].Value);
-                        this.ColorizeLabel(this.L2, costList[1].Key);
-                        this.PopulateLabel(this.L2, costList[1].Value);
-                        this.PopulateLabel(this.L3, 0);
-                        this.PopulateLabel(this.L4, 0);
-                        this.PopulateLabel(this.L5, 0);
+                        this.FillCardCost(this.L1, costList[0]);
+                        this.FillCardCost(this.L2, costList[1]);
+                        this.FillCardCost(this.L3);
+                        this.FillCardCost(this.L4);
+                        this.FillCardCost(this.L5);
                         break;
                     case 3:
-                        this.ColorizeLabel(this.L1, costList[0].Key);
-                        this.PopulateLabel(this.L1, costList[0].Value);
-                        this.ColorizeLabel(this.L2, costList[1].Key);
-                        this.PopulateLabel(this.L2, costList[1].Value);
-                        this.ColorizeLabel(this.L3, costList[2].Key);
-                        this.PopulateLabel(this.L3, costList[2].Value);
-                        this.PopulateLabel(this.L4, 0);
-                        this.PopulateLabel(this.L5, 0);
+                        this.FillCardCost(this.L1, costList[0]);
+                        this.FillCardCost(this.L2, costList[1]);
+                        this.FillCardCost(this.L3, costList[2]);
+                        this.FillCardCost(this.L4);
+                        this.FillCardCost(this.L5);
                         break;
                     case 4:
-                        this.ColorizeLabel(this.L1, costList[0].Key);
-                        this.PopulateLabel(this.L1, costList[0].Value);
-                        this.ColorizeLabel(this.L2, costList[1].Key);
-                        this.PopulateLabel(this.L2, costList[1].Value);
-                        this.ColorizeLabel(this.L3, costList[2].Key);
-                        this.PopulateLabel(this.L3, costList[2].Value);
-                        this.ColorizeLabel(this.L4, costList[3].Key);
-                        this.PopulateLabel(this.L4, costList[3].Value);
-                        this.PopulateLabel(this.L5, 0);
+                        this.FillCardCost(this.L1, costList[0]);
+                        this.FillCardCost(this.L2, costList[1]);
+                        this.FillCardCost(this.L3, costList[2]);
+                        this.FillCardCost(this.L4, costList[3]);
+                        this.FillCardCost(this.L5);
 
                         break;
                     case 5:
-                        this.ColorizeLabel(this.L1, costList[0].Key);
-                        this.PopulateLabel(this.L1, costList[0].Value);
-                        this.ColorizeLabel(this.L2, costList[1].Key);
-                        this.PopulateLabel(this.L2, costList[1].Value);
-                        this.ColorizeLabel(this.L3, costList[2].Key);
-                        this.PopulateLabel(this.L3, costList[2].Value);
-                        this.ColorizeLabel(this.L4, costList[3].Key);
-                        this.PopulateLabel(this.L4, costList[3].Value);
-                        this.ColorizeLabel(this.L5, costList[4].Key);
-                        this.PopulateLabel(this.L5, costList[4].Value);
-                        break;
-                }
-
-                this.PopulateLabel(this.Points, this.card.VictoryPoints);
-
-                switch (this.card.Color)
-                {
-                    case SplendorCore.Models.Color.Black:
-                        this.Color.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Black);
-                        this.Points.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Black);
-                        this.Points.ForeColor = FormsColor.ForeColor(SplendorCore.Models.Color.Black);
-                        break;
-                    case SplendorCore.Models.Color.Blue:
-                        this.Color.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Blue);
-                        this.Points.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Blue);
-                        this.Points.ForeColor = FormsColor.ForeColor(SplendorCore.Models.Color.Blue);
-                        break;
-                    case SplendorCore.Models.Color.White:
-                        this.Color.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.White);
-                        this.Points.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.White);
-                        this.Points.ForeColor = FormsColor.ForeColor(SplendorCore.Models.Color.White);
-                        break;
-                    case SplendorCore.Models.Color.Red:
-                        this.Color.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Red);
-                        this.Points.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Red);
-                        this.Points.ForeColor = FormsColor.ForeColor(SplendorCore.Models.Color.Red);
-                        break;
-                    case SplendorCore.Models.Color.Green:
-                        this.Color.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Green);
-                        this.Points.BackColor = FormsColor.BackColor(SplendorCore.Models.Color.Green);
-                        this.Points.ForeColor = FormsColor.ForeColor(SplendorCore.Models.Color.Green);
+                        this.FillCardCost(this.L1, costList[0]);
+                        this.FillCardCost(this.L2, costList[1]);
+                        this.FillCardCost(this.L3, costList[2]);
+                        this.FillCardCost(this.L4, costList[3]);
+                        this.FillCardCost(this.L5, costList[4]);
                         break;
                 }
             }
-        }
-
-        private void ColorizeLabel(Label label, Color color)
-        {
-            label.ForeColor = FormsColor.ForeColor(color);
-            label.BackColor = FormsColor.BackColor(color);
         }
 
         #endregion
@@ -159,6 +112,15 @@
             Program.MainWindow.PurchaseOrReserveCard(this.card);
         }
 
+        private void FillCardCost(Label label, KeyValuePair<Color, int> cardCost = new KeyValuePair<Color, int>())
+        {
+            this.UpdateLabelValue(label, cardCost.Value);
+            if (cardCost.Value > 0)
+            {
+                this.UpdateLabelColor(label, cardCost.Key);
+            }
+        }
+
         private void Green_Click(object sender, EventArgs e)
         {
             Program.MainWindow.PurchaseOrReserveCard(this.card);
@@ -169,22 +131,28 @@
             Program.MainWindow.PurchaseOrReserveCard(this.card);
         }
 
-        private void PopulateLabel(Label label, int amount)
+        private void Red_Click(object sender, EventArgs e)
         {
-            if (amount > 0)
+            Program.MainWindow.PurchaseOrReserveCard(this.card);
+        }
+
+        private void UpdateLabelColor(Label label, Color color)
+        {
+            label.ForeColor = FormsColor.ForeColor(color);
+            label.BackColor = FormsColor.BackColor(color);
+        }
+
+        private void UpdateLabelValue(Label label, int value)
+        {
+            if (value > 0)
             {
                 label.Visible = true;
-                label.Text = amount.ToString();
+                label.Text = value.ToString();
             }
             else
             {
                 label.Visible = false;
             }
-        }
-
-        private void Red_Click(object sender, EventArgs e)
-        {
-            Program.MainWindow.PurchaseOrReserveCard(this.card);
         }
 
         private void White_Click(object sender, EventArgs e)

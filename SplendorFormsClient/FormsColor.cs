@@ -71,6 +71,48 @@
             throw new NotSupportedException();
         }
 
+        public static Color DisabledForeColor(SplendorColor color)
+        {
+            switch (color)
+            {
+                case SplendorColor.Black:
+                    return Black;
+                case SplendorColor.Blue:
+                    return Blue;
+                case SplendorColor.Gold:
+                    return Gold;
+                case SplendorColor.Green:
+                    return Green;
+                case SplendorColor.Red:
+                    return Red;
+                case SplendorColor.White:
+                    return White;
+            }
+
+            throw new NotSupportedException();
+        }
+
+        public static Color DisabledBackColor(SplendorColor color)
+        {
+            switch (color)
+            {
+                case SplendorColor.Black:
+                    return Black;
+                case SplendorColor.Blue:
+                    return Blue;
+                case SplendorColor.Gold:
+                    return Gold;
+                case SplendorColor.Green:
+                    return Green;
+                case SplendorColor.Red:
+                    return Red;
+                case SplendorColor.White:
+                    return White;
+            }
+
+            throw new NotSupportedException();
+        }
+
         #endregion
     }
 }

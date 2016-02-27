@@ -2,6 +2,7 @@
 {
     #region
 
+    using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Forms;
 
@@ -45,50 +46,39 @@
                 }
 
                 this.VictoryPoints.Text = this.aristocrate.VictoryPoints.ToString();
-
                 var requiredCards = this.aristocrate.RequiredCards.Where(card => card.Value != 0).ToList();
+
                 switch (requiredCards.Count)
                 {
                     case 3:
-                        this.L1.Visible = true;
-                        this.L1.BackColor = FormsColor.BackColor(requiredCards[0].Key);
-                        this.L1.ForeColor = FormsColor.ForeColor(requiredCards[0].Key);
-                        this.L1.Text = requiredCards[0].Value.ToString();
-
-                        this.L2.Visible = true;
-                        this.L2.BackColor = FormsColor.BackColor(requiredCards[1].Key);
-                        this.L2.ForeColor = FormsColor.ForeColor(requiredCards[1].Key);
-                        this.L2.Text = requiredCards[1].Value.ToString();
-
-                        this.L3.Visible = true;
-                        this.L3.BackColor = FormsColor.BackColor(requiredCards[2].Key);
-                        this.L3.ForeColor = FormsColor.ForeColor(requiredCards[2].Key);
-                        this.L3.Text = requiredCards[2].Value.ToString();
+                        this.UpdateCostLabel(this.L1, requiredCards[0]);
+                        this.UpdateCostLabel(this.L2, requiredCards[1]);
+                        this.UpdateCostLabel(this.L3, requiredCards[2]);
                         break;
                     case 2:
-                        this.L1.Visible = true;
-                        this.L1.BackColor = FormsColor.BackColor(requiredCards[0].Key);
-                        this.L1.ForeColor = FormsColor.ForeColor(requiredCards[0].Key);
-                        this.L1.Text = requiredCards[0].Value.ToString();
-
-                        this.L2.Visible = true;
-                        this.L2.BackColor = FormsColor.BackColor(requiredCards[1].Key);
-                        this.L2.ForeColor = FormsColor.ForeColor(requiredCards[1].Key);
-                        this.L2.Text = requiredCards[1].Value.ToString();
-
+                        this.UpdateCostLabel(this.L1, requiredCards[0]);
+                        this.UpdateCostLabel(this.L2, requiredCards[1]);
                         this.L3.Visible = false;
                         break;
                     case 1:
-                        this.L1.Visible = true;
-                        this.L1.BackColor = FormsColor.BackColor(requiredCards[0].Key);
-                        this.L1.ForeColor = FormsColor.ForeColor(requiredCards[0].Key);
-                        this.L1.Text = requiredCards[0].Value.ToString();
-
+                        this.UpdateCostLabel(this.L1, requiredCards[0]);
                         this.L2.Visible = false;
                         this.L3.Visible = false;
                         break;
                 }
             }
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void UpdateCostLabel(Label label, KeyValuePair<Color, int> requiredCard)
+        {
+            label.Visible = true;
+            label.BackColor = FormsColor.BackColor(requiredCard.Key);
+            label.ForeColor = FormsColor.ForeColor(requiredCard.Key);
+            label.Text = requiredCard.Value.ToString();
         }
 
         #endregion

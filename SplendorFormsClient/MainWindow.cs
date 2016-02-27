@@ -38,18 +38,18 @@
             this.game = new Game();
             this.InitializeComponent();
 
-            this.BlackChips.ForeColor = FormsColor.ForeColor(Color.Black);
-            this.BlackChips.BackColor = FormsColor.BackColor(Color.Black);
-            this.BlueChips.ForeColor = FormsColor.ForeColor(Color.Blue);
-            this.BlueChips.BackColor = FormsColor.BackColor(Color.Blue);
-            this.GoldChips.ForeColor = FormsColor.ForeColor(Color.Gold);
-            this.GoldChips.BackColor = FormsColor.BackColor(Color.Gold);
-            this.GreenChips.ForeColor = FormsColor.ForeColor(Color.Green);
-            this.GreenChips.BackColor = FormsColor.BackColor(Color.Green);
-            this.RedChips.ForeColor = FormsColor.ForeColor(Color.Red);
-            this.RedChips.BackColor = FormsColor.BackColor(Color.Red);
-            this.WhiteChips.ForeColor = FormsColor.ForeColor(Color.White);
-            this.WhiteChips.BackColor = FormsColor.BackColor(Color.White);
+            this.BankBlackChips.ForeColor = FormsColor.ForeColor(Color.Black);
+            this.BankBlackChips.BackColor = FormsColor.BackColor(Color.Black);
+            this.BankBlueChips.ForeColor = FormsColor.ForeColor(Color.Blue);
+            this.BankBlueChips.BackColor = FormsColor.BackColor(Color.Blue);
+            this.BankGoldChips.ForeColor = FormsColor.ForeColor(Color.Gold);
+            this.BankGoldChips.BackColor = FormsColor.BackColor(Color.Gold);
+            this.BankGreenChips.ForeColor = FormsColor.ForeColor(Color.Green);
+            this.BankGreenChips.BackColor = FormsColor.BackColor(Color.Green);
+            this.BankRedChips.ForeColor = FormsColor.ForeColor(Color.Red);
+            this.BankRedChips.BackColor = FormsColor.BackColor(Color.Red);
+            this.BankWhiteChips.ForeColor = FormsColor.ForeColor(Color.White);
+            this.BankWhiteChips.BackColor = FormsColor.BackColor(Color.White);
 
             this.TakenBlackChips.ForeColor = FormsColor.ForeColor(Color.Black);
             this.TakenBlackChips.BackColor = FormsColor.BackColor(Color.Black);
@@ -79,10 +79,10 @@
                 this.Log(string.Format("Player {0} can't purchase previously reserved card {1}", this.game.CurrentPlayer, reservedCard));
             }
 
-            this.RefreshAristocrates();
+            this.UpdateAristocratesPanel();
             this.FillDeck();
-            this.RefreshBank();
-            this.RefreshCurrentPlayer();
+            this.UpdateBankPanel();
+            this.UpdatePlayersPanels();
         }
 
         public void PurchaseOrReserveCard(Card card)
@@ -104,17 +104,17 @@
                 this.Log(string.Format("Player {0} can't purchase nor reserve card {1}", this.game.CurrentPlayer, card));
             }
 
-            this.RefreshAristocrates();
+            this.UpdateAristocratesPanel();
             this.FillDeck();
-            this.RefreshBank();
-            this.RefreshCurrentPlayer();
+            this.UpdateBankPanel();
+            this.UpdatePlayersPanels();
         }
 
         #endregion
 
         #region Methods
 
-        private void AddPlayer_Click(object sender, EventArgs e)
+        private void AddPlayerClick(object sender, EventArgs e)
         {
             var player = new Player { Name = this.PlayerNameBox.Text };
 
@@ -152,7 +152,27 @@
             this.AddPlayer.Enabled = false;
         }
 
-        private void BankTakeButton_Click(object sender, EventArgs e)
+        private void BankBlackChipsClick(object sender, EventArgs e)
+        {
+            this.HandleTakeChips(Color.Black);
+        }
+
+        private void BankBlueChipsClick(object sender, EventArgs e)
+        {
+            this.HandleTakeChips(Color.Blue);
+        }
+
+        private void BankGreenChipsClick(object sender, EventArgs e)
+        {
+            this.HandleTakeChips(Color.Green);
+        }
+
+        private void BankRedChipsClick(object sender, EventArgs e)
+        {
+            this.HandleTakeChips(Color.Red);
+        }
+
+        private void BankTakeButtonClick(object sender, EventArgs e)
         {
             if (this.game.CanTakeChips(this.game.CurrentPlayer, this.game.CurrentPlayer.Chips + this.chipsToTake))
             {
@@ -166,40 +186,29 @@
                 this.Log(string.Format("Player {0} can't take {1}", this.game.CurrentPlayer, this.chipsToTake));
             }
 
-            this.RefreshAristocrates();
-            this.RefreshBank();
-            this.RefreshCurrentPlayer();
+            this.UpdateAristocratesPanel();
+            this.UpdateBankPanel();
+            this.UpdatePlayersPanels();
         }
 
-        private void RefreshAristocrates()
+        private void BankWhiteChipsClick(object sender, EventArgs e)
         {
-            this.aristocrate1.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate1.Aristocrate);
-            this.aristocrate2.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate2.Aristocrate);
-            this.aristocrate3.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate3.Aristocrate);
-            this.aristocrate4.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate4.Aristocrate);
-            this.aristocrate5.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate5.Aristocrate);
+            this.HandleTakeChips(Color.White);
         }
 
-        private void BlackChips_Click(object sender, EventArgs e)
+        private void CheckTakeAdditionalChips(Button chipsButton, Chips chips)
         {
-            if (this.bankChips[Color.Black] > 0)
-            {
-                this.bankChips[Color.Black]--;
-                this.chipsToTake[Color.Black]++;
-            }
-
-            this.RefreshBank();
+            var result = this.game.CanTakeChips(this.game.CurrentPlayer, this.game.CurrentPlayer.Chips + this.chipsToTake + chips);
+            chipsButton.Enabled = result;
         }
 
-        private void BlueChips_Click(object sender, EventArgs e)
+        private void CheckTakenPossibilities()
         {
-            if (this.bankChips[Color.Blue] > 0)
-            {
-                this.bankChips[Color.Blue]--;
-                this.chipsToTake[Color.Blue]++;
-            }
-
-            this.RefreshBank();
+            this.CheckTakeAdditionalChips(this.BankWhiteChips, new Chips(1, 0, 0, 0, 0, 0));
+            this.CheckTakeAdditionalChips(this.BankBlueChips, new Chips(0, 1, 0, 0, 0, 0));
+            this.CheckTakeAdditionalChips(this.BankGreenChips, new Chips(0, 0, 1, 0, 0, 0));
+            this.CheckTakeAdditionalChips(this.BankRedChips, new Chips(0, 0, 0, 1, 0, 0));
+            this.CheckTakeAdditionalChips(this.BankBlackChips, new Chips(0, 0, 0, 0, 1, 0));
         }
 
         private void FillButton(Button button, int amount)
@@ -232,18 +241,29 @@
             this.Card33.Card = this.game.Deck.AvailableCards[10];
             this.Card34.Card = this.game.Deck.AvailableCards[11];
 
-            this.RefreshCurrentPlayer();
+            this.UpdatePlayersPanels();
         }
 
-        private void GreenChips_Click(object sender, EventArgs e)
+        private void HandleTakeChips(Color color)
         {
-            if (this.bankChips[Color.Green] > 0)
+            if (this.bankChips[color] > 0)
             {
-                this.bankChips[Color.Green]--;
-                this.chipsToTake[Color.Green]++;
+                this.chipsToTake[color]++;
+                this.bankChips[color]--;
             }
 
-            this.RefreshBank();
+            this.UpdateBankPanel();
+        }
+
+        private void HandleTakenChips(Color color)
+        {
+            if (this.chipsToTake[color] > 0)
+            {
+                this.chipsToTake[color]--;
+                this.bankChips[color]++;
+            }
+
+            this.UpdateBankPanel();
         }
 
         private void Log(string message)
@@ -251,25 +271,28 @@
             this.textBox1.AppendText(message + Environment.NewLine);
         }
 
-        private void RedChips_Click(object sender, EventArgs e)
+        private void PlayerNameBoxTextChanged(object sender, EventArgs e)
         {
-            if (this.bankChips[Color.Red] > 0)
-            {
-                this.bankChips[Color.Red]--;
-                this.chipsToTake[Color.Red]++;
-            }
-
-            this.RefreshBank();
+            this.AddPlayer.Enabled = !string.IsNullOrWhiteSpace(this.PlayerNameBox.Text);
         }
 
-        private void RefreshBank()
+        private void UpdateAristocratesPanel()
         {
-            this.FillButton(this.WhiteChips, this.bankChips.White);
-            this.FillButton(this.BlueChips, this.bankChips.Blue);
-            this.FillButton(this.BlackChips, this.bankChips.Black);
-            this.FillButton(this.GreenChips, this.bankChips.Green);
-            this.FillButton(this.RedChips, this.bankChips.Red);
-            this.FillButton(this.GoldChips, this.bankChips.Gold);
+            this.aristocrate1.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate1.Aristocrate);
+            this.aristocrate2.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate2.Aristocrate);
+            this.aristocrate3.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate3.Aristocrate);
+            this.aristocrate4.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate4.Aristocrate);
+            this.aristocrate5.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate5.Aristocrate);
+        }
+
+        private void UpdateBankPanel()
+        {
+            this.FillButton(this.BankWhiteChips, this.bankChips.White);
+            this.FillButton(this.BankBlueChips, this.bankChips.Blue);
+            this.FillButton(this.BankBlackChips, this.bankChips.Black);
+            this.FillButton(this.BankGreenChips, this.bankChips.Green);
+            this.FillButton(this.BankRedChips, this.bankChips.Red);
+            this.FillButton(this.BankGoldChips, this.bankChips.Gold);
 
             this.FillButton(this.TakenWhiteChips, this.chipsToTake.White);
             this.FillButton(this.TakenBlackChips, this.chipsToTake.Black);
@@ -277,14 +300,9 @@
             this.FillButton(this.TakenGreenChips, this.chipsToTake.Green);
             this.FillButton(this.TakenRedChips, this.chipsToTake.Red);
 
-
             if (this.game.HasStarted && !this.game.HasFinished)
             {
-                this.WhiteChips.Enabled = true;
-                this.BlueChips.Enabled = true;
-                this.GreenChips.Enabled = true;
-                this.RedChips.Enabled = true;
-                this.BlackChips.Enabled = true;
+                this.CheckTakenPossibilities();
 
                 if (this.game.CanTakeChips(this.game.CurrentPlayer, this.game.CurrentPlayer.Chips + this.chipsToTake))
                 {
@@ -297,7 +315,7 @@
             }
         }
 
-        private void RefreshCurrentPlayer()
+        private void UpdatePlayersPanels()
         {
             this.playerPanel1.RefreshValues();
             this.playerPanel2.RefreshValues();
@@ -310,7 +328,7 @@
             this.playerPanel4.BackColor = this.playerPanel4.Player == this.game.CurrentPlayer ? System.Drawing.Color.LightPink : SystemColors.Control;
         }
 
-        private void StartGame_Click(object sender, EventArgs e)
+        private void StartGameClick(object sender, EventArgs e)
         {
             this.Log("Game started");
 
@@ -363,80 +381,35 @@
                 }
             }
 
-            this.RefreshCurrentPlayer();
-            this.RefreshBank();
+            this.UpdatePlayersPanels();
+            this.UpdateBankPanel();
             this.FillDeck();
         }
 
-        private void TakenBlackChips_Click(object sender, EventArgs e)
+        private void TakenBlackChipsClick(object sender, EventArgs e)
         {
-            if (this.chipsToTake[Color.Black] > 0)
-            {
-                this.chipsToTake[Color.Black]--;
-                this.bankChips[Color.Black]++;
-            }
-
-            this.RefreshBank();
+            this.HandleTakenChips(Color.Black);
         }
 
-        private void TakenBlueChips_Click(object sender, EventArgs e)
+        private void TakenBlueChipsClick(object sender, EventArgs e)
         {
-            if (this.chipsToTake[Color.Blue] > 0)
-            {
-                this.chipsToTake[Color.Blue]--;
-                this.bankChips[Color.Blue]++;
-            }
-
-            this.RefreshBank();
+            this.HandleTakenChips(Color.Blue);
         }
 
-        private void TakenGreenChips_Click(object sender, EventArgs e)
+        private void TakenGreenChipsClick(object sender, EventArgs e)
         {
-            if (this.chipsToTake[Color.Green] > 0)
-            {
-                this.chipsToTake[Color.Green]--;
-                this.bankChips[Color.Green]++;
-            }
-
-            this.RefreshBank();
+            this.HandleTakenChips(Color.Green);
         }
 
-        private void TakenRedChips_Click(object sender, EventArgs e)
+        private void TakenRedChipsClick(object sender, EventArgs e)
         {
-            if (this.chipsToTake[Color.Red] > 0)
-            {
-                this.chipsToTake[Color.Red]--;
-                this.bankChips[Color.Red]++;
-            }
-
-            this.RefreshBank();
+            this.HandleTakenChips(Color.Red);
         }
 
-        private void TakenWhiteChips_Click(object sender, EventArgs e)
+        private void TakenWhiteChipsClick(object sender, EventArgs e)
         {
-            if (this.chipsToTake[Color.White] > 0)
-            {
-                this.chipsToTake[Color.White]--;
-                this.bankChips[Color.White]++;
-            }
-
-            this.RefreshBank();
-        }
-
-        private void WhiteChips_Click(object sender, EventArgs e)
-        {
-            if (this.bankChips[Color.White] > 0)
-            {
-                this.bankChips[Color.White]--;
-                this.chipsToTake[Color.White]++;
-            }
-
-            this.RefreshBank();
-        }
-
-        private void PlayerNameBox_TextChanged(object sender, EventArgs e)
-        {
-            this.AddPlayer.Enabled = !string.IsNullOrWhiteSpace(this.PlayerNameBox.Text);
+            this.HandleTakenChips(Color.White);
+            
         }
 
         #endregion
