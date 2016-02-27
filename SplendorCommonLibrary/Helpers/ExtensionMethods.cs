@@ -27,7 +27,7 @@
                 var k = box[0] % n;
                 n--;
 
-                T value = list[k];
+                var value = list[k];
                 list[k] = list[n];
                 list[n] = value;
             }

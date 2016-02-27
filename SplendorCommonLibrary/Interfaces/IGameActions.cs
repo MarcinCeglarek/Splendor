@@ -2,7 +2,7 @@
 {
     #region
 
-    using SplendorCore.Models;
+    using Models;
 
     #endregion
 
