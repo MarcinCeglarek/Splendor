@@ -113,7 +113,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SplendorCommonLibrary\Core.csproj">
+    <ProjectReference Include="..\SplendorCore\Core.csproj">
       <Project>{D36F7689-E5C6-4628-A9D5-329E955BD2EF}</Project>
       <Name>Core</Name>
     </ProjectReference>
