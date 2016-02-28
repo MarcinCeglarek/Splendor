@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleServer", "SplendorCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "SplendorConsoleClient\ConsoleClient.csproj", "{E155F706-B0B5-43D0-B4B9-7D10399DF561}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormsClient", "SplendorFormsClient\FormsClient.csproj", "{3F8C8959-748E-47FE-A81E-2208420AAA6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsClient", "SplendorFormsClient\WindowsFormsClient.csproj", "{3F8C8959-748E-47FE-A81E-2208420AAA6B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connector", "SplendorConnector\Connector.csproj", "{51A4743A-E49C-4B3B-928D-3F8465C3E241}"
 EndProject

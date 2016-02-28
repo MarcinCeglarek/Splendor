@@ -7,8 +7,8 @@
     <ProjectGuid>{3F8C8959-748E-47FE-A81E-2208420AAA6B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SplendorFormsClient</RootNamespace>
-    <AssemblyName>SplendorFormsClient</AssemblyName>
+    <RootNamespace>SplendorWindowsFormsClient</RootNamespace>
+    <AssemblyName>SplendorWindowsFormsClient</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -97,6 +97,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
