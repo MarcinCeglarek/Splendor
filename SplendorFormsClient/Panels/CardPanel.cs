@@ -21,7 +21,7 @@
 
         #region Constructors and Destructors
 
-        public CardPanel(int tier = 0)
+        public CardPanel()
         {
             this.InitializeComponent();
         }

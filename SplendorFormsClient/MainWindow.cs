@@ -331,19 +331,7 @@
             this.AddPlayer.Visible = false;
             this.StartGame.Visible = false;
 
-            this.Card11.Visible = true;
-            this.Card12.Visible = true;
-            this.Card13.Visible = true;
-            this.Card14.Visible = true;
-            this.Card21.Visible = true;
-            this.Card22.Visible = true;
-            this.Card23.Visible = true;
-            this.Card24.Visible = true;
-            this.Card31.Visible = true;
-            this.Card32.Visible = true;
-            this.Card33.Visible = true;
-            this.Card34.Visible = true;
-
+            this.cardPanels.ForEach(cardPanel => cardPanel.Visible = true);
             this.BankTakeButton.Enabled = true;
 
             this.game.Deck = new Deck(this.game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);

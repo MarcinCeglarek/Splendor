@@ -50,7 +50,6 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormsClientConstants.cs" />
     <Compile Include="FormsColor.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>

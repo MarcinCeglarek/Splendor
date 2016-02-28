@@ -259,7 +259,7 @@
             this.CardsWhite.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.CardsWhite.Location = new System.Drawing.Point(6, 12);
             this.CardsWhite.Name = "CardsWhite";
-            this.CardsWhite.Size = new System.Drawing.Size(44, 23);
+            this.CardsWhite.Size = new System.Drawing.Size(40, 23);
             this.CardsWhite.TabIndex = 3;
             this.CardsWhite.Text = "0";
             this.CardsWhite.UseVisualStyleBackColor = false;
@@ -273,9 +273,9 @@
             this.CardsBlue.BackColor = System.Drawing.Color.Blue;
             this.CardsBlue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.CardsBlue.ForeColor = System.Drawing.Color.White;
-            this.CardsBlue.Location = new System.Drawing.Point(59, 12);
+            this.CardsBlue.Location = new System.Drawing.Point(49, 12);
             this.CardsBlue.Name = "CardsBlue";
-            this.CardsBlue.Size = new System.Drawing.Size(44, 23);
+            this.CardsBlue.Size = new System.Drawing.Size(40, 23);
             this.CardsBlue.TabIndex = 4;
             this.CardsBlue.Text = "0";
             this.CardsBlue.UseVisualStyleBackColor = false;
@@ -289,9 +289,9 @@
             this.CardsGreen.BackColor = System.Drawing.Color.Green;
             this.CardsGreen.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.CardsGreen.ForeColor = System.Drawing.Color.White;
-            this.CardsGreen.Location = new System.Drawing.Point(112, 12);
+            this.CardsGreen.Location = new System.Drawing.Point(92, 12);
             this.CardsGreen.Name = "CardsGreen";
-            this.CardsGreen.Size = new System.Drawing.Size(44, 23);
+            this.CardsGreen.Size = new System.Drawing.Size(40, 23);
             this.CardsGreen.TabIndex = 5;
             this.CardsGreen.Text = "0";
             this.CardsGreen.UseVisualStyleBackColor = false;
@@ -305,9 +305,9 @@
             this.CardsRed.BackColor = System.Drawing.Color.Red;
             this.CardsRed.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.CardsRed.ForeColor = System.Drawing.Color.White;
-            this.CardsRed.Location = new System.Drawing.Point(165, 12);
+            this.CardsRed.Location = new System.Drawing.Point(138, 12);
             this.CardsRed.Name = "CardsRed";
-            this.CardsRed.Size = new System.Drawing.Size(44, 23);
+            this.CardsRed.Size = new System.Drawing.Size(40, 23);
             this.CardsRed.TabIndex = 6;
             this.CardsRed.Text = "0";
             this.CardsRed.UseVisualStyleBackColor = false;
@@ -321,9 +321,9 @@
             this.CardsBlack.BackColor = System.Drawing.Color.Black;
             this.CardsBlack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.CardsBlack.ForeColor = System.Drawing.Color.White;
-            this.CardsBlack.Location = new System.Drawing.Point(218, 12);
+            this.CardsBlack.Location = new System.Drawing.Point(184, 12);
             this.CardsBlack.Name = "CardsBlack";
-            this.CardsBlack.Size = new System.Drawing.Size(44, 23);
+            this.CardsBlack.Size = new System.Drawing.Size(40, 23);
             this.CardsBlack.TabIndex = 7;
             this.CardsBlack.Text = "0";
             this.CardsBlack.UseVisualStyleBackColor = false;
