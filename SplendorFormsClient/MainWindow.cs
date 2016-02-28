@@ -4,6 +4,7 @@
 
     using System;
     using System.Drawing;
+    using System.Linq;
     using System.Windows.Forms;
 
     using SplendorCore.Data;
@@ -79,10 +80,7 @@
                 this.Log(string.Format("Player {0} can't purchase previously reserved card {1}", this.game.CurrentPlayer, reservedCard));
             }
 
-            this.UpdateAristocratesPanel();
-            this.FillDeck();
-            this.UpdateBankPanel();
-            this.UpdatePlayersPanels();
+            this.UpdateGameState();
         }
 
         public void PurchaseOrReserveCard(Card card)
@@ -104,10 +102,7 @@
                 this.Log(string.Format("Player {0} can't purchase nor reserve card {1}", this.game.CurrentPlayer, card));
             }
 
-            this.UpdateAristocratesPanel();
-            this.FillDeck();
-            this.UpdateBankPanel();
-            this.UpdatePlayersPanels();
+            this.UpdateGameState();
         }
 
         #endregion
@@ -186,9 +181,7 @@
                 this.Log(string.Format("Player {0} can't take {1}", this.game.CurrentPlayer, this.chipsToTake));
             }
 
-            this.UpdateAristocratesPanel();
-            this.UpdateBankPanel();
-            this.UpdatePlayersPanels();
+            this.UpdateGameState();
         }
 
         private void BankWhiteChipsClick(object sender, EventArgs e)
@@ -211,6 +204,24 @@
             this.CheckTakeAdditionalChips(this.BankBlackChips, new Chips(0, 0, 0, 0, 1, 0));
         }
 
+        private void CheckVictoryCondition()
+        {
+            if (this.game.HasFinished)
+            {
+                this.Log("Game Ended");
+                var maxPoints = this.game.Players.Max(o => o.VictoryPoints);
+                var winners = this.game.Players.Where(o => o.VictoryPoints == maxPoints).ToList();
+                if (winners.Count > 1)
+                {
+                    this.Log("The winners are " + string.Join(", ", winners));
+                }
+                else
+                {
+                    this.Log("The winner is " + winners.Single());
+                }
+            }
+        }
+
         private void FillButton(Button button, int amount)
         {
             if (amount > 0)
@@ -224,29 +235,9 @@
             }
         }
 
-        private void FillDeck()
-        {
-            this.Card11.Card = this.game.Deck.AvailableCards[0];
-            this.Card12.Card = this.game.Deck.AvailableCards[1];
-            this.Card13.Card = this.game.Deck.AvailableCards[2];
-            this.Card14.Card = this.game.Deck.AvailableCards[3];
-
-            this.Card21.Card = this.game.Deck.AvailableCards[4];
-            this.Card22.Card = this.game.Deck.AvailableCards[5];
-            this.Card23.Card = this.game.Deck.AvailableCards[6];
-            this.Card24.Card = this.game.Deck.AvailableCards[7];
-
-            this.Card31.Card = this.game.Deck.AvailableCards[8];
-            this.Card32.Card = this.game.Deck.AvailableCards[9];
-            this.Card33.Card = this.game.Deck.AvailableCards[10];
-            this.Card34.Card = this.game.Deck.AvailableCards[11];
-
-            this.UpdatePlayersPanels();
-        }
-
         private void HandleTakeChips(Color color)
         {
-            if (this.bankChips[color] > 0)
+            if (this.game.IsActive && this.bankChips[color] > 0)
             {
                 this.chipsToTake[color]++;
                 this.bankChips[color]--;
@@ -257,7 +248,7 @@
 
         private void HandleTakenChips(Color color)
         {
-            if (this.chipsToTake[color] > 0)
+            if (this.game.IsActive && this.chipsToTake[color] > 0)
             {
                 this.chipsToTake[color]--;
                 this.bankChips[color]++;
@@ -274,58 +265,6 @@
         private void PlayerNameBoxTextChanged(object sender, EventArgs e)
         {
             this.AddPlayer.Enabled = !string.IsNullOrWhiteSpace(this.PlayerNameBox.Text);
-        }
-
-        private void UpdateAristocratesPanel()
-        {
-            this.aristocrate1.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate1.Aristocrate);
-            this.aristocrate2.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate2.Aristocrate);
-            this.aristocrate3.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate3.Aristocrate);
-            this.aristocrate4.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate4.Aristocrate);
-            this.aristocrate5.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate5.Aristocrate);
-        }
-
-        private void UpdateBankPanel()
-        {
-            this.FillButton(this.BankWhiteChips, this.bankChips.White);
-            this.FillButton(this.BankBlueChips, this.bankChips.Blue);
-            this.FillButton(this.BankBlackChips, this.bankChips.Black);
-            this.FillButton(this.BankGreenChips, this.bankChips.Green);
-            this.FillButton(this.BankRedChips, this.bankChips.Red);
-            this.FillButton(this.BankGoldChips, this.bankChips.Gold);
-
-            this.FillButton(this.TakenWhiteChips, this.chipsToTake.White);
-            this.FillButton(this.TakenBlackChips, this.chipsToTake.Black);
-            this.FillButton(this.TakenBlueChips, this.chipsToTake.Blue);
-            this.FillButton(this.TakenGreenChips, this.chipsToTake.Green);
-            this.FillButton(this.TakenRedChips, this.chipsToTake.Red);
-
-            if (this.game.HasStarted && !this.game.HasFinished)
-            {
-                this.CheckTakenPossibilities();
-
-                if (this.game.CanTakeChips(this.game.CurrentPlayer, this.game.CurrentPlayer.Chips + this.chipsToTake))
-                {
-                    this.BankTakeButton.Enabled = true;
-                }
-                else
-                {
-                    this.BankTakeButton.Enabled = false;
-                }
-            }
-        }
-
-        private void UpdatePlayersPanels()
-        {
-            this.playerPanel1.RefreshValues();
-            this.playerPanel2.RefreshValues();
-            this.playerPanel3.RefreshValues();
-            this.playerPanel4.RefreshValues();
-
-            this.playerPanel1.BackColor = this.playerPanel1.Player == this.game.CurrentPlayer ? System.Drawing.Color.LightPink : SystemColors.Control;
-            this.playerPanel2.BackColor = this.playerPanel2.Player == this.game.CurrentPlayer ? System.Drawing.Color.LightPink : SystemColors.Control;
-            this.playerPanel3.BackColor = this.playerPanel3.Player == this.game.CurrentPlayer ? System.Drawing.Color.LightPink : SystemColors.Control;
-            this.playerPanel4.BackColor = this.playerPanel4.Player == this.game.CurrentPlayer ? System.Drawing.Color.LightPink : SystemColors.Control;
         }
 
         private void StartGameClick(object sender, EventArgs e)
@@ -383,7 +322,7 @@
 
             this.UpdatePlayersPanels();
             this.UpdateBankPanel();
-            this.FillDeck();
+            this.UpdateDeck();
         }
 
         private void TakenBlackChipsClick(object sender, EventArgs e)
@@ -409,7 +348,87 @@
         private void TakenWhiteChipsClick(object sender, EventArgs e)
         {
             this.HandleTakenChips(Color.White);
-            
+        }
+
+        private void UpdateAristocratesPanel()
+        {
+            this.aristocrate1.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate1.Aristocrate);
+            this.aristocrate2.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate2.Aristocrate);
+            this.aristocrate3.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate3.Aristocrate);
+            this.aristocrate4.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate4.Aristocrate);
+            this.aristocrate5.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate5.Aristocrate);
+        }
+
+        private void UpdateBankPanel()
+        {
+            this.FillButton(this.BankWhiteChips, this.bankChips.White);
+            this.FillButton(this.BankBlueChips, this.bankChips.Blue);
+            this.FillButton(this.BankBlackChips, this.bankChips.Black);
+            this.FillButton(this.BankGreenChips, this.bankChips.Green);
+            this.FillButton(this.BankRedChips, this.bankChips.Red);
+            this.FillButton(this.BankGoldChips, this.bankChips.Gold);
+
+            this.FillButton(this.TakenWhiteChips, this.chipsToTake.White);
+            this.FillButton(this.TakenBlackChips, this.chipsToTake.Black);
+            this.FillButton(this.TakenBlueChips, this.chipsToTake.Blue);
+            this.FillButton(this.TakenGreenChips, this.chipsToTake.Green);
+            this.FillButton(this.TakenRedChips, this.chipsToTake.Red);
+
+            if (this.game.HasStarted && !this.game.HasFinished)
+            {
+                this.CheckTakenPossibilities();
+
+                if (this.game.CanTakeChips(this.game.CurrentPlayer, this.game.CurrentPlayer.Chips + this.chipsToTake))
+                {
+                    this.BankTakeButton.Enabled = true;
+                }
+                else
+                {
+                    this.BankTakeButton.Enabled = false;
+                }
+            }
+        }
+
+        private void UpdateDeck()
+        {
+            this.Card11.Card = this.game.Deck.AvailableCards[0];
+            this.Card12.Card = this.game.Deck.AvailableCards[1];
+            this.Card13.Card = this.game.Deck.AvailableCards[2];
+            this.Card14.Card = this.game.Deck.AvailableCards[3];
+
+            this.Card21.Card = this.game.Deck.AvailableCards[4];
+            this.Card22.Card = this.game.Deck.AvailableCards[5];
+            this.Card23.Card = this.game.Deck.AvailableCards[6];
+            this.Card24.Card = this.game.Deck.AvailableCards[7];
+
+            this.Card31.Card = this.game.Deck.AvailableCards[8];
+            this.Card32.Card = this.game.Deck.AvailableCards[9];
+            this.Card33.Card = this.game.Deck.AvailableCards[10];
+            this.Card34.Card = this.game.Deck.AvailableCards[11];
+
+            this.UpdatePlayersPanels();
+        }
+
+        private void UpdateGameState()
+        {
+            this.UpdateDeck();
+            this.UpdateBankPanel();
+            this.UpdatePlayersPanels();
+            this.UpdateAristocratesPanel();
+            this.CheckVictoryCondition();
+        }
+
+        private void UpdatePlayersPanels()
+        {
+            this.playerPanel1.RefreshValues();
+            this.playerPanel2.RefreshValues();
+            this.playerPanel3.RefreshValues();
+            this.playerPanel4.RefreshValues();
+
+            this.playerPanel1.BackColor = this.playerPanel1.Player == this.game.CurrentPlayer ? System.Drawing.Color.LightPink : SystemColors.Control;
+            this.playerPanel2.BackColor = this.playerPanel2.Player == this.game.CurrentPlayer ? System.Drawing.Color.LightPink : SystemColors.Control;
+            this.playerPanel3.BackColor = this.playerPanel3.Player == this.game.CurrentPlayer ? System.Drawing.Color.LightPink : SystemColors.Control;
+            this.playerPanel4.BackColor = this.playerPanel4.Player == this.game.CurrentPlayer ? System.Drawing.Color.LightPink : SystemColors.Control;
         }
 
         #endregion
