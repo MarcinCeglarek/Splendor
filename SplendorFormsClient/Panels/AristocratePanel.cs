@@ -46,7 +46,7 @@
                 }
 
                 this.VictoryPoints.Text = this.aristocrate.VictoryPoints.ToString();
-                var requiredCards = this.aristocrate.RequiredCards.Where(card => card.Value != 0).ToList();
+                var requiredCards = this.aristocrate.RequiredCards.Where(card => card.Value != 0).OrderByDescending(card => (int)card.Key).ToList();
 
                 switch (requiredCards.Count)
                 {

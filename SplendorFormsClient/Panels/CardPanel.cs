@@ -50,7 +50,7 @@
                 this.Color.BackColor = FormsColor.BackColor(this.card.Color);
                 this.Points.BackColor = FormsColor.BackColor(this.card.Color);
                 this.Points.ForeColor = FormsColor.ForeColor(this.card.Color);
-                var costList = this.card.Cost.Where(cost => cost.Value != 0).ToList();
+                var costList = this.card.Cost.Where(cost => cost.Value != 0).OrderByDescending(cost => (int)cost.Key).ToList();
                 switch (costList.Count())
                 {
                     case 1:

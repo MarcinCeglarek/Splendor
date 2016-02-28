@@ -14,10 +14,7 @@
 
         public Chips()
         {
-            foreach (var color in Enum.GetValues(typeof(Color)).Cast<Color>())
-            {
-                this.Add(color, 0);
-            }
+            GetColorsCollection.ForEach(color => this.Add(color, 0));
         }
 
         public Chips(Chips other)
@@ -121,7 +118,7 @@
 
         #region Properties
 
-        private static List<Color> GetColorValues
+        private static List<Color> GetColorsCollection
         {
             get
             {
@@ -151,22 +148,22 @@
 
         public static bool operator >(Chips a, Chips b)
         {
-            return GetColorValues.All(color => (a[color] == 0 && b[color] == 0) || a[color] > b[color]);
+            return GetColorsCollection.All(color => (a[color] == 0 && b[color] == 0) || a[color] > b[color]);
         }
 
         public static bool operator >=(Chips a, Chips b)
         {
-            return GetColorValues.All(color => (a[color] == 0 && b[color] == 0) || a[color] >= b[color]);
+            return GetColorsCollection.All(color => (a[color] == 0 && b[color] == 0) || a[color] >= b[color]);
         }
 
         public static bool operator <(Chips a, Chips b)
         {
-            return GetColorValues.All(color => (a[color] == 0 && b[color] == 0) || a[color] < b[color]);
+            return GetColorsCollection.All(color => (a[color] == 0 && b[color] == 0) || a[color] < b[color]);
         }
 
         public static bool operator <=(Chips a, Chips b)
         {
-            return GetColorValues.All(color => (a[color] == 0 && b[color] == 0) || a[color] <= b[color]);
+            return GetColorsCollection.All(color => (a[color] == 0 && b[color] == 0) || a[color] <= b[color]);
         }
 
         public static Chips operator -(Chips chipsA, Chips chipsB)
