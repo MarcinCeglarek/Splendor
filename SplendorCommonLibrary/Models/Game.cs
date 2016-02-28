@@ -126,11 +126,7 @@
                 this.PurchaseCardVerification(player, card);
                 return true;
             }
-            catch (SplendorCardOperationException)
-            {
-                return false;
-            }
-            catch (SplendorCardException)
+            catch (SplendorException)
             {
                 return false;
             }
@@ -143,7 +139,7 @@
                 this.ReserveCardVerification(player, card);
                 return true;
             }
-            catch (SplendorCardOperationException)
+            catch (SplendorException)
             {
                 return false;
             }
@@ -156,7 +152,7 @@
                 this.TakeChipVerification(player, chips);
                 return true;
             }
-            catch (SplendorChipOperationException)
+            catch (SplendorException)
             {
                 return false;
             }
