@@ -3,6 +3,7 @@
     #region
 
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
@@ -19,6 +20,8 @@
     public partial class MainWindow : Form
     {
         #region Fields
+
+        private readonly List<CardPanel> cardPanels = new List<CardPanel>();
 
         private readonly Game game;
 
@@ -62,6 +65,19 @@
             this.TakenRedChips.BackColor = FormsColor.BackColor(Color.Red);
             this.TakenWhiteChips.ForeColor = FormsColor.ForeColor(Color.White);
             this.TakenWhiteChips.BackColor = FormsColor.BackColor(Color.White);
+
+            this.cardPanels.Add(this.Card11);
+            this.cardPanels.Add(this.Card12);
+            this.cardPanels.Add(this.Card13);
+            this.cardPanels.Add(this.Card14);
+            this.cardPanels.Add(this.Card21);
+            this.cardPanels.Add(this.Card22);
+            this.cardPanels.Add(this.Card23);
+            this.cardPanels.Add(this.Card24);
+            this.cardPanels.Add(this.Card31);
+            this.cardPanels.Add(this.Card32);
+            this.cardPanels.Add(this.Card33);
+            this.cardPanels.Add(this.Card34);
         }
 
         #endregion
@@ -89,13 +105,14 @@
             if (this.game.CanPurchaseCard(currentPlayer, card))
             {
                 this.Log(string.Format("Player {0} purchases card {1}", this.game.CurrentPlayer, card));
+                this.RemoveCardFromDeck(card);
                 this.game.PurchaseCard(currentPlayer, card);
             }
             else if (this.game.CanReserveCard(currentPlayer, card))
             {
                 this.Log(string.Format("Player {0} reserves card {1}", this.game.CurrentPlayer, card));
+                this.RemoveCardFromDeck(card);
                 this.game.ReserveCard(currentPlayer, card);
-                this.bankChips.Gold = this.game.Bank.Gold;
             }
             else
             {
@@ -243,7 +260,7 @@
                 this.bankChips[color]--;
             }
 
-            this.UpdateBankPanel();
+            this.RefreshBankPanelButtons();
         }
 
         private void HandleTakenChips(Color color)
@@ -254,7 +271,7 @@
                 this.bankChips[color]++;
             }
 
-            this.UpdateBankPanel();
+            this.RefreshBankPanelButtons();
         }
 
         private void Log(string message)
@@ -265,6 +282,45 @@
         private void PlayerNameBoxTextChanged(object sender, EventArgs e)
         {
             this.AddPlayer.Enabled = !string.IsNullOrWhiteSpace(this.PlayerNameBox.Text);
+        }
+
+        private void RefreshBankPanelButtons()
+        {
+            this.FillButton(this.BankWhiteChips, this.bankChips.White);
+            this.FillButton(this.BankBlueChips, this.bankChips.Blue);
+            this.FillButton(this.BankBlackChips, this.bankChips.Black);
+            this.FillButton(this.BankGreenChips, this.bankChips.Green);
+            this.FillButton(this.BankRedChips, this.bankChips.Red);
+            this.FillButton(this.BankGoldChips, this.bankChips.Gold);
+
+            this.FillButton(this.TakenWhiteChips, this.chipsToTake.White);
+            this.FillButton(this.TakenBlackChips, this.chipsToTake.Black);
+            this.FillButton(this.TakenBlueChips, this.chipsToTake.Blue);
+            this.FillButton(this.TakenGreenChips, this.chipsToTake.Green);
+            this.FillButton(this.TakenRedChips, this.chipsToTake.Red);
+
+            if (this.game.HasStarted && !this.game.HasFinished)
+            {
+                this.CheckTakenPossibilities();
+
+                if (this.game.CanTakeChips(this.game.CurrentPlayer, this.game.CurrentPlayer.Chips + this.chipsToTake))
+                {
+                    this.BankTakeButton.Enabled = true;
+                }
+                else
+                {
+                    this.BankTakeButton.Enabled = false;
+                }
+            }
+        }
+
+        private void RemoveCardFromDeck(Card card)
+        {
+            var cardPanelToClear = this.cardPanels.SingleOrDefault(cp => cp.Card == card);
+            if (cardPanelToClear != null)
+            {
+                cardPanelToClear.Card = null;
+            }
         }
 
         private void StartGameClick(object sender, EventArgs e)
@@ -361,50 +417,21 @@
 
         private void UpdateBankPanel()
         {
-            this.FillButton(this.BankWhiteChips, this.bankChips.White);
-            this.FillButton(this.BankBlueChips, this.bankChips.Blue);
-            this.FillButton(this.BankBlackChips, this.bankChips.Black);
-            this.FillButton(this.BankGreenChips, this.bankChips.Green);
-            this.FillButton(this.BankRedChips, this.bankChips.Red);
-            this.FillButton(this.BankGoldChips, this.bankChips.Gold);
-
-            this.FillButton(this.TakenWhiteChips, this.chipsToTake.White);
-            this.FillButton(this.TakenBlackChips, this.chipsToTake.Black);
-            this.FillButton(this.TakenBlueChips, this.chipsToTake.Blue);
-            this.FillButton(this.TakenGreenChips, this.chipsToTake.Green);
-            this.FillButton(this.TakenRedChips, this.chipsToTake.Red);
-
-            if (this.game.HasStarted && !this.game.HasFinished)
-            {
-                this.CheckTakenPossibilities();
-
-                if (this.game.CanTakeChips(this.game.CurrentPlayer, this.game.CurrentPlayer.Chips + this.chipsToTake))
-                {
-                    this.BankTakeButton.Enabled = true;
-                }
-                else
-                {
-                    this.BankTakeButton.Enabled = false;
-                }
-            }
+            this.bankChips = this.game.Bank;
+            this.chipsToTake = new Chips();
+            this.RefreshBankPanelButtons();
         }
 
         private void UpdateDeck()
         {
-            this.Card11.Card = this.game.Deck.AvailableCards[0];
-            this.Card12.Card = this.game.Deck.AvailableCards[1];
-            this.Card13.Card = this.game.Deck.AvailableCards[2];
-            this.Card14.Card = this.game.Deck.AvailableCards[3];
+            var alreadyAssignedCards = this.cardPanels.Select(o => o.Card).ToList();
+            var cardsToAssign = this.game.Deck.AvailableCards.Except(alreadyAssignedCards).ToList();
 
-            this.Card21.Card = this.game.Deck.AvailableCards[4];
-            this.Card22.Card = this.game.Deck.AvailableCards[5];
-            this.Card23.Card = this.game.Deck.AvailableCards[6];
-            this.Card24.Card = this.game.Deck.AvailableCards[7];
-
-            this.Card31.Card = this.game.Deck.AvailableCards[8];
-            this.Card32.Card = this.game.Deck.AvailableCards[9];
-            this.Card33.Card = this.game.Deck.AvailableCards[10];
-            this.Card34.Card = this.game.Deck.AvailableCards[11];
+            foreach (var cardToAssign in cardsToAssign)
+            {
+                var emptyCardsPanels = this.cardPanels.Where(cardPanel => cardPanel.Card == null && cardPanel.Tier == cardToAssign.Tier).ToList();
+                emptyCardsPanels.First().Card = cardToAssign;
+            }
 
             this.UpdatePlayersPanels();
         }

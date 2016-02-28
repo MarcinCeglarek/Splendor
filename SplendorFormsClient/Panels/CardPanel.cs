@@ -21,7 +21,7 @@
 
         #region Constructors and Destructors
 
-        public CardPanel()
+        public CardPanel(int tier = 0)
         {
             this.InitializeComponent();
         }
@@ -43,9 +43,11 @@
 
                 if (this.card == null)
                 {
+                    this.Visible = false;
                     return;
                 }
 
+                this.Visible = true;
                 this.UpdateLabelValue(this.Points, this.card.VictoryPoints);
                 this.Color.BackColor = FormsColor.BackColor(this.card.Color);
                 this.Points.BackColor = FormsColor.BackColor(this.card.Color);
@@ -90,6 +92,14 @@
                         this.FillCardCost(this.L5, costList[4]);
                         break;
                 }
+            }
+        }
+
+        public int Tier
+        {
+            get
+            {
+                return int.Parse(this.Name.Substring(4, 1));
             }
         }
 
