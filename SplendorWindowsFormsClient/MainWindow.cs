@@ -331,13 +331,15 @@
             this.AddPlayer.Visible = false;
             this.StartGame.Visible = false;
 
-            this.cardPanels.ForEach(cardPanel => cardPanel.Visible = true);
-            this.BankTakeButton.Enabled = true;
-
             this.game.Deck = new Deck(this.game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
             this.game.Start();
             this.Log("Shuffling players, order: " + string.Join(", ", this.game.Players));
 
+            this.cardPanels.ForEach(cardPanel => cardPanel.Visible = true);
+            this.Tier1Cards.Visible = true;
+            this.Tier2Cards.Visible = true;
+            this.Tier3Cards.Visible = true;
+            this.BankTakeButton.Enabled = true;
             this.bankChips = this.game.Bank;
 
             this.playerPanel1.Player = this.game.Players[0];
@@ -421,6 +423,9 @@
                 emptyCardsPanels.First().Card = cardToAssign;
             }
 
+            this.Tier1Cards.Text = this.game.Deck.AllCards.Except(this.game.Deck.AvailableCards).Count(o => o.Tier == 1).ToString();
+            this.Tier2Cards.Text = this.game.Deck.AllCards.Except(this.game.Deck.AvailableCards).Count(o => o.Tier == 2).ToString();
+            this.Tier3Cards.Text = this.game.Deck.AllCards.Except(this.game.Deck.AvailableCards).Count(o => o.Tier == 3).ToString();
             this.UpdatePlayersPanels();
         }
 

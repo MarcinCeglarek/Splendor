@@ -57,12 +57,17 @@
             this.BankWhiteChips = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.AristocratesPanel = new System.Windows.Forms.Panel();
+            this.CardsPanel = new System.Windows.Forms.Panel();
+            this.PlayersPanel = new System.Windows.Forms.Panel();
+            this.Tier1Cards = new System.Windows.Forms.Label();
+            this.Tier2Cards = new System.Windows.Forms.Label();
+            this.Tier3Cards = new System.Windows.Forms.Label();
             this.aristocrate5 = new SplendorFormsClient.Panels.AristocratePanel();
             this.aristocrate3 = new SplendorFormsClient.Panels.AristocratePanel();
             this.aristocrate2 = new SplendorFormsClient.Panels.AristocratePanel();
             this.aristocrate1 = new SplendorFormsClient.Panels.AristocratePanel();
             this.aristocrate4 = new SplendorFormsClient.Panels.AristocratePanel();
-            this.CardsPanel = new System.Windows.Forms.Panel();
+            this.Card11 = new SplendorFormsClient.Panels.CardPanel();
             this.Card34 = new SplendorFormsClient.Panels.CardPanel();
             this.Card33 = new SplendorFormsClient.Panels.CardPanel();
             this.Card32 = new SplendorFormsClient.Panels.CardPanel();
@@ -74,8 +79,6 @@
             this.Card14 = new SplendorFormsClient.Panels.CardPanel();
             this.Card13 = new SplendorFormsClient.Panels.CardPanel();
             this.Card12 = new SplendorFormsClient.Panels.CardPanel();
-            this.Card11 = new SplendorFormsClient.Panels.CardPanel();
-            this.PlayersPanel = new System.Windows.Forms.Panel();
             this.playerPanel4 = new SplendorFormsClient.Panels.PlayerPanel();
             this.playerPanel3 = new SplendorFormsClient.Panels.PlayerPanel();
             this.playerPanel2 = new SplendorFormsClient.Panels.PlayerPanel();
@@ -123,53 +126,47 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.Control;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.25739F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.PlayersPanel, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 74.05901F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.941F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1202, 1021);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1203, 1022);
             this.tableLayoutPanel1.TabIndex = 69;
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.Control;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.7804F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.21959F));
             this.tableLayoutPanel2.Controls.Add(this.BankPanel3, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 756F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1202, 756);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1203, 756);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // BankPanel3
             // 
-            this.BankPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.BankPanel3.BackColor = System.Drawing.SystemColors.Control;
             this.BankPanel3.Controls.Add(this.textBox1);
             this.BankPanel3.Controls.Add(this.groupBox2);
             this.BankPanel3.Controls.Add(this.BankPanel);
-            this.BankPanel3.Location = new System.Drawing.Point(778, 0);
+            this.BankPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BankPanel3.Location = new System.Drawing.Point(779, 0);
             this.BankPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.BankPanel3.Name = "BankPanel3";
             this.BankPanel3.Size = new System.Drawing.Size(424, 756);
@@ -361,40 +358,114 @@
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.Control;
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.Controls.Add(this.AristocratesPanel, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.CardsPanel, 0, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.57542F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 81.42458F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(778, 756);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(779, 756);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // AristocratesPanel
             // 
-            this.AristocratesPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.AristocratesPanel.BackColor = System.Drawing.SystemColors.Control;
             this.AristocratesPanel.Controls.Add(this.aristocrate5);
             this.AristocratesPanel.Controls.Add(this.aristocrate3);
             this.AristocratesPanel.Controls.Add(this.aristocrate2);
             this.AristocratesPanel.Controls.Add(this.aristocrate1);
             this.AristocratesPanel.Controls.Add(this.aristocrate4);
+            this.AristocratesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AristocratesPanel.Location = new System.Drawing.Point(0, 0);
             this.AristocratesPanel.Margin = new System.Windows.Forms.Padding(0);
             this.AristocratesPanel.Name = "AristocratesPanel";
-            this.AristocratesPanel.Size = new System.Drawing.Size(778, 140);
+            this.AristocratesPanel.Size = new System.Drawing.Size(779, 140);
             this.AristocratesPanel.TabIndex = 0;
+            // 
+            // CardsPanel
+            // 
+            this.CardsPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.CardsPanel.Controls.Add(this.Tier3Cards);
+            this.CardsPanel.Controls.Add(this.Tier2Cards);
+            this.CardsPanel.Controls.Add(this.Tier1Cards);
+            this.CardsPanel.Controls.Add(this.Card11);
+            this.CardsPanel.Controls.Add(this.Card34);
+            this.CardsPanel.Controls.Add(this.Card33);
+            this.CardsPanel.Controls.Add(this.Card32);
+            this.CardsPanel.Controls.Add(this.Card31);
+            this.CardsPanel.Controls.Add(this.Card24);
+            this.CardsPanel.Controls.Add(this.Card23);
+            this.CardsPanel.Controls.Add(this.Card22);
+            this.CardsPanel.Controls.Add(this.Card21);
+            this.CardsPanel.Controls.Add(this.Card14);
+            this.CardsPanel.Controls.Add(this.Card13);
+            this.CardsPanel.Controls.Add(this.Card12);
+            this.CardsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CardsPanel.Location = new System.Drawing.Point(0, 140);
+            this.CardsPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.CardsPanel.Name = "CardsPanel";
+            this.CardsPanel.Size = new System.Drawing.Size(779, 616);
+            this.CardsPanel.TabIndex = 1;
+            // 
+            // PlayersPanel
+            // 
+            this.PlayersPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.PlayersPanel.Controls.Add(this.playerPanel4);
+            this.PlayersPanel.Controls.Add(this.playerPanel3);
+            this.PlayersPanel.Controls.Add(this.playerPanel2);
+            this.PlayersPanel.Controls.Add(this.playerPanel1);
+            this.PlayersPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PlayersPanel.Location = new System.Drawing.Point(0, 756);
+            this.PlayersPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.PlayersPanel.Name = "PlayersPanel";
+            this.PlayersPanel.Size = new System.Drawing.Size(1203, 266);
+            this.PlayersPanel.TabIndex = 1;
+            // 
+            // Tier1Cards
+            // 
+            this.Tier1Cards.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Tier1Cards.BackColor = System.Drawing.Color.Lime;
+            this.Tier1Cards.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Tier1Cards.Location = new System.Drawing.Point(3, 62);
+            this.Tier1Cards.Name = "Tier1Cards";
+            this.Tier1Cards.Size = new System.Drawing.Size(50, 86);
+            this.Tier1Cards.TabIndex = 70;
+            this.Tier1Cards.Text = "99";
+            this.Tier1Cards.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tier1Cards.Visible = false;
+            // 
+            // Tier2Cards
+            // 
+            this.Tier2Cards.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Tier2Cards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.Tier2Cards.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Tier2Cards.Location = new System.Drawing.Point(3, 256);
+            this.Tier2Cards.Name = "Tier2Cards";
+            this.Tier2Cards.Size = new System.Drawing.Size(50, 86);
+            this.Tier2Cards.TabIndex = 71;
+            this.Tier2Cards.Text = "99";
+            this.Tier2Cards.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tier2Cards.Visible = false;
+            // 
+            // Tier3Cards
+            // 
+            this.Tier3Cards.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Tier3Cards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.Tier3Cards.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Tier3Cards.Location = new System.Drawing.Point(3, 461);
+            this.Tier3Cards.Name = "Tier3Cards";
+            this.Tier3Cards.Size = new System.Drawing.Size(50, 86);
+            this.Tier3Cards.TabIndex = 72;
+            this.Tier3Cards.Text = "99";
+            this.Tier3Cards.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tier3Cards.Visible = false;
             // 
             // aristocrate5
             // 
@@ -446,29 +517,14 @@
             this.aristocrate4.TabIndex = 69;
             this.aristocrate4.Visible = false;
             // 
-            // CardsPanel
+            // Card11
             // 
-            this.CardsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CardsPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.CardsPanel.Controls.Add(this.Card34);
-            this.CardsPanel.Controls.Add(this.Card33);
-            this.CardsPanel.Controls.Add(this.Card32);
-            this.CardsPanel.Controls.Add(this.Card31);
-            this.CardsPanel.Controls.Add(this.Card24);
-            this.CardsPanel.Controls.Add(this.Card23);
-            this.CardsPanel.Controls.Add(this.Card22);
-            this.CardsPanel.Controls.Add(this.Card21);
-            this.CardsPanel.Controls.Add(this.Card14);
-            this.CardsPanel.Controls.Add(this.Card13);
-            this.CardsPanel.Controls.Add(this.Card12);
-            this.CardsPanel.Controls.Add(this.Card11);
-            this.CardsPanel.Location = new System.Drawing.Point(0, 140);
-            this.CardsPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.CardsPanel.Name = "CardsPanel";
-            this.CardsPanel.Size = new System.Drawing.Size(778, 616);
-            this.CardsPanel.TabIndex = 1;
+            this.Card11.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Card11.Card = null;
+            this.Card11.Location = new System.Drawing.Point(61, 11);
+            this.Card11.Name = "Card11";
+            this.Card11.Size = new System.Drawing.Size(157, 194);
+            this.Card11.TabIndex = 58;
             // 
             // Card34
             // 
@@ -478,7 +534,6 @@
             this.Card34.Name = "Card34";
             this.Card34.Size = new System.Drawing.Size(157, 194);
             this.Card34.TabIndex = 69;
-            this.Card34.Visible = false;
             // 
             // Card33
             // 
@@ -488,7 +543,6 @@
             this.Card33.Name = "Card33";
             this.Card33.Size = new System.Drawing.Size(157, 194);
             this.Card33.TabIndex = 68;
-            this.Card33.Visible = false;
             // 
             // Card32
             // 
@@ -498,7 +552,6 @@
             this.Card32.Name = "Card32";
             this.Card32.Size = new System.Drawing.Size(157, 194);
             this.Card32.TabIndex = 67;
-            this.Card32.Visible = false;
             // 
             // Card31
             // 
@@ -508,7 +561,6 @@
             this.Card31.Name = "Card31";
             this.Card31.Size = new System.Drawing.Size(157, 194);
             this.Card31.TabIndex = 66;
-            this.Card31.Visible = false;
             // 
             // Card24
             // 
@@ -518,7 +570,6 @@
             this.Card24.Name = "Card24";
             this.Card24.Size = new System.Drawing.Size(157, 194);
             this.Card24.TabIndex = 65;
-            this.Card24.Visible = false;
             // 
             // Card23
             // 
@@ -528,7 +579,6 @@
             this.Card23.Name = "Card23";
             this.Card23.Size = new System.Drawing.Size(157, 194);
             this.Card23.TabIndex = 64;
-            this.Card23.Visible = false;
             // 
             // Card22
             // 
@@ -538,7 +588,6 @@
             this.Card22.Name = "Card22";
             this.Card22.Size = new System.Drawing.Size(157, 194);
             this.Card22.TabIndex = 63;
-            this.Card22.Visible = false;
             // 
             // Card21
             // 
@@ -548,7 +597,6 @@
             this.Card21.Name = "Card21";
             this.Card21.Size = new System.Drawing.Size(157, 194);
             this.Card21.TabIndex = 62;
-            this.Card21.Visible = false;
             // 
             // Card14
             // 
@@ -558,7 +606,6 @@
             this.Card14.Name = "Card14";
             this.Card14.Size = new System.Drawing.Size(157, 194);
             this.Card14.TabIndex = 61;
-            this.Card14.Visible = false;
             // 
             // Card13
             // 
@@ -568,7 +615,6 @@
             this.Card13.Name = "Card13";
             this.Card13.Size = new System.Drawing.Size(157, 194);
             this.Card13.TabIndex = 60;
-            this.Card13.Visible = false;
             // 
             // Card12
             // 
@@ -578,38 +624,11 @@
             this.Card12.Name = "Card12";
             this.Card12.Size = new System.Drawing.Size(157, 194);
             this.Card12.TabIndex = 59;
-            this.Card12.Visible = false;
-            // 
-            // Card11
-            // 
-            this.Card11.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Card11.Card = null;
-            this.Card11.Location = new System.Drawing.Point(61, 11);
-            this.Card11.Name = "Card11";
-            this.Card11.Size = new System.Drawing.Size(157, 194);
-            this.Card11.TabIndex = 58;
-            this.Card11.Visible = false;
-            // 
-            // PlayersPanel
-            // 
-            this.PlayersPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.PlayersPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.PlayersPanel.Controls.Add(this.playerPanel4);
-            this.PlayersPanel.Controls.Add(this.playerPanel3);
-            this.PlayersPanel.Controls.Add(this.playerPanel2);
-            this.PlayersPanel.Controls.Add(this.playerPanel1);
-            this.PlayersPanel.Location = new System.Drawing.Point(0, 756);
-            this.PlayersPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.PlayersPanel.Name = "PlayersPanel";
-            this.PlayersPanel.Size = new System.Drawing.Size(1202, 265);
-            this.PlayersPanel.TabIndex = 1;
             // 
             // playerPanel4
             // 
             this.playerPanel4.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.playerPanel4.Location = new System.Drawing.Point(901, 0);
+            this.playerPanel4.Location = new System.Drawing.Point(901, 1);
             this.playerPanel4.MaximumSize = new System.Drawing.Size(293, 260);
             this.playerPanel4.MinimumSize = new System.Drawing.Size(293, 260);
             this.playerPanel4.Name = "playerPanel4";
@@ -621,7 +640,7 @@
             // playerPanel3
             // 
             this.playerPanel3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.playerPanel3.Location = new System.Drawing.Point(602, 0);
+            this.playerPanel3.Location = new System.Drawing.Point(602, 1);
             this.playerPanel3.MaximumSize = new System.Drawing.Size(293, 260);
             this.playerPanel3.MinimumSize = new System.Drawing.Size(293, 260);
             this.playerPanel3.Name = "playerPanel3";
@@ -633,7 +652,7 @@
             // playerPanel2
             // 
             this.playerPanel2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.playerPanel2.Location = new System.Drawing.Point(303, 0);
+            this.playerPanel2.Location = new System.Drawing.Point(303, 1);
             this.playerPanel2.MaximumSize = new System.Drawing.Size(293, 260);
             this.playerPanel2.MinimumSize = new System.Drawing.Size(293, 260);
             this.playerPanel2.Name = "playerPanel2";
@@ -645,7 +664,7 @@
             // playerPanel1
             // 
             this.playerPanel1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.playerPanel1.Location = new System.Drawing.Point(4, 0);
+            this.playerPanel1.Location = new System.Drawing.Point(4, 1);
             this.playerPanel1.MaximumSize = new System.Drawing.Size(293, 260);
             this.playerPanel1.MinimumSize = new System.Drawing.Size(293, 260);
             this.playerPanel1.Name = "playerPanel1";
@@ -728,6 +747,9 @@
         private PlayerPanel playerPanel3;
         private PlayerPanel playerPanel2;
         private PlayerPanel playerPanel1;
+        private System.Windows.Forms.Label Tier3Cards;
+        private System.Windows.Forms.Label Tier2Cards;
+        private System.Windows.Forms.Label Tier1Cards;
         #region Fields
 
 
