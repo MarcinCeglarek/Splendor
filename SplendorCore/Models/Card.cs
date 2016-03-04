@@ -3,10 +3,14 @@
     #region
 
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Runtime.Serialization;
+
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
-    using Helpers;
+
+    using SplendorCore.Helpers;
 
     #endregion
 
@@ -22,19 +26,14 @@
 
         #endregion
 
-        public override string ToString()
-        {
-            return string.Format("{0}: {1} ({2} pts.)", this.RomanTier(), this.Color, this.VictoryPoints);
-        }
-
         #region Public Properties
 
         [DataMember]
-        [JsonConverter(typeof (StringEnumConverter))]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Color Color { get; set; }
 
         [DataMember]
-        [JsonConverter(typeof (CardCostConverter))]
+        [JsonConverter(typeof(CardCostConverter))]
         public Chips Cost { get; set; }
 
         public Guid Id { get; set; }
@@ -44,6 +43,14 @@
 
         [DataMember]
         public int VictoryPoints { get; set; }
+
+        public IList<KeyValuePair<Color, int>> VisibleCost
+        {
+            get
+            {
+                return this.Cost.Where(o => o.Value > 0).OrderBy(o => o.Key).ToList();
+            }
+        }
 
         #endregion
 
@@ -80,6 +87,15 @@
 
             return missingChips <= chips.Gold;
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0}: {1} ({2} pts.)", this.RomanTier(), this.Color, this.VictoryPoints);
+        }
+
+        #endregion
+
+        #region Methods
 
         private string RomanTier()
         {
