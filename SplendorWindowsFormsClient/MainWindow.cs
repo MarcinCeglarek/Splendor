@@ -23,6 +23,8 @@
 
         private readonly List<CardPanel> cardPanels = new List<CardPanel>();
 
+        private readonly List<PlayerPanel> playerPanels = new List<PlayerPanel>(); 
+
         private readonly Game game;
 
         private Chips bankChips = new Chips();
@@ -35,12 +37,13 @@
 
         public MainWindow()
         {
-            this.playerPanel1 = new PlayerPanel();
-            this.playerPanel2 = new PlayerPanel();
-            this.playerPanel3 = new PlayerPanel();
-            this.playerPanel4 = new PlayerPanel();
             this.game = new Game();
             this.InitializeComponent();
+
+            this.playerPanels.Add(this.playerPanel1);
+            this.playerPanels.Add(this.playerPanel2);
+            this.playerPanels.Add(this.playerPanel3);
+            this.playerPanels.Add(this.playerPanel4);
 
             this.BankBlackChips.ForeColor = FormsColor.ForeColor(Color.Black);
             this.BankBlackChips.BackColor = FormsColor.BackColor(Color.Black);
@@ -97,6 +100,24 @@
             }
 
             this.UpdateGameState();
+        }
+
+        public void GiveBackChip(Player player, Color color)
+        {
+            if (this.game.CurrentPlayer != player)
+            {
+                return;
+            }
+
+            var currentPlayerPanel = this.playerPanels.Single(panel => panel.Player == this.game.CurrentPlayer);
+            if (this.game.CurrentPlayer.Chips[color] - currentPlayerPanel.ChipsToGive[color] > -this.chipsToTake[color])
+            {
+                this.chipsToTake[color]--;
+                currentPlayerPanel.ChipsToGive[color]++;
+            }
+
+            this.RefreshBankPanelButtons();
+            this.RefreshPlayerPanels();
         }
 
         public void PurchaseOrReserveCard(Card card)
@@ -241,7 +262,7 @@
 
         private void FillButton(Button button, int amount)
         {
-            if (amount > 0)
+            if (amount != 0)
             {
                 button.Visible = true;
                 button.Text = amount.ToString();
@@ -265,13 +286,33 @@
 
         private void HandleTakenChips(Color color)
         {
-            if (this.game.IsActive && this.chipsToTake[color] > 0)
+            if (!this.game.IsActive)
+            {
+                return;
+            }
+
+            if (this.chipsToTake[color] > 0)
             {
                 this.chipsToTake[color]--;
                 this.bankChips[color]++;
             }
+            else if (this.chipsToTake[color] < 0)
+            {
+                var currentPlayerPanel = this.playerPanels.Single(panel => panel.Player == this.game.CurrentPlayer);
+                currentPlayerPanel.ChipsToGive[color]--;
+                this.chipsToTake[color]++;
+            }
 
             this.RefreshBankPanelButtons();
+            this.RefreshPlayerPanels();
+        }
+
+        private void RefreshPlayerPanels()
+        {
+            this.playerPanel1.RefreshPanel();
+            this.playerPanel2.RefreshPanel();
+            this.playerPanel3.RefreshPanel();
+            this.playerPanel4.RefreshPanel();
         }
 
         private void Log(string message)
@@ -440,10 +481,10 @@
 
         private void UpdatePlayersPanels()
         {
-            this.playerPanel1.RefreshValues();
-            this.playerPanel2.RefreshValues();
-            this.playerPanel3.RefreshValues();
-            this.playerPanel4.RefreshValues();
+            this.playerPanel1.UpdatePanel();
+            this.playerPanel2.UpdatePanel();
+            this.playerPanel3.UpdatePanel();
+            this.playerPanel4.UpdatePanel();
 
             this.playerPanel1.BackColor = this.playerPanel1.Player == this.game.CurrentPlayer ? System.Drawing.Color.LightPink : SystemColors.Control;
             this.playerPanel2.BackColor = this.playerPanel2.Player == this.game.CurrentPlayer ? System.Drawing.Color.LightPink : SystemColors.Control;

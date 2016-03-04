@@ -163,6 +163,7 @@
             this.ChipsBlack.Text = "0";
             this.ChipsBlack.UseVisualStyleBackColor = false;
             this.ChipsBlack.Visible = false;
+            this.ChipsBlack.Click += new System.EventHandler(this.ChipsBlack_Click);
             // 
             // ChipsRed
             // 
@@ -179,6 +180,7 @@
             this.ChipsRed.Text = "0";
             this.ChipsRed.UseVisualStyleBackColor = false;
             this.ChipsRed.Visible = false;
+            this.ChipsRed.Click += new System.EventHandler(this.ChipsRed_Click);
             // 
             // ChipsGreen
             // 
@@ -195,6 +197,7 @@
             this.ChipsGreen.Text = "0";
             this.ChipsGreen.UseVisualStyleBackColor = false;
             this.ChipsGreen.Visible = false;
+            this.ChipsGreen.Click += new System.EventHandler(this.ChipsGreen_Click);
             // 
             // ChipsBlue
             // 
@@ -211,6 +214,7 @@
             this.ChipsBlue.Text = "0";
             this.ChipsBlue.UseVisualStyleBackColor = false;
             this.ChipsBlue.Visible = false;
+            this.ChipsBlue.Click += new System.EventHandler(this.ChipsBlue_Click);
             // 
             // ChipsWhite
             // 
@@ -226,6 +230,7 @@
             this.ChipsWhite.Text = "0";
             this.ChipsWhite.UseVisualStyleBackColor = false;
             this.ChipsWhite.Visible = false;
+            this.ChipsWhite.Click += new System.EventHandler(this.ChipsWhite_Click);
             // 
             // groupBox2
             // 
