@@ -6,9 +6,11 @@
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization;
+
     using Newtonsoft.Json;
-    using Helpers;
-    using Exceptions.FileExceptions;
+
+    using SplendorCore.Helpers;
+    using SplendorCore.Models.Exceptions.FileExceptions;
 
     #endregion
 
@@ -18,6 +20,18 @@
         #region Constants
 
         private const int VisibleCardsCount = 4;
+
+        #endregion
+
+        #region Fields
+
+        private readonly IList<Aristocrate> allAristocrates;
+
+        private readonly IList<Card> allCards;
+
+        private readonly Game game;
+
+        private IList<Card> cardsInBank;
 
         #endregion
 
@@ -36,40 +50,11 @@
 
         #endregion
 
-        #region Public Methods and Operators
-
-        public void Initialize()
-        {
-            this.cardsInBank = this.allCards.Shuffle();
-            var numberOfAristocrates = this.game.Players.Count + 1;
-            this.AvailableAristocrates = this.allAristocrates.Shuffle().Take(numberOfAristocrates).ToList();
-        }
-
-        #endregion
-
-        #region Fields
-
-        private readonly IList<Aristocrate> allAristocrates;
-
-        private readonly IList<Card> allCards;
-
-        private readonly Game game;
-
-        private IList<Card> cardsInBank;
-
-        #endregion
-
         #region Public Properties
 
-        public IList<Aristocrate> AllAristocrates
-        {
-            get { return this.allAristocrates; }
-        }
+        public IList<Aristocrate> AllAristocrates { get { return this.allAristocrates; } }
 
-        public IList<Card> AllCards
-        {
-            get { return this.allCards; }
-        }
+        public IList<Card> AllCards { get { return this.allCards; } }
 
         [DataMember]
         public List<Aristocrate> AvailableAristocrates { get; private set; }
@@ -87,6 +72,17 @@
 
                 return retVal;
             }
+        }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public void Initialize()
+        {
+            this.cardsInBank = this.allCards.Shuffle();
+            var numberOfAristocrates = this.game.Players.Count + 1;
+            this.AvailableAristocrates = this.allAristocrates.Shuffle().Take(numberOfAristocrates).ToList();
         }
 
         #endregion

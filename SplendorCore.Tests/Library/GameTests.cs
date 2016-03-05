@@ -12,10 +12,9 @@
     using SplendorCore.Models.Exceptions;
     using SplendorCore.Models.Exceptions.AbstractExceptions;
     using SplendorCore.Models.Exceptions.CardExceptions;
+    using SplendorCore.Models.Exceptions.CardOperationExceptions;
     using SplendorCore.Models.Exceptions.ChipOperationExceptions;
-    using SplendorCore.Models.Exceptions.DeckExceptions;
     using SplendorCore.Models.Exceptions.GameExceptions;
-    using SplendorCore.Models.Exceptions.OperationExceptions;
 
     #endregion
 

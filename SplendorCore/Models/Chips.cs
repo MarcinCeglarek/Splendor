@@ -36,95 +36,23 @@
 
         #region Public Properties
 
-        public int Black
-        {
-            get
-            {
-                return this[Color.Black];
-            }
+        public int Black { get { return this[Color.Black]; } set { this[Color.Black] = value; } }
 
-            set
-            {
-                this[Color.Black] = value;
-            }
-        }
+        public int Blue { get { return this[Color.Blue]; } set { this[Color.Blue] = value; } }
 
-        public int Blue
-        {
-            get
-            {
-                return this[Color.Blue];
-            }
+        public int Gold { get { return this[Color.Gold]; } set { this[Color.Gold] = value; } }
 
-            set
-            {
-                this[Color.Blue] = value;
-            }
-        }
+        public int Green { get { return this[Color.Green]; } set { this[Color.Green] = value; } }
 
-        public int Gold
-        {
-            get
-            {
-                return this[Color.Gold];
-            }
+        public int Red { get { return this[Color.Red]; } set { this[Color.Red] = value; } }
 
-            set
-            {
-                this[Color.Gold] = value;
-            }
-        }
-
-        public int Green
-        {
-            get
-            {
-                return this[Color.Green];
-            }
-
-            set
-            {
-                this[Color.Green] = value;
-            }
-        }
-
-        public int Red
-        {
-            get
-            {
-                return this[Color.Red];
-            }
-
-            set
-            {
-                this[Color.Red] = value;
-            }
-        }
-
-        public int White
-        {
-            get
-            {
-                return this[Color.White];
-            }
-
-            set
-            {
-                this[Color.White] = value;
-            }
-        }
+        public int White { get { return this[Color.White]; } set { this[Color.White] = value; } }
 
         #endregion
 
         #region Properties
 
-        private static List<Color> GetColorsCollection
-        {
-            get
-            {
-                return Enum.GetValues(typeof(Color)).Cast<Color>().ToList();
-            }
-        }
+        private static List<Color> GetColorsCollection { get { return Enum.GetValues(typeof(Color)).Cast<Color>().ToList(); } }
 
         #endregion
 

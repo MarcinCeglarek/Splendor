@@ -12,10 +12,9 @@
     using SplendorCore.Interfaces;
     using SplendorCore.Models.Exceptions.AbstractExceptions;
     using SplendorCore.Models.Exceptions.CardExceptions;
+    using SplendorCore.Models.Exceptions.CardOperationExceptions;
     using SplendorCore.Models.Exceptions.ChipOperationExceptions;
-    using SplendorCore.Models.Exceptions.DeckExceptions;
     using SplendorCore.Models.Exceptions.GameExceptions;
-    using SplendorCore.Models.Exceptions.OperationExceptions;
     using SplendorCore.Models.Exceptions.PlayerExceptions;
 
     #endregion
@@ -51,25 +50,13 @@
         #region Public Properties
 
         [DataMember]
-        public Chips Bank
-        {
-            get
-            {
-                return new Chips(this.bank);
-            }
-        }
+        public Chips Bank { get { return new Chips(this.bank); } }
 
         [DataMember]
         public List<ChatEntry> Chat { get; set; }
 
         [DataMember]
-        public Player CurrentPlayer
-        {
-            get
-            {
-                return this.Players.FirstOrDefault();
-            }
-        }
+        public Player CurrentPlayer { get { return this.Players.FirstOrDefault(); } }
 
         [DataMember]
         public Deck Deck { get; set; }
@@ -86,13 +73,7 @@
         [DataMember]
         public Guid Id { get; private set; }
 
-        public bool IsActive
-        {
-            get
-            {
-                return this.HasStarted && !this.HasFinished;
-            }
-        }
+        public bool IsActive { get { return this.HasStarted && !this.HasFinished; } }
 
         [DataMember]
         public List<Player> Players { get; set; }

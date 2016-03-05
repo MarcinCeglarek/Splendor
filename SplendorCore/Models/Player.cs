@@ -6,7 +6,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
-    using Exceptions.OperationExceptions;
+
+    using SplendorCore.Models.Exceptions.CardOperationExceptions;
 
     #endregion
 
@@ -33,11 +34,11 @@
             get
             {
                 return new Chips(
-                    this.OwnedCards.Count(o => o.Color == Color.White),
-                    this.OwnedCards.Count(o => o.Color == Color.Blue),
-                    this.OwnedCards.Count(o => o.Color == Color.Green),
-                    this.OwnedCards.Count(o => o.Color == Color.Red),
-                    this.OwnedCards.Count(o => o.Color == Color.Black),
+                    this.OwnedCards.Count(o => o.Color == Color.White), 
+                    this.OwnedCards.Count(o => o.Color == Color.Blue), 
+                    this.OwnedCards.Count(o => o.Color == Color.Green), 
+                    this.OwnedCards.Count(o => o.Color == Color.Red), 
+                    this.OwnedCards.Count(o => o.Color == Color.Black), 
                     0);
             }
         }
@@ -67,10 +68,7 @@
         public IList<Card> ReservedCards { get; private set; }
 
         [DataMember]
-        public int VictoryPoints
-        {
-            get { return this.OwnedCards.Sum(card => card.VictoryPoints) + this.OwnedAristocrates.Sum(aristocrate => aristocrate.VictoryPoints); }
-        }
+        public int VictoryPoints { get { return this.OwnedCards.Sum(card => card.VictoryPoints) + this.OwnedAristocrates.Sum(aristocrate => aristocrate.VictoryPoints); } }
 
         #endregion
 

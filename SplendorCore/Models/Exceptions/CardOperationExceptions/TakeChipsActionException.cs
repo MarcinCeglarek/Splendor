@@ -1,4 +1,4 @@
-﻿namespace SplendorCore.Models.Exceptions.OperationExceptions
+﻿namespace SplendorCore.Models.Exceptions.CardOperationExceptions
 {
     #region
 

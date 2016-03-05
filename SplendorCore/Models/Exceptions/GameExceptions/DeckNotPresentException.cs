@@ -1,4 +1,4 @@
-﻿namespace SplendorCore.Models.Exceptions.DeckExceptions
+﻿namespace SplendorCore.Models.Exceptions.GameExceptions
 {
     #region
 

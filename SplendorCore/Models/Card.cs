@@ -44,13 +44,7 @@
         [DataMember]
         public int VictoryPoints { get; set; }
 
-        public IList<KeyValuePair<Color, int>> VisibleCost
-        {
-            get
-            {
-                return this.Cost.Where(o => o.Value > 0).OrderBy(o => o.Key).ToList();
-            }
-        }
+        public IList<KeyValuePair<Color, int>> VisibleCost { get { return this.Cost.Where(o => o.Value > 0).OrderBy(o => o.Key).ToList(); } }
 
         #endregion
 
