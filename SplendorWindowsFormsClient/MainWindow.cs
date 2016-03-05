@@ -110,7 +110,13 @@
             }
 
             var currentPlayerPanel = this.playerPanels.Single(panel => panel.Player == this.game.CurrentPlayer);
-            if (this.game.CurrentPlayer.Chips[color] - currentPlayerPanel.ChipsToGive[color] > -this.chipsToTake[color])
+
+            if (this.chipsToTake[color] > 0)
+            {
+                this.chipsToTake[color]--;
+                this.bankChips[color]++;
+            }
+            else if (this.game.CurrentPlayer.Chips[color] - currentPlayerPanel.ChipsToGive[color] > 0)
             {
                 this.chipsToTake[color]--;
                 currentPlayerPanel.ChipsToGive[color]++;
@@ -275,13 +281,28 @@
 
         private void HandleTakeChips(Color color)
         {
-            if (this.game.IsActive && this.bankChips[color] > 0)
+            if (!this.game.IsActive)
             {
-                this.chipsToTake[color]++;
-                this.bankChips[color]--;
+                return;
+            }
+
+            if (this.bankChips[color] > 0)
+            {
+                if (this.chipsToTake[color] < 0)
+                {
+                    var currentPlayerPanel = this.playerPanels.Single(panel => panel.Player == this.game.CurrentPlayer);
+                    this.chipsToTake[color]++;
+                    currentPlayerPanel.ChipsToGive[color]--;
+                }
+                else
+                {
+                    this.chipsToTake[color]++;
+                    this.bankChips[color]--;
+                }
             }
 
             this.RefreshBankPanelButtons();
+            this.RefreshPlayerPanels();
         }
 
         private void HandleTakenChips(Color color)
