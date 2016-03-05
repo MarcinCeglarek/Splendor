@@ -1,11 +1,9 @@
-﻿namespace SplendorFormsClient
+﻿namespace SplendorWindowsFormsClient
 {
     #region
 
     using System;
     using System.Drawing;
-
-    using SplendorColor = SplendorCore.Models.Color;
 
     #endregion
 
@@ -29,84 +27,84 @@
 
         #region Public Methods and Operators
 
-        public static Color ForeColor(SplendorColor color)
+        public static Color ForeColor(SplendorCore.Models.Color color)
         {
             switch (color)
             {
-                case SplendorColor.Black:
+                case SplendorCore.Models.Color.Black:
                     return White;
-                case SplendorColor.Blue:
+                case SplendorCore.Models.Color.Blue:
                     return White;
-                case SplendorColor.Gold:
+                case SplendorCore.Models.Color.Gold:
                     return Black;
-                case SplendorColor.Green:
+                case SplendorCore.Models.Color.Green:
                     return White;
-                case SplendorColor.Red:
+                case SplendorCore.Models.Color.Red:
                     return White;
-                case SplendorColor.White:
+                case SplendorCore.Models.Color.White:
                     return Black;
             }
 
             throw new NotSupportedException();
         }
 
-        public static Color BackColor(SplendorColor color)
+        public static Color BackColor(SplendorCore.Models.Color color)
         {
             switch (color)
             {
-                case SplendorColor.Black:
+                case SplendorCore.Models.Color.Black:
                     return Black;
-                case SplendorColor.Blue:
+                case SplendorCore.Models.Color.Blue:
                     return Blue;
-                case SplendorColor.Gold:
+                case SplendorCore.Models.Color.Gold:
                     return Gold;
-                case SplendorColor.Green:
+                case SplendorCore.Models.Color.Green:
                     return Green;
-                case SplendorColor.Red:
+                case SplendorCore.Models.Color.Red:
                     return Red;
-                case SplendorColor.White:
+                case SplendorCore.Models.Color.White:
                     return White;
             }
 
             throw new NotSupportedException();
         }
 
-        public static Color DisabledForeColor(SplendorColor color)
+        public static Color DisabledForeColor(SplendorCore.Models.Color color)
         {
             switch (color)
             {
-                case SplendorColor.Black:
+                case SplendorCore.Models.Color.Black:
                     return Black;
-                case SplendorColor.Blue:
+                case SplendorCore.Models.Color.Blue:
                     return Blue;
-                case SplendorColor.Gold:
+                case SplendorCore.Models.Color.Gold:
                     return Gold;
-                case SplendorColor.Green:
+                case SplendorCore.Models.Color.Green:
                     return Green;
-                case SplendorColor.Red:
+                case SplendorCore.Models.Color.Red:
                     return Red;
-                case SplendorColor.White:
+                case SplendorCore.Models.Color.White:
                     return White;
             }
 
             throw new NotSupportedException();
         }
 
-        public static Color DisabledBackColor(SplendorColor color)
+        public static Color DisabledBackColor(SplendorCore.Models.Color color)
         {
             switch (color)
             {
-                case SplendorColor.Black:
+                case SplendorCore.Models.Color.Black:
                     return Black;
-                case SplendorColor.Blue:
+                case SplendorCore.Models.Color.Blue:
                     return Blue;
-                case SplendorColor.Gold:
+                case SplendorCore.Models.Color.Gold:
                     return Gold;
-                case SplendorColor.Green:
+                case SplendorCore.Models.Color.Green:
                     return Green;
-                case SplendorColor.Red:
+                case SplendorCore.Models.Color.Red:
                     return Red;
-                case SplendorColor.White:
+                case SplendorCore.Models.Color.White:
                     return White;
             }
 

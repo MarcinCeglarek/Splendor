@@ -1,4 +1,4 @@
-﻿namespace SplendorFormsClient.Panels
+﻿namespace SplendorWindowsFormsClient.Panels
 {
     #region
 

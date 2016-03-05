@@ -1,4 +1,4 @@
-﻿namespace SplendorFormsClient
+﻿namespace SplendorWindowsFormsClient
 {
     #region
 
@@ -11,7 +11,7 @@
     using SplendorCore.Data;
     using SplendorCore.Models;
 
-    using SplendorFormsClient.Panels;
+    using SplendorWindowsFormsClient.Panels;
 
     using Color = SplendorCore.Models.Color;
 

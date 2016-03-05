@@ -1,16 +1,14 @@
-﻿namespace SplendorFormsClient.Panels
+﻿namespace SplendorWindowsFormsClient.Panels
 {
-    using SplendorCore.Models;
-
     partial class PlayerPanel
     {
         private System.ComponentModel.IContainer components = null;
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -1,4 +1,4 @@
-﻿namespace SplendorFormsClient
+﻿namespace SplendorWindowsFormsClient
 {
     #region
 

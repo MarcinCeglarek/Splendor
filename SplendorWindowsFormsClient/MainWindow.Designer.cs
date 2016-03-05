@@ -1,10 +1,6 @@
-﻿namespace SplendorFormsClient
+﻿namespace SplendorWindowsFormsClient
 {
-    using System.Windows.Media;
-
-    using SplendorCore.Models;
-
-    using SplendorFormsClient.Panels;
+    using SplendorWindowsFormsClient.Panels;
 
     partial class MainWindow
     {
@@ -19,9 +15,9 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -62,27 +58,27 @@
             this.Tier1Cards = new System.Windows.Forms.Label();
             this.Tier2Cards = new System.Windows.Forms.Label();
             this.Tier3Cards = new System.Windows.Forms.Label();
-            this.aristocrate5 = new SplendorFormsClient.Panels.AristocratePanel();
-            this.aristocrate3 = new SplendorFormsClient.Panels.AristocratePanel();
-            this.aristocrate2 = new SplendorFormsClient.Panels.AristocratePanel();
-            this.aristocrate1 = new SplendorFormsClient.Panels.AristocratePanel();
-            this.aristocrate4 = new SplendorFormsClient.Panels.AristocratePanel();
-            this.Card11 = new SplendorFormsClient.Panels.CardPanel();
-            this.Card34 = new SplendorFormsClient.Panels.CardPanel();
-            this.Card33 = new SplendorFormsClient.Panels.CardPanel();
-            this.Card32 = new SplendorFormsClient.Panels.CardPanel();
-            this.Card31 = new SplendorFormsClient.Panels.CardPanel();
-            this.Card24 = new SplendorFormsClient.Panels.CardPanel();
-            this.Card23 = new SplendorFormsClient.Panels.CardPanel();
-            this.Card22 = new SplendorFormsClient.Panels.CardPanel();
-            this.Card21 = new SplendorFormsClient.Panels.CardPanel();
-            this.Card14 = new SplendorFormsClient.Panels.CardPanel();
-            this.Card13 = new SplendorFormsClient.Panels.CardPanel();
-            this.Card12 = new SplendorFormsClient.Panels.CardPanel();
-            this.playerPanel4 = new SplendorFormsClient.Panels.PlayerPanel();
-            this.playerPanel3 = new SplendorFormsClient.Panels.PlayerPanel();
-            this.playerPanel2 = new SplendorFormsClient.Panels.PlayerPanel();
-            this.playerPanel1 = new SplendorFormsClient.Panels.PlayerPanel();
+            this.aristocrate5 = new AristocratePanel();
+            this.aristocrate3 = new AristocratePanel();
+            this.aristocrate2 = new AristocratePanel();
+            this.aristocrate1 = new AristocratePanel();
+            this.aristocrate4 = new AristocratePanel();
+            this.Card11 = new CardPanel();
+            this.Card34 = new CardPanel();
+            this.Card33 = new CardPanel();
+            this.Card32 = new CardPanel();
+            this.Card31 = new CardPanel();
+            this.Card24 = new CardPanel();
+            this.Card23 = new CardPanel();
+            this.Card22 = new CardPanel();
+            this.Card21 = new CardPanel();
+            this.Card14 = new CardPanel();
+            this.Card13 = new CardPanel();
+            this.Card12 = new CardPanel();
+            this.playerPanel4 = new PlayerPanel();
+            this.playerPanel3 = new PlayerPanel();
+            this.playerPanel2 = new PlayerPanel();
+            this.playerPanel1 = new PlayerPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.BankPanel3.SuspendLayout();
