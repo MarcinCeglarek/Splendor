@@ -3,21 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Models="clr-namespace:SplendorCore.Models;assembly=SplendorCore" xmlns:ValueConverters="clr-namespace:SplendorWpfClient.ValueConverters" x:Class="SplendorWpfClient.Panels.CardPanel" 
+             xmlns:ValueConverters="clr-namespace:SplendorWpfClient.ValueConverters" xmlns:ViewModels="clr-namespace:SplendorWpfClient.ViewModels" x:Class="SplendorWpfClient.Panels.CardPanel" 
              mc:Ignorable="d" 
              d:DesignHeight="262" Width="218">
     <UserControl.Resources>
-        <ValueConverters:ValueConverterGroup x:Key="VisibilitateIfPositive">
-            <ValueConverters:IsGreaterThanZero/>
-            <BooleanToVisibilityConverter/>
-        </ValueConverters:ValueConverterGroup>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <UserControl.DataContext>
-        <Models:Card/>
+        <ViewModels:CardViewModel/>
     </UserControl.DataContext>
 
 
-    
+
     <Border x:Name="Background" BorderBrush="Black" BorderThickness="2" CornerRadius="10">
         <Border.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -26,10 +23,20 @@
             </LinearGradientBrush>
         </Border.Background>
         <Grid>
-            <Label x:Name="Color" Content="{Binding VictoryPoints}" VerticalAlignment="Top" Height="84" Opacity="0.5" FontSize="40" Background="White" Margin="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Padding="20" Visibility="{Binding VictoryPoints, Converter={StaticResource VisibilitateIfPositive}, Mode=OneWay}"/>
-            <Border x:Name="C1Border" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="20" BorderThickness="1" BorderBrush="Black" CornerRadius="14" Background="{Binding VisibleCost/Key, Mode=OneWay}" >
-                <Label x:Name="C1" Content="{Binding VisibleCost/Value, Mode=OneWay}" RenderTransformOrigin="0.567,0.192" Height="20" HorizontalContentAlignment="Center" FontSize="15" FontWeight="Bold" VerticalContentAlignment="Center" Padding="0"/>
-            </Border>
+            <Grid Margin="10,97,156,10">
+                <ListView ItemsSource="{Binding VisibleCost}" Background="{x:Null}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border x:Name="CostBorder" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="20" BorderThickness="1" BorderBrush="Black" CornerRadius="14" Background="{Binding Color, Converter={StaticResource ColorToBackground}}" >
+                                <Label x:Name="Cost" Content="{Binding Value}" RenderTransformOrigin="0.567,0.192" Height="20" HorizontalContentAlignment="Center" FontSize="15" FontWeight="Bold" VerticalContentAlignment="Center" Padding="0"/>
+                            </Border>
+                        </DataTemplate>
+                    
+                    </ListView.ItemTemplate>
+                
+                </ListView>
+            </Grid>
+            <Label Content="{Binding VictoryPoints}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="82" Width="214" Visibility="{Binding IsVictoryPointsPresent, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
         </Grid>
     </Border>
 </UserControl>

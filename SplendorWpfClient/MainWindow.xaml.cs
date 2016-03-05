@@ -10,6 +10,7 @@
     using SplendorCore.Models;
 
     using SplendorWpfClient.Panels;
+    using SplendorWpfClient.ViewModels;
 
     #endregion
 
@@ -32,6 +33,9 @@
         public MainWindow()
         {
             this.game = new Game();
+            var viewModel = new GameViewModel { Game = this.game };
+            this.DataContext = viewModel;
+            
             this.InitializeComponent();
         }
 
@@ -42,16 +46,6 @@
         public void AddPlayer(string name)
         {
             this.game.Players.Add(new Player { Name = name });
-
-            if (this.game.Players.Count >= 2)
-            {
-                this.StartGameButton.IsEnabled = true;
-            }
-
-            if (this.game.Players.Count > 3)
-            {
-                this.AddPlayerButton.IsEnabled = false;
-            }
         }
 
         #endregion

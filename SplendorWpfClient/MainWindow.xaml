@@ -1,11 +1,15 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:Panels="clr-namespace:SplendorWpfClient.Panels" x:Class="SplendorWpfClient.MainWindow"
+        xmlns:Panels="clr-namespace:SplendorWpfClient.Panels" xmlns:ViewModels="clr-namespace:SplendorWpfClient.ViewModels" x:Class="SplendorWpfClient.MainWindow"
         Title="MainWindow" Height="686" Width="964">
+    <Window.DataContext>
+        <ViewModels:GameViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="671*"/>
+            <ColumnDefinition Width="612*"/>
+            <ColumnDefinition Width="59*"/>
             <ColumnDefinition Width="285*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -14,8 +18,8 @@
         </Grid.RowDefinitions>
 
         <Panels:CardPanel x:Name="Card11" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Button x:Name="AddPlayerButton" Content="Add player" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="137" Height="53" Click="AddPlayerClick"/>
-        <Button x:Name="StartGameButton" Content="Start game" HorizontalAlignment="Left" Margin="138,10,0,0" VerticalAlignment="Top" Width="137" Height="53" Click="StartGameClick" Grid.Column="1" IsEnabled="False"/>
+        <Button x:Name="AddPlayerButton" Content="Add player" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="137" Height="53" Click="AddPlayerClick" IsEnabled="{Binding CanPlayerBeAdded, Mode=OneWay}"></Button>
+        <Button x:Name="StartGameButton" Content="Start game" HorizontalAlignment="Left" Margin="138,10,0,0" VerticalAlignment="Top" Width="137" Height="53" Click="StartGameClick" Grid.Column="2" IsEnabled="{Binding CanGameBeStarted, Mode=OneWay}"/>
 
     </Grid>
 </Window>
