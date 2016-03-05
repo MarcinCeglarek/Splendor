@@ -52,9 +52,9 @@
 
         #region Public Properties
 
-        public Player Player { get; set; }
-
         public Chips ChipsToGive { get; set; }
+
+        public Player Player { get; set; }
 
         #endregion
 

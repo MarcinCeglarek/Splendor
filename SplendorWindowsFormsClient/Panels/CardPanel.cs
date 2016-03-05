@@ -32,10 +32,7 @@
 
         public Card Card
         {
-            get
-            {
-                return this.card;
-            }
+            get { return this.card; }
 
             set
             {
@@ -95,13 +92,7 @@
             }
         }
 
-        public int Tier
-        {
-            get
-            {
-                return int.Parse(this.Name.Substring(4, 1));
-            }
-        }
+        public int Tier { get { return int.Parse(this.Name.Substring(4, 1)); } }
 
         #endregion
 

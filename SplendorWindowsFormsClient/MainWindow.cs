@@ -23,9 +23,9 @@
 
         private readonly List<CardPanel> cardPanels = new List<CardPanel>();
 
-        private readonly List<PlayerPanel> playerPanels = new List<PlayerPanel>(); 
-
         private readonly Game game;
+
+        private readonly List<PlayerPanel> playerPanels = new List<PlayerPanel>();
 
         private Chips bankChips = new Chips();
 
@@ -328,14 +328,6 @@
             this.RefreshPlayerPanels();
         }
 
-        private void RefreshPlayerPanels()
-        {
-            this.playerPanel1.RefreshPanel();
-            this.playerPanel2.RefreshPanel();
-            this.playerPanel3.RefreshPanel();
-            this.playerPanel4.RefreshPanel();
-        }
-
         private void Log(string message)
         {
             this.textBox1.AppendText(message + Environment.NewLine);
@@ -374,6 +366,14 @@
                     this.BankTakeButton.Enabled = false;
                 }
             }
+        }
+
+        private void RefreshPlayerPanels()
+        {
+            this.playerPanel1.RefreshPanel();
+            this.playerPanel2.RefreshPanel();
+            this.playerPanel3.RefreshPanel();
+            this.playerPanel4.RefreshPanel();
         }
 
         private void RemoveCardFromDeck(Card card)

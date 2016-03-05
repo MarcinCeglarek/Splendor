@@ -31,10 +31,7 @@
 
         public Aristocrate Aristocrate
         {
-            get
-            {
-                return this.aristocrate;
-            }
+            get { return this.aristocrate; }
 
             set
             {
