@@ -102,6 +102,11 @@
 
         private IEnumerable<Card> GetVisibleCardsOfTier(int i)
         {
+            if (this.cardsInBank == null)
+            {
+                return new List<Card>();
+            }
+
             return this.cardsInBank.Where(card => card.Tier == i).Take(VisibleCardsCount).ToArray();
         }
 

@@ -20,7 +20,7 @@
 
         private readonly List<CardPanel> cardPanels = new List<CardPanel>();
 
-        private readonly Game game;
+        private GameViewModel game;
 
         private Chips bankChips = new Chips();
 
@@ -32,10 +32,6 @@
 
         public MainWindow()
         {
-            this.game = new Game();
-            var viewModel = new GameViewModel { Game = this.game };
-            this.DataContext = viewModel;
-            
             this.InitializeComponent();
         }
 
@@ -65,10 +61,15 @@
             this.StartGameButton.Visibility = Visibility.Hidden;
             this.AddPlayerButton.Visibility = Visibility.Hidden;
 
-            this.game.Deck = new Deck(this.game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
             this.game.Start();
 
-            this.Card11.Card = this.game.Deck.AvailableCards.First();
+            this.Card11.Card = this.game.AvailableCards.First();
+        }
+
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.game = new GameViewModel();
+            this.DataContext = this.game;
         }
     }
 }
