@@ -54,9 +54,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ValueConverters\ColorToBackground.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ValueConverters\IsGreaterThanZero.cs" />
     <Compile Include="ValueConverters\ValueConverterGroup.cs" />
+    <Compile Include="ViewModels\AbstractViewModel.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\GameViewModel.cs" />
     <Page Include="MainWindow.xaml">

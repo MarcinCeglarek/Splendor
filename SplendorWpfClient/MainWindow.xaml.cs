@@ -58,12 +58,17 @@
 
         private void StartGameClick(object sender, RoutedEventArgs e)
         {
-            this.StartGameButton.Visibility = Visibility.Hidden;
-            this.AddPlayerButton.Visibility = Visibility.Hidden;
-
             this.game.Start();
 
-            this.Card11.Card = this.game.AvailableCards.First();
+            this.Card11.DataContext = new CardViewModel() { Card = this.game.AvailableCards[0] };
+            this.Card12.DataContext = new CardViewModel() { Card = this.game.AvailableCards[1] };
+            this.Card13.DataContext = new CardViewModel() { Card = this.game.AvailableCards[2] };
+            this.Card14.DataContext = new CardViewModel() { Card = this.game.AvailableCards[3] };
+
+            this.Card21.DataContext = new CardViewModel() { Card = this.game.AvailableCards[4] };
+            this.Card22.DataContext = new CardViewModel() { Card = this.game.AvailableCards[5] };
+            this.Card23.DataContext = new CardViewModel() { Card = this.game.AvailableCards[6] };
+            this.Card24.DataContext = new CardViewModel() { Card = this.game.AvailableCards[7] };
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)

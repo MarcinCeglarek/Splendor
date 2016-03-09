@@ -2,17 +2,16 @@
 {
     #region
 
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
 
     using SplendorCore.Data;
     using SplendorCore.Models;
 
     #endregion
 
-    internal class GameViewModel : INotifyPropertyChanged
+    internal class GameViewModel : AbstractViewModel
     {
         #region Constructors and Destructors
 
@@ -31,12 +30,6 @@
 
         #endregion
 
-        #region Public Events
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
         #region Public Properties
 
         public ObservableCollection<Card> AllCards { get; set; }
@@ -45,7 +38,11 @@
 
         public bool CanGameBeStarted { get { return this.Game != null && !this.Game.HasStarted && this.Game.Players.Count >= 2; } }
 
-        public bool CanPlayerBeAdded { get { return this.Game != null && this.Game.Players.Count < 4; } }
+        public bool CanPlayerBeAdded { get { return this.Game != null && this.Game.Players.Count < 4 && !this.Game.IsActive; } }
+
+        public bool IsActive { get { return this.Game != null && this.Game.IsActive; } }
+
+        public bool IsStarted { get { return this.Game != null && this.Game.HasStarted; } }
 
         public ObservableCollection<Player> Players { get; set; }
 
@@ -62,20 +59,27 @@
         public void Start()
         {
             this.Game.Start();
+            this.AllCards.Clear();
+            foreach (var card in this.Game.Deck.AllCards)
+            {
+                this.AllCards.Add(card);
+            }
+
+            this.AvailableCards.Clear();
+            foreach (var card in this.Game.Deck.AvailableCards)
+            {
+                this.AvailableCards.Add(card);
+            }
+
+            this.OnPropertyChanged("CanGameBeStarted");
+            this.OnPropertyChanged("CanPlayerBeAdded");
+            this.OnPropertyChanged("IsActive");
+            this.OnPropertyChanged("IsStarted");
         }
 
         #endregion
 
         #region Methods
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            var handler = this.PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
 
         private void AllCardsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -89,6 +93,8 @@
 
         private void PlayersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            this.Game.Players = new List<Player>(this.Players);
+
             this.OnPropertyChanged("CanGameBeStarted");
             this.OnPropertyChanged("CanPlayerBeAdded");
             this.OnPropertyChanged("Players");
