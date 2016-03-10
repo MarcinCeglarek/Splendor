@@ -8,6 +8,48 @@
              d:DesignHeight="262" Width="218">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <LinearGradientBrush x:Key="RedGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Red" Offset="0.25"/>
+            <GradientStop Color="#FF5D0000" Offset="1"/>
+            <GradientStop Color="#FFFFB3B3"/>
+            <GradientStop Color="#FFF10000" Offset="0.75"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="BlueGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="RoyalBlue" Offset="0.25"/>
+            <GradientStop Color="#FF001E7A" Offset="1"/>
+            <GradientStop Color="#FFA9BFFF"/>
+            <GradientStop Color="RoyalBlue" Offset="0.75"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="GreenGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="LawnGreen" Offset="0.25"/>
+            <GradientStop Color="#FF2C5900" Offset="1"/>
+            <GradientStop Color="#FFC5FF8D"/>
+            <GradientStop Color="LawnGreen" Offset="0.75"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="WhiteGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFCFCFCF" Offset="0.25"/>
+            <GradientStop Color="#FF7A7A7A" Offset="1"/>
+            <GradientStop Color="White"/>
+            <GradientStop Color="WhiteSmoke" Offset="0.75"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="BlackGradientBrush"  EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF363636" Offset="0.25"/>
+            <GradientStop Color="Black" Offset="1"/>
+            <GradientStop Color="#FF535353"/>
+            <GradientStop Color="#FF363636" Offset="0.75"/>
+        </LinearGradientBrush>
+
+        <RadialGradientBrush x:Key="UnknownCardBrush">
+            <GradientStop Color="#FFFFF05F" Offset="0.25"/>
+            <GradientStop Color="White" Offset="1"/>
+            <GradientStop Color="#FFFBFBFB"/>
+            <GradientStop Color="#FFC5CB53" Offset="0.75"/>
+        </RadialGradientBrush>
+        
     </UserControl.Resources>
     <UserControl.DataContext>
         <ViewModels:CardViewModel/>
@@ -15,10 +57,11 @@
 
 
 
-    <Border x:Name="Background" BorderBrush="Black" BorderThickness="2" CornerRadius="10" Background="{Binding Background, FallbackValue=Red, Mode=OneWay, TargetNullValue=Red}">
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="10" Background="{Binding Background, Mode=OneWay, TargetNullValue=Gold}">
         <Grid>
+            <Label Content="{Binding VictoryPoints}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="82" Width="214" Visibility="{Binding IsVictoryPointsPresent, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" FontSize="32" HorizontalContentAlignment="Right"/>
             <Grid Margin="10,97,156,10">
-                <ListView ItemsSource="{Binding VisibleCost}" Background="{x:Null}">
+                <ListView ItemsSource="{Binding VisibleCost}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Border x:Name="CostBorder" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="20" BorderThickness="1" BorderBrush="Black" CornerRadius="14">
@@ -30,7 +73,7 @@
 
                 </ListView>
             </Grid>
-            <Label Content="{Binding VictoryPoints}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="82" Width="214" Visibility="{Binding IsVictoryPointsPresent, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
+            
         </Grid>
     </Border>
 </UserControl>
