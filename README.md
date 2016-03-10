@@ -1,10 +1,10 @@
 # README #
 
-Jeśli ktoś zna lepszy system zarządzania - to możemy łatwo wszyskto zmigrować.
-Wiem o Visualstudio.com - i może spróbujemy. Marek kubicki mógłby nam o TFS poopowiadać ;)
+This is my private repository, where I try new technologies in some basic business like environment. The game splendor is protected by copyright laws, and this digital representation is made for educational purposes only (It's simplest board game that i know)
 
 ### What is this repository for? ###
 
-* Będziemy się uczyć ładnie pisać :P 
-* TDD
-* Nowe dziwne rzeczy (tj. dependency injectioni takie tam fajne :P)
+- C# Splendor library (Core)
+- Windows Forms Client (up to 4 hot-seat players capable) 
+- MVVM Client (in progress)
+- TODO: WebSockets Host (C#) and Client (javascript) 
