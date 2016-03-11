@@ -2,14 +2,10 @@
 {
     #region
 
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Windows;
 
-    using SplendorCore.Data;
     using SplendorCore.Models;
 
-    using SplendorWpfClient.Panels;
     using SplendorWpfClient.ViewModels;
 
     #endregion
@@ -18,13 +14,7 @@
     {
         #region Fields
 
-        private readonly List<CardPanel> cardPanels = new List<CardPanel>();
-
         private GameViewModel game;
-
-        private Chips bankChips = new Chips();
-
-        private Chips chipsToTake = new Chips();
 
         #endregion
 
@@ -54,7 +44,13 @@
             playerWindow.ShowDialog();
         }
 
-        #endregion
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.game = new GameViewModel();
+            this.DataContext = this.game;
+            this.game.Players.Add(new Player { Name = "AA" });
+            this.game.Players.Add(new Player { Name = "BB" });
+        }
 
         private void StartGameClick(object sender, RoutedEventArgs e)
         {
@@ -69,12 +65,13 @@
             this.Card22.DataContext = new CardViewModel() { Card = this.game.AvailableCards[5] };
             this.Card23.DataContext = new CardViewModel() { Card = this.game.AvailableCards[6] };
             this.Card24.DataContext = new CardViewModel() { Card = this.game.AvailableCards[7] };
+
+            this.Card31.DataContext = new CardViewModel() { Card = this.game.AvailableCards[8] };
+            this.Card32.DataContext = new CardViewModel() { Card = this.game.AvailableCards[9] };
+            this.Card33.DataContext = new CardViewModel() { Card = this.game.AvailableCards[10] };
+            this.Card34.DataContext = new CardViewModel() { Card = this.game.AvailableCards[11] };
         }
 
-        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            this.game = new GameViewModel();
-            this.DataContext = this.game;
-        }
+        #endregion
     }
 }

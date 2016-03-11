@@ -20,12 +20,13 @@
             this.Game = new Game();
             this.Game.Deck = new Deck(this.Game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
             this.Players = new ObservableCollection<Player>();
+            this.Players.CollectionChanged += this.PlayersCollectionChanged;
 
             this.AllCards = new ObservableCollection<Card>(this.Game.Deck.AllCards);
-            this.AvailableCards = new ObservableCollection<Card>(this.Game.Deck.AvailableCards);
-            this.Players.CollectionChanged += this.PlayersCollectionChanged;
-            this.AvailableCards.CollectionChanged += this.AvailableCardsCollectionChanged;
             this.AllCards.CollectionChanged += this.AllCardsCollectionChanged;
+
+            this.AvailableCards = new ObservableCollection<Card>(this.Game.Deck.AvailableCards);
+            this.AvailableCards.CollectionChanged += this.AvailableCardsCollectionChanged;
         }
 
         #endregion
@@ -43,6 +44,8 @@
         public bool IsActive { get { return this.Game != null && this.Game.IsActive; } }
 
         public bool IsStarted { get { return this.Game != null && this.Game.HasStarted; } }
+
+        public bool IsNotStarted { get { return this.Game == null || !this.Game.HasStarted; } }
 
         public ObservableCollection<Player> Players { get; set; }
 
@@ -75,6 +78,7 @@
             this.OnPropertyChanged("CanPlayerBeAdded");
             this.OnPropertyChanged("IsActive");
             this.OnPropertyChanged("IsStarted");
+            this.OnPropertyChanged("IsNotStarted");
         }
 
         #endregion

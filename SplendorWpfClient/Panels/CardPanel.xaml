@@ -49,7 +49,7 @@
             <GradientStop Color="#FFFBFBFB"/>
             <GradientStop Color="#FFC5CB53" Offset="0.75"/>
         </RadialGradientBrush>
-        
+
     </UserControl.Resources>
     <UserControl.DataContext>
         <ViewModels:CardViewModel/>
@@ -57,23 +57,20 @@
 
 
 
-    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="10" Background="{Binding Background, Mode=OneWay, TargetNullValue=Gold}">
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="10" Background="{Binding Background, TargetNullValue={StaticResource UnknownCardBrush}}">
         <Grid>
-            <Label Content="{Binding VictoryPoints}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="82" Width="214" Visibility="{Binding IsVictoryPointsPresent, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" FontSize="32" HorizontalContentAlignment="Right"/>
-            <Grid Margin="10,97,156,10">
-                <ListView ItemsSource="{Binding VisibleCost}">
-                    <ListView.ItemTemplate>
+            <Label Content="{Binding VictoryPoints}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="82" Width="170" FontSize="35" VerticalContentAlignment="Center" Padding="20" Background="#54DEDEDE" Margin="19,22,0,0"/>
+            <Grid Margin="10,10,66,10">
+                <ItemsControl ItemsSource="{Binding VisibleCost}" VerticalContentAlignment="Bottom">
+                    <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border x:Name="CostBorder" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="20" BorderThickness="1" BorderBrush="Black" CornerRadius="14">
-                                <Label x:Name="Cost" Content="{Binding Value}" RenderTransformOrigin="0.567,0.192" Height="20" HorizontalContentAlignment="Center" FontSize="15" FontWeight="Bold" VerticalContentAlignment="Center" Padding="0"/>
+                            <Border x:Name="CostBorder" HorizontalAlignment="Left" Margin="2,0,0,2" VerticalAlignment="Bottom" Width="20" BorderThickness="1" BorderBrush="Black" CornerRadius="10" Background="{Binding BackColor}">
+                                <Label x:Name="Cost" Content="{Binding Value}" RenderTransformOrigin="0.567,0.192" Height="20" HorizontalContentAlignment="Center" FontSize="15" FontWeight="Bold" VerticalContentAlignment="Center" Padding="0" Foreground="{Binding ForeColor}"/>
                             </Border>
                         </DataTemplate>
-
-                    </ListView.ItemTemplate>
-
-                </ListView>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Grid>
-            
         </Grid>
     </Border>
 </UserControl>

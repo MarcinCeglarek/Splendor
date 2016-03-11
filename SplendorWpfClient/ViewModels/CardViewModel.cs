@@ -3,7 +3,6 @@
     #region
 
     using System;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows.Media;
@@ -42,7 +41,7 @@
 
         public CardViewModel()
         {
-            this.VisibleCost = new ObservableCollection<KeyValuePair<SplendorCore.Models.Color, int>>();
+            this.VisibleCost = new ObservableCollection<DisplayInfo>();
         }
 
         #endregion
@@ -55,7 +54,7 @@
             {
                 if (this.IsCardPresent)
                 {
-                    return new SolidColorBrush(ForeColor(this.card.Color));
+                    return new SolidColorBrush(BackColor(this.card.Color));
                 }
 
                 return null;
@@ -69,8 +68,13 @@
             {
                 this.card = value;
 
-                this.VisibleCost = new ObservableCollection<KeyValuePair<SplendorCore.Models.Color, int>>();
-                foreach (var cost in this.card.Cost.Where(cost => cost.Value > 0).OrderByDescending(cost => cost.Key))
+                this.VisibleCost = new ObservableCollection<DisplayInfo>();
+                foreach (var cost in
+                    this.card.Cost.Where(cost => cost.Value > 0)
+                        .OrderByDescending(cost => cost.Key)
+                        .Select(
+                            cost =>
+                            new DisplayInfo { BackColor = new SolidColorBrush(BackColor(cost.Key)), ForeColor = new SolidColorBrush(ForeColor(cost.Key)), Value = cost.Value }))
                 {
                     this.VisibleCost.Add(cost);
                 }
@@ -86,15 +90,15 @@
 
         public bool IsVictoryPointsPresent { get { return this.IsCardPresent && this.Card.VictoryPoints != 0; } }
 
-        public int VictoryPoints { get { return this.IsCardPresent ? this.card.VictoryPoints : 0; } }
+        public int VictoryPoints { get { return this.IsCardPresent ? this.card.VictoryPoints : -1; } }
 
-        public ObservableCollection<KeyValuePair<SplendorCore.Models.Color, int>> VisibleCost { get; set; }
+        public ObservableCollection<DisplayInfo> VisibleCost { get; set; }
 
         #endregion
 
-        #region Public Methods and Operators
+        #region Methods
 
-        public static Color ForeColor(SplendorCore.Models.Color color)
+        private static Color BackColor(SplendorCore.Models.Color color)
         {
             switch (color)
             {
@@ -115,6 +119,40 @@
             throw new NotSupportedException();
         }
 
+        private static Color ForeColor(SplendorCore.Models.Color color)
+        {
+            switch (color)
+            {
+                case SplendorCore.Models.Color.Black:
+                    return White;
+                case SplendorCore.Models.Color.Blue:
+                    return Black;
+                case SplendorCore.Models.Color.Gold:
+                    return Black;
+                case SplendorCore.Models.Color.Green:
+                    return Black;
+                case SplendorCore.Models.Color.Red:
+                    return Black;
+                case SplendorCore.Models.Color.White:
+                    return Black;
+            }
+
+            throw new NotSupportedException();
+        }
+
         #endregion
+
+        public class DisplayInfo
+        {
+            #region Public Properties
+
+            public SolidColorBrush BackColor { get; set; }
+
+            public SolidColorBrush ForeColor { get; set; }
+
+            public int Value { get; set; }
+
+            #endregion
+        }
     }
 }
