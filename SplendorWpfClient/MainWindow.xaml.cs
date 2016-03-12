@@ -70,6 +70,19 @@
             this.Card32.DataContext = new CardViewModel() { Card = this.game.AvailableCards[9] };
             this.Card33.DataContext = new CardViewModel() { Card = this.game.AvailableCards[10] };
             this.Card34.DataContext = new CardViewModel() { Card = this.game.AvailableCards[11] };
+
+            this.PlayerPanel1.DataContext = new PlayerViewModel() { Player = this.game.Players[0], IsActivePlayer = true};
+            this.PlayerPanel2.DataContext = new PlayerViewModel() { Player = this.game.Players[1] };
+
+            if (this.game.Players.Count > 2)
+            {
+                this.PlayerPanel3.DataContext = new PlayerViewModel() { Player = this.game.Players[2] };
+
+                if (this.game.Players.Count > 3)
+                {
+                    this.PlayerPanel4.DataContext = new PlayerViewModel() { Player = this.game.Players[3] };   
+                }
+            }
         }
 
         #endregion

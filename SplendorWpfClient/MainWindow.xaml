@@ -25,6 +25,10 @@
         <Panels:CardPanel x:Name="Card32" HorizontalAlignment="Left" Margin="183,408,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
         <Panels:CardPanel x:Name="Card33" HorizontalAlignment="Left" Margin="325,408,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
         <Panels:CardPanel x:Name="Card34" HorizontalAlignment="Left" Margin="467,408,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
+        <Panels:PlayerPanel x:Name="PlayerPanel1" HorizontalAlignment="Left" Margin="41,589,0,-29" VerticalAlignment="Top"/>
+        <Panels:PlayerPanel x:Name="PlayerPanel2" HorizontalAlignment="Left" Margin="240,589,0,-29" VerticalAlignment="Top" Height="190" Width="193"/>
+        <Panels:PlayerPanel x:Name="PlayerPanel3" HorizontalAlignment="Left" Margin="438,589,0,-29" VerticalAlignment="Top" Height="190" Width="190"/>
+        <Panels:PlayerPanel x:Name="PlayerPanel4" HorizontalAlignment="Left" Margin="633,589,0,-29" VerticalAlignment="Top" Height="190" Width="192"/>
 
     </Grid>
 </Window>
