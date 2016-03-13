@@ -15,6 +15,7 @@
     using SplendorCore.Models.Exceptions.CardOperationExceptions;
     using SplendorCore.Models.Exceptions.ChipOperationExceptions;
     using SplendorCore.Models.Exceptions.GameExceptions;
+    using SplendorCore.Models.Exceptions.PlayerExceptions;
 
     #endregion
 
@@ -22,6 +23,50 @@
     public class GameTests : TestsBase
     {
         #region Public Methods and Operators
+
+        [TestMethod]
+        public void AddSinglePlayer()
+        {
+            var game = new Game();
+            game.AddPlayer(new Player());
+
+            Assert.AreEqual(1, game.Players.Count);
+        }
+
+        [TestMethod]
+        public void AddAndRemovePlayer()
+        {
+            var game = new Game();
+            var player = new Player();
+            game.AddPlayer(player);
+            game.RemovePlayer(player);
+
+            Assert.AreEqual(0, game.Players.Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidPlayerException))]
+        public void RemoveInvalidPlayer()
+        {
+            var game = new Game();
+            game.RemovePlayer(new Player());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(GameAlreadyStartedException))]
+        public void RemovePlayerAfterGameIsStarted()
+        {
+            var game = this.InitializeGame(3);
+            game.RemovePlayer(game.Players.First());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(GameAlreadyStartedException))]
+        public void AddPlayerAfterGameIsStarted()
+        {
+            var game = this.InitializeGame(3);
+            game.AddPlayer(new Player());
+        }
 
         [TestMethod]
         public void FourPlayersQueue()
@@ -46,15 +91,6 @@
             Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
             game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
             Assert.AreEqual(firstPlayer, game.CurrentPlayer);
-
-            /*game.PurchaseCard(game.CurrentPlayer, new Card());
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.PurchaseCard(game.CurrentPlayer, new Card());
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.PurchaseCard(game.CurrentPlayer, new Card());
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.PurchaseCard(game.CurrentPlayer, new Card());
-            Assert.AreEqual(firstPlayer, game.CurrentPlayer);*/
         }
 
         [TestMethod]
@@ -220,8 +256,8 @@
         public void StartDeckNotPresentException()
         {
             var game = new Game();
-            game.Players.Add(new Player());
-            game.Players.Add(new Player());
+            game.AddPlayer(new Player());
+            game.AddPlayer(new Player());
             game.Start();
         }
 
@@ -442,13 +478,6 @@
             Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
             game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
             Assert.AreEqual(firstPlayer, game.CurrentPlayer);
-
-            /*game.PurchaseCard(game.CurrentPlayer, new Card());
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.PurchaseCard(game.CurrentPlayer, new Card());
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.PurchaseCard(game.CurrentPlayer, new Card());
-            Assert.AreEqual(firstPlayer, game.CurrentPlayer);*/
         }
 
         [TestMethod]
@@ -467,11 +496,6 @@
             Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
             game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
             Assert.AreEqual(firstPlayer, game.CurrentPlayer);
-
-            /*game.PurchaseCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-            Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.PurchaseCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-            Assert.AreEqual(firstPlayer, game.CurrentPlayer);*/
         }
 
         #endregion

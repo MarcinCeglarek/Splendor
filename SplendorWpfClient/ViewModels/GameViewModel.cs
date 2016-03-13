@@ -2,9 +2,9 @@
 {
     #region
 
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
+    using System.Linq;
 
     using SplendorCore.Data;
     using SplendorCore.Models;
@@ -13,14 +13,17 @@
 
     internal class GameViewModel : AbstractViewModel
     {
+        private ObservableCollection<PlayerViewModel> players;
+
         #region Constructors and Destructors
 
         public GameViewModel()
         {
             this.Game = new Game();
             this.Game.Deck = new Deck(this.Game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
-            this.Players = new ObservableCollection<Player>();
-            this.Players.CollectionChanged += this.PlayersCollectionChanged;
+            this.players = new ObservableCollection<PlayerViewModel>();
+            this.players.CollectionChanged += this.PlayersCollectionChanged;
+            this.Players = new ReadOnlyObservableCollection<PlayerViewModel>(this.players);
 
             this.AllCards = new ObservableCollection<Card>(this.Game.Deck.AllCards);
             this.AllCards.CollectionChanged += this.AllCardsCollectionChanged;
@@ -43,11 +46,11 @@
 
         public bool IsActive { get { return this.Game != null && this.Game.IsActive; } }
 
-        public bool IsStarted { get { return this.Game != null && this.Game.HasStarted; } }
-
         public bool IsNotStarted { get { return this.Game == null || !this.Game.HasStarted; } }
 
-        public ObservableCollection<Player> Players { get; set; }
+        public bool IsStarted { get { return this.Game != null && this.Game.HasStarted; } }
+
+        public ReadOnlyObservableCollection<PlayerViewModel> Players { get; set; }
 
         #endregion
 
@@ -58,6 +61,21 @@
         #endregion
 
         #region Public Methods and Operators
+
+        public void AddPlayer(Player player)
+        {
+            this.players.Add(new PlayerViewModel() { Player = player });
+        }
+
+        public void BuyCard(Card card)
+        {
+            this.Game.PurchaseCard(this.Game.CurrentPlayer, card);
+        }
+
+        public void ReserveCard(Card card)
+        {
+            this.Game.ReserveCard(this.Game.CurrentPlayer, card);
+        }
 
         public void Start()
         {
@@ -97,7 +115,15 @@
 
         private void PlayersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            this.Game.Players = new List<Player>(this.Players);
+            foreach (var player in this.Game.Players.ToList())
+            {
+                this.Game.RemovePlayer(player);
+            }
+
+            foreach (var player in this.Players.Select(playerViewModel => playerViewModel.Player))
+            {
+                this.Game.AddPlayer(player);
+            }
 
             this.OnPropertyChanged("CanGameBeStarted");
             this.OnPropertyChanged("CanPlayerBeAdded");

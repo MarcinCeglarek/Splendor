@@ -157,7 +157,7 @@
         {
             var player = new Player { Name = this.PlayerNameBox.Text };
 
-            this.game.Players.Add(player);
+            this.game.AddPlayer(player);
 
             this.Log(string.Format("Player {0} joins game", player));
 

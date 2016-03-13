@@ -4,6 +4,7 @@
 
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Runtime.Serialization;
 
@@ -24,11 +25,17 @@
     {
         #region Fields
 
+        private readonly List<ChatEntry> chat;
+
         private readonly List<IBroadcastMessages> subscribers;
 
         private Chips bank;
 
         private Player firstPlayer;
+
+        private List<HistoryEntry> history;
+
+        private List<Player> players;
 
         #endregion
 
@@ -37,10 +44,13 @@
         public Game()
         {
             this.Id = Guid.NewGuid();
-            this.Players = new List<Player>();
+            this.players = new List<Player>();
+            this.Players = new ReadOnlyCollection<Player>(this.players);
             this.subscribers = new List<IBroadcastMessages>();
-            this.Chat = new List<ChatEntry>();
-            this.History = new List<HistoryEntry>();
+            this.chat = new List<ChatEntry>();
+            this.Chat = new ReadOnlyCollection<ChatEntry>(this.chat);
+            this.history = new List<HistoryEntry>();
+            this.History = new ReadOnlyCollection<HistoryEntry>(this.history);
             this.HasStarted = false;
             this.HasFinished = false;
         }
@@ -53,10 +63,10 @@
         public Chips Bank { get { return new Chips(this.bank); } }
 
         [DataMember]
-        public List<ChatEntry> Chat { get; set; }
+        public ReadOnlyCollection<ChatEntry> Chat { get; private set; }
 
         [DataMember]
-        public Player CurrentPlayer { get { return this.Players.FirstOrDefault(); } }
+        public Player CurrentPlayer { get { return this.players.FirstOrDefault(); } }
 
         [DataMember]
         public Deck Deck { get; set; }
@@ -68,7 +78,7 @@
         public bool HasStarted { get; private set; }
 
         [DataMember]
-        public List<HistoryEntry> History { get; set; }
+        public ReadOnlyCollection<HistoryEntry> History { get; private set; }
 
         [DataMember]
         public Guid Id { get; private set; }
@@ -76,13 +86,13 @@
         public bool IsActive { get { return this.HasStarted && !this.HasFinished; } }
 
         [DataMember]
-        public List<Player> Players { get; set; }
+        public ReadOnlyCollection<Player> Players { get; private set; }
 
         public int TotalNumberOfNormalChips
         {
             get
             {
-                switch (this.Players.Count)
+                switch (this.players.Count)
                 {
                     case 2:
                         return CoreConstants.Game.NumberOfNormalChips2Players;
@@ -99,6 +109,21 @@
         #endregion
 
         #region Public Methods and Operators
+
+        public void AddPlayer(Player player)
+        {
+            if (this.HasStarted)
+            {
+                throw new GameAlreadyStartedException(this);
+            }
+
+            if (this.players.Count >= 4)
+            {
+                throw new InvalidNumberOfPlayersException(this);
+            }
+
+            this.players.Add(player);
+        }
 
         public bool CanPurchaseCard(Player player, Card card)
         {
@@ -141,10 +166,10 @@
 
         public void ChatMessage(Player player, string message)
         {
-            if (this.Players.Contains(player))
+            if (this.players.Contains(player))
             {
                 var entry = new ChatEntry(player, message);
-                this.Chat.Add(entry);
+                this.chat.Add(entry);
                 this.subscribers.ForEach(subscriber => subscriber.ChatMessage(entry));
             }
             else
@@ -168,6 +193,22 @@
 
             this.PlayerFinished();
             this.subscribers.ForEach(subscriber => subscriber.CardPurchased(this));
+        }
+
+        public void RemovePlayer(Player player)
+        {
+            if (this.HasStarted)
+            {
+                throw new GameAlreadyStartedException(this);
+            }
+
+            if (this.players.Contains(player))
+            {
+                this.players.Remove(player);
+                return;
+            }
+
+            throw new InvalidPlayerException(player);
         }
 
         public void ReserveCard(Player player, Card card)
@@ -204,15 +245,15 @@
                 throw new DeckNotPresentException(this);
             }
 
-            if (this.Players.Count < 2 || this.Players.Count > 4)
+            if (this.players.Count < 2 || this.players.Count > 4)
             {
                 throw new InvalidNumberOfPlayersException(this);
             }
 
             this.HasStarted = true;
             this.Deck.Initialize();
-            this.Players = this.Players.Shuffle().ToList();
-            this.firstPlayer = this.Players.First();
+            this.players = this.players.Shuffle().ToList();
+            this.firstPlayer = this.players.First();
 
             var chipCount = this.TotalNumberOfNormalChips;
             this.bank = new Chips { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = CoreConstants.Game.NumberOfGoldChips };
@@ -255,21 +296,21 @@
                 return;
             }
 
-            var firstAristocrate = eligableAristocrates.First();
+            var firstEligableAristocrate = eligableAristocrates.First();
 
-            this.Deck.AvailableAristocrates.Remove(firstAristocrate);
-            this.CurrentPlayer.OwnedAristocrates.Add(firstAristocrate);
+            this.Deck.AvailableAristocrates.Remove(firstEligableAristocrate);
+            this.CurrentPlayer.OwnedAristocrates.Add(firstEligableAristocrate);
         }
 
         private void CheckEndGameCondition()
         {
-            if (this.Players.Any(p => p.VictoryPoints >= 15) && this.firstPlayer == this.CurrentPlayer)
+            if (this.players.Any(p => p.VictoryPoints >= 15) && this.firstPlayer == this.CurrentPlayer)
             {
-                this.GameEnded();
+                this.EndGame();
             }
         }
 
-        private void GameEnded()
+        private void EndGame()
         {
             this.HasFinished = true;
             this.subscribers.ForEach(subscriber => subscriber.GameEnded(this));
@@ -279,8 +320,8 @@
         {
             this.CheckAristocrates();
             var currentUser = this.CurrentPlayer;
-            this.Players.RemoveAt(0);
-            this.Players.Insert(this.Players.Count, currentUser);
+            this.players.RemoveAt(0);
+            this.players.Insert(this.players.Count, currentUser);
 
             this.CheckEndGameCondition();
         }
@@ -290,7 +331,7 @@
             this.VerifyThatGameIsActive();
             this.VerifyPlayerEligibleForMove(player);
 
-            if (!this.Deck.AvailableCards.Contains(card) && !this.Players.Single(o => o == player).ReservedCards.Contains(card))
+            if (!this.Deck.AvailableCards.Contains(card) && !this.players.Single(o => o == player).ReservedCards.Contains(card))
             {
                 throw new CardUnavailableException(card);
             }

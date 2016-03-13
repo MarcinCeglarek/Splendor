@@ -28,7 +28,7 @@
 
             for (var i = 0; i < numberOfPlayers; i++)
             {
-                game.Players.Add(new Player());
+                game.AddPlayer(new Player());
             }
 
             game.Start();
