@@ -32,16 +32,19 @@
 
         #region Public Properties
 
-        public bool IsActivePlayer { get; set; }
+        public SolidColorBrush BorderColor { get { return this.IsCurrentPlayer ? new SolidColorBrush(Colors.Fuchsia) : new SolidColorBrush(Colors.Gray); } }
 
-        public SolidColorBrush BorderColor
+        public IEnumerable<ChipsViewModel> Cards
         {
-            get { return this.IsActivePlayer ? new SolidColorBrush(Colors.Fuchsia) : new SolidColorBrush(Colors.Gray); }
+            get { return this.IsPlayerPresent ? this.player.Cards.Select(card => new ChipsViewModel(card, Color.White)) : new List<ChipsViewModel>(); }
         }
 
-        public IEnumerable<ChipsViewModel> Cards { get { return this.IsPlayerPresent ? this.player.Cards.Select(card => new ChipsViewModel(card, Color.White)) : new List<ChipsViewModel>(); } }
+        public IEnumerable<ChipsViewModel> Chips
+        {
+            get { return this.IsPlayerPresent ? this.player.Chips.Select(card => new ChipsViewModel(card, Color.White)) : new List<ChipsViewModel>(); }
+        }
 
-        public IEnumerable<ChipsViewModel> Chips { get { return this.IsPlayerPresent ? this.player.Chips.Select(card => new ChipsViewModel(card, Color.White)) : new List<ChipsViewModel>(); } }
+        public bool IsCurrentPlayer { get; set; }
 
         public bool IsPlayerPresent { get { return this.player != null; } }
 
@@ -61,14 +64,24 @@
                     }
                 }
 
-                this.OnPropertyChanged("IsPlayerPresent");
-                this.OnPropertyChanged("Chips");
-                this.OnPropertyChanged("Cards");
-                this.OnPropertyChanged("ReservedCards");
+                this.NotifyPropertyChanged();
             }
         }
 
         public ObservableCollection<CardViewModel> ReservedCards { get; set; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public void NotifyPropertyChanged()
+        {
+            this.OnPropertyChanged("Cards");
+            this.OnPropertyChanged("Chips");
+            this.OnPropertyChanged("IsPlayerPresent");
+            this.OnPropertyChanged("IsCurrentPlayer");
+            this.OnPropertyChanged("ReservedCards");
+        }
 
         #endregion
     }

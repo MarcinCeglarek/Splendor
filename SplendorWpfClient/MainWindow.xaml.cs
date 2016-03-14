@@ -32,7 +32,7 @@
 
         public static void BuyCard(Card card)
         {
-            game.BuyCard(card);
+            game.PurchaseCard(card);
         }
 
         public static void GiveBackChips()
@@ -94,6 +94,10 @@
             this.Card32.DataContext = new CardViewModel() { Card = game.AvailableCards[9] };
             this.Card33.DataContext = new CardViewModel() { Card = game.AvailableCards[10] };
             this.Card34.DataContext = new CardViewModel() { Card = game.AvailableCards[11] };
+
+            this.CardsTier1.DataContext = game.Tier1;
+            this.CardsTier2.DataContext = game.Tier2;
+            this.CardsTier3.DataContext = game.Tier3;
 
             this.PopulatePlayerPanels();
         }

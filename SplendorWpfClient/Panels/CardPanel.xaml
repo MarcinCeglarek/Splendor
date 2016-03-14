@@ -56,9 +56,9 @@
     </UserControl.DataContext>
 
     <Viewbox StretchDirection="Both" Stretch="Uniform">
-        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="10" Background="{Binding Background, TargetNullValue={StaticResource UnknownCardBrush}}" Height="235" MouseUp="Border_MouseUp">
+        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="10" Background="{Binding Background, TargetNullValue={StaticResource UnknownCardBrush}}" Height="235" MouseUp="Border_MouseUp" Width="186">
             <Grid>
-                <Label Content="{Binding VictoryPoints}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="82" Width="170" FontSize="35" VerticalContentAlignment="Center" Padding="20" Background="{x:Null}" HorizontalContentAlignment="Right" Foreground="{Binding ForeColor, Mode=OneWay}"/>
+                <Label Content="{Binding VictoryPoints}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="82" Width="170" FontSize="35" VerticalContentAlignment="Center" Padding="20" Background="{x:Null}" HorizontalContentAlignment="Right" Foreground="{Binding ForeColor, Mode=OneWay}" Visibility="{Binding IsVictoryPointsPresent, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
                 <Grid Margin="10,10,66,10">
                     <ItemsControl ItemsSource="{Binding VisibleCost}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right">
                         <ItemsControl.ItemTemplate>

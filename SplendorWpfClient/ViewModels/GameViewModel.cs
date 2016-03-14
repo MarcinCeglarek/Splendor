@@ -2,9 +2,11 @@
 {
     #region
 
+    using System;
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.Linq;
+    using System.Windows.Media;
 
     using SplendorCore.Data;
     using SplendorCore.Models;
@@ -13,7 +15,11 @@
 
     internal class GameViewModel : AbstractViewModel
     {
-        private ObservableCollection<PlayerViewModel> players;
+        #region Fields
+
+        private readonly ObservableCollection<PlayerViewModel> players;
+
+        #endregion
 
         #region Constructors and Destructors
 
@@ -21,6 +27,7 @@
         {
             this.Game = new Game();
             this.Game.Deck = new Deck(this.Game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
+
             this.players = new ObservableCollection<PlayerViewModel>();
             this.players.CollectionChanged += this.PlayersCollectionChanged;
             this.Players = new ReadOnlyObservableCollection<PlayerViewModel>(this.players);
@@ -52,6 +59,21 @@
 
         public ReadOnlyObservableCollection<PlayerViewModel> Players { get; set; }
 
+        public CardsHeapViewModel Tier1
+        {
+            get { return new CardsHeapViewModel() { Count = this.GetRemainingCardsOfTier(1), Background = new RadialGradientBrush(Colors.LimeGreen, Colors.DarkGreen) }; }
+        }
+
+        public CardsHeapViewModel Tier2
+        {
+            get { return new CardsHeapViewModel() { Count = this.GetRemainingCardsOfTier(2), Background = new RadialGradientBrush(Colors.Orange, Colors.SaddleBrown) }; }
+        }
+
+        public CardsHeapViewModel Tier3
+        {
+            get { return new CardsHeapViewModel() { Count = this.GetRemainingCardsOfTier(3), Background = new RadialGradientBrush(Colors.DodgerBlue, Colors.Blue) }; }
+        }
+
         #endregion
 
         #region Properties
@@ -67,14 +89,25 @@
             this.players.Add(new PlayerViewModel() { Player = player });
         }
 
-        public void BuyCard(Card card)
+        public void PurchaseCard(Card card)
         {
-            this.Game.PurchaseCard(this.Game.CurrentPlayer, card);
+            if (this.Game.CanPurchaseCard(this.Game.CurrentPlayer, card))
+            {
+                this.Game.PurchaseCard(this.Game.CurrentPlayer, card);
+                this.NotifyDeckChanges();
+                this.UpdatePlayerPanels();
+            }
+            
         }
 
         public void ReserveCard(Card card)
         {
-            this.Game.ReserveCard(this.Game.CurrentPlayer, card);
+            if (this.Game.CanReserveCard(this.Game.CurrentPlayer, card))
+            {
+                this.Game.ReserveCard(this.Game.CurrentPlayer, card);
+                this.NotifyDeckChanges();
+                this.UpdatePlayerPanels();
+            }
         }
 
         public void Start()
@@ -92,11 +125,18 @@
                 this.AvailableCards.Add(card);
             }
 
-            this.OnPropertyChanged("CanGameBeStarted");
-            this.OnPropertyChanged("CanPlayerBeAdded");
-            this.OnPropertyChanged("IsActive");
-            this.OnPropertyChanged("IsStarted");
-            this.OnPropertyChanged("IsNotStarted");
+            this.NotifyGameStarts();
+            this.NotifyPlayersChanges();
+            this.UpdatePlayerPanels();
+            this.NotifyDeckChanges();
+        }
+
+        public void TakeChips(Chips chips)
+        {
+            this.Game.TakeChips(this.Game.CurrentPlayer, chips);
+
+            this.NotifyBankChanges();
+            this.UpdatePlayerPanels();
         }
 
         #endregion
@@ -113,6 +153,37 @@
             this.OnPropertyChanged("AvailableCards");
         }
 
+        private int GetRemainingCardsOfTier(int i)
+        {
+            return this.Game.Deck.AllCards.Count(card => card.Tier == i) - this.Game.Deck.AvailableCards.Count(card => card.Tier == i);
+        }
+
+        private void NotifyBankChanges()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void NotifyDeckChanges()
+        {
+            this.OnPropertyChanged("Tier1");
+            this.OnPropertyChanged("Tier2");
+            this.OnPropertyChanged("Tier3");
+        }
+
+        private void NotifyGameStarts()
+        {
+            this.OnPropertyChanged("IsActive");
+            this.OnPropertyChanged("IsStarted");
+            this.OnPropertyChanged("IsNotStarted");
+        }
+
+        private void NotifyPlayersChanges()
+        {
+            this.OnPropertyChanged("CanGameBeStarted");
+            this.OnPropertyChanged("CanPlayerBeAdded");
+            this.OnPropertyChanged("Players");
+        }
+
         private void PlayersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             foreach (var player in this.Game.Players.ToList())
@@ -125,9 +196,16 @@
                 this.Game.AddPlayer(player);
             }
 
-            this.OnPropertyChanged("CanGameBeStarted");
-            this.OnPropertyChanged("CanPlayerBeAdded");
-            this.OnPropertyChanged("Players");
+            this.NotifyPlayersChanges();
+        }
+
+        private void UpdatePlayerPanels()
+        {
+            foreach (var playerViewModel in this.Players)
+            {
+                playerViewModel.IsCurrentPlayer = playerViewModel.Player == this.Game.CurrentPlayer;
+                playerViewModel.NotifyPropertyChanged();
+            }
         }
 
         #endregion
