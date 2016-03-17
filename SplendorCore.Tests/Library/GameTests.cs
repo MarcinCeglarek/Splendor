@@ -2,15 +2,12 @@
 {
     #region
 
-    using System;
     using System.Linq;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using SplendorCore.Data;
     using SplendorCore.Models;
-    using SplendorCore.Models.Exceptions;
-    using SplendorCore.Models.Exceptions.AbstractExceptions;
     using SplendorCore.Models.Exceptions.CardExceptions;
     using SplendorCore.Models.Exceptions.CardOperationExceptions;
     using SplendorCore.Models.Exceptions.ChipOperationExceptions;
@@ -25,18 +22,9 @@
         #region Public Methods and Operators
 
         [TestMethod]
-        public void AddSinglePlayer()
-        {
-            var game = new Game();
-            game.AddPlayer(new Player());
-
-            Assert.AreEqual(1, game.Players.Count);
-        }
-
-        [TestMethod]
         public void AddAndRemovePlayer()
         {
-            var game = new Game();
+            var game = new Game(CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
             var player = new Player();
             game.AddPlayer(player);
             game.RemovePlayer(player);
@@ -45,27 +33,20 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidPlayerException))]
-        public void RemoveInvalidPlayer()
-        {
-            var game = new Game();
-            game.RemovePlayer(new Player());
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(GameAlreadyStartedException))]
-        public void RemovePlayerAfterGameIsStarted()
-        {
-            var game = this.InitializeGame(3);
-            game.RemovePlayer(game.Players.First());
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(GameAlreadyStartedException))]
         public void AddPlayerAfterGameIsStarted()
         {
             var game = this.InitializeGame(3);
             game.AddPlayer(new Player());
+        }
+
+        [TestMethod]
+        public void AddSinglePlayer()
+        {
+            var game = new Game(CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
+            game.AddPlayer(new Player());
+
+            Assert.AreEqual(1, game.Players.Count);
         }
 
         [TestMethod]
@@ -83,13 +64,13 @@
             game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { White = 2 });
             Assert.AreEqual(firstPlayer, game.CurrentPlayer);
 
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
             Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
             Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
             Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
             Assert.AreEqual(firstPlayer, game.CurrentPlayer);
         }
 
@@ -120,7 +101,7 @@
         {
             var game = this.InitializeGame();
             var player = game.CurrentPlayer;
-            var card = game.Deck.AvailableCards.First();
+            var card = game.AvailableCards.First();
 
             game.PurchaseCard(player, card);
         }
@@ -136,74 +117,55 @@
             game.PurchaseCard(player, invalidCard);
         }
 
-/*        [TestMethod]
-        public void PurchaseCardNormal()
+        [TestMethod]
+        [ExpectedException(typeof(InvalidPlayerException))]
+        public void RemoveInvalidPlayer()
         {
-            var game = this.InitializeGame();
-            var player = game.CurrentPlayer;
-            var card = game.Deck.AvailableCards.First();
-
-            var amountForPlayer = new Chips(4, 4, 4, 4, 4, 0);
-            game.Bank -= amountForPlayer;
-            game.CurrentPlayer.Chips += amountForPlayer;
-
-            game.PurchaseCard(player, card);
-            Assert.AreEqual(1, player.OwnedCards.Count);
-            Assert.AreEqual(card, player.OwnedCards.Single());
-            Assert.AreEqual(amountForPlayer, player.Chips + card.Cost);
-            this.VerityChipsCountIntegrity(game);
+            var game = new Game(CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
+            game.RemovePlayer(new Player());
         }
 
         [TestMethod]
-        public void PurchaseCardWithGold()
+        [ExpectedException(typeof(GameAlreadyStartedException))]
+        public void RemovePlayerAfterGameIsStarted()
         {
-            var game = this.InitializeGame();
-            var player = game.CurrentPlayer;
-            var card = game.Deck.AvailableCards.First();
-
-            var amountForPlayer = new Chips(1, 0, 1, 0, 1, 4);
-            game.Bank -= amountForPlayer;
-            game.CurrentPlayer.Chips += amountForPlayer;
-
-            game.PurchaseCard(player, card);
-            Assert.AreEqual(1, player.OwnedCards.Count);
-            Assert.AreEqual(card, player.OwnedCards.Single());
-            this.VerityChipsCountIntegrity(game);
-        }*/
+            var game = this.InitializeGame(3);
+            game.RemovePlayer(game.Players.First());
+        }
 
         [TestMethod]
         public void ReserveCard1()
         {
             var game = this.InitializeGame();
             var player = game.CurrentPlayer;
-            var card = game.Deck.AvailableCards.First();
+            var card = game.AvailableCards.First();
 
             game.ReserveCard(player, card);
-            Assert.AreEqual(3 * CoreConstants.Deck.NumberOfVisibleCards, game.Deck.AvailableCards.Count);
+            Assert.AreEqual(3 * CoreConstants.Deck.NumberOfVisibleCards, game.AvailableCards.Count);
             Assert.AreEqual(1, player.ReservedCards.Count);
             Assert.IsTrue(player.ReservedCards.Contains(card));
             Assert.AreEqual(1, player.Chips.Gold);
 
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
 
-            card = game.Deck.AvailableCards.First();
+            card = game.AvailableCards.First();
             game.ReserveCard(player, card);
-            Assert.AreEqual(3 * CoreConstants.Deck.NumberOfVisibleCards, game.Deck.AvailableCards.Count);
+            Assert.AreEqual(3 * CoreConstants.Deck.NumberOfVisibleCards, game.AvailableCards.Count);
             Assert.AreEqual(2, player.ReservedCards.Count);
             Assert.IsTrue(player.ReservedCards.Contains(card));
             Assert.AreEqual(2, player.Chips.Gold);
 
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
 
-            card = game.Deck.AvailableCards.First();
+            card = game.AvailableCards.First();
             game.ReserveCard(player, card);
-            Assert.AreEqual(3 * CoreConstants.Deck.NumberOfVisibleCards, game.Deck.AvailableCards.Count);
+            Assert.AreEqual(3 * CoreConstants.Deck.NumberOfVisibleCards, game.AvailableCards.Count);
             Assert.AreEqual(3, player.ReservedCards.Count);
             Assert.IsTrue(player.ReservedCards.Contains(card));
             Assert.AreEqual(3, player.Chips.Gold);
 
             var player2 = game.CurrentPlayer;
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
             Assert.AreEqual(2, player2.Chips.Gold);
         }
 
@@ -213,26 +175,26 @@
         {
             var game = this.InitializeGame();
             var player1 = game.CurrentPlayer;
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
             var player2 = game.CurrentPlayer;
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
 
             Assert.AreEqual(3, game.Bank.Gold);
 
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
 
             Assert.AreEqual(1, game.Bank.Gold);
 
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
 
             Assert.AreEqual(3, player1.Chips.Gold);
             Assert.AreEqual(2, player2.Chips.Gold);
             Assert.AreEqual(0, game.Bank.Gold);
 
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
         }
 
         [TestMethod]
@@ -240,7 +202,7 @@
         public void ReserveCardReserveUnavailableCard()
         {
             var game = this.InitializeGame();
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AllCards.Last());
+            game.ReserveCard(game.CurrentPlayer, game.AllCards.Last());
         }
 
         [TestMethod]
@@ -248,16 +210,6 @@
         public void StartAlreadyStartedException()
         {
             var game = this.InitializeGame();
-            game.Start();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(DeckNotPresentException))]
-        public void StartDeckNotPresentException()
-        {
-            var game = new Game();
-            game.AddPlayer(new Player());
-            game.AddPlayer(new Player());
             game.Start();
         }
 
@@ -372,19 +324,19 @@
 
             game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 1, Red = 0, White = 0 });
             game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 1, Green = 1, Red = 1, White = 0 });
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
 
             game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 0, Green = 1, Red = 1, White = 1 });
             game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 0, Green = 0, Red = 1, White = 1 });
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
 
             game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 0, Red = 0, White = 1 });
             game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 1, Blue = 1, Green = 1, Red = 0, White = 0 });
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
 
             game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 1, Green = 1, Red = 1, White = 0 });
             game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Black = 0, Blue = 0, Green = 1, Red = 1, White = 1 });
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
         }
 
         [TestMethod]
@@ -472,11 +424,11 @@
             game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Green = 2 });
             Assert.AreEqual(firstPlayer, game.CurrentPlayer);
 
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
             Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
             Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
             Assert.AreEqual(firstPlayer, game.CurrentPlayer);
         }
 
@@ -492,9 +444,9 @@
             game.TakeChips(game.CurrentPlayer, game.CurrentPlayer.Chips + new Chips() { Blue = 2 });
             Assert.AreEqual(firstPlayer, game.CurrentPlayer);
 
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
             Assert.AreNotEqual(firstPlayer, game.CurrentPlayer);
-            game.ReserveCard(game.CurrentPlayer, game.Deck.AvailableCards.First());
+            game.ReserveCard(game.CurrentPlayer, game.AvailableCards.First());
             Assert.AreEqual(firstPlayer, game.CurrentPlayer);
         }
 

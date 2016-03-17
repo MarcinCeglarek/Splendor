@@ -53,10 +53,12 @@
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\Chips.cs" />
     <Compile Include="Models\Deck.cs" />
+    <Compile Include="Models\Exceptions\AbstractExceptions\SplendorAristocrateException.cs" />
     <Compile Include="Models\Exceptions\AbstractExceptions\SplendorCardException.cs" />
     <Compile Include="Models\Exceptions\AbstractExceptions\SplendorDeckException.cs" />
     <Compile Include="Models\Exceptions\AbstractExceptions\SplendorFileException.cs" />
     <Compile Include="Models\Exceptions\AbstractExceptions\SplendorChipOperationException.cs" />
+    <Compile Include="Models\Exceptions\AristocrateExceptions\AristocrateUnavailableException.cs" />
     <Compile Include="Models\Exceptions\ChipOperationExceptions\BankResourcesExhaustedException.cs" />
     <Compile Include="Models\Exceptions\ChipOperationExceptions\InvalidTakeActionException.cs" />
     <Compile Include="Models\Exceptions\ChipOperationExceptions\ResourcesOverflowException.cs" />

@@ -3,6 +3,7 @@
     #region
 
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Security.Cryptography;
 
     #endregion
@@ -12,7 +13,7 @@
         // From https://stackoverflow.com/questions/273313/randomize-a-listt-in-c-sharp
         #region Public Methods and Operators
 
-        public static IList<T> Shuffle<T>(this IList<T> list)
+        public static List<T> Shuffle<T>(this List<T> list)
         {
             var provider = new RNGCryptoServiceProvider();
             var n = list.Count;

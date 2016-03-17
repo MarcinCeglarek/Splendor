@@ -37,7 +37,7 @@
 
         public MainWindow()
         {
-            this.game = new Game();
+            this.game = new Game(CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
             this.InitializeComponent();
 
             this.playerPanels.Add(this.playerPanel1);
@@ -393,7 +393,6 @@
             this.AddPlayer.Visible = false;
             this.StartGame.Visible = false;
 
-            this.game.Deck = new Deck(this.game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
             this.game.Start();
             this.Log("Shuffling players, order: " + string.Join(", ", this.game.Players));
 
@@ -407,9 +406,9 @@
             this.playerPanel1.Player = this.game.Players[0];
             this.playerPanel2.Player = this.game.Players[1];
 
-            this.aristocrate1.Aristocrate = this.game.Deck.AvailableAristocrates[0];
-            this.aristocrate2.Aristocrate = this.game.Deck.AvailableAristocrates[1];
-            this.aristocrate3.Aristocrate = this.game.Deck.AvailableAristocrates[2];
+            this.aristocrate1.Aristocrate = this.game.AvailableAristocrates[0];
+            this.aristocrate2.Aristocrate = this.game.AvailableAristocrates[1];
+            this.aristocrate3.Aristocrate = this.game.AvailableAristocrates[2];
             this.aristocrate1.Visible = true;
             this.aristocrate2.Visible = true;
             this.aristocrate3.Visible = true;
@@ -417,13 +416,13 @@
             if (this.game.Players.Count > 2)
             {
                 this.playerPanel3.Player = this.game.Players[2];
-                this.aristocrate4.Aristocrate = this.game.Deck.AvailableAristocrates[3];
+                this.aristocrate4.Aristocrate = this.game.AvailableAristocrates[3];
                 this.aristocrate4.Visible = true;
 
                 if (this.game.Players.Count > 3)
                 {
                     this.playerPanel4.Player = this.game.Players[3];
-                    this.aristocrate5.Aristocrate = this.game.Deck.AvailableAristocrates[4];
+                    this.aristocrate5.Aristocrate = this.game.AvailableAristocrates[4];
                     this.aristocrate5.Visible = true;
                 }
             }
@@ -460,11 +459,11 @@
 
         private void UpdateAristocratesPanel()
         {
-            this.aristocrate1.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate1.Aristocrate);
-            this.aristocrate2.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate2.Aristocrate);
-            this.aristocrate3.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate3.Aristocrate);
-            this.aristocrate4.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate4.Aristocrate);
-            this.aristocrate5.Visible = this.game.Deck.AvailableAristocrates.Contains(this.aristocrate5.Aristocrate);
+            this.aristocrate1.Visible = this.game.AvailableAristocrates.Contains(this.aristocrate1.Aristocrate);
+            this.aristocrate2.Visible = this.game.AvailableAristocrates.Contains(this.aristocrate2.Aristocrate);
+            this.aristocrate3.Visible = this.game.AvailableAristocrates.Contains(this.aristocrate3.Aristocrate);
+            this.aristocrate4.Visible = this.game.AvailableAristocrates.Contains(this.aristocrate4.Aristocrate);
+            this.aristocrate5.Visible = this.game.AvailableAristocrates.Contains(this.aristocrate5.Aristocrate);
         }
 
         private void UpdateBankPanel()
@@ -477,7 +476,7 @@
         private void UpdateDeck()
         {
             var alreadyAssignedCards = this.cardPanels.Select(o => o.Card).ToList();
-            var cardsToAssign = this.game.Deck.AvailableCards.Except(alreadyAssignedCards).ToList();
+            var cardsToAssign = this.game.AvailableCards.Except(alreadyAssignedCards).ToList();
 
             foreach (var cardToAssign in cardsToAssign)
             {
@@ -485,9 +484,9 @@
                 emptyCardsPanels.First().Card = cardToAssign;
             }
 
-            this.Tier1Cards.Text = this.game.Deck.AllCards.Except(this.game.Deck.AvailableCards).Count(o => o.Tier == 1).ToString();
-            this.Tier2Cards.Text = this.game.Deck.AllCards.Except(this.game.Deck.AvailableCards).Count(o => o.Tier == 2).ToString();
-            this.Tier3Cards.Text = this.game.Deck.AllCards.Except(this.game.Deck.AvailableCards).Count(o => o.Tier == 3).ToString();
+            this.Tier1Cards.Text = this.game.AllCards.Except(this.game.AvailableCards).Count(o => o.Tier == 1).ToString();
+            this.Tier2Cards.Text = this.game.AllCards.Except(this.game.AvailableCards).Count(o => o.Tier == 2).ToString();
+            this.Tier3Cards.Text = this.game.AllCards.Except(this.game.AvailableCards).Count(o => o.Tier == 3).ToString();
             this.UpdatePlayersPanels();
         }
 

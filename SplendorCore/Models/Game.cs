@@ -6,7 +6,6 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using System.Runtime.Serialization;
 
     using SplendorCore.Data;
     using SplendorCore.Helpers;
@@ -20,7 +19,6 @@
 
     #endregion
 
-    [DataContract]
     public class Game : IGameActions
     {
         #region Fields
@@ -41,7 +39,7 @@
 
         #region Constructors and Destructors
 
-        public Game()
+        public Game(string deckFilePath, string aristocratesFilePath)
         {
             this.Id = Guid.NewGuid();
             this.players = new List<Player>();
@@ -53,39 +51,38 @@
             this.History = new ReadOnlyCollection<HistoryEntry>(this.history);
             this.HasStarted = false;
             this.HasFinished = false;
+
+            this.Deck = new Deck(this, deckFilePath, aristocratesFilePath);
         }
 
         #endregion
 
         #region Public Properties
 
-        [DataMember]
+        public ReadOnlyCollection<Aristocrate> AllAristocrates { get { return this.Deck.AllAristocrates; } }
+
+        public ReadOnlyCollection<Card> AllCards { get { return this.Deck.AllCards; } }
+
+        public ReadOnlyCollection<Aristocrate> AvailableAristocrates { get { return this.Deck.AvailableAristocrates; } }
+
+        public ReadOnlyCollection<Card> AvailableCards { get { return this.Deck.AvailableCards; } }
+
         public Chips Bank { get { return new Chips(this.bank); } }
 
-        [DataMember]
         public ReadOnlyCollection<ChatEntry> Chat { get; private set; }
 
-        [DataMember]
         public Player CurrentPlayer { get { return this.players.FirstOrDefault(); } }
 
-        [DataMember]
-        public Deck Deck { get; set; }
-
-        [DataMember]
         public bool HasFinished { get; private set; }
 
-        [DataMember]
         public bool HasStarted { get; private set; }
 
-        [DataMember]
         public ReadOnlyCollection<HistoryEntry> History { get; private set; }
 
-        [DataMember]
         public Guid Id { get; private set; }
 
         public bool IsActive { get { return this.HasStarted && !this.HasFinished; } }
 
-        [DataMember]
         public ReadOnlyCollection<Player> Players { get; private set; }
 
         public int TotalNumberOfNormalChips
@@ -105,6 +102,12 @@
                 throw new InvalidNumberOfPlayersException(this);
             }
         }
+
+        #endregion
+
+        #region Properties
+
+        private Deck Deck { get; set; }
 
         #endregion
 
@@ -182,7 +185,7 @@
         {
             this.PurchaseCardVerification(player, card);
 
-            this.Deck.AllCards.Remove(card);
+            this.Deck.RemoveCard(card);
             this.CurrentPlayer.ReservedCards.Remove(card);
 
             var cost = this.CurrentPlayer.GetCardCost(card);
@@ -215,7 +218,7 @@
         {
             this.ReserveCardVerification(player, card);
 
-            this.Deck.AllCards.Remove(card);
+            this.Deck.RemoveCard(card);
             this.CurrentPlayer.ReservedCards.Add(card);
 
             if (this.bank.Gold > 0)
@@ -298,7 +301,7 @@
 
             var firstEligableAristocrate = eligableAristocrates.First();
 
-            this.Deck.AvailableAristocrates.Remove(firstEligableAristocrate);
+            this.Deck.RemoveAristocrate(firstEligableAristocrate);
             this.CurrentPlayer.OwnedAristocrates.Add(firstEligableAristocrate);
         }
 

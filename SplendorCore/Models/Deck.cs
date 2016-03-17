@@ -3,6 +3,7 @@
     #region
 
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization;
@@ -10,6 +11,8 @@
     using Newtonsoft.Json;
 
     using SplendorCore.Helpers;
+    using SplendorCore.Models.Exceptions.AristocrateExceptions;
+    using SplendorCore.Models.Exceptions.CardExceptions;
     using SplendorCore.Models.Exceptions.FileExceptions;
 
     #endregion
@@ -25,13 +28,15 @@
 
         #region Fields
 
-        private readonly IList<Aristocrate> allAristocrates;
-
-        private readonly IList<Card> allCards;
+        private readonly List<Card> allCards;
 
         private readonly Game game;
 
-        private IList<Card> cardsInBank;
+        private List<Aristocrate> allAristocrates;
+
+        private List<Aristocrate> aristocratesInBank;
+
+        private List<Card> cardsInBank;
 
         #endregion
 
@@ -43,24 +48,27 @@
 
             var deckFileText = GetTextFromFile(deckFilePath);
             this.allCards = JsonConvert.DeserializeObject<List<Card>>(deckFileText);
+            this.AllCards = new ReadOnlyCollection<Card>(this.allCards);
 
             var aristocratesFileText = GetTextFromFile(aristocratesFilePath);
-            this.allAristocrates = JsonConvert.DeserializeObject<List<Aristocrate>>(aristocratesFileText);
+            this.AllAristocrates = JsonConvert.DeserializeObject<ReadOnlyCollection<Aristocrate>>(aristocratesFileText);
+            this.aristocratesInBank = new List<Aristocrate>();
+            this.AvailableAristocrates = new ReadOnlyCollection<Aristocrate>(this.aristocratesInBank);
         }
 
         #endregion
 
         #region Public Properties
 
-        public IList<Aristocrate> AllAristocrates { get { return this.allAristocrates; } }
+        public ReadOnlyCollection<Aristocrate> AllAristocrates { get; private set; }
 
-        public IList<Card> AllCards { get { return this.allCards; } }
-
-        [DataMember]
-        public List<Aristocrate> AvailableAristocrates { get; private set; }
+        public ReadOnlyCollection<Card> AllCards { get; private set; }
 
         [DataMember]
-        public List<Card> AvailableCards
+        public ReadOnlyCollection<Aristocrate> AvailableAristocrates { get; private set; }
+
+        [DataMember]
+        public ReadOnlyCollection<Card> AvailableCards
         {
             get
             {
@@ -70,7 +78,7 @@
                     retVal.AddRange(this.GetVisibleCardsOfTier(i));
                 }
 
-                return retVal;
+                return new ReadOnlyCollection<Card>(retVal);
             }
         }
 
@@ -80,9 +88,38 @@
 
         public void Initialize()
         {
-            this.cardsInBank = this.allCards.Shuffle();
+            this.cardsInBank = new List<Card>();
+            this.cardsInBank.AddRange(this.allCards);
+            this.cardsInBank = this.cardsInBank.Shuffle();
+
             var numberOfAristocrates = this.game.Players.Count + 1;
-            this.AvailableAristocrates = this.allAristocrates.Shuffle().Take(numberOfAristocrates).ToList();
+            this.aristocratesInBank = new List<Aristocrate>();
+            this.aristocratesInBank.AddRange(this.AllAristocrates);
+            this.aristocratesInBank = this.aristocratesInBank.Shuffle().Take(numberOfAristocrates).ToList();
+
+            this.AvailableAristocrates = new ReadOnlyCollection<Aristocrate>(this.aristocratesInBank);
+        }
+
+        public void RemoveAristocrate(Aristocrate aristocrate)
+        {
+            if (this.aristocratesInBank.Contains(aristocrate))
+            {
+                this.aristocratesInBank.Remove(aristocrate);
+                return;
+            }
+
+            throw new AristocrateUnavailableException(aristocrate);
+        }
+
+        public void RemoveCard(Card card)
+        {
+            if (this.cardsInBank.Contains(card))
+            {
+                this.cardsInBank.Remove(card);
+                return;
+            }
+
+            throw new CardUnavailableException(card);
         }
 
         #endregion

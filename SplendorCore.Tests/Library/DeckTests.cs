@@ -9,7 +9,6 @@
 
     using SplendorCore.Data;
     using SplendorCore.Models;
-    using SplendorCore.Models.Exceptions;
     using SplendorCore.Models.Exceptions.FileExceptions;
 
     #endregion
@@ -24,10 +23,10 @@
         {
             var game = this.InitializeGame(2);
 
-            Assert.AreEqual(10, game.Deck.AllAristocrates.Count);
+            Assert.AreEqual(10, game.AllAristocrates.Count);
             var sumOfAllCards = new Chips();
 
-            foreach (var aristocrate in game.Deck.AllAristocrates)
+            foreach (var aristocrate in game.AllAristocrates)
             {
                 Assert.IsNotNull(aristocrate.RequiredCards);
                 sumOfAllCards += aristocrate.RequiredCards;
@@ -46,7 +45,7 @@
         {
             var game = this.InitializeGame(2);
 
-            foreach (var aristocrate in game.Deck.AllAristocrates)
+            foreach (var aristocrate in game.AllAristocrates)
             {
                 Assert.AreEqual(3, aristocrate.VictoryPoints);
             }
@@ -56,47 +55,45 @@
         public void CardsNumber()
         {
             var game = this.InitializeGame(2);
-            var deck = game.Deck;
 
-            Assert.AreEqual(90, deck.AllCards.Count);
-            Assert.AreEqual(3 * CoreConstants.Deck.NumberOfVisibleCards, deck.AvailableCards.Count);
+            Assert.AreEqual(90, game.AllCards.Count);
+            Assert.AreEqual(3 * CoreConstants.Deck.NumberOfVisibleCards, game.AvailableCards.Count);
 
             for (var i = 1; i <= 3; i++)
             {
-                Assert.AreEqual(CoreConstants.Deck.NumberOfVisibleCards, deck.AvailableCards.Count(o => o.Tier == i));
+                Assert.AreEqual(CoreConstants.Deck.NumberOfVisibleCards, game.AvailableCards.Count(o => o.Tier == i));
             }
 
-            Assert.AreEqual(10, deck.AllAristocrates.Count);
+            Assert.AreEqual(10, game.AllAristocrates.Count);
 
-            Assert.AreEqual(40, deck.AllCards.Count(o => o.Tier == 1));
-            Assert.AreEqual(30, deck.AllCards.Count(o => o.Tier == 2));
-            Assert.AreEqual(20, deck.AllCards.Count(o => o.Tier == 3));
+            Assert.AreEqual(40, game.AllCards.Count(o => o.Tier == 1));
+            Assert.AreEqual(30, game.AllCards.Count(o => o.Tier == 2));
+            Assert.AreEqual(20, game.AllCards.Count(o => o.Tier == 3));
 
-            Assert.AreEqual(90 / 5, deck.AllCards.Count(o => o.Color == Color.Black));
-            Assert.AreEqual(90 / 5, deck.AllCards.Count(o => o.Color == Color.Blue));
-            Assert.AreEqual(90 / 5, deck.AllCards.Count(o => o.Color == Color.Green));
-            Assert.AreEqual(90 / 5, deck.AllCards.Count(o => o.Color == Color.Red));
-            Assert.AreEqual(90 / 5, deck.AllCards.Count(o => o.Color == Color.White));
+            Assert.AreEqual(90 / 5, game.AllCards.Count(o => o.Color == Color.Black));
+            Assert.AreEqual(90 / 5, game.AllCards.Count(o => o.Color == Color.Blue));
+            Assert.AreEqual(90 / 5, game.AllCards.Count(o => o.Color == Color.Green));
+            Assert.AreEqual(90 / 5, game.AllCards.Count(o => o.Color == Color.Red));
+            Assert.AreEqual(90 / 5, game.AllCards.Count(o => o.Color == Color.White));
 
-            Assert.AreEqual(0, deck.AllCards.Count(o => o.Color == Color.Gold));
+            Assert.AreEqual(0, game.AllCards.Count(o => o.Color == Color.Gold));
         }
 
         [TestMethod]
         public void CarsdPoints()
         {
             var game = this.InitializeGame(2);
-            var deck = game.Deck;
 
             foreach (var color in Enum.GetValues(typeof(Color)).Cast<Color>().Where(c => c != Color.Gold))
             {
-                Assert.AreEqual(1, deck.AllCards.Where(o => o.Tier == 1 && o.Color == color).Sum(c => c.VictoryPoints));
-                Assert.AreEqual(11, deck.AllCards.Where(o => o.Tier == 2 && o.Color == color).Sum(c => c.VictoryPoints));
-                Assert.AreEqual(16, deck.AllCards.Where(o => o.Tier == 3 && o.Color == color).Sum(c => c.VictoryPoints));
+                Assert.AreEqual(1, game.AllCards.Where(o => o.Tier == 1 && o.Color == color).Sum(c => c.VictoryPoints));
+                Assert.AreEqual(11, game.AllCards.Where(o => o.Tier == 2 && o.Color == color).Sum(c => c.VictoryPoints));
+                Assert.AreEqual(16, game.AllCards.Where(o => o.Tier == 3 && o.Color == color).Sum(c => c.VictoryPoints));
             }
 
-            Assert.AreEqual(0, deck.AllCards.Where(o => o.Tier == 1 && o.Color == Color.Gold).Sum(c => c.VictoryPoints));
-            Assert.AreEqual(0, deck.AllCards.Where(o => o.Tier == 2 && o.Color == Color.Gold).Sum(c => c.VictoryPoints));
-            Assert.AreEqual(0, deck.AllCards.Where(o => o.Tier == 3 && o.Color == Color.Gold).Sum(c => c.VictoryPoints));
+            Assert.AreEqual(0, game.AllCards.Where(o => o.Tier == 1 && o.Color == Color.Gold).Sum(c => c.VictoryPoints));
+            Assert.AreEqual(0, game.AllCards.Where(o => o.Tier == 2 && o.Color == Color.Gold).Sum(c => c.VictoryPoints));
+            Assert.AreEqual(0, game.AllCards.Where(o => o.Tier == 3 && o.Color == Color.Gold).Sum(c => c.VictoryPoints));
         }
 
         [TestMethod]

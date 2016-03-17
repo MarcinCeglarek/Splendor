@@ -18,13 +18,12 @@
 
         protected Card GetInvalidCard(Game game)
         {
-            return game.Deck.AllCards.First(card => !game.Deck.AvailableCards.Contains(card));
+            return game.AllCards.First(card => !game.AvailableCards.Contains(card));
         }
 
         protected Game InitializeGame(int numberOfPlayers = 2)
         {
-            var game = new Game();
-            game.Deck = new Deck(game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
+            var game = new Game(CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
 
             for (var i = 0; i < numberOfPlayers; i++)
             {

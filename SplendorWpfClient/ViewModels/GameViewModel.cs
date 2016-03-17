@@ -25,17 +25,16 @@
 
         public GameViewModel()
         {
-            this.Game = new Game();
-            this.Game.Deck = new Deck(this.Game, CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
+            this.Game = new Game(CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
 
             this.players = new ObservableCollection<PlayerViewModel>();
             this.players.CollectionChanged += this.PlayersCollectionChanged;
             this.Players = new ReadOnlyObservableCollection<PlayerViewModel>(this.players);
 
-            this.AllCards = new ObservableCollection<Card>(this.Game.Deck.AllCards);
+            this.AllCards = new ObservableCollection<Card>(this.Game.AllCards);
             this.AllCards.CollectionChanged += this.AllCardsCollectionChanged;
 
-            this.AvailableCards = new ObservableCollection<Card>(this.Game.Deck.AvailableCards);
+            this.AvailableCards = new ObservableCollection<Card>(this.Game.AvailableCards);
             this.AvailableCards.CollectionChanged += this.AvailableCardsCollectionChanged;
         }
 
@@ -114,13 +113,13 @@
         {
             this.Game.Start();
             this.AllCards.Clear();
-            foreach (var card in this.Game.Deck.AllCards)
+            foreach (var card in this.Game.AllCards)
             {
                 this.AllCards.Add(card);
             }
 
             this.AvailableCards.Clear();
-            foreach (var card in this.Game.Deck.AvailableCards)
+            foreach (var card in this.Game.AvailableCards)
             {
                 this.AvailableCards.Add(card);
             }
@@ -155,7 +154,7 @@
 
         private int GetRemainingCardsOfTier(int i)
         {
-            return this.Game.Deck.AllCards.Count(card => card.Tier == i) - this.Game.Deck.AvailableCards.Count(card => card.Tier == i);
+            return this.Game.AllCards.Count(card => card.Tier == i) - this.Game.AvailableCards.Count(card => card.Tier == i);
         }
 
         private void NotifyBankChanges()
