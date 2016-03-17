@@ -36,6 +36,8 @@
 
             this.AvailableCards = new ObservableCollection<Card>(this.Game.AvailableCards);
             this.AvailableCards.CollectionChanged += this.AvailableCardsCollectionChanged;
+
+            this.AvailableAristocrates = new ObservableCollection<Aristocrate>(this.Game.AvailableAristocrates);
         }
 
         #endregion
@@ -43,6 +45,8 @@
         #region Public Properties
 
         public ObservableCollection<Card> AllCards { get; set; }
+
+        public ObservableCollection<Aristocrate> AvailableAristocrates { get; set; }
 
         public ObservableCollection<Card> AvailableCards { get; set; }
 
@@ -96,7 +100,6 @@
                 this.NotifyDeckChanges();
                 this.UpdatePlayerPanels();
             }
-            
         }
 
         public void ReserveCard(Card card)
@@ -122,6 +125,12 @@
             foreach (var card in this.Game.AvailableCards)
             {
                 this.AvailableCards.Add(card);
+            }
+
+            this.AvailableAristocrates.Clear();
+            foreach (var aristocrate in this.Game.AvailableAristocrates)
+            {
+                this.AvailableAristocrates.Add(aristocrate);
             }
 
             this.NotifyGameStarts();

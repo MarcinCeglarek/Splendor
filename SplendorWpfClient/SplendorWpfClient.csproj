@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Panels\AristocratePanel.xaml.cs">
+      <DependentUpon>AristocratePanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\CardsHeap.xaml.cs">
       <DependentUpon>CardsHeap.xaml</DependentUpon>
     </Compile>
@@ -65,6 +68,7 @@
     <Compile Include="ValueConverters\IsGreaterThanZero.cs" />
     <Compile Include="ValueConverters\ValueConverterGroup.cs" />
     <Compile Include="ViewModels\AbstractViewModel.cs" />
+    <Compile Include="ViewModels\AristocrateViewModel.cs" />
     <Compile Include="ViewModels\CardsHeapViewModel.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\ChipsViewModel.cs" />
@@ -82,6 +86,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Panels\AristocratePanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Panels\CardPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

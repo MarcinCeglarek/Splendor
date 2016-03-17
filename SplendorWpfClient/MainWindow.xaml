@@ -3,35 +3,42 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Panels="clr-namespace:SplendorWpfClient.Panels" xmlns:ViewModels="clr-namespace:SplendorWpfClient.ViewModels" x:Class="SplendorWpfClient.MainWindow"
     Loaded="MainWindow_OnLoaded"
-        Title="MainWindow" Height="833" Width="964">
+        Title="MainWindow" Height="833" Width="964" Closed="WindowClosed">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
     <Window.DataContext>
         <ViewModels:GameViewModel/>
     </Window.DataContext>
-    <Grid>
-        <Panels:CardPanel x:Name="Card11" HorizontalAlignment="Left" Margin="159,47,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Button x:Name="AddPlayerButton" Content="Add player" HorizontalAlignment="Left" Margin="734,431,0,0" VerticalAlignment="Top" Width="137" Height="53" Click="AddPlayerClick" IsEnabled="{Binding CanPlayerBeAdded, Mode=OneWay}" Visibility="{Binding IsNotStarted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-        <Button x:Name="StartGameButton" Content="Start game" HorizontalAlignment="Left" Margin="734,505,0,0" VerticalAlignment="Top" Width="137" Height="53" Click="StartGameClick" IsEnabled="{Binding CanGameBeStarted, Mode=OneWay}" Visibility="{Binding IsNotStarted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-        <Panels:CardPanel x:Name="Card12" HorizontalAlignment="Left" Margin="301,47,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Panels:CardPanel x:Name="Card13" HorizontalAlignment="Left" Margin="443,47,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Panels:CardPanel x:Name="Card14" HorizontalAlignment="Left" Margin="585,47,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Panels:CardPanel x:Name="Card21" HorizontalAlignment="Left" Margin="159,228,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Panels:CardPanel x:Name="Card22" HorizontalAlignment="Left" Margin="301,228,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Panels:CardPanel x:Name="Card23" HorizontalAlignment="Left" Margin="443,228,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Panels:CardPanel x:Name="Card24" HorizontalAlignment="Left" Margin="585,228,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Panels:CardPanel x:Name="Card31" HorizontalAlignment="Left" Margin="159,409,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Panels:CardPanel x:Name="Card32" HorizontalAlignment="Left" Margin="301,409,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Panels:CardPanel x:Name="Card33" HorizontalAlignment="Left" Margin="443,409,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Panels:CardPanel x:Name="Card34" HorizontalAlignment="Left" Margin="585,409,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Panels:PlayerPanel x:Name="PlayerPanel1" HorizontalAlignment="Left" Margin="17,602,0,0" VerticalAlignment="Top" Height="190" Width="194"/>
-        <Panels:PlayerPanel x:Name="PlayerPanel2" HorizontalAlignment="Left" Margin="216,602,0,0" VerticalAlignment="Top" Height="190" Width="193"/>
-        <Panels:PlayerPanel x:Name="PlayerPanel3" HorizontalAlignment="Left" Margin="414,602,0,0" VerticalAlignment="Top" Height="190" Width="190"/>
-        <Panels:PlayerPanel x:Name="PlayerPanel4" HorizontalAlignment="Left" Margin="609,602,0,0" VerticalAlignment="Top" Height="190" Width="192"/>
-        <Panels:CardsHeap x:Name="CardsTier1" HorizontalAlignment="Left" Margin="17,47,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Panels:CardsHeap x:Name="CardsTier2" HorizontalAlignment="Left" Margin="17,228,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
-        <Panels:CardsHeap x:Name="CardsTier3" HorizontalAlignment="Left" Margin="17,409,0,0" VerticalAlignment="Top" Height="176" Width="137"/>
+    <Viewbox StretchDirection="Both" Stretch="Uniform">
+        <Grid Width="933">
+            <Panels:CardPanel x:Name="Card11" HorizontalAlignment="Left" Margin="167,129,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
+            <Button x:Name="AddPlayerButton" Content="Add player" HorizontalAlignment="Left" Margin="264,10,0,0" VerticalAlignment="Top" Width="137" Height="53" Click="AddPlayerClick" IsEnabled="{Binding CanPlayerBeAdded, Mode=OneWay}" Visibility="{Binding IsNotStarted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Button x:Name="StartGameButton" Content="Start game" HorizontalAlignment="Left" Margin="406,10,0,0" VerticalAlignment="Top" Width="137" Height="53" Click="StartGameClick" IsEnabled="{Binding CanGameBeStarted, Mode=OneWay}" Visibility="{Binding IsNotStarted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Panels:CardPanel x:Name="Card12" HorizontalAlignment="Left" Margin="277,129,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
+            <Panels:CardPanel x:Name="Card13" HorizontalAlignment="Left" Margin="387,129,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
+            <Panels:CardPanel x:Name="Card14" HorizontalAlignment="Left" Margin="498,129,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
+            <Panels:CardPanel x:Name="Card21" HorizontalAlignment="Left" Margin="167,270,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
+            <Panels:CardPanel x:Name="Card22" HorizontalAlignment="Left" Margin="277,270,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
+            <Panels:CardPanel x:Name="Card23" HorizontalAlignment="Left" Margin="387,270,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
+            <Panels:CardPanel x:Name="Card24" HorizontalAlignment="Left" Margin="498,270,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
+            <Panels:CardPanel x:Name="Card31" HorizontalAlignment="Left" Margin="167,410,0,0" VerticalAlignment="Top" Height="137" Width="106"/>
+            <Panels:CardPanel x:Name="Card32" HorizontalAlignment="Left" Margin="277,410,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
+            <Panels:CardPanel x:Name="Card33" HorizontalAlignment="Left" Margin="387,410,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
+            <Panels:CardPanel x:Name="Card34" HorizontalAlignment="Left" Margin="498,410,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
+            <Panels:PlayerPanel x:Name="PlayerPanel1" HorizontalAlignment="Left" Margin="20,564,0,0" VerticalAlignment="Top" Height="190" Width="194"/>
+            <Panels:PlayerPanel x:Name="PlayerPanel2" HorizontalAlignment="Left" Margin="219,564,0,0" VerticalAlignment="Top" Height="190" Width="193"/>
+            <Panels:PlayerPanel x:Name="PlayerPanel3" HorizontalAlignment="Left" Margin="417,564,0,0" VerticalAlignment="Top" Height="190" Width="190"/>
+            <Panels:PlayerPanel x:Name="PlayerPanel4" HorizontalAlignment="Left" Margin="612,564,0,0" VerticalAlignment="Top" Height="190" Width="192"/>
+            <Panels:CardsHeap x:Name="CardsTier1" HorizontalAlignment="Left" Margin="57,129,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
+            <Panels:CardsHeap x:Name="CardsTier2" HorizontalAlignment="Left" Margin="57,270,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
+            <Panels:CardsHeap x:Name="CardsTier3" HorizontalAlignment="Left" Margin="57,410,0,0" VerticalAlignment="Top" Height="137" Width="106"/>
+            <Panels:AristocratePanel x:Name="Aristocrate1" HorizontalAlignment="Left" Margin="57,10,0,0" VerticalAlignment="Top" Height="102" Width="108"/>
+            <Panels:AristocratePanel x:Name="Aristocrate2" HorizontalAlignment="Left" Margin="165,10,0,0" VerticalAlignment="Top" Height="102" Width="108"/>
+            <Panels:AristocratePanel x:Name="Aristocrate3" HorizontalAlignment="Left" Margin="271,10,0,0" VerticalAlignment="Top" Height="102" Width="108"/>
+            <Panels:AristocratePanel x:Name="Aristocrate4" HorizontalAlignment="Left" Margin="379,10,0,0" VerticalAlignment="Top" Height="102" Width="108"/>
+            <Panels:AristocratePanel x:Name="Aristocrate5" HorizontalAlignment="Left" Margin="487,10,0,0" VerticalAlignment="Top" Height="102" Width="108"/>
 
-    </Grid>
+        </Grid>
+    </Viewbox>
 </Window>

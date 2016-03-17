@@ -1,0 +1,33 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewModels="clr-namespace:SplendorWpfClient.ViewModels" x:Class="SplendorWpfClient.Panels.AristocratePanel" 
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="200">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <ViewModels:AristocrateViewModel/>
+    </UserControl.DataContext>
+    <Viewbox StretchDirection="Both" Stretch="Uniform">
+        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="20" Height="200" Width="200" Visibility="{Binding IsAristocratePresent, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+            <Grid>
+                <Label Content="{Binding VictoryPoints}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="82" Width="170" FontSize="35" VerticalContentAlignment="Center" Padding="20" Background="{x:Null}" HorizontalContentAlignment="Right" Visibility="{Binding IsVictoryPointsPresent, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
+                <Grid Margin="10,10,66,10">
+                    <ItemsControl ItemsSource="{Binding VisibleRequiredCards}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border x:Name="CostBorder" HorizontalAlignment="Left" Margin="2,0,0,2" VerticalAlignment="Center" Width="40" BorderThickness="2" BorderBrush="{Binding BorderColor}" CornerRadius="90" Background="{Binding BackColor}">
+                                    <Label x:Name="Cost" Content="{Binding Value}" Height="36" HorizontalContentAlignment="Center" FontSize="24" FontWeight="Bold" VerticalContentAlignment="Center" Padding="0" Foreground="{Binding ForeColor}"/>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Grid>
+        </Border>
+    </Viewbox>
+</UserControl>

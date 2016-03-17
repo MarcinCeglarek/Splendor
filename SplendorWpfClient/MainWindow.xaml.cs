@@ -76,6 +76,39 @@
             this.PopulatePlayerPanels();
         }
 
+        private void PopulateAristocrates()
+        {
+            this.Aristocrate1.DataContext = new AristocrateViewModel() { Aristocrate = game.AvailableAristocrates[0] };
+            this.Aristocrate2.DataContext = new AristocrateViewModel() { Aristocrate = game.AvailableAristocrates[1] };
+            this.Aristocrate3.DataContext = new AristocrateViewModel() { Aristocrate = game.AvailableAristocrates[2] };
+
+            if (game.Players.Count > 2)
+            {
+                this.Aristocrate4.DataContext = new AristocrateViewModel() { Aristocrate = game.AvailableAristocrates[3] };
+
+                if (game.Players.Count > 3)
+                {
+                    this.Aristocrate5.DataContext = new AristocrateViewModel() { Aristocrate = game.AvailableAristocrates[4] };
+                }
+            }
+        }
+
+        private void PopulatePlayerPanels()
+        {
+            this.PlayerPanel1.DataContext = game.Players[0];
+            this.PlayerPanel2.DataContext = game.Players[1];
+
+            if (game.Players.Count > 2)
+            {
+                this.PlayerPanel3.DataContext = game.Players[2];
+
+                if (game.Players.Count > 3)
+                {
+                    this.PlayerPanel4.DataContext = game.Players[3];
+                }
+            }
+        }
+
         private void StartGameClick(object sender, RoutedEventArgs e)
         {
             game.Start();
@@ -100,22 +133,12 @@
             this.CardsTier3.DataContext = game.Tier3;
 
             this.PopulatePlayerPanels();
+            this.PopulateAristocrates();
         }
 
-        private void PopulatePlayerPanels()
+        private void WindowClosed(object sender, EventArgs e)
         {
-            this.PlayerPanel1.DataContext = game.Players[0];
-            this.PlayerPanel2.DataContext = game.Players[1];
-
-            if (game.Players.Count > 2)
-            {
-                this.PlayerPanel3.DataContext = game.Players[2];
-
-                if (game.Players.Count > 3)
-                {
-                    this.PlayerPanel4.DataContext = game.Players[3];
-                }
-            }
+            Application.Current.Shutdown(0);
         }
 
         #endregion
