@@ -186,13 +186,13 @@
             this.PurchaseCardVerification(player, card);
 
             this.Deck.RemoveCard(card);
-            this.CurrentPlayer.ReservedCards.Remove(card);
+            this.CurrentPlayer.RemoveReservedCard(card);
 
             var cost = this.CurrentPlayer.GetCardCost(card);
 
             this.CurrentPlayer.Chips -= cost;
             this.bank += cost;
-            this.CurrentPlayer.OwnedCards.Add(card);
+            this.CurrentPlayer.AddOwnedCard(card);
 
             this.PlayerFinished();
             this.subscribers.ForEach(subscriber => subscriber.CardPurchased(this));
@@ -219,7 +219,7 @@
             this.ReserveCardVerification(player, card);
 
             this.Deck.RemoveCard(card);
-            this.CurrentPlayer.ReservedCards.Add(card);
+            this.CurrentPlayer.AddReservedCard(card);
 
             if (this.bank.Gold > 0)
             {
@@ -302,7 +302,7 @@
             var firstEligableAristocrate = eligableAristocrates.First();
 
             this.Deck.RemoveAristocrate(firstEligableAristocrate);
-            this.CurrentPlayer.OwnedAristocrates.Add(firstEligableAristocrate);
+            this.CurrentPlayer.AddOwnedAristocrate(firstEligableAristocrate);
         }
 
         private void CheckEndGameCondition()

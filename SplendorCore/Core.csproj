@@ -59,6 +59,7 @@
     <Compile Include="Models\Exceptions\AbstractExceptions\SplendorFileException.cs" />
     <Compile Include="Models\Exceptions\AbstractExceptions\SplendorChipOperationException.cs" />
     <Compile Include="Models\Exceptions\AristocrateExceptions\AristocrateUnavailableException.cs" />
+    <Compile Include="Models\Exceptions\CardExceptions\InvalidCardException.cs" />
     <Compile Include="Models\Exceptions\ChipOperationExceptions\BankResourcesExhaustedException.cs" />
     <Compile Include="Models\Exceptions\ChipOperationExceptions\InvalidTakeActionException.cs" />
     <Compile Include="Models\Exceptions\ChipOperationExceptions\ResourcesOverflowException.cs" />

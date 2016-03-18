@@ -202,7 +202,7 @@
         public void ReserveCardReserveUnavailableCard()
         {
             var game = this.InitializeGame();
-            game.ReserveCard(game.CurrentPlayer, game.AllCards.Last());
+            game.ReserveCard(game.CurrentPlayer, game.AllCards.Except(game.AvailableCards).Last());
         }
 
         [TestMethod]

@@ -3,9 +3,6 @@
     #region
 
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.Serialization;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -14,35 +11,46 @@
 
     #endregion
 
-    [DataContract]
     public class Card
     {
+        #region Fields
+
+        private readonly Color color;
+
+        private readonly Chips cost;
+
+        private readonly int tier;
+
+        private readonly int victoryPoints;
+
+        #endregion
+
         #region Constructors and Destructors
 
-        public Card()
+        public Card(Chips cost, Color color = Color.Gold, int tier = 0, int victoryPoints = 0)
         {
             this.Id = Guid.NewGuid();
+            this.color = color;
+            this.tier = tier;
+            this.cost = cost;
+            this.victoryPoints = victoryPoints;
         }
 
         #endregion
 
         #region Public Properties
 
-        [DataMember]
         [JsonConverter(typeof(StringEnumConverter))]
-        public Color Color { get; set; }
+        public Color Color { get { return this.color; } }
 
-        [DataMember]
         [JsonConverter(typeof(CardCostConverter))]
-        public Chips Cost { get; set; }
+        public Chips Cost { get { return new Chips(this.cost); } }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
-        [DataMember]
-        public int Tier { get; set; }
+        public int Tier { get { return this.tier; } }
 
-        [DataMember]
-        public int VictoryPoints { get; set; }
+        public int VictoryPoints { get { return this.victoryPoints; } }
 
         #endregion
 
@@ -82,26 +90,7 @@
 
         public override string ToString()
         {
-            return string.Format("{0}: {1} ({2} pts.)", this.RomanTier(), this.Color, this.VictoryPoints);
-        }
-
-        #endregion
-
-        #region Methods
-
-        private string RomanTier()
-        {
-            switch (this.Tier)
-            {
-                case 1:
-                    return "I";
-                case 2:
-                    return "II";
-                case 3:
-                    return "III";
-                default:
-                    throw new NotSupportedException();
-            }
+            return string.Format("{0}: {1} ({2} pts.)", this.tier, this.Color, this.VictoryPoints);
         }
 
         #endregion

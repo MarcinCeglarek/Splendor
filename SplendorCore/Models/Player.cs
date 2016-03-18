@@ -4,9 +4,11 @@
 
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Runtime.Serialization;
 
+    using SplendorCore.Models.Exceptions.CardExceptions;
     using SplendorCore.Models.Exceptions.CardOperationExceptions;
 
     #endregion
@@ -14,15 +16,30 @@
     [DataContract]
     public class Player
     {
+        #region Fields
+
+        private readonly List<Aristocrate> ownedAristocrates;
+
+        private readonly List<Card> ownedCards;
+
+        private readonly List<Card> reservedCards;
+
+        #endregion
+
         #region Constructors and Destructors
 
         public Player()
         {
             this.Id = Guid.NewGuid();
             this.Chips = new Chips();
-            this.OwnedCards = new List<Card>();
-            this.ReservedCards = new List<Card>();
-            this.OwnedAristocrates = new List<Aristocrate>();
+
+            this.ownedCards = new List<Card>();
+            this.reservedCards = new List<Card>();
+            this.ownedAristocrates = new List<Aristocrate>();
+
+            this.OwnedCards = new ReadOnlyCollection<Card>(this.ownedCards);
+            this.ReservedCards = new ReadOnlyCollection<Card>(this.reservedCards);
+            this.OwnedAristocrates = new ReadOnlyCollection<Aristocrate>(this.ownedAristocrates);
         }
 
         #endregion
@@ -58,21 +75,44 @@
 
         public Guid Id { get; private set; }
 
-        [DataMember]
         public string Name { get; set; }
 
-        public IList<Aristocrate> OwnedAristocrates { get; private set; }
+        public ReadOnlyCollection<Aristocrate> OwnedAristocrates { get; private set; }
 
-        public IList<Card> OwnedCards { get; private set; }
+        public ReadOnlyCollection<Card> OwnedCards { get; private set; }
 
-        public IList<Card> ReservedCards { get; private set; }
+        public ReadOnlyCollection<Card> ReservedCards { get; private set; }
 
-        [DataMember]
         public int VictoryPoints { get { return this.OwnedCards.Sum(card => card.VictoryPoints) + this.OwnedAristocrates.Sum(aristocrate => aristocrate.VictoryPoints); } }
 
         #endregion
 
         #region Public Methods and Operators
+
+        public void AddOwnedAristocrate(Aristocrate aristocrate)
+        {
+            this.ownedAristocrates.Add(aristocrate);
+        }
+
+        public void AddOwnedCard(Card card)
+        {
+            if (this.ownedCards.Contains(card))
+            {
+                throw new InvalidCardException(card);
+            }
+
+            this.ownedCards.Add(card);
+        }
+
+        public void AddReservedCard(Card card)
+        {
+            if (this.reservedCards.Contains(card) || this.reservedCards.Count >= 3)
+            {
+                throw new CardReservationException(this, card);
+            }
+
+            this.reservedCards.Add(card);
+        }
 
         public bool Equals(Player player)
         {
@@ -104,6 +144,17 @@
             }
 
             return result;
+        }
+
+        public void RemoveReservedCard(Card card)
+        {
+            if (this.reservedCards.Contains(card))
+            {
+                this.reservedCards.Remove(card);
+                return;
+            }
+
+            throw new InvalidCardException(card);
         }
 
         public override string ToString()

@@ -16,7 +16,7 @@
         [TestMethod]
         public void CanBuyNegativeTest()
         {
-            var card = new Card() { Color = Color.White, Cost = new Chips() { Black = 2, Blue = 2, Green = 2, Red = 2, White = 2 } };
+            var card = new Card(new Chips() { Black = 2, Blue = 2, Green = 2, Red = 2, White = 2 });
 
             Assert.IsFalse(card.CanBuy(new Chips()));
             Assert.IsFalse(card.CanBuy(new Chips() { Black = 1, Blue = 1, Red = 1, White = 1 }));
@@ -46,10 +46,9 @@
         [TestMethod]
         public void CanBuyNormalTest()
         {
-            var card = new Card() { Color = Color.White, Cost = new Chips() { Black = 2, Blue = 2, Green = 2, Red = 2, White = 2 } };
+            var card = new Card(new Chips() { Black = 2, Blue = 2, Green = 2, Red = 2, White = 2 });
 
             Assert.IsTrue(card.CanBuy(new Chips() { Black = 5, Blue = 5, Green = 5, Red = 5, White = 5 }));
-
             Assert.IsTrue(card.CanBuy(new Chips() { Black = 2, Blue = 5, Green = 5, Red = 5, White = 5 }));
             Assert.IsTrue(card.CanBuy(new Chips() { Black = 5, Blue = 2, Green = 5, Red = 5, White = 5 }));
             Assert.IsTrue(card.CanBuy(new Chips() { Black = 5, Blue = 5, Green = 2, Red = 5, White = 5 }));
@@ -60,7 +59,7 @@
         [TestMethod]
         public void CanBuyUseGoldTest()
         {
-            var card = new Card() { Color = Color.White, Cost = new Chips() { Black = 2, Blue = 2, Green = 2, Red = 2, White = 2 } };
+            var card = new Card(new Chips() { Black = 2, Blue = 2, Green = 2, Red = 2, White = 2 }, Color.Black);
 
             Assert.IsTrue(card.CanBuy(new Chips() { Black = 0, Blue = 5, Green = 5, Red = 5, White = 5, Gold = 2 }));
             Assert.IsTrue(card.CanBuy(new Chips() { Black = 2, Blue = 0, Green = 5, Red = 5, White = 5, Gold = 2 }));
