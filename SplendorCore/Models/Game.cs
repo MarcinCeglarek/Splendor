@@ -51,6 +51,7 @@
             this.History = new ReadOnlyCollection<HistoryEntry>(this.history);
             this.HasStarted = false;
             this.HasFinished = false;
+            this.bank = new Chips();
 
             this.Deck = new Deck(this, deckFilePath, aristocratesFilePath);
         }
@@ -193,6 +194,7 @@
             this.CurrentPlayer.Chips -= cost;
             this.bank += cost;
             this.CurrentPlayer.AddOwnedCard(card);
+            this.history.Add(new PurchasedCardsEntry(this.CurrentPlayer, card));
 
             this.PlayerFinished();
             this.subscribers.ForEach(subscriber => subscriber.CardPurchased(this));
@@ -226,6 +228,8 @@
                 this.bank.Gold--;
                 this.CurrentPlayer.Chips.Gold++;
             }
+
+            this.history.Add(new ReserveCardsEntry(this.CurrentPlayer, card));
 
             this.PlayerFinished();
             this.subscribers.ForEach(subscriber => subscriber.CardReserved(this));
@@ -276,6 +280,7 @@
             var diff = chips - player.Chips;
             this.bank -= diff;
             this.CurrentPlayer.Chips += diff;
+            this.history.Add(new TakeChipsEntry(this.CurrentPlayer, chips));
 
             this.PlayerFinished();
             this.subscribers.ForEach(subscriber => subscriber.ChipsTaken(this));

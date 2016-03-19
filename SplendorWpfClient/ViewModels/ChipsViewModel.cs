@@ -17,13 +17,17 @@
         {
         }
 
-        public ChipsViewModel(KeyValuePair<Color, int> chips, Color? borderColor = null)
+        public ChipsViewModel(Color color, int value)
         {
-            this.BackColor = new SolidColorBrush(GetBackColor(chips.Key));
-            this.ForeColor = new SolidColorBrush(GetForeColor(chips.Key));
-            this.BorderColor = new SolidColorBrush(borderColor.HasValue ? GetForeColor(borderColor.Value) : GetForeColor(chips.Key));
-            
-            this.Value = chips.Value;
+            this.BackColor = new SolidColorBrush(GetBackColor(color));
+            this.ForeColor = new SolidColorBrush(GetForeColor(color));
+            this.Value = value;
+        }
+
+        public ChipsViewModel(KeyValuePair<Color, int> chips, Color? borderColor = null)
+            : this(chips.Key, chips.Value)
+        {
+            this.BorderColor = new SolidColorBrush(borderColor.HasValue ? GetForeColor(borderColor.Value) : Colors.Black);
         }
 
         #endregion

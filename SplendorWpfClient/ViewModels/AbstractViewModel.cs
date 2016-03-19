@@ -4,6 +4,7 @@
 
     using System;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using System.Windows.Media;
 
@@ -85,6 +86,7 @@
             var handler = this.PropertyChanged;
             if (handler != null)
             {
+                Debug.WriteLine("OnPropertyChanged " + propertyName);
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }

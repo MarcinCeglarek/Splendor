@@ -4,6 +4,7 @@
 
     using System;
     using System.Windows;
+    using System.Windows.Forms.VisualStyles;
 
     using SplendorCore.Models;
 
@@ -73,6 +74,10 @@
             game.AddPlayer(new Player() { Name = "AA" });
             game.AddPlayer(new Player() { Name = "BB" });
 
+            this.CardsTier1.DataContext = game.Tier1;
+            this.CardsTier2.DataContext = game.Tier2;
+            this.CardsTier3.DataContext = game.Tier3;
+
             this.PopulatePlayerPanels();
         }
 
@@ -128,10 +133,6 @@
             this.Card33.DataContext = new CardViewModel() { Card = game.AvailableCards[10] };
             this.Card34.DataContext = new CardViewModel() { Card = game.AvailableCards[11] };
 
-            this.CardsTier1.DataContext = game.Tier1;
-            this.CardsTier2.DataContext = game.Tier2;
-            this.CardsTier3.DataContext = game.Tier3;
-
             this.PopulatePlayerPanels();
             this.PopulateAristocrates();
         }
@@ -142,5 +143,10 @@
         }
 
         #endregion
+
+        private void CostBorderMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var k = 2;
+        }
     }
 }

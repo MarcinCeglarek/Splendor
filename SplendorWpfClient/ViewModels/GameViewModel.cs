@@ -19,6 +19,10 @@
 
         private readonly ObservableCollection<PlayerViewModel> players;
 
+        private Chips bankChipsToShow;
+
+        private Chips bankChipsToTake;
+
         #endregion
 
         #region Constructors and Destructors
@@ -38,6 +42,9 @@
             this.AvailableCards.CollectionChanged += this.AvailableCardsCollectionChanged;
 
             this.AvailableAristocrates = new ObservableCollection<Aristocrate>(this.Game.AvailableAristocrates);
+
+            this.bankChipsToShow = new Chips();
+            this.bankChipsToTake = new Chips();
         }
 
         #endregion
@@ -49,6 +56,10 @@
         public ObservableCollection<Aristocrate> AvailableAristocrates { get; set; }
 
         public ObservableCollection<Card> AvailableCards { get; set; }
+
+        public ObservableCollection<ChipsViewModel> BankChipsToShow { get { return new ObservableCollection<ChipsViewModel>((this.bankChipsToShow - this.bankChipsToTake).Select(chip => new ChipsViewModel(chip))); } }
+
+        public ObservableCollection<ChipsViewModel> BankChipsToTake { get { return new ObservableCollection<ChipsViewModel>(this.bankChipsToTake.Select(chip => new ChipsViewModel(chip))); } }
 
         public bool CanGameBeStarted { get { return this.Game != null && !this.Game.HasStarted && this.Game.Players.Count >= 2; } }
 
@@ -136,6 +147,7 @@
             this.NotifyGameStarts();
             this.NotifyPlayersChanges();
             this.UpdatePlayerPanels();
+            this.NotifyBankChanges();
             this.NotifyDeckChanges();
         }
 
@@ -168,7 +180,10 @@
 
         private void NotifyBankChanges()
         {
-            throw new NotImplementedException();
+            this.bankChipsToShow = this.Game.Bank;
+            this.bankChipsToTake = new Chips();
+            this.OnPropertyChanged("BankChipsToShow");
+            this.OnPropertyChanged("BankChipsToTake");
         }
 
         private void NotifyDeckChanges()
@@ -176,6 +191,10 @@
             this.OnPropertyChanged("Tier1");
             this.OnPropertyChanged("Tier2");
             this.OnPropertyChanged("Tier3");
+
+            this.Tier1.Update();
+            this.Tier2.Update();
+            this.Tier3.Update();
         }
 
         private void NotifyGameStarts()

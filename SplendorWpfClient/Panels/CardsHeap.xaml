@@ -33,7 +33,7 @@
         <ViewModels:CardsHeapViewModel/>
     </UserControl.DataContext>
     <Viewbox StretchDirection="Both" Stretch="Uniform">
-        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="10" Height="235" Background="{Binding Background}" Visibility="{Binding IsCountPositive, Mode=OneWay}">
+        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="10" Height="235" Background="{Binding Background}" Visibility="{Binding IsCountPositive, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
             <Grid>
                 <Label Content="{Binding Count}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="178" Width="170" FontSize="48" VerticalContentAlignment="Center" Padding="20" HorizontalContentAlignment="Center" Margin="0,24,0,0" Foreground="White"/>
             </Grid>
