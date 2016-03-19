@@ -21,6 +21,7 @@
         {
             this.BackColor = new SolidColorBrush(GetBackColor(color));
             this.ForeColor = new SolidColorBrush(GetForeColor(color));
+            this.BorderColor = new SolidColorBrush(Colors.Black);
             this.Value = value;
         }
 
@@ -41,6 +42,8 @@
         public SolidColorBrush ForeColor { get; set; }
 
         public int Value { get; set; }
+
+        public bool IsValuePositive { get { return this.Value > 0; } }
 
         #endregion
     }

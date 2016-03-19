@@ -9,7 +9,12 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <DataTemplate x:Key="ChipsDataTemplate">
-            <Border x:Name="CostBorder" HorizontalAlignment="Left" Margin="2,0,0,2" VerticalAlignment="Center" Width="30" BorderThickness="2" BorderBrush="{Binding BorderColor}" CornerRadius="14" Background="{Binding BackColor}" Cursor="Hand" MouseUp="CostBorder_MouseUp">
+            <Border x:Name="CostBorder" HorizontalAlignment="Left" Margin="2,0,0,2" VerticalAlignment="Center" Width="30" BorderThickness="2" BorderBrush="{Binding BorderColor}" CornerRadius="14" Background="{Binding BackColor}" Cursor="Hand" MouseUp="CostBorder_MouseUp" Visibility="{Binding IsValuePositive, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Label x:Name="Cost" Content="{Binding Value}" RenderTransformOrigin="0.567,0.192" Height="25" HorizontalContentAlignment="Center" FontSize="17" FontWeight="Bold" VerticalContentAlignment="Center" Padding="0" Foreground="{Binding ForeColor}"/>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="CardsDataTemplate">
+            <Border x:Name="CostBorder" HorizontalAlignment="Left" Margin="2,0,0,2" VerticalAlignment="Center" Width="30" BorderThickness="2" BorderBrush="{Binding BorderColor}" CornerRadius="2" Background="{Binding BackColor}" Cursor="Hand" MouseUp="CostBorder_MouseUp" Visibility="{Binding IsValuePositive, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Label x:Name="Cost" Content="{Binding Value}" RenderTransformOrigin="0.567,0.192" Height="25" HorizontalContentAlignment="Center" FontSize="17" FontWeight="Bold" VerticalContentAlignment="Center" Padding="0" Foreground="{Binding ForeColor}"/>
             </Border>
         </DataTemplate>
@@ -31,7 +36,7 @@
                     </ItemsControl>
                 </Grid>
                 <Grid Margin="10,96,10,95">
-                    <ItemsControl ItemsSource="{Binding Cards}" ItemTemplate="{StaticResource ChipsDataTemplate}" VerticalContentAlignment="Bottom">
+                    <ItemsControl ItemsSource="{Binding Cards}" ItemTemplate="{StaticResource CardsDataTemplate}" VerticalContentAlignment="Bottom">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal"/>

@@ -5,11 +5,14 @@
     using System;
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
+    using System.Diagnostics;
     using System.Linq;
     using System.Windows.Media;
 
     using SplendorCore.Data;
     using SplendorCore.Models;
+
+    using Color = SplendorCore.Models.Color;
 
     #endregion
 
@@ -19,16 +22,13 @@
 
         private readonly ObservableCollection<PlayerViewModel> players;
 
-        private Chips bankChipsToShow;
-
-        private Chips bankChipsToTake;
-
         #endregion
 
         #region Constructors and Destructors
 
         public GameViewModel()
         {
+            Debug.WriteLine("GameViewModel:ctor");
             this.Game = new Game(CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
 
             this.players = new ObservableCollection<PlayerViewModel>();
@@ -43,8 +43,8 @@
 
             this.AvailableAristocrates = new ObservableCollection<Aristocrate>(this.Game.AvailableAristocrates);
 
-            this.bankChipsToShow = new Chips();
-            this.bankChipsToTake = new Chips();
+            this.BankChipsToShow = new Chips();
+            this.BankChipsToTake = new Chips();
         }
 
         #endregion
@@ -57,9 +57,33 @@
 
         public ObservableCollection<Card> AvailableCards { get; set; }
 
-        public ObservableCollection<ChipsViewModel> BankChipsToShow { get { return new ObservableCollection<ChipsViewModel>((this.bankChipsToShow - this.bankChipsToTake).Select(chip => new ChipsViewModel(chip))); } }
+        public Chips BankChipsToShow { get; set; }
 
-        public ObservableCollection<ChipsViewModel> BankChipsToTake { get { return new ObservableCollection<ChipsViewModel>(this.bankChipsToTake.Select(chip => new ChipsViewModel(chip))); } }
+        public Chips BankChipsToTake { get; set; }
+
+        public ChipsViewModel BanksChipsToShowBlack { get { return new ChipsViewModel(Color.Black, this.BankChipsToShow.Black - this.BankChipsToTake.Black); } }
+
+        public ChipsViewModel BanksChipsToShowBlue { get { return new ChipsViewModel(Color.Blue, this.BankChipsToShow.Blue - this.BankChipsToTake.Blue); } }
+
+        public ChipsViewModel BanksChipsToShowGold { get { return new ChipsViewModel(Color.Gold, this.BankChipsToShow.Gold - this.BankChipsToTake.Gold); } }
+
+        public ChipsViewModel BanksChipsToShowGreen { get { return new ChipsViewModel(Color.Green, this.BankChipsToShow.Green - this.BankChipsToTake.Green); } }
+
+        public ChipsViewModel BanksChipsToShowRed { get { return new ChipsViewModel(Color.Red, this.BankChipsToShow.Red - this.BankChipsToTake.Red); } }
+
+        public ChipsViewModel BanksChipsToShowWhite { get { return new ChipsViewModel(Color.White, this.BankChipsToShow.White - this.BankChipsToTake.White); } }
+
+        public ChipsViewModel BanksChipsToTakeBlack { get { return new ChipsViewModel(Color.Black, this.BankChipsToTake.Black); } }
+
+        public ChipsViewModel BanksChipsToTakeBlue { get { return new ChipsViewModel(Color.Blue, this.BankChipsToTake.Blue); } }
+
+        public ChipsViewModel BanksChipsToTakeGold { get { return new ChipsViewModel(Color.Gold, this.BankChipsToTake.Gold); } }
+
+        public ChipsViewModel BanksChipsToTakeGreen { get { return new ChipsViewModel(Color.Green, this.BankChipsToTake.Green); } }
+
+        public ChipsViewModel BanksChipsToTakeRed { get { return new ChipsViewModel(Color.Red, this.BankChipsToTake.Red); } }
+
+        public ChipsViewModel BanksChipsToTakeWhite { get { return new ChipsViewModel(Color.White, this.BankChipsToTake.White); } }
 
         public bool CanGameBeStarted { get { return this.Game != null && !this.Game.HasStarted && this.Game.Players.Count >= 2; } }
 
@@ -100,11 +124,18 @@
 
         public void AddPlayer(Player player)
         {
+            Debug.WriteLine("GameViewModel:AddPlayer");
             this.players.Add(new PlayerViewModel() { Player = player });
+        }
+
+        public bool CanCurrentPlayerTakeChips(Chips chips)
+        {
+            return this.Game.CanTakeChips(this.Game.CurrentPlayer, this.BankChipsToTake);
         }
 
         public void PurchaseCard(Card card)
         {
+            Debug.WriteLine("GameViewModel:PurchaseCard");
             if (this.Game.CanPurchaseCard(this.Game.CurrentPlayer, card))
             {
                 this.Game.PurchaseCard(this.Game.CurrentPlayer, card);
@@ -115,6 +146,7 @@
 
         public void ReserveCard(Card card)
         {
+            Debug.WriteLine("GameViewModel:ReserveCard");
             if (this.Game.CanReserveCard(this.Game.CurrentPlayer, card))
             {
                 this.Game.ReserveCard(this.Game.CurrentPlayer, card);
@@ -125,6 +157,7 @@
 
         public void Start()
         {
+            Debug.WriteLine("GameViewModel:Start");
             this.Game.Start();
             this.AllCards.Clear();
             foreach (var card in this.Game.AllCards)
@@ -147,16 +180,25 @@
             this.NotifyGameStarts();
             this.NotifyPlayersChanges();
             this.UpdatePlayerPanels();
-            this.NotifyBankChanges();
+            this.UpdateBank();
             this.NotifyDeckChanges();
         }
 
         public void TakeChips(Chips chips)
         {
+            Debug.WriteLine("GameViewModel:TakeChips");
             this.Game.TakeChips(this.Game.CurrentPlayer, chips);
 
-            this.NotifyBankChanges();
+            this.UpdateBank();
             this.UpdatePlayerPanels();
+        }
+
+        public void UpdateBank()
+        {
+            this.BankChipsToShow = this.Game.Bank;
+            this.BankChipsToTake = new Chips();
+
+            this.NotifyBankChanges();
         }
 
         #endregion
@@ -180,10 +222,18 @@
 
         private void NotifyBankChanges()
         {
-            this.bankChipsToShow = this.Game.Bank;
-            this.bankChipsToTake = new Chips();
-            this.OnPropertyChanged("BankChipsToShow");
-            this.OnPropertyChanged("BankChipsToTake");
+            this.OnPropertyChanged("BanksChipsToShowWhite");
+            this.OnPropertyChanged("BanksChipsToShowBlue");
+            this.OnPropertyChanged("BanksChipsToShowGreen");
+            this.OnPropertyChanged("BanksChipsToShowRed");
+            this.OnPropertyChanged("BanksChipsToShowBlack");
+            this.OnPropertyChanged("BanksChipsToShowGold");
+
+            this.OnPropertyChanged("BanksChipsToTakeWhite");
+            this.OnPropertyChanged("BanksChipsToTakeBlue");
+            this.OnPropertyChanged("BanksChipsToTakeGreen");
+            this.OnPropertyChanged("BanksChipsToTakeRed");
+            this.OnPropertyChanged("BanksChipsToTakeBlack");
         }
 
         private void NotifyDeckChanges()
@@ -236,5 +286,31 @@
         }
 
         #endregion
+
+        public void MoveChipToChipsToTake(Color color)
+        {
+            var oneChip = new Chips();
+            oneChip[color]++;
+
+            if (this.Game.CanTakeChips(this.Game.CurrentPlayer, this.BankChipsToTake + oneChip))
+            {
+                this.BankChipsToTake[color]++;
+
+                this.NotifyBankChanges();
+            }
+        }
+
+        public void MoveChipToChipsToShow(Color color)
+        {
+            var oneChip = new Chips();
+            oneChip[color]++;
+
+            if (this.Game.CanTakeChips(this.Game.CurrentPlayer, this.BankChipsToTake - oneChip))
+            {
+                this.BankChipsToTake[color]--;
+
+                this.NotifyBankChanges();
+            }
+        }
     }
 }

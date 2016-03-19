@@ -3,8 +3,10 @@
     #region
 
     using System;
+    using System.Runtime.InteropServices;
     using System.Windows;
     using System.Windows.Forms.VisualStyles;
+    using System.Windows.Input;
 
     using SplendorCore.Models;
 
@@ -144,9 +146,62 @@
 
         #endregion
 
-        private void CostBorderMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void BankShowWhiteMouseUp(object sender, MouseButtonEventArgs e)
         {
-            var k = 2;
+            game.MoveChipToChipsToTake(Color.White);
+        }
+
+        private void BankShowBlueMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToTake(Color.Blue);
+        }
+
+        private void BankShowGreenMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToTake(Color.Green);
+        }
+
+        private void BankShowRedMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToTake(Color.Red);
+        }
+
+        private void BankShowBlackMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToTake(Color.Black);
+        }
+
+        private void BankTakeWhiteMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToShow(Color.White);
+        }
+
+        private void BankTakeBlueMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToShow(Color.Blue);
+        }
+
+        private void BankTakeGreenMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToShow(Color.Green);
+        }
+
+        private void BankTakeRedMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToShow(Color.Red);
+        }
+
+        private void BankTakeBlackMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToShow(Color.Black);
+        }
+
+        private void BankTakeButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (game.CanCurrentPlayerTakeChips(game.BankChipsToTake))
+            {
+                game.TakeChips(game.BankChipsToTake);
+            }
         }
     }
 }
