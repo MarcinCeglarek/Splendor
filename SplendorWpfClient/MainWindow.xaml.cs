@@ -3,9 +3,7 @@
     #region
 
     using System;
-    using System.Runtime.InteropServices;
     using System.Windows;
-    using System.Windows.Forms.VisualStyles;
     using System.Windows.Input;
 
     using SplendorCore.Models;
@@ -69,6 +67,64 @@
             playerWindow.ShowDialog();
         }
 
+        private void BankShowBlackMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToTake(Color.Black);
+        }
+
+        private void BankShowBlueMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToTake(Color.Blue);
+        }
+
+        private void BankShowGreenMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToTake(Color.Green);
+        }
+
+        private void BankShowRedMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToTake(Color.Red);
+        }
+
+        private void BankShowWhiteMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToTake(Color.White);
+        }
+
+        private void BankTakeBlackMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToShow(Color.Black);
+        }
+
+        private void BankTakeBlueMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToShow(Color.Blue);
+        }
+
+        private void BankTakeButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (game.CanCurrentPlayerTakeChips(game.BankChipsToTake))
+            {
+                game.TakeChips(game.BankChipsToTake);
+            }
+        }
+
+        private void BankTakeGreenMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToShow(Color.Green);
+        }
+
+        private void BankTakeRedMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToShow(Color.Red);
+        }
+
+        private void BankTakeWhiteMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            game.MoveChipToChipsToShow(Color.White);
+        }
+
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             game = new GameViewModel();
@@ -120,20 +176,20 @@
         {
             game.Start();
 
-            this.Card11.DataContext = new CardViewModel() { Card = game.AvailableCards[0] };
-            this.Card12.DataContext = new CardViewModel() { Card = game.AvailableCards[1] };
-            this.Card13.DataContext = new CardViewModel() { Card = game.AvailableCards[2] };
-            this.Card14.DataContext = new CardViewModel() { Card = game.AvailableCards[3] };
+            this.Card11.DataContext = game.AvailableCards[0];
+            this.Card12.DataContext = game.AvailableCards[1];
+            this.Card13.DataContext = game.AvailableCards[2];
+            this.Card14.DataContext = game.AvailableCards[3];
 
-            this.Card21.DataContext = new CardViewModel() { Card = game.AvailableCards[4] };
-            this.Card22.DataContext = new CardViewModel() { Card = game.AvailableCards[5] };
-            this.Card23.DataContext = new CardViewModel() { Card = game.AvailableCards[6] };
-            this.Card24.DataContext = new CardViewModel() { Card = game.AvailableCards[7] };
+            this.Card21.DataContext = game.AvailableCards[4];
+            this.Card22.DataContext = game.AvailableCards[5];
+            this.Card23.DataContext = game.AvailableCards[6];
+            this.Card24.DataContext = game.AvailableCards[7];
 
-            this.Card31.DataContext = new CardViewModel() { Card = game.AvailableCards[8] };
-            this.Card32.DataContext = new CardViewModel() { Card = game.AvailableCards[9] };
-            this.Card33.DataContext = new CardViewModel() { Card = game.AvailableCards[10] };
-            this.Card34.DataContext = new CardViewModel() { Card = game.AvailableCards[11] };
+            this.Card31.DataContext = game.AvailableCards[8];
+            this.Card32.DataContext = game.AvailableCards[9];
+            this.Card33.DataContext = game.AvailableCards[10];
+            this.Card34.DataContext = game.AvailableCards[11];
 
             this.PopulatePlayerPanels();
             this.PopulateAristocrates();
@@ -145,63 +201,5 @@
         }
 
         #endregion
-
-        private void BankShowWhiteMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            game.MoveChipToChipsToTake(Color.White);
-        }
-
-        private void BankShowBlueMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            game.MoveChipToChipsToTake(Color.Blue);
-        }
-
-        private void BankShowGreenMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            game.MoveChipToChipsToTake(Color.Green);
-        }
-
-        private void BankShowRedMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            game.MoveChipToChipsToTake(Color.Red);
-        }
-
-        private void BankShowBlackMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            game.MoveChipToChipsToTake(Color.Black);
-        }
-
-        private void BankTakeWhiteMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            game.MoveChipToChipsToShow(Color.White);
-        }
-
-        private void BankTakeBlueMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            game.MoveChipToChipsToShow(Color.Blue);
-        }
-
-        private void BankTakeGreenMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            game.MoveChipToChipsToShow(Color.Green);
-        }
-
-        private void BankTakeRedMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            game.MoveChipToChipsToShow(Color.Red);
-        }
-
-        private void BankTakeBlackMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            game.MoveChipToChipsToShow(Color.Black);
-        }
-
-        private void BankTakeButtonClick(object sender, RoutedEventArgs e)
-        {
-            if (game.CanCurrentPlayerTakeChips(game.BankChipsToTake))
-            {
-                game.TakeChips(game.BankChipsToTake);
-            }
-        }
     }
 }

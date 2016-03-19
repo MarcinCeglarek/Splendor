@@ -14,7 +14,11 @@
     {
         #region Fields
 
+        private bool canBePurchased;
+
         private Card card;
+
+        private bool isMouseHover;
 
         #endregion
 
@@ -25,15 +29,38 @@
             this.VisibleCost = new ObservableCollection<ChipsViewModel>();
         }
 
+        public CardViewModel(Card card)
+            : this()
+        {
+            this.Card = card;
+        }
+
         #endregion
 
         #region Public Properties
 
-        public SolidColorBrush Background
+        public SolidColorBrush Background { get { return this.IsCardPresent ? new SolidColorBrush(GetBackColor(this.card.Color)) : null; } }
+
+        public SolidColorBrush BorderColor
         {
             get
             {
-                return this.IsCardPresent ? new SolidColorBrush(GetBackColor(this.card.Color)) : null;
+                if (this.IsMouseHover)
+                {
+                    return this.CanBePurchased ? new SolidColorBrush(Colors.LimeGreen) : new SolidColorBrush(Colors.Red);
+                }
+
+                return new SolidColorBrush(Colors.Transparent);
+            }
+        }
+
+        public bool CanBePurchased
+        {
+            get { return this.canBePurchased; }
+            set
+            {
+                this.canBePurchased = value;
+                this.OnPropertyChanged("BorderColor");
             }
         }
 
@@ -62,6 +89,16 @@
         public SolidColorBrush ForeColor { get { return this.IsCardPresent ? new SolidColorBrush(GetForeColor(this.card.Color)) : new SolidColorBrush(Colors.Gold); } }
 
         public bool IsCardPresent { get { return this.Card != null; } }
+
+        public bool IsMouseHover
+        {
+            get { return this.isMouseHover; }
+            set
+            {
+                this.isMouseHover = value;
+                this.OnPropertyChanged("BorderColor");
+            }
+        }
 
         public bool IsVictoryPointsPresent { get { return this.IsCardPresent && this.Card.VictoryPoints != 0; } }
 

@@ -2,7 +2,7 @@
 {
     #region
 
-    using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.Diagnostics;
@@ -22,6 +22,14 @@
 
         private readonly ObservableCollection<PlayerViewModel> players;
 
+        private readonly CardsHeapViewModel tier1 = new CardsHeapViewModel() { Count = 0, Background = new RadialGradientBrush(Colors.LimeGreen, Colors.DarkGreen) };
+
+        private readonly CardsHeapViewModel tier2 = new CardsHeapViewModel() { Count = 0, Background = new RadialGradientBrush(Colors.Orange, Colors.SaddleBrown) };
+
+        private readonly CardsHeapViewModel tier3 = new CardsHeapViewModel() { Count = 0, Background = new RadialGradientBrush(Colors.DodgerBlue, Colors.Blue) };
+
+        private List<CardViewModel> availableCards;
+
         #endregion
 
         #region Constructors and Destructors
@@ -32,13 +40,13 @@
             this.Game = new Game(CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
 
             this.players = new ObservableCollection<PlayerViewModel>();
-            this.players.CollectionChanged += this.PlayersCollectionChanged;
             this.Players = new ReadOnlyObservableCollection<PlayerViewModel>(this.players);
 
             this.AllCards = new ObservableCollection<Card>(this.Game.AllCards);
             this.AllCards.CollectionChanged += this.AllCardsCollectionChanged;
 
-            this.AvailableCards = new ObservableCollection<Card>(this.Game.AvailableCards);
+            this.availableCards = this.Game.AvailableCards.Select(card => new CardViewModel() { Card = card }).ToList();
+            this.AvailableCards = new ObservableCollection<CardViewModel>(this.availableCards);
             this.AvailableCards.CollectionChanged += this.AvailableCardsCollectionChanged;
 
             this.AvailableAristocrates = new ObservableCollection<Aristocrate>(this.Game.AvailableAristocrates);
@@ -55,7 +63,7 @@
 
         public ObservableCollection<Aristocrate> AvailableAristocrates { get; set; }
 
-        public ObservableCollection<Card> AvailableCards { get; set; }
+        public ObservableCollection<CardViewModel> AvailableCards { get; set; }
 
         public Chips BankChipsToShow { get; set; }
 
@@ -99,17 +107,29 @@
 
         public CardsHeapViewModel Tier1
         {
-            get { return new CardsHeapViewModel() { Count = this.GetRemainingCardsOfTier(1), Background = new RadialGradientBrush(Colors.LimeGreen, Colors.DarkGreen) }; }
+            get
+            {
+                this.tier1.Count = this.GetRemainingCardsOfTier(1);
+                return this.tier1;
+            }
         }
 
         public CardsHeapViewModel Tier2
         {
-            get { return new CardsHeapViewModel() { Count = this.GetRemainingCardsOfTier(2), Background = new RadialGradientBrush(Colors.Orange, Colors.SaddleBrown) }; }
+            get
+            {
+                this.tier2.Count = this.GetRemainingCardsOfTier(2);
+                return this.tier2;
+            }
         }
 
         public CardsHeapViewModel Tier3
         {
-            get { return new CardsHeapViewModel() { Count = this.GetRemainingCardsOfTier(3), Background = new RadialGradientBrush(Colors.DodgerBlue, Colors.Blue) }; }
+            get
+            {
+                this.tier3.Count = this.GetRemainingCardsOfTier(3);
+                return this.tier3;
+            }
         }
 
         #endregion
@@ -125,12 +145,41 @@
         public void AddPlayer(Player player)
         {
             Debug.WriteLine("GameViewModel:AddPlayer");
+            this.Game.AddPlayer(player);
             this.players.Add(new PlayerViewModel() { Player = player });
+            this.OnPropertyChanged("CanGameBeStarted");
+            this.OnPropertyChanged("CanPlayerBeAdded");
         }
 
         public bool CanCurrentPlayerTakeChips(Chips chips)
         {
             return this.Game.CanTakeChips(this.Game.CurrentPlayer, this.BankChipsToTake);
+        }
+
+        public void MoveChipToChipsToShow(Color color)
+        {
+            var oneChip = new Chips();
+            oneChip[color]++;
+
+            if (this.Game.CanTakeChips(this.Game.CurrentPlayer, this.Game.CurrentPlayer.Chips + this.BankChipsToTake - oneChip))
+            {
+                this.BankChipsToTake[color]--;
+
+                this.NotifyBankChanges();
+            }
+        }
+
+        public void MoveChipToChipsToTake(Color color)
+        {
+            var oneChip = new Chips();
+            oneChip[color]++;
+
+            if (this.Game.CanTakeChips(this.Game.CurrentPlayer, this.Game.CurrentPlayer.Chips + this.BankChipsToTake + oneChip))
+            {
+                this.BankChipsToTake[color]++;
+
+                this.NotifyBankChanges();
+            }
         }
 
         public void PurchaseCard(Card card)
@@ -165,16 +214,24 @@
                 this.AllCards.Add(card);
             }
 
-            this.AvailableCards.Clear();
+            this.availableCards.Clear();
             foreach (var card in this.Game.AvailableCards)
             {
-                this.AvailableCards.Add(card);
+                this.availableCards.Add(new CardViewModel(card));
             }
+            this.AvailableCards = new ObservableCollection<CardViewModel>(this.availableCards);
 
             this.AvailableAristocrates.Clear();
             foreach (var aristocrate in this.Game.AvailableAristocrates)
             {
                 this.AvailableAristocrates.Add(aristocrate);
+            }
+            
+
+            this.players.Clear();
+            foreach (var player in this.Game.Players)
+            {
+                this.players.Add(new PlayerViewModel() { Player = player });
             }
 
             this.NotifyGameStarts();
@@ -187,7 +244,7 @@
         public void TakeChips(Chips chips)
         {
             Debug.WriteLine("GameViewModel:TakeChips");
-            this.Game.TakeChips(this.Game.CurrentPlayer, chips);
+            this.Game.TakeChips(this.Game.CurrentPlayer, this.Game.CurrentPlayer.Chips + chips);
 
             this.UpdateBank();
             this.UpdatePlayerPanels();
@@ -217,7 +274,9 @@
 
         private int GetRemainingCardsOfTier(int i)
         {
-            return this.Game.AllCards.Count(card => card.Tier == i) - this.Game.AvailableCards.Count(card => card.Tier == i);
+            var allCards = this.Game.AllCards.Count(card => card.Tier == i);
+            var availableCards = this.Game.AvailableCards.Count(card => card.Tier == i);
+            return allCards - availableCards;
         }
 
         private void NotifyBankChanges()
@@ -261,21 +320,6 @@
             this.OnPropertyChanged("Players");
         }
 
-        private void PlayersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            foreach (var player in this.Game.Players.ToList())
-            {
-                this.Game.RemovePlayer(player);
-            }
-
-            foreach (var player in this.Players.Select(playerViewModel => playerViewModel.Player))
-            {
-                this.Game.AddPlayer(player);
-            }
-
-            this.NotifyPlayersChanges();
-        }
-
         private void UpdatePlayerPanels()
         {
             foreach (var playerViewModel in this.Players)
@@ -283,34 +327,13 @@
                 playerViewModel.IsCurrentPlayer = playerViewModel.Player == this.Game.CurrentPlayer;
                 playerViewModel.NotifyPropertyChanged();
             }
+
+            foreach (var cardViewModel in this.availableCards)
+            {
+                cardViewModel.CanBePurchased = this.Game.CanPurchaseCard(this.Game.CurrentPlayer, cardViewModel.Card);
+            }
         }
 
         #endregion
-
-        public void MoveChipToChipsToTake(Color color)
-        {
-            var oneChip = new Chips();
-            oneChip[color]++;
-
-            if (this.Game.CanTakeChips(this.Game.CurrentPlayer, this.BankChipsToTake + oneChip))
-            {
-                this.BankChipsToTake[color]++;
-
-                this.NotifyBankChanges();
-            }
-        }
-
-        public void MoveChipToChipsToShow(Color color)
-        {
-            var oneChip = new Chips();
-            oneChip[color]++;
-
-            if (this.Game.CanTakeChips(this.Game.CurrentPlayer, this.BankChipsToTake - oneChip))
-            {
-                this.BankChipsToTake[color]--;
-
-                this.NotifyBankChanges();
-            }
-        }
     }
 }

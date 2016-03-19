@@ -76,10 +76,11 @@
 
         public void NotifyPropertyChanged()
         {
+            this.OnPropertyChanged("BorderColor");
             this.OnPropertyChanged("Cards");
             this.OnPropertyChanged("Chips");
-            this.OnPropertyChanged("IsPlayerPresent");
             this.OnPropertyChanged("IsCurrentPlayer");
+            this.OnPropertyChanged("IsPlayerPresent");
             this.OnPropertyChanged("ReservedCards");
         }
 

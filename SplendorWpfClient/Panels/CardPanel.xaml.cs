@@ -23,5 +23,15 @@
         {
             MainWindow.BuyCard(((CardViewModel)this.DataContext).Card);
         }
+
+        private void Border_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            ((CardViewModel)this.DataContext).IsMouseHover = true;
+        }
+
+        private void Border_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            ((CardViewModel)this.DataContext).IsMouseHover = false;
+        }
     }
 }
