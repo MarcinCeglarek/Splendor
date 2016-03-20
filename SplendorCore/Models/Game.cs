@@ -283,7 +283,7 @@
             var diff = chips - player.Chips;
             this.bank -= diff;
             this.CurrentPlayer.Chips += diff;
-            this.history.Add(new ChipsTaken(this.CurrentPlayer, chips));
+            this.history.Add(new ChipsTaken(this.CurrentPlayer, diff));
 
             this.PlayerFinished();
             this.subscribers.ForEach(subscriber => subscriber.ChipsTaken(this));

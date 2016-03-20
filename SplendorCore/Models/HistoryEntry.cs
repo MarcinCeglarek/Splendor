@@ -22,6 +22,8 @@
 
         public DateTime DateTime { get; private set; }
 
+        public string GetTimestamp { get { return this.DateTime.ToString("HH:mm:ss"); } }
+
         public Player Player { get; set; }
 
         #endregion
@@ -72,7 +74,7 @@
         public ChipsTaken(Player player, Chips chips)
             : base(player)
         {
-            this.Chips = new Chips(chips) + player.Chips;
+            this.Chips = new Chips(chips);
         }
 
         #endregion
@@ -86,33 +88,49 @@
 
     public class PlayerJoined : HistoryEntry
     {
+        #region Constructors and Destructors
+
         public PlayerJoined(Player player)
             : base(player)
         {
         }
+
+        #endregion
     }
 
     public class GameEnded : HistoryEntry
     {
+        #region Constructors and Destructors
+
         public GameEnded(Player player)
             : base(player)
         {
         }
+
+        #endregion
     }
 
     public class PlayerLeft : HistoryEntry
     {
+        #region Constructors and Destructors
+
         public PlayerLeft(Player player)
             : base(player)
         {
         }
+
+        #endregion
     }
 
     public class GameStarted : HistoryEntry
     {
+        #region Constructors and Destructors
+
         public GameStarted()
             : base(null)
         {
         }
+
+        #endregion
     }
 }

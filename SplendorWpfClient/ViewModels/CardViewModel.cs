@@ -47,7 +47,7 @@
             {
                 if (this.IsMouseHover)
                 {
-                    return this.CanBePurchased ? new SolidColorBrush(Colors.LimeGreen) : new SolidColorBrush(Colors.Red);
+                    return this.CanBePurchased ? new SolidColorBrush(BorderPurchasable) : new SolidColorBrush(BorderReservable);
                 }
 
                 return new SolidColorBrush(Colors.Transparent);
@@ -90,7 +90,7 @@
             }
         }
 
-        public SolidColorBrush ForeColor { get { return this.IsCardPresent ? new SolidColorBrush(GetForeColor(this.card.Color)) : new SolidColorBrush(Colors.Gold); } }
+        public SolidColorBrush ForeColor { get { return this.IsCardPresent ? new SolidColorBrush(GetForeColor(this.card.Color)) : new SolidColorBrush(Gold); } }
 
         public bool IsCardPresent { get { return this.Card != null; } }
 

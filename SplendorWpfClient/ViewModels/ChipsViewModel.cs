@@ -49,8 +49,8 @@
             get
             {
                 return this.IsMouseHover
-                           ? new SolidColorBrush(Colors.Magenta)
-                           : new SolidColorBrush(this.orginalBorderColor.HasValue ? GetForeColor(this.orginalBorderColor.Value) : Colors.Black);
+                           ? new SolidColorBrush(BorderHover)
+                           : new SolidColorBrush(this.orginalBorderColor.HasValue ? GetForeColor(this.orginalBorderColor.Value) : Black);
             }
         }
 

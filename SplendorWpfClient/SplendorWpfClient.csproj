@@ -65,9 +65,7 @@
       <DependentUpon>PlayerPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ValueConverters\IsGreaterThanZero.cs" />
-    <Compile Include="ValueConverters\ValueConverterGroup.cs" />
-    <Compile Include="ViewModels\AbstractViewModel.cs" />
+    <Compile Include="ViewModels\Base\AbstractViewModel.cs" />
     <Compile Include="ViewModels\AristocrateViewModel.cs" />
     <Compile Include="ViewModels\CardsHeapViewModel.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />

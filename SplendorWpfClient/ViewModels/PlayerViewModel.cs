@@ -34,7 +34,7 @@
 
         #region Public Properties
 
-        public SolidColorBrush BorderColor { get { return this.IsCurrentPlayer ? new SolidColorBrush(Colors.Fuchsia) : new SolidColorBrush(Colors.Gray); } }
+        public SolidColorBrush BorderColor { get { return this.IsCurrentPlayer ? new SolidColorBrush(BorderHover) : new SolidColorBrush(Gray); } }
 
         public IEnumerable<ChipsViewModel> Cards
         {

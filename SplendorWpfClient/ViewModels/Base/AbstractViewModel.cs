@@ -16,17 +16,25 @@
     {
         #region Static Fields
 
-        private static readonly Color Black = Colors.Black;
+        protected static readonly Color Black = Colors.Black;
 
-        private static readonly Color Blue = Colors.RoyalBlue;
+        protected static readonly Color Blue = Colors.RoyalBlue;
 
-        private static readonly Color Gold = Colors.Gold;
+        protected static readonly Color BorderHover = Colors.Magenta;
 
-        private static readonly Color Green = Colors.LimeGreen;
+        protected static readonly Color BorderPurchasable = Colors.LimeGreen;
 
-        private static readonly Color Red = Colors.OrangeRed;
+        protected static readonly Color BorderReservable = Colors.Red;
 
-        private static readonly Color White = Colors.WhiteSmoke;
+        protected static readonly Color Gold = Colors.Gold;
+
+        protected static readonly Color Gray = Colors.Gray;
+
+        protected static readonly Color Green = Colors.LimeGreen;
+
+        protected static readonly Color Red = Colors.OrangeRed;
+
+        protected static readonly Color White = Colors.WhiteSmoke;
 
         #endregion
 
