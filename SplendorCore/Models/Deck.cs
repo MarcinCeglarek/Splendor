@@ -116,10 +116,7 @@
             if (this.cardsInBank.Contains(card))
             {
                 this.cardsInBank.Remove(card);
-                return;
             }
-
-            throw new CardUnavailableException(card);
         }
 
         #endregion

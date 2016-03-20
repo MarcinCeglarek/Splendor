@@ -151,10 +151,7 @@
             if (this.reservedCards.Contains(card))
             {
                 this.reservedCards.Remove(card);
-                return;
             }
-
-            throw new InvalidCardException(card);
         }
 
         public override string ToString()

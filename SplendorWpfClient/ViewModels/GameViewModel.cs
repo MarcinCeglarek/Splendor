@@ -20,6 +20,8 @@
     {
         #region Fields
 
+        private readonly List<CardViewModel> availableCards;
+
         private readonly ObservableCollection<PlayerViewModel> players;
 
         private readonly CardsHeapViewModel tier1 = new CardsHeapViewModel() { Count = 0, Background = new RadialGradientBrush(Colors.LimeGreen, Colors.DarkGreen) };
@@ -27,8 +29,6 @@
         private readonly CardsHeapViewModel tier2 = new CardsHeapViewModel() { Count = 0, Background = new RadialGradientBrush(Colors.Orange, Colors.SaddleBrown) };
 
         private readonly CardsHeapViewModel tier3 = new CardsHeapViewModel() { Count = 0, Background = new RadialGradientBrush(Colors.DodgerBlue, Colors.Blue) };
-
-        private List<CardViewModel> availableCards;
 
         #endregion
 
@@ -188,7 +188,9 @@
             if (this.Game.CanPurchaseCard(this.Game.CurrentPlayer, card))
             {
                 this.Game.PurchaseCard(this.Game.CurrentPlayer, card);
-                this.NotifyDeckChanges();
+
+                this.UpdateBank();
+                this.UpdateDeck();
                 this.UpdatePlayerPanels();
             }
         }
@@ -199,7 +201,9 @@
             if (this.Game.CanReserveCard(this.Game.CurrentPlayer, card))
             {
                 this.Game.ReserveCard(this.Game.CurrentPlayer, card);
-                this.NotifyDeckChanges();
+
+                this.UpdateBank();
+                this.UpdateDeck();
                 this.UpdatePlayerPanels();
             }
         }
@@ -219,6 +223,7 @@
             {
                 this.availableCards.Add(new CardViewModel(card));
             }
+
             this.AvailableCards = new ObservableCollection<CardViewModel>(this.availableCards);
 
             this.AvailableAristocrates.Clear();
@@ -226,7 +231,6 @@
             {
                 this.AvailableAristocrates.Add(aristocrate);
             }
-            
 
             this.players.Clear();
             foreach (var player in this.Game.Players)
@@ -248,14 +252,6 @@
 
             this.UpdateBank();
             this.UpdatePlayerPanels();
-        }
-
-        public void UpdateBank()
-        {
-            this.BankChipsToShow = this.Game.Bank;
-            this.BankChipsToTake = new Chips();
-
-            this.NotifyBankChanges();
         }
 
         #endregion
@@ -318,6 +314,28 @@
             this.OnPropertyChanged("CanGameBeStarted");
             this.OnPropertyChanged("CanPlayerBeAdded");
             this.OnPropertyChanged("Players");
+        }
+
+        private void UpdateBank()
+        {
+            this.BankChipsToShow = this.Game.Bank;
+            this.BankChipsToTake = new Chips();
+
+            this.NotifyBankChanges();
+        }
+
+        private void UpdateDeck()
+        {
+            foreach (var availableCard in this.availableCards)
+            {
+                if (availableCard.Card == null || !this.Game.AvailableCards.Contains(availableCard.Card))
+                {
+                    var firstNotUsedCard = this.Game.AvailableCards.Except(this.availableCards.Select(cvm => cvm.Card)).FirstOrDefault();
+                    availableCard.Card = firstNotUsedCard;
+                }
+            }
+
+            this.NotifyDeckChanges();
         }
 
         private void UpdatePlayerPanels()
