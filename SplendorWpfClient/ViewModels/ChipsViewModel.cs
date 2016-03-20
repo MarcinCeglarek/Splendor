@@ -68,6 +68,8 @@
 
         public bool IsValuePositive { get { return this.Value > 0; } }
 
+        public int IsValuePositiveOpacity { get { return this.IsValuePositive ? 100 : 0; } }
+
         public int Value { get; set; }
 
         #endregion

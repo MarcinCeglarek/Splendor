@@ -71,6 +71,8 @@
 
         public ObservableCollection<CardViewModel> ReservedCards { get; set; }
 
+        public int VictoryPoints { get { return this.player != null ? this.player.VictoryPoints : -1; } }
+
         #endregion
 
         #region Public Methods and Operators
@@ -84,6 +86,7 @@
             this.OnPropertyChanged("Chips");
             this.OnPropertyChanged("IsCurrentPlayer");
             this.OnPropertyChanged("IsPlayerPresent");
+            this.OnPropertyChanged("VictoryPoints");
         }
 
         #endregion

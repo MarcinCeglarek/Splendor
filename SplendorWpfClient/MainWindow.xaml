@@ -26,10 +26,10 @@
             <Panels:CardPanel x:Name="Card32" HorizontalAlignment="Left" Margin="277,410,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
             <Panels:CardPanel x:Name="Card33" HorizontalAlignment="Left" Margin="387,410,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
             <Panels:CardPanel x:Name="Card34" HorizontalAlignment="Left" Margin="498,410,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
-            <Panels:PlayerPanel x:Name="PlayerPanel1" HorizontalAlignment="Left" Margin="20,564,0,0" VerticalAlignment="Top" Height="190" Width="194"/>
-            <Panels:PlayerPanel x:Name="PlayerPanel2" HorizontalAlignment="Left" Margin="219,564,0,0" VerticalAlignment="Top" Height="190" Width="193"/>
-            <Panels:PlayerPanel x:Name="PlayerPanel3" HorizontalAlignment="Left" Margin="417,564,0,0" VerticalAlignment="Top" Height="190" Width="190"/>
-            <Panels:PlayerPanel x:Name="PlayerPanel4" HorizontalAlignment="Left" Margin="612,564,0,0" VerticalAlignment="Top" Height="190" Width="192"/>
+            <Panels:PlayerPanel x:Name="PlayerPanel1" HorizontalAlignment="Left" Margin="21,557,0,0" VerticalAlignment="Top" Height="190" Width="194"/>
+            <Panels:PlayerPanel x:Name="PlayerPanel2" HorizontalAlignment="Left" Margin="220,557,0,0" VerticalAlignment="Top" Height="190" Width="193"/>
+            <Panels:PlayerPanel x:Name="PlayerPanel3" HorizontalAlignment="Left" Margin="418,557,0,0" VerticalAlignment="Top" Height="190" Width="190"/>
+            <Panels:PlayerPanel x:Name="PlayerPanel4" HorizontalAlignment="Left" Margin="613,557,0,0" VerticalAlignment="Top" Height="190" Width="192"/>
             <Panels:CardsHeap x:Name="CardsTier1" HorizontalAlignment="Left" Margin="57,129,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
             <Panels:CardsHeap x:Name="CardsTier2" HorizontalAlignment="Left" Margin="57,270,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
             <Panels:CardsHeap x:Name="CardsTier3" HorizontalAlignment="Left" Margin="57,410,0,0" VerticalAlignment="Top" Height="137" Width="106"/>

@@ -9,12 +9,12 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <DataTemplate x:Key="ChipsDataTemplate">
-            <Border x:Name="CostBorder" HorizontalAlignment="Left" Margin="2,0,0,2" VerticalAlignment="Center" Width="30" BorderThickness="2" BorderBrush="{Binding BorderColor}" CornerRadius="14" Background="{Binding BackColor}" Cursor="Hand" MouseUp="CostBorder_MouseUp" Visibility="{Binding IsValuePositive, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Border x:Name="CostBorder" HorizontalAlignment="Left" Margin="2,0,0,2" VerticalAlignment="Center" Width="30" BorderThickness="2" BorderBrush="{Binding BorderColor}" CornerRadius="14" Background="{Binding BackColor}" Cursor="Hand" MouseUp="CostBorder_MouseUp" Opacity="{Binding IsValuePositiveOpacity}" >
                 <Label x:Name="Cost" Content="{Binding Value}" RenderTransformOrigin="0.567,0.192" Height="25" HorizontalContentAlignment="Center" FontSize="17" FontWeight="Bold" VerticalContentAlignment="Center" Padding="0" Foreground="{Binding ForeColor}"/>
             </Border>
         </DataTemplate>
         <DataTemplate x:Key="CardsDataTemplate">
-            <Border x:Name="CostBorder" HorizontalAlignment="Left" Margin="2,0,0,2" VerticalAlignment="Center" Width="30" BorderThickness="2" BorderBrush="{Binding BorderColor}" CornerRadius="2" Background="{Binding BackColor}" Cursor="Hand" MouseUp="CostBorder_MouseUp" Visibility="{Binding IsValuePositive, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Border x:Name="CostBorder" HorizontalAlignment="Left" Margin="2,0,0,2" VerticalAlignment="Center" Width="30" BorderThickness="2" BorderBrush="{Binding BorderColor}" CornerRadius="2" Background="{Binding BackColor}" Cursor="Hand" MouseUp="CostBorder_MouseUp" Opacity="{Binding IsValuePositiveOpacity}">
                 <Label x:Name="Cost" Content="{Binding Value}" RenderTransformOrigin="0.567,0.192" Height="25" HorizontalContentAlignment="Center" FontSize="17" FontWeight="Bold" VerticalContentAlignment="Center" Padding="0" Foreground="{Binding ForeColor}"/>
             </Border>
         </DataTemplate>
@@ -23,8 +23,8 @@
         <ViewModels:PlayerViewModel/>
     </UserControl.DataContext>
     <Viewbox StretchDirection="Both" Stretch="Uniform">
-        <Border BorderBrush="{Binding BorderColor, Mode=OneWay}" BorderThickness="2" CornerRadius="10" Height="235" Width="240">
-            <Grid>
+        <Border BorderBrush="{Binding BorderColor, Mode=OneWay}" BorderThickness="2" CornerRadius="10" Height="235" Width="240" Visibility="{Binding IsPlayerPresent, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+            <Grid  ClipToBounds="True">
                 <Label Margin="0,0,0,183" Content="{Binding Name, FallbackValue=&lt;PlayerName&gt;, Mode=OneWay}" Foreground="{Binding BorderColor, Mode=OneWay}" FontSize="30" HorizontalContentAlignment="Center"/>
                 <Grid Margin="10,53,10,140">
                     <ItemsControl ItemsSource="{Binding Chips}" ItemTemplate="{StaticResource ChipsDataTemplate}" VerticalContentAlignment="Bottom">
@@ -48,6 +48,7 @@
                 <local:CardPanel x:Name="ReservedCard1" HorizontalAlignment="Left" Height="100" Margin="10,141,0,-10" VerticalAlignment="Top" Width="84" MouseUp="ReservedCard1MouseUp"/>
                 <local:CardPanel x:Name="ReservedCard2" HorizontalAlignment="Left" Height="100" Margin="69,141,0,-10" VerticalAlignment="Top" Width="84" MouseUp="ReservedCard2MouseUp"/>
                 <local:CardPanel x:Name="ReservedCard3" HorizontalAlignment="Left" Height="100" Margin="142,141,0,-10" VerticalAlignment="Top" Width="84" MouseUp="ReservedCard3MouseUp"/>
+                <Label Content="{Binding VictoryPoints, FallbackValue=-1, Mode=OneWay}" HorizontalAlignment="Center" Margin="188,0,0,183" VerticalAlignment="Center" Height="48" Width="48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25" FontWeight="Bold"/>
             </Grid>
         </Border>
     </Viewbox>

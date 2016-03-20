@@ -75,7 +75,7 @@
                 {
                     this.VisibleCost = new ObservableCollection<ChipsViewModel>();
                     foreach (var cost in
-                        this.card.Cost.Where(cost => cost.Value > 0).OrderByDescending(cost => cost.Key).Select(cost => new ChipsViewModel(cost, this.card.Color)))
+                        this.card.Cost.Where(cost => cost.Value > 0).OrderBy(cost => cost.Key).Select(cost => new ChipsViewModel(cost, this.card.Color)))
                     {
                         this.VisibleCost.Add(cost);
                     }
