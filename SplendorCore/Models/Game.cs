@@ -127,6 +127,7 @@
             }
 
             this.players.Add(player);
+            this.history.Add(new PlayerJoined(player));
         }
 
         public bool CanPurchaseCard(Player player, Card card)
@@ -194,7 +195,7 @@
             this.CurrentPlayer.Chips -= cost;
             this.bank += cost;
             this.CurrentPlayer.AddOwnedCard(card);
-            this.history.Add(new PurchasedCardsEntry(this.CurrentPlayer, card));
+            this.history.Add(new CardPurchased(this.CurrentPlayer, card));
 
             this.PlayerFinished();
             this.subscribers.ForEach(subscriber => subscriber.CardPurchased(this));
@@ -210,6 +211,7 @@
             if (this.players.Contains(player))
             {
                 this.players.Remove(player);
+                this.history.Add(new PlayerLeft(player));
                 return;
             }
 
@@ -229,7 +231,7 @@
                 this.CurrentPlayer.Chips.Gold++;
             }
 
-            this.history.Add(new ReserveCardsEntry(this.CurrentPlayer, card));
+            this.history.Add(new CardReserved(this.CurrentPlayer, card));
 
             this.PlayerFinished();
             this.subscribers.ForEach(subscriber => subscriber.CardReserved(this));
@@ -264,6 +266,7 @@
 
             var chipCount = this.TotalNumberOfNormalChips;
             this.bank = new Chips { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = CoreConstants.Game.NumberOfGoldChips };
+            this.history.Add(new GameStarted());
 
             this.subscribers.ForEach(subscriber => subscriber.GameStarted(this));
         }
@@ -280,7 +283,7 @@
             var diff = chips - player.Chips;
             this.bank -= diff;
             this.CurrentPlayer.Chips += diff;
-            this.history.Add(new TakeChipsEntry(this.CurrentPlayer, chips));
+            this.history.Add(new ChipsTaken(this.CurrentPlayer, chips));
 
             this.PlayerFinished();
             this.subscribers.ForEach(subscriber => subscriber.ChipsTaken(this));
@@ -321,6 +324,7 @@
         private void EndGame()
         {
             this.HasFinished = true;
+            this.history.Add(new GameEnded(this.players.Last(player => player.VictoryPoints == this.players.Max(p => p.VictoryPoints))));
             this.subscribers.ForEach(subscriber => subscriber.GameEnded(this));
         }
 

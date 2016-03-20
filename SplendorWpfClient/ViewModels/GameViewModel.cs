@@ -38,6 +38,7 @@
         {
             Debug.WriteLine("GameViewModel:ctor");
             this.Game = new Game(CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath);
+            this.History = new ObservableCollection<HistoryEntry>(this.Game.History);
 
             this.players = new ObservableCollection<PlayerViewModel>();
             this.Players = new ReadOnlyObservableCollection<PlayerViewModel>(this.players);
@@ -64,6 +65,8 @@
         public ObservableCollection<Aristocrate> AvailableAristocrates { get; set; }
 
         public ObservableCollection<CardViewModel> AvailableCards { get; set; }
+
+        public ObservableCollection<HistoryEntry> History { get; set; } 
 
         public Chips BankChipsToShow { get; set; }
 
@@ -145,10 +148,14 @@
         public void AddPlayer(Player player)
         {
             Debug.WriteLine("GameViewModel:AddPlayer");
-            this.Game.AddPlayer(player);
-            this.players.Add(new PlayerViewModel() { Player = player });
-            this.OnPropertyChanged("CanGameBeStarted");
-            this.OnPropertyChanged("CanPlayerBeAdded");
+            if (!this.Game.HasStarted)
+            {
+                this.Game.AddPlayer(player);
+                this.players.Add(new PlayerViewModel() { Player = player });
+                this.OnPropertyChanged("CanGameBeStarted");
+                this.OnPropertyChanged("CanPlayerBeAdded");
+                this.UpdateHistory();
+            }
         }
 
         public bool CanCurrentPlayerTakeChips(Chips chips)
@@ -158,6 +165,11 @@
 
         public void MoveChipToChipsToShow(Color color)
         {
+            if (!this.Game.IsActive)
+            {
+                return;
+            }
+
             var oneChip = new Chips();
             oneChip[color]++;
 
@@ -171,6 +183,11 @@
 
         public void MoveChipToChipsToTake(Color color)
         {
+            if (!this.Game.IsActive)
+            {
+                return;
+            }
+
             var oneChip = new Chips();
             oneChip[color]++;
 
@@ -199,7 +216,13 @@
 
         public void PurchaseCard(Card card)
         {
+            if (!this.Game.IsActive)
+            {
+                return;
+            }
+
             Debug.WriteLine("GameViewModel:PurchaseCard");
+
             if (this.Game.CanPurchaseCard(this.Game.CurrentPlayer, card))
             {
                 this.Game.PurchaseCard(this.Game.CurrentPlayer, card);
@@ -207,12 +230,19 @@
                 this.UpdateBank();
                 this.UpdateDeck();
                 this.UpdatePlayerPanels();
+                this.UpdateHistory();
             }
         }
 
         public void PurchaseOrReserveCard(Card card)
         {
+            if (!this.Game.IsActive)
+            {
+                return;
+            }
+
             Debug.WriteLine("GameViewModel:PurchaseOrReserveCard");
+
             if (this.Game.CanPurchaseCard(this.Game.CurrentPlayer, card))
             {
                 this.Game.PurchaseCard(this.Game.CurrentPlayer, card);
@@ -220,6 +250,7 @@
                 this.UpdateBank();
                 this.UpdateDeck();
                 this.UpdatePlayerPanels();
+                this.UpdateHistory();
             }
             else if (this.Game.CanReserveCard(this.Game.CurrentPlayer, card))
             {
@@ -228,11 +259,17 @@
                 this.UpdateBank();
                 this.UpdateDeck();
                 this.UpdatePlayerPanels();
+                this.UpdateHistory();
             }
         }
 
         public void ReserveCard(Card card)
         {
+            if (!this.Game.IsActive)
+            {
+                return;
+            }
+
             Debug.WriteLine("GameViewModel:ReserveCard");
             if (this.Game.CanReserveCard(this.Game.CurrentPlayer, card))
             {
@@ -241,11 +278,17 @@
                 this.UpdateBank();
                 this.UpdateDeck();
                 this.UpdatePlayerPanels();
+                this.UpdateHistory();
             }
         }
 
         public void Start()
         {
+            if (this.Game.HasStarted)
+            {
+                return;
+            }
+
             Debug.WriteLine("GameViewModel:Start");
             this.Game.Start();
             this.AllCards.Clear();
@@ -278,16 +321,23 @@
             this.NotifyPlayersChanges();
             this.UpdatePlayerPanels();
             this.UpdateBank();
+            this.UpdateHistory();
             this.NotifyDeckChanges();
         }
 
         public void TakeChips(Chips chips)
         {
+            if (!this.Game.IsActive)
+            {
+                return;
+            }
+
             Debug.WriteLine("GameViewModel:TakeChips");
             this.Game.TakeChips(this.Game.CurrentPlayer, this.Game.CurrentPlayer.Chips + chips);
 
             this.UpdateBank();
             this.UpdatePlayerPanels();
+            this.UpdateHistory();
         }
 
         #endregion
@@ -358,6 +408,15 @@
             this.BankChipsToTake = new Chips();
 
             this.NotifyBankChanges();
+        }
+
+        private void UpdateHistory()
+        {
+            this.History.Clear();
+            foreach (var historyEntry in this.Game.History)
+            {
+                this.History.Add(historyEntry);
+            }
         }
 
         private void UpdateDeck()

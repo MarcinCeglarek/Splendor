@@ -27,11 +27,11 @@
         #endregion
     }
 
-    public class ReserveCardsEntry : HistoryEntry
+    public class CardReserved : HistoryEntry
     {
         #region Constructors and Destructors
 
-        public ReserveCardsEntry(Player player, Card card)
+        public CardReserved(Player player, Card card)
             : base(player)
         {
             this.Card = card;
@@ -46,11 +46,11 @@
         #endregion
     }
 
-    public class PurchasedCardsEntry : HistoryEntry
+    public class CardPurchased : HistoryEntry
     {
         #region Constructors and Destructors
 
-        public PurchasedCardsEntry(Player player, Card card)
+        public CardPurchased(Player player, Card card)
             : base(player)
         {
             this.Card = card;
@@ -65,11 +65,11 @@
         #endregion
     }
 
-    public class TakeChipsEntry : HistoryEntry
+    public class ChipsTaken : HistoryEntry
     {
         #region Constructors and Destructors
 
-        public TakeChipsEntry(Player player, Chips chips)
+        public ChipsTaken(Player player, Chips chips)
             : base(player)
         {
             this.Chips = new Chips(chips) + player.Chips;
@@ -82,5 +82,37 @@
         public Chips Chips { get; private set; }
 
         #endregion
+    }
+
+    public class PlayerJoined : HistoryEntry
+    {
+        public PlayerJoined(Player player)
+            : base(player)
+        {
+        }
+    }
+
+    public class GameEnded : HistoryEntry
+    {
+        public GameEnded(Player player)
+            : base(player)
+        {
+        }
+    }
+
+    public class PlayerLeft : HistoryEntry
+    {
+        public PlayerLeft(Player player)
+            : base(player)
+        {
+        }
+    }
+
+    public class GameStarted : HistoryEntry
+    {
+        public GameStarted()
+            : base(null)
+        {
+        }
     }
 }

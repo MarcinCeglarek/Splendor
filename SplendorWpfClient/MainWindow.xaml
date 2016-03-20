@@ -1,7 +1,9 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:Panels="clr-namespace:SplendorWpfClient.Panels" xmlns:ViewModels="clr-namespace:SplendorWpfClient.ViewModels" x:Class="SplendorWpfClient.MainWindow"
+        xmlns:Panels="clr-namespace:SplendorWpfClient.Panels" xmlns:ViewModels="clr-namespace:SplendorWpfClient.ViewModels"
+    xmlns:local="clr-namespace:SplendorCore.Models;assembly=SplendorCore"
+    x:Class="SplendorWpfClient.MainWindow"
     Loaded="MainWindow_OnLoaded"
         Title="MainWindow" Height="833" Width="964" Closed="WindowClosed">
     <Window.Resources>
@@ -76,6 +78,28 @@
                 </Border>
             </Grid>
             <Button Content="Take" HorizontalAlignment="Left" Margin="631,135,0,0" VerticalAlignment="Top" Width="259" Height="49" Click="BankTakeButtonClick" Visibility="{Binding IsStarted, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
+            <ListBox HorizontalAlignment="Left" Height="358" Margin="631,189,0,0" VerticalAlignment="Top" Width="259" ItemsSource="{Binding History}" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+                <ListBox.Resources>
+                    <DataTemplate DataType="{x:Type local:PlayerJoined}">
+                        <TextBlock Text="{Binding DateTime}" Foreground="DarkGreen"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type local:GameStarted}">
+                        <TextBlock Text="{Binding DateTime}" Foreground="DarkRed"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type local:ChipsTaken}">
+                        <TextBlock Text="{Binding DateTime}" Foreground="DarkSlateGray"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type local:CardPurchased}">
+                        <TextBlock Text="{Binding DateTime}" Foreground="DarkMagenta"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type local:CardReserved}">
+                        <TextBlock Text="{Binding DateTime}" Foreground="DarkOliveGreen"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type local:GameEnded}">
+                        <TextBlock Text="{Binding DateTime}" Foreground="DarkBlue"/>
+                    </DataTemplate>
+                </ListBox.Resources>
+            </ListBox>
         </Grid>
     </Viewbox>
 </Window>
