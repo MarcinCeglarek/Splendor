@@ -83,6 +83,7 @@
                 this.OnPropertyChanged("VictoryPoints");
                 this.OnPropertyChanged("VisibleCost");
                 this.OnPropertyChanged("ForeColor");
+                this.OnPropertyChanged("Background");
             }
         }
 

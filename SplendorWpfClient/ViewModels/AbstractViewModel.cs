@@ -26,7 +26,7 @@
 
         private static readonly Color Red = Colors.OrangeRed;
 
-        private static readonly Color White = Colors.GhostWhite;
+        private static readonly Color White = Colors.WhiteSmoke;
 
         #endregion
 
