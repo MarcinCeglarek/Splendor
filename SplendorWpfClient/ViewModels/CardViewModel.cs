@@ -71,11 +71,14 @@
             {
                 this.card = value;
 
-                this.VisibleCost = new ObservableCollection<ChipsViewModel>();
-                foreach (var cost in
-                    this.card.Cost.Where(cost => cost.Value > 0).OrderByDescending(cost => cost.Key).Select(cost => new ChipsViewModel(cost, this.card.Color)))
+                if (this.card != null)
                 {
-                    this.VisibleCost.Add(cost);
+                    this.VisibleCost = new ObservableCollection<ChipsViewModel>();
+                    foreach (var cost in
+                        this.card.Cost.Where(cost => cost.Value > 0).OrderByDescending(cost => cost.Key).Select(cost => new ChipsViewModel(cost, this.card.Color)))
+                    {
+                        this.VisibleCost.Add(cost);
+                    }
                 }
 
                 this.OnPropertyChanged("IsCardPresent");

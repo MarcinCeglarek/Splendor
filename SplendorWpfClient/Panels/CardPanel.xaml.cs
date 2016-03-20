@@ -21,7 +21,7 @@
 
         private void Border_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MainWindow.BuyCard(((CardViewModel)this.DataContext).Card);
+            MainWindow.PurchaseOrReserveCard(((CardViewModel)this.DataContext).Card);
         }
 
         private void Border_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)

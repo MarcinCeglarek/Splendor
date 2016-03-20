@@ -25,7 +25,9 @@
 
         public PlayerViewModel()
         {
-            this.ReservedCards = new ObservableCollection<CardViewModel>();
+            this.ReservedCard1 = new CardViewModel();
+            this.ReservedCard2 = new CardViewModel();
+            this.ReservedCard3 = new CardViewModel();
         }
 
         #endregion
@@ -56,17 +58,16 @@
             set
             {
                 this.player = value;
-                if (this.player != null)
-                {
-                    foreach (var reservedCard in this.player.ReservedCards)
-                    {
-                        this.ReservedCards.Add(new CardViewModel() { Card = reservedCard });
-                    }
-                }
-
+                this.UpdateReservedCards();
                 this.NotifyPropertyChanged();
             }
         }
+
+        public CardViewModel ReservedCard1 { get; private set; }
+
+        public CardViewModel ReservedCard2 { get; private set; }
+
+        public CardViewModel ReservedCard3 { get; private set; }
 
         public ObservableCollection<CardViewModel> ReservedCards { get; set; }
 
@@ -76,12 +77,59 @@
 
         public void NotifyPropertyChanged()
         {
+            this.UpdateReservedCards();
+
             this.OnPropertyChanged("BorderColor");
             this.OnPropertyChanged("Cards");
             this.OnPropertyChanged("Chips");
             this.OnPropertyChanged("IsCurrentPlayer");
             this.OnPropertyChanged("IsPlayerPresent");
-            this.OnPropertyChanged("ReservedCards");
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void UpdateReservedCards()
+        {
+            if (this.player != null)
+            {
+                if (this.player.ReservedCards.Count > 0)
+                {
+                    this.ReservedCard1.Card = this.player.ReservedCards[0];
+                    this.OnPropertyChanged("ReservedCard1");
+                }
+                else
+                {
+                    this.ReservedCard1.Card = null;
+                    this.ReservedCard2.Card = null;
+                    this.ReservedCard3.Card = null;
+                    return;
+                }
+
+                if (this.player.ReservedCards.Count > 1)
+                {
+                    this.ReservedCard2.Card = this.player.ReservedCards[1];
+                    this.OnPropertyChanged("ReservedCard2");
+                }
+                else
+                {
+                    this.ReservedCard2.Card = null;
+                    this.ReservedCard3.Card = null;
+                    return;
+                }
+
+                if (this.player.ReservedCards.Count > 2)
+                {
+                    this.ReservedCard3.Card = this.player.ReservedCards[2];
+                    this.OnPropertyChanged("ReservedCard3");
+                }
+                else
+                {
+                    this.ReservedCard3.Card = null;
+                    return;
+                }
+            }
         }
 
         #endregion

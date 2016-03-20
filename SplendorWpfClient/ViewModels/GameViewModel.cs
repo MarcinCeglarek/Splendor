@@ -153,7 +153,7 @@
 
         public bool CanCurrentPlayerTakeChips(Chips chips)
         {
-            return this.Game.CanTakeChips(this.Game.CurrentPlayer, this.BankChipsToTake);
+            return this.Game.CanTakeChips(this.Game.CurrentPlayer, this.Game.CurrentPlayer.Chips + this.BankChipsToTake);
         }
 
         public void MoveChipToChipsToShow(Color color)
@@ -182,12 +182,48 @@
             }
         }
 
+        public void NotifyBankHover(ChipsViewModel chipsViewModel)
+        {
+            this.OnPropertyChanged("BanksChipsToShowBlack");
+            this.OnPropertyChanged("BanksChipsToShowBlue");
+            this.OnPropertyChanged("BanksChipsToShowGreen");
+            this.OnPropertyChanged("BanksChipsToShowRed");
+            this.OnPropertyChanged("BanksChipsToShowWhite");
+
+            this.OnPropertyChanged("BanksChipsToTakeBlack");
+            this.OnPropertyChanged("BanksChipsToTakeBlue");
+            this.OnPropertyChanged("BanksChipsToTakeGreen");
+            this.OnPropertyChanged("BanksChipsToTakeRed");
+            this.OnPropertyChanged("BanksChipsToTakeWhite");
+        }
+
         public void PurchaseCard(Card card)
         {
             Debug.WriteLine("GameViewModel:PurchaseCard");
             if (this.Game.CanPurchaseCard(this.Game.CurrentPlayer, card))
             {
                 this.Game.PurchaseCard(this.Game.CurrentPlayer, card);
+
+                this.UpdateBank();
+                this.UpdateDeck();
+                this.UpdatePlayerPanels();
+            }
+        }
+
+        public void PurchaseOrReserveCard(Card card)
+        {
+            Debug.WriteLine("GameViewModel:PurchaseOrReserveCard");
+            if (this.Game.CanPurchaseCard(this.Game.CurrentPlayer, card))
+            {
+                this.Game.PurchaseCard(this.Game.CurrentPlayer, card);
+
+                this.UpdateBank();
+                this.UpdateDeck();
+                this.UpdatePlayerPanels();
+            }
+            else if (this.Game.CanReserveCard(this.Game.CurrentPlayer, card))
+            {
+                this.Game.ReserveCard(this.Game.CurrentPlayer, card);
 
                 this.UpdateBank();
                 this.UpdateDeck();
@@ -270,9 +306,9 @@
 
         private int GetRemainingCardsOfTier(int i)
         {
-            var allCards = this.Game.AllCards.Count(card => card.Tier == i);
-            var availableCards = this.Game.AvailableCards.Count(card => card.Tier == i);
-            return allCards - availableCards;
+            var allGameCards = this.Game.AllCards.Count(card => card.Tier == i);
+            var availableGameCards = this.Game.AvailableCards.Count(card => card.Tier == i);
+            return allGameCards - availableGameCards;
         }
 
         private void NotifyBankChanges()

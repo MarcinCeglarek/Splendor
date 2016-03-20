@@ -25,28 +25,52 @@
         public MainWindow()
         {
             this.InitializeComponent();
+
+            this.BorderBanksChipsToShowBlack.MouseEnter += (sender, args) => this.BorderMouseEnter(sender, args, game.BanksChipsToShowBlack);
+            this.BorderBanksChipsToShowBlue.MouseEnter += (sender, args) => this.BorderMouseEnter(sender, args, game.BanksChipsToShowBlue);
+            this.BorderBanksChipsToShowGreen.MouseEnter += (sender, args) => this.BorderMouseEnter(sender, args, game.BanksChipsToShowGreen);
+            this.BorderBanksChipsToShowRed.MouseEnter += (sender, args) => this.BorderMouseEnter(sender, args, game.BanksChipsToShowRed);
+            this.BorderBanksChipsToShowWhite.MouseEnter += (sender, args) => this.BorderMouseEnter(sender, args, game.BanksChipsToShowWhite);
+
+            this.BorderBanksChipsToShowBlack.MouseLeave += (sender, args) => this.BorderMouseLeave(sender, args, game.BanksChipsToShowBlack);
+            this.BorderBanksChipsToShowBlue.MouseLeave += (sender, args) => this.BorderMouseLeave(sender, args, game.BanksChipsToShowBlue);
+            this.BorderBanksChipsToShowGreen.MouseLeave += (sender, args) => this.BorderMouseLeave(sender, args, game.BanksChipsToShowGreen);
+            this.BorderBanksChipsToShowRed.MouseLeave += (sender, args) => this.BorderMouseLeave(sender, args, game.BanksChipsToShowRed);
+            this.BorderBanksChipsToShowWhite.MouseLeave += (sender, args) => this.BorderMouseLeave(sender, args, game.BanksChipsToShowWhite);
+
+            this.BorderBanksChipsToTakeBlack.MouseEnter += (sender, args) => this.BorderMouseEnter(sender, args, game.BanksChipsToTakeBlack);
+            this.BorderBanksChipsToTakeBlue.MouseEnter += (sender, args) => this.BorderMouseEnter(sender, args, game.BanksChipsToTakeBlue);
+            this.BorderBanksChipsToTakeGreen.MouseEnter += (sender, args) => this.BorderMouseEnter(sender, args, game.BanksChipsToTakeGreen);
+            this.BorderBanksChipsToTakeRed.MouseEnter += (sender, args) => this.BorderMouseEnter(sender, args, game.BanksChipsToTakeRed);
+            this.BorderBanksChipsToTakeWhite.MouseEnter += (sender, args) => this.BorderMouseEnter(sender, args, game.BanksChipsToTakeWhite);
+
+            this.BorderBanksChipsToTakeBlack.MouseLeave += (sender, args) => this.BorderMouseLeave(sender, args, game.BanksChipsToTakeBlack);
+            this.BorderBanksChipsToTakeBlue.MouseLeave += (sender, args) => this.BorderMouseLeave(sender, args, game.BanksChipsToTakeBlue);
+            this.BorderBanksChipsToTakeGreen.MouseLeave += (sender, args) => this.BorderMouseLeave(sender, args, game.BanksChipsToTakeGreen);
+            this.BorderBanksChipsToTakeRed.MouseLeave += (sender, args) => this.BorderMouseLeave(sender, args, game.BanksChipsToTakeRed);
+            this.BorderBanksChipsToTakeWhite.MouseLeave += (sender, args) => this.BorderMouseLeave(sender, args, game.BanksChipsToTakeWhite);
         }
 
         #endregion
 
         #region Public Methods and Operators
 
-        public static void BuyCard(Card card)
-        {
-            game.PurchaseCard(card);
-        }
-
         public static void GiveBackChips()
         {
             throw new NotImplementedException();
         }
 
-        public static void ReserveCard()
+        public static void PurchaseOrReserveCard(Card card)
         {
-            throw new NotImplementedException();
+            game.PurchaseOrReserveCard(card);
         }
 
-        public static void TakeChips()
+        public static void PurchaseReservedCard(Card card)
+        {
+            game.PurchaseCard(card);
+        }
+
+        public static void ReserveCard()
         {
             throw new NotImplementedException();
         }
@@ -125,6 +149,24 @@
             game.MoveChipToChipsToShow(Color.White);
         }
 
+        private void BorderMouseEnter(object sender, MouseEventArgs e, ChipsViewModel chipsViewModel)
+        {
+            if (chipsViewModel != null)
+            {
+                chipsViewModel.IsMouseHover = true;
+                game.NotifyBankHover(chipsViewModel);
+            }
+        }
+
+        private void BorderMouseLeave(object sender, MouseEventArgs e, ChipsViewModel chipsViewModel)
+        {
+            if (chipsViewModel != null)
+            {
+                chipsViewModel.IsMouseHover = false;
+                game.NotifyBankHover(chipsViewModel);
+            }
+        }
+
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             game = new GameViewModel();
@@ -159,15 +201,20 @@
         private void PopulatePlayerPanels()
         {
             this.PlayerPanel1.DataContext = game.Players[0];
+            this.PlayerPanel1.AttachReservedCards();
+
             this.PlayerPanel2.DataContext = game.Players[1];
+            this.PlayerPanel2.AttachReservedCards();
 
             if (game.Players.Count > 2)
             {
                 this.PlayerPanel3.DataContext = game.Players[2];
+                this.PlayerPanel3.AttachReservedCards();
 
                 if (game.Players.Count > 3)
                 {
                     this.PlayerPanel4.DataContext = game.Players[3];
+                    this.PlayerPanel4.AttachReservedCards();
                 }
             }
         }

@@ -11,6 +11,14 @@
 
     public class ChipsViewModel : AbstractViewModel
     {
+        #region Fields
+
+        private bool isMouseHover;
+
+        private Color? orginalBorderColor;
+
+        #endregion
+
         #region Constructors and Destructors
 
         public ChipsViewModel()
@@ -21,14 +29,13 @@
         {
             this.BackColor = new SolidColorBrush(GetBackColor(color));
             this.ForeColor = new SolidColorBrush(GetForeColor(color));
-            this.BorderColor = new SolidColorBrush(Colors.Black);
             this.Value = value;
         }
 
         public ChipsViewModel(KeyValuePair<Color, int> chips, Color? borderColor = null)
             : this(chips.Key, chips.Value)
         {
-            this.BorderColor = new SolidColorBrush(borderColor.HasValue ? GetForeColor(borderColor.Value) : Colors.Black);
+            this.orginalBorderColor = borderColor;
         }
 
         #endregion
@@ -37,13 +44,31 @@
 
         public SolidColorBrush BackColor { get; set; }
 
-        public SolidColorBrush BorderColor { get; set; }
+        public SolidColorBrush BorderColor
+        {
+            get
+            {
+                return this.IsMouseHover
+                           ? new SolidColorBrush(Colors.Magenta)
+                           : new SolidColorBrush(this.orginalBorderColor.HasValue ? GetForeColor(this.orginalBorderColor.Value) : Colors.Black);
+            }
+        }
 
         public SolidColorBrush ForeColor { get; set; }
 
-        public int Value { get; set; }
+        public bool IsMouseHover
+        {
+            get { return this.isMouseHover; }
+            set
+            {
+                this.isMouseHover = value;
+                this.OnPropertyChanged("BorderColor");
+            }
+        }
 
         public bool IsValuePositive { get { return this.Value > 0; } }
+
+        public int Value { get; set; }
 
         #endregion
     }

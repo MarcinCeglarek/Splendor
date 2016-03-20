@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:ViewModels="clr-namespace:SplendorWpfClient.ViewModels" x:Class="SplendorWpfClient.Panels.PlayerPanel" 
+             xmlns:ViewModels="clr-namespace:SplendorWpfClient.ViewModels" xmlns:local="clr-namespace:SplendorWpfClient.Panels" x:Class="SplendorWpfClient.Panels.PlayerPanel" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -25,7 +25,7 @@
     <Viewbox StretchDirection="Both" Stretch="Uniform">
         <Border BorderBrush="{Binding BorderColor, Mode=OneWay}" BorderThickness="2" CornerRadius="10" Height="235" Width="240">
             <Grid>
-                <Label Margin="0,0,0,183" Content="{Binding Name, FallbackValue=&lt;PlayerName&gt;, Mode=OneWay}" Foreground="{Binding BorderColor, Mode=OneWay}" FontSize="30" HorizontalContentAlignment="Center"></Label>
+                <Label Margin="0,0,0,183" Content="{Binding Name, FallbackValue=&lt;PlayerName&gt;, Mode=OneWay}" Foreground="{Binding BorderColor, Mode=OneWay}" FontSize="30" HorizontalContentAlignment="Center"/>
                 <Grid Margin="10,53,10,140">
                     <ItemsControl ItemsSource="{Binding Chips}" ItemTemplate="{StaticResource ChipsDataTemplate}" VerticalContentAlignment="Bottom">
                         <ItemsControl.ItemsPanel>
@@ -44,6 +44,10 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </Grid>
+
+                <local:CardPanel x:Name="ReservedCard1" HorizontalAlignment="Left" Height="100" Margin="10,141,0,-10" VerticalAlignment="Top" Width="84" MouseUp="ReservedCard1MouseUp"/>
+                <local:CardPanel x:Name="ReservedCard2" HorizontalAlignment="Left" Height="100" Margin="69,141,0,-10" VerticalAlignment="Top" Width="84" MouseUp="ReservedCard2MouseUp"/>
+                <local:CardPanel x:Name="ReservedCard3" HorizontalAlignment="Left" Height="100" Margin="142,141,0,-10" VerticalAlignment="Top" Width="84" MouseUp="ReservedCard3MouseUp"/>
             </Grid>
         </Border>
     </Viewbox>
