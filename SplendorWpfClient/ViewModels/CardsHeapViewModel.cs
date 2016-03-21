@@ -1,23 +1,36 @@
 ﻿namespace SplendorWpfClient.ViewModels
 {
-    using System.Data;
+    #region
+
     using System.Windows.Media;
+
+    #endregion
 
     public class CardsHeapViewModel : AbstractViewModel
     {
-        public int Count { get; set; }
+        #region Fields
+
+        private int count;
+
+        #endregion
+
+        #region Public Properties
 
         public RadialGradientBrush Background { get; set; }
 
-        public bool IsCountPositive
+        public int Count
         {
-            get { return this.Count > 0; }
+            get { return this.count; }
+            set
+            {
+                this.count = value;
+                this.OnPropertyChanged();
+                this.OnPropertyChanged("IsCountPositive");
+            }
         }
 
-        public void Update()
-        {
-            this.OnPropertyChanged("Count");
-            this.OnPropertyChanged("IsCountPositive");
-        }
+        public bool IsCountPositive { get { return this.Count > 0; } }
+
+        #endregion
     }
 }

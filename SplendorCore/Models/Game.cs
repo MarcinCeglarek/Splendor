@@ -25,13 +25,13 @@
 
         private readonly List<ChatEntry> chat;
 
+        private readonly List<HistoryEntry> history;
+
         private readonly List<IBroadcastMessages> subscribers;
 
         private Chips bank;
 
         private Player firstPlayer;
-
-        private List<HistoryEntry> history;
 
         private List<Player> players;
 
@@ -199,6 +199,11 @@
 
             this.PlayerFinished();
             this.subscribers.ForEach(subscriber => subscriber.CardPurchased(this));
+        }
+
+        public int RemainingCardsOfTier(int i)
+        {
+            return this.Deck.RemainingCardsOfTier(i);
         }
 
         public void RemovePlayer(Player player)

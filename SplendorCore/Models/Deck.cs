@@ -12,7 +12,6 @@
 
     using SplendorCore.Helpers;
     using SplendorCore.Models.Exceptions.AristocrateExceptions;
-    using SplendorCore.Models.Exceptions.CardExceptions;
     using SplendorCore.Models.Exceptions.FileExceptions;
 
     #endregion
@@ -98,6 +97,11 @@
             this.aristocratesInBank = this.aristocratesInBank.Shuffle().Take(numberOfAristocrates).ToList();
 
             this.AvailableAristocrates = new ReadOnlyCollection<Aristocrate>(this.aristocratesInBank);
+        }
+
+        public int RemainingCardsOfTier(int tier)
+        {
+            return this.cardsInBank.Count(card => card.Tier == tier) - this.GetVisibleCardsOfTier(tier).Count();
         }
 
         public void RemoveAristocrate(Aristocrate aristocrate)

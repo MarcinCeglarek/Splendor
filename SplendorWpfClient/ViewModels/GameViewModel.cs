@@ -66,8 +66,6 @@
 
         public ObservableCollection<CardViewModel> AvailableCards { get; set; }
 
-        public ObservableCollection<HistoryEntry> History { get; set; } 
-
         public Chips BankChipsToShow { get; set; }
 
         public Chips BankChipsToTake { get; set; }
@@ -100,6 +98,8 @@
 
         public bool CanPlayerBeAdded { get { return this.Game != null && this.Game.Players.Count < 4 && !this.Game.IsActive; } }
 
+        public ObservableCollection<HistoryEntry> History { get; set; }
+
         public bool IsActive { get { return this.Game != null && this.Game.IsActive; } }
 
         public bool IsNotStarted { get { return this.Game == null || !this.Game.HasStarted; } }
@@ -108,32 +108,11 @@
 
         public ReadOnlyObservableCollection<PlayerViewModel> Players { get; set; }
 
-        public CardsHeapViewModel Tier1
-        {
-            get
-            {
-                this.tier1.Count = this.GetRemainingCardsOfTier(1);
-                return this.tier1;
-            }
-        }
+        public CardsHeapViewModel Tier1 { get { return this.tier1; } }
 
-        public CardsHeapViewModel Tier2
-        {
-            get
-            {
-                this.tier2.Count = this.GetRemainingCardsOfTier(2);
-                return this.tier2;
-            }
-        }
+        public CardsHeapViewModel Tier2 { get { return this.tier2; } }
 
-        public CardsHeapViewModel Tier3
-        {
-            get
-            {
-                this.tier3.Count = this.GetRemainingCardsOfTier(3);
-                return this.tier3;
-            }
-        }
+        public CardsHeapViewModel Tier3 { get { return this.tier3; } }
 
         #endregion
 
@@ -322,7 +301,7 @@
             this.UpdatePlayerPanels();
             this.UpdateBank();
             this.UpdateHistory();
-            this.NotifyDeckChanges();
+            this.UpdateDeckHeaps();
         }
 
         public void TakeChips(Chips chips)
@@ -354,13 +333,6 @@
             this.OnPropertyChanged("AvailableCards");
         }
 
-        private int GetRemainingCardsOfTier(int i)
-        {
-            var allGameCards = this.Game.AllCards.Count(card => card.Tier == i);
-            var availableGameCards = this.Game.AvailableCards.Count(card => card.Tier == i);
-            return allGameCards - availableGameCards;
-        }
-
         private void NotifyBankChanges()
         {
             this.OnPropertyChanged("BanksChipsToShowWhite");
@@ -377,15 +349,11 @@
             this.OnPropertyChanged("BanksChipsToTakeBlack");
         }
 
-        private void NotifyDeckChanges()
+        private void UpdateDeckHeaps()
         {
-            this.OnPropertyChanged("Tier1");
-            this.OnPropertyChanged("Tier2");
-            this.OnPropertyChanged("Tier3");
-
-            this.Tier1.Update();
-            this.Tier2.Update();
-            this.Tier3.Update();
+            this.Tier1.Count = Game.RemainingCardsOfTier(1);
+            this.Tier2.Count = Game.RemainingCardsOfTier(2);
+            this.Tier3.Count = Game.RemainingCardsOfTier(3);
         }
 
         private void NotifyGameStarts()
@@ -410,15 +378,6 @@
             this.NotifyBankChanges();
         }
 
-        private void UpdateHistory()
-        {
-            this.History.Clear();
-            foreach (var historyEntry in this.Game.History)
-            {
-                this.History.Add(historyEntry);
-            }
-        }
-
         private void UpdateDeck()
         {
             foreach (var availableCard in this.availableCards)
@@ -430,7 +389,16 @@
                 }
             }
 
-            this.NotifyDeckChanges();
+            this.UpdateDeckHeaps();
+        }
+
+        private void UpdateHistory()
+        {
+            this.History.Clear();
+            foreach (var historyEntry in this.Game.History)
+            {
+                this.History.Add(historyEntry);
+            }
         }
 
         private void UpdatePlayerPanels()
