@@ -35,9 +35,11 @@
 
         #region Methods
 
-        private void CostBorder_MouseUp(object sender, MouseButtonEventArgs e)
+        private void CostBorderMouseUp(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.GiveBackChips();
+            var color = (Color)((Border)sender).ToolTip;
+            var player = ((PlayerViewModel)this.DataContext).Player;
+            MainWindow.GiveBackChips(player, color);
         }
 
         private void ReservedCard1MouseUp(object sender, MouseButtonEventArgs e)

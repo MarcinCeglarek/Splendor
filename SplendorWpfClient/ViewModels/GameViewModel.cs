@@ -2,6 +2,7 @@
 {
     #region
 
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
@@ -140,6 +141,14 @@
         public bool CanCurrentPlayerTakeChips(Chips chips)
         {
             return this.Game.CanTakeChips(this.Game.CurrentPlayer, this.Game.CurrentPlayer.Chips + this.BankChipsToTake);
+        }
+
+        public void GiveBackChips(Player player, Color color)
+        {
+            if (player == Game.CurrentPlayer && player.Chips[color] + this.BankChipsToTake[color] > 0)
+            {
+                this.MoveChipToChipsToShow(color);
+            }
         }
 
         public void MoveChipToChipsToShow(Color color)
@@ -349,13 +358,6 @@
             this.OnPropertyChanged("BanksChipsToTakeBlack");
         }
 
-        private void UpdateDeckHeaps()
-        {
-            this.Tier1.Count = Game.RemainingCardsOfTier(1);
-            this.Tier2.Count = Game.RemainingCardsOfTier(2);
-            this.Tier3.Count = Game.RemainingCardsOfTier(3);
-        }
-
         private void NotifyGameStarts()
         {
             this.OnPropertyChanged("IsActive");
@@ -390,6 +392,13 @@
             }
 
             this.UpdateDeckHeaps();
+        }
+
+        private void UpdateDeckHeaps()
+        {
+            this.Tier1.Count = this.Game.RemainingCardsOfTier(1);
+            this.Tier2.Count = this.Game.RemainingCardsOfTier(2);
+            this.Tier3.Count = this.Game.RemainingCardsOfTier(3);
         }
 
         private void UpdateHistory()

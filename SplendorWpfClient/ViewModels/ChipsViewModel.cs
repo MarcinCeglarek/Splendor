@@ -30,6 +30,7 @@
             this.BackColor = new SolidColorBrush(GetBackColor(color));
             this.ForeColor = new SolidColorBrush(GetForeColor(color));
             this.Value = value;
+            this.Color = color;
         }
 
         public ChipsViewModel(KeyValuePair<Color, int> chips, Color? borderColor = null)
@@ -54,6 +55,8 @@
             }
         }
 
+        public Color Color { get; private set; }
+
         public SolidColorBrush ForeColor { get; set; }
 
         public bool IsMouseHover
@@ -66,9 +69,9 @@
             }
         }
 
-        public bool IsValuePositive { get { return this.Value > 0; } }
+        public bool HasValue { get { return this.Value != 0; } }
 
-        public int IsValuePositiveOpacity { get { return this.IsValuePositive ? 100 : 0; } }
+        public int HasValueOpacity { get { return this.HasValue ? 100 : 0; } }
 
         public int Value { get; set; }
 

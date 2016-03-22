@@ -55,9 +55,9 @@
 
         #region Public Methods and Operators
 
-        public static void GiveBackChips()
+        public static void GiveBackChips(Player player, Color color)
         {
-            throw new NotImplementedException();
+            game.GiveBackChips(player, color);
         }
 
         public static void PurchaseOrReserveCard(Card card)
@@ -68,11 +68,6 @@
         public static void PurchaseReservedCard(Card card)
         {
             game.PurchaseCard(card);
-        }
-
-        public static void ReserveCard()
-        {
-            throw new NotImplementedException();
         }
 
         public void AddPlayer(string name)
