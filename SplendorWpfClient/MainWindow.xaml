@@ -8,6 +8,30 @@
         Title="MainWindow" Height="833" Width="964" Closed="WindowClosed">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <LinearGradientBrush x:Key="RedGradient" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Red"/>
+            <GradientStop Color="#FF5D0000" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="BlueGradient" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="RoyalBlue" />
+            <GradientStop Color="#FF001E7A" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="GreenGradient" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="ForestGreen" />
+            <GradientStop Color="#FF2C5900" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="WhiteGradient" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="WhiteSmoke" />
+            <GradientStop Color="#FF7A7A7A" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="BlackGradient"  EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF363636" />
+            <GradientStop Color="Black" Offset="1"/>
+        </LinearGradientBrush>
     </Window.Resources>
     <Window.DataContext>
         <ViewModels:GameViewModel/>
@@ -28,10 +52,10 @@
             <Panels:CardPanel x:Name="Card32" HorizontalAlignment="Left" Margin="240,410,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
             <Panels:CardPanel x:Name="Card33" HorizontalAlignment="Left" Margin="350,410,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
             <Panels:CardPanel x:Name="Card34" HorizontalAlignment="Left" Margin="461,410,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
-            <Panels:PlayerPanel x:Name="PlayerPanel1" HorizontalAlignment="Left" Margin="21,557,0,0" VerticalAlignment="Top" Height="190" Width="194"/>
-            <Panels:PlayerPanel x:Name="PlayerPanel2" HorizontalAlignment="Left" Margin="220,557,0,0" VerticalAlignment="Top" Height="190" Width="193"/>
-            <Panels:PlayerPanel x:Name="PlayerPanel3" HorizontalAlignment="Left" Margin="418,557,0,0" VerticalAlignment="Top" Height="190" Width="190"/>
-            <Panels:PlayerPanel x:Name="PlayerPanel4" HorizontalAlignment="Left" Margin="613,557,0,0" VerticalAlignment="Top" Height="190" Width="192"/>
+            <Panels:PlayerPanel x:Name="PlayerPanel1" HorizontalAlignment="Left" Margin="10,557,0,0" VerticalAlignment="Top" Height="190" Width="194"/>
+            <Panels:PlayerPanel x:Name="PlayerPanel2" HorizontalAlignment="Left" Margin="229,557,0,0" VerticalAlignment="Top" Height="190" Width="194"/>
+            <Panels:PlayerPanel x:Name="PlayerPanel3" HorizontalAlignment="Left" Margin="458,557,0,0" VerticalAlignment="Top" Height="190" Width="194"/>
+            <Panels:PlayerPanel x:Name="PlayerPanel4" HorizontalAlignment="Left" Margin="698,557,0,0" VerticalAlignment="Top" Height="190" Width="194"/>
             <Panels:CardsHeap x:Name="CardsTier1" HorizontalAlignment="Left" Margin="20,129,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
             <Panels:CardsHeap x:Name="CardsTier2" HorizontalAlignment="Left" Margin="20,270,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
             <Panels:CardsHeap x:Name="CardsTier3" HorizontalAlignment="Left" Margin="20,410,0,0" VerticalAlignment="Top" Height="137" Width="106"/>

@@ -30,9 +30,9 @@
 
         protected static readonly Color Gray = Colors.Gray;
 
-        protected static readonly Color Green = Colors.LimeGreen;
+        protected static readonly Color Green = Colors.ForestGreen;
 
-        protected static readonly Color Red = Colors.OrangeRed;
+        protected static readonly Color Red = Colors.DarkRed;
 
         protected static readonly Color White = Colors.WhiteSmoke;
 

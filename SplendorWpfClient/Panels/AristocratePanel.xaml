@@ -13,9 +13,16 @@
         <ViewModels:AristocrateViewModel/>
     </UserControl.DataContext>
     <Viewbox StretchDirection="Both" Stretch="Uniform">
-        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="20" Height="200" Width="200" Visibility="{Binding IsAristocratePresent, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="20" Height="200" Width="200" Visibility="{Binding IsAristocratePresent, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF999999" Offset="0"/>
+                    <GradientStop Color="#FF343434" Offset="1"/>
+                    <GradientStop Color="#FF5C5C5C" Offset="0.745"/>
+                </LinearGradientBrush>
+            </Border.Background>
             <Grid>
-                <Label Content="{Binding VictoryPoints}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="82" Width="170" FontSize="35" VerticalContentAlignment="Center" Padding="20" Background="{x:Null}" HorizontalContentAlignment="Right" Visibility="{Binding IsVictoryPointsPresent, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
+                <Label Content="{Binding VictoryPoints}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="69" Width="170" FontSize="45" VerticalContentAlignment="Center" Padding="0, 0, 20, 0" HorizontalContentAlignment="Right" Foreground="#FFE6E6E6" FontWeight="SemiBold" Visibility="{Binding IsVictoryPointsPresent, Converter={StaticResource BooleanToVisibilityConverter}}"  Margin="13,0"/>
                 <Grid Margin="10,10,66,10">
                     <ItemsControl ItemsSource="{Binding VisibleRequiredCards}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right">
                         <ItemsControl.ItemTemplate>

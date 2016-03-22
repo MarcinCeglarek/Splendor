@@ -4,9 +4,12 @@
 
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System.Windows;
     using System.Windows.Media;
 
     using SplendorCore.Models;
+
+    using SplendorWpfClient.Panels;
 
     #endregion
 
@@ -87,10 +90,25 @@
                 this.OnPropertyChanged("VisibleCost");
                 this.OnPropertyChanged("ForeColor");
                 this.OnPropertyChanged("Background");
+                this.OnPropertyChanged("CardBackground");
             }
         }
 
         public SolidColorBrush ForeColor { get { return this.IsCardPresent ? new SolidColorBrush(GetForeColor(this.card.Color)) : new SolidColorBrush(Gold); } }
+
+        public object CardBackground
+        {
+            get
+            {
+                if (this.card != null)
+                {
+                    var resourceName = string.Format("{0}Gradient", this.card.Color);
+                    return Application.Current.MainWindow.Resources[resourceName];
+                }
+
+                return null;
+            }
+        }
 
         public bool IsCardPresent { get { return this.Card != null; } }
 

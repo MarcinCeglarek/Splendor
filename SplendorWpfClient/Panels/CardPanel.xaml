@@ -8,57 +8,15 @@
              d:DesignHeight="262" Width="218" ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <LinearGradientBrush x:Key="RedGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="Red" Offset="0.25"/>
-            <GradientStop Color="#FF5D0000" Offset="1"/>
-            <GradientStop Color="#FFFFB3B3"/>
-            <GradientStop Color="#FFF10000" Offset="0.75"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="BlueGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="RoyalBlue" Offset="0.25"/>
-            <GradientStop Color="#FF001E7A" Offset="1"/>
-            <GradientStop Color="#FFA9BFFF"/>
-            <GradientStop Color="RoyalBlue" Offset="0.75"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="GreenGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="LawnGreen" Offset="0.25"/>
-            <GradientStop Color="#FF2C5900" Offset="1"/>
-            <GradientStop Color="#FFC5FF8D"/>
-            <GradientStop Color="LawnGreen" Offset="0.75"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="WhiteGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FFCFCFCF" Offset="0.25"/>
-            <GradientStop Color="#FF7A7A7A" Offset="1"/>
-            <GradientStop Color="White"/>
-            <GradientStop Color="WhiteSmoke" Offset="0.75"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="BlackGradientBrush"  EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF363636" Offset="0.25"/>
-            <GradientStop Color="Black" Offset="1"/>
-            <GradientStop Color="#FF535353"/>
-            <GradientStop Color="#FF363636" Offset="0.75"/>
-        </LinearGradientBrush>
-
-        <RadialGradientBrush x:Key="UnknownCardBrush">
-            <GradientStop Color="#FFFFF05F" Offset="0.25"/>
-            <GradientStop Color="White" Offset="1"/>
-            <GradientStop Color="#FFFBFBFB"/>
-            <GradientStop Color="#FFC5CB53" Offset="0.75"/>
-        </RadialGradientBrush>
-
     </UserControl.Resources>
     <UserControl.DataContext>
         <ViewModels:CardViewModel/>
     </UserControl.DataContext>
 
     <Viewbox StretchDirection="Both" Stretch="Uniform">
-        <Border BorderBrush="{Binding BorderColor, Mode=OneWay}" BorderThickness="5" CornerRadius="10" Background="{Binding Background, TargetNullValue={StaticResource UnknownCardBrush}}" Height="235" MouseUp="Border_MouseUp" Width="186" Visibility="{Binding IsCardPresent, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" MouseEnter="Border_MouseEnter" MouseLeave="Border_MouseLeave">
+        <Border BorderBrush="{Binding BorderColor}" BorderThickness="5" CornerRadius="10" Background="{Binding CardBackground}" Height="235" MouseUp="Border_MouseUp" Width="186" Visibility="{Binding IsCardPresent, Converter={StaticResource BooleanToVisibilityConverter}}" MouseEnter="Border_MouseEnter" MouseLeave="Border_MouseLeave">
             <Grid>
-                <Label Content="{Binding VictoryPoints}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="82" Width="170" FontSize="35" VerticalContentAlignment="Center" Padding="20" Background="{x:Null}" HorizontalContentAlignment="Right" Foreground="{Binding ForeColor, Mode=OneWay}" Visibility="{Binding IsVictoryPointsPresent, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
+                <Label Content="{Binding VictoryPoints}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="82" Width="170" FontSize="40" VerticalContentAlignment="Center" Padding="0, 0, 20, 0" HorizontalContentAlignment="Right" Foreground="{Binding ForeColor}" Visibility="{Binding IsVictoryPointsPresent, Converter={StaticResource BooleanToVisibilityConverter}}" FontWeight="SemiBold"/>
                 <Grid Margin="10,10,66,10">
                     <ItemsControl ItemsSource="{Binding VisibleCost}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right">
                         <ItemsControl.ItemTemplate>
