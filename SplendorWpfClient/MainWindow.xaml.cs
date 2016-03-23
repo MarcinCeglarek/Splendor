@@ -166,8 +166,6 @@
         {
             game = new GameViewModel();
             this.DataContext = game;
-            game.AddPlayer(new Player() { Name = "AA" });
-            game.AddPlayer(new Player() { Name = "BB" });
 
             this.CardsTier1.DataContext = game.Tier1;
             this.CardsTier2.DataContext = game.Tier2;
@@ -195,23 +193,43 @@
 
         private void PopulatePlayerPanels()
         {
+            if (game.Players.Count <= 0)
+            {
+                return;
+            }
+
             this.PlayerPanel1.DataContext = game.Players[0];
             this.PlayerPanel1.AttachReservedCards();
+
+            if (game.Players.Count <= 1)
+            {
+                return;
+            }
 
             this.PlayerPanel2.DataContext = game.Players[1];
             this.PlayerPanel2.AttachReservedCards();
 
-            if (game.Players.Count > 2)
+            if (game.Players.Count <= 2)
             {
-                this.PlayerPanel3.DataContext = game.Players[2];
-                this.PlayerPanel3.AttachReservedCards();
-
-                if (game.Players.Count > 3)
-                {
-                    this.PlayerPanel4.DataContext = game.Players[3];
-                    this.PlayerPanel4.AttachReservedCards();
-                }
+                return;
             }
+
+            this.PlayerPanel3.DataContext = game.Players[2];
+            this.PlayerPanel3.AttachReservedCards();
+
+            if (game.Players.Count <= 3)
+            {
+                return;
+            }
+
+            this.PlayerPanel4.DataContext = game.Players[3];
+            this.PlayerPanel4.AttachReservedCards();
+        }
+
+        private void SendChatButtonClick(object sender, RoutedEventArgs e)
+        {
+            game.SendChat(this.ChatMessage.Text);
+            this.ChatMessage.Text = string.Empty;
         }
 
         private void StartGameClick(object sender, RoutedEventArgs e)

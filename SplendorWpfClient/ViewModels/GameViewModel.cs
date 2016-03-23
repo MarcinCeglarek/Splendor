@@ -2,7 +2,6 @@
 {
     #region
 
-    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
@@ -12,6 +11,7 @@
 
     using SplendorCore.Data;
     using SplendorCore.Models;
+    using SplendorCore.Models.History;
 
     using Color = SplendorCore.Models.Color;
 
@@ -145,7 +145,7 @@
 
         public void GiveBackChips(Player player, Color color)
         {
-            if (player == Game.CurrentPlayer && player.Chips[color] + this.BankChipsToTake[color] > 0)
+            if (player == this.Game.CurrentPlayer && player.Chips[color] + this.BankChipsToTake[color] > 0)
             {
                 this.MoveChipToChipsToShow(color);
             }
@@ -268,6 +268,12 @@
                 this.UpdatePlayerPanels();
                 this.UpdateHistory();
             }
+        }
+
+        public void SendChat(string message)
+        {
+            this.Game.ChatMessage(this.Game.CurrentPlayer, message);
+            this.UpdateHistory();
         }
 
         public void Start()

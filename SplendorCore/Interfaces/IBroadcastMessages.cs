@@ -3,6 +3,7 @@
     #region
 
     using SplendorCore.Models;
+    using SplendorCore.Models.History;
 
     #endregion
 

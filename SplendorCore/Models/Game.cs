@@ -16,14 +16,13 @@
     using SplendorCore.Models.Exceptions.ChipOperationExceptions;
     using SplendorCore.Models.Exceptions.GameExceptions;
     using SplendorCore.Models.Exceptions.PlayerExceptions;
+    using SplendorCore.Models.History;
 
     #endregion
 
     public class Game : IGameActions
     {
         #region Fields
-
-        private readonly List<ChatEntry> chat;
 
         private readonly List<HistoryEntry> history;
 
@@ -45,8 +44,6 @@
             this.players = new List<Player>();
             this.Players = new ReadOnlyCollection<Player>(this.players);
             this.subscribers = new List<IBroadcastMessages>();
-            this.chat = new List<ChatEntry>();
-            this.Chat = new ReadOnlyCollection<ChatEntry>(this.chat);
             this.history = new List<HistoryEntry>();
             this.History = new ReadOnlyCollection<HistoryEntry>(this.history);
             this.HasStarted = false;
@@ -174,7 +171,7 @@
             if (this.players.Contains(player))
             {
                 var entry = new ChatEntry(player, message);
-                this.chat.Add(entry);
+                this.history.Add(entry);
                 this.subscribers.ForEach(subscriber => subscriber.ChatMessage(entry));
             }
             else

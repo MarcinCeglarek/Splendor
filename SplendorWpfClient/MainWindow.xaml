@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Panels="clr-namespace:SplendorWpfClient.Panels" xmlns:ViewModels="clr-namespace:SplendorWpfClient.ViewModels"
     xmlns:local="clr-namespace:SplendorCore.Models;assembly=SplendorCore"
+    xmlns:history="clr-namespace:SplendorCore.Models.History;assembly=SplendorCore"
     x:Class="SplendorWpfClient.MainWindow"
     Loaded="MainWindow_OnLoaded"
         Title="MainWindow" Height="833" Width="964" Closed="WindowClosed">
@@ -38,27 +39,27 @@
     </Window.DataContext>
     <Viewbox StretchDirection="Both" Stretch="Uniform">
         <Grid Width="900">
-            <Panels:CardPanel x:Name="Card11" HorizontalAlignment="Left" Margin="130,129,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
+            <Panels:CardPanel x:Name="Card11" HorizontalAlignment="Left" Margin="124,127,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
             <Button x:Name="AddPlayerButton" Content="Add player" HorizontalAlignment="Left" Margin="264,10,0,0" VerticalAlignment="Top" Width="137" Height="53" Click="AddPlayerClick" IsEnabled="{Binding CanPlayerBeAdded, Mode=OneWay}" Visibility="{Binding IsNotStarted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <Button x:Name="StartGameButton" Content="Start game" HorizontalAlignment="Left" Margin="406,10,0,0" VerticalAlignment="Top" Width="137" Height="53" Click="StartGameClick" IsEnabled="{Binding CanGameBeStarted, Mode=OneWay}" Visibility="{Binding IsNotStarted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Panels:CardPanel x:Name="Card12" HorizontalAlignment="Left" Margin="240,129,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
-            <Panels:CardPanel x:Name="Card13" HorizontalAlignment="Left" Margin="350,129,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
-            <Panels:CardPanel x:Name="Card14" HorizontalAlignment="Left" Margin="461,129,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
-            <Panels:CardPanel x:Name="Card21" HorizontalAlignment="Left" Margin="130,270,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
-            <Panels:CardPanel x:Name="Card22" HorizontalAlignment="Left" Margin="240,270,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
-            <Panels:CardPanel x:Name="Card23" HorizontalAlignment="Left" Margin="350,270,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
-            <Panels:CardPanel x:Name="Card24" HorizontalAlignment="Left" Margin="461,270,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
-            <Panels:CardPanel x:Name="Card31" HorizontalAlignment="Left" Margin="130,410,0,0" VerticalAlignment="Top" Height="137" Width="106"/>
-            <Panels:CardPanel x:Name="Card32" HorizontalAlignment="Left" Margin="240,410,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
-            <Panels:CardPanel x:Name="Card33" HorizontalAlignment="Left" Margin="350,410,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
-            <Panels:CardPanel x:Name="Card34" HorizontalAlignment="Left" Margin="461,410,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
+            <Panels:CardPanel x:Name="Card12" HorizontalAlignment="Left" Margin="234,127,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
+            <Panels:CardPanel x:Name="Card13" HorizontalAlignment="Left" Margin="344,127,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
+            <Panels:CardPanel x:Name="Card14" HorizontalAlignment="Left" Margin="455,127,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
+            <Panels:CardPanel x:Name="Card21" HorizontalAlignment="Left" Margin="124,268,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
+            <Panels:CardPanel x:Name="Card22" HorizontalAlignment="Left" Margin="234,268,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
+            <Panels:CardPanel x:Name="Card23" HorizontalAlignment="Left" Margin="344,268,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
+            <Panels:CardPanel x:Name="Card24" HorizontalAlignment="Left" Margin="455,268,0,0" VerticalAlignment="Top" Height="136" Width="107"/>
+            <Panels:CardPanel x:Name="Card31" HorizontalAlignment="Left" Margin="124,408,0,0" VerticalAlignment="Top" Height="137" Width="106"/>
+            <Panels:CardPanel x:Name="Card32" HorizontalAlignment="Left" Margin="234,408,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
+            <Panels:CardPanel x:Name="Card33" HorizontalAlignment="Left" Margin="344,408,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
+            <Panels:CardPanel x:Name="Card34" HorizontalAlignment="Left" Margin="455,408,0,0" VerticalAlignment="Top" Height="137" Width="107"/>
             <Panels:PlayerPanel x:Name="PlayerPanel1" HorizontalAlignment="Left" Margin="10,557,0,0" VerticalAlignment="Top" Height="190" Width="194"/>
             <Panels:PlayerPanel x:Name="PlayerPanel2" HorizontalAlignment="Left" Margin="229,557,0,0" VerticalAlignment="Top" Height="190" Width="194"/>
             <Panels:PlayerPanel x:Name="PlayerPanel3" HorizontalAlignment="Left" Margin="458,557,0,0" VerticalAlignment="Top" Height="190" Width="194"/>
             <Panels:PlayerPanel x:Name="PlayerPanel4" HorizontalAlignment="Left" Margin="698,557,0,0" VerticalAlignment="Top" Height="190" Width="194"/>
-            <Panels:CardsHeap x:Name="CardsTier1" HorizontalAlignment="Left" Margin="20,129,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
-            <Panels:CardsHeap x:Name="CardsTier2" HorizontalAlignment="Left" Margin="20,270,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
-            <Panels:CardsHeap x:Name="CardsTier3" HorizontalAlignment="Left" Margin="20,410,0,0" VerticalAlignment="Top" Height="137" Width="106"/>
+            <Panels:CardsHeap x:Name="CardsTier1" HorizontalAlignment="Left" Margin="14,127,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
+            <Panels:CardsHeap x:Name="CardsTier2" HorizontalAlignment="Left" Margin="14,268,0,0" VerticalAlignment="Top" Height="136" Width="106"/>
+            <Panels:CardsHeap x:Name="CardsTier3" HorizontalAlignment="Left" Margin="14,408,0,0" VerticalAlignment="Top" Height="137" Width="106"/>
             <Panels:AristocratePanel x:Name="Aristocrate1" HorizontalAlignment="Left" Margin="41,10,0,0" VerticalAlignment="Top" Height="102" Width="108"/>
             <Panels:AristocratePanel x:Name="Aristocrate2" HorizontalAlignment="Left" Margin="149,10,0,0" VerticalAlignment="Top" Height="102" Width="108"/>
             <Panels:AristocratePanel x:Name="Aristocrate3" HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top" Height="102" Width="108"/>
@@ -102,9 +103,9 @@
                 </Border>
             </Grid>
             <Button Content="Take" HorizontalAlignment="Left" Margin="573,135,0,0" VerticalAlignment="Top" Width="317" Height="49" Click="BankTakeButtonClick" Visibility="{Binding IsStarted, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
-            <ListBox HorizontalAlignment="Left" Height="358" Margin="573,189,0,0" VerticalAlignment="Top" Width="317" ItemsSource="{Binding History}" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+            <ListBox HorizontalAlignment="Left" Height="330" Margin="573,189,0,0" VerticalAlignment="Top" Width="317" ItemsSource="{Binding History}" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
                 <ListBox.Resources>
-                    <DataTemplate DataType="{x:Type local:PlayerJoined}">
+                    <DataTemplate DataType="{x:Type history:PlayerJoined}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding GetTimestamp}" Margin="0, 0, 10, 0"/>
                             <TextBlock Text="Player " />
@@ -112,13 +113,13 @@
                             <TextBlock Text=" joined" />
                         </StackPanel>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type local:GameStarted}">
+                    <DataTemplate DataType="{x:Type history:GameStarted}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding GetTimestamp}" Margin="0, 0, 10, 0"/>
                             <TextBlock Text="Game started" />
                         </StackPanel>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type local:ChipsTaken}">
+                    <DataTemplate DataType="{x:Type history:ChipsTaken}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding GetTimestamp}" Margin="0, 0, 10, 0"/>
                             <TextBlock Text="{Binding Player.Name}" FontWeight="Bold" />
@@ -130,10 +131,11 @@
                             <TextBlock Text="{Binding Chips.Black}" Padding="3, 0, 3, 0" FontWeight="Bold"  Background="Black" Foreground="White"/>
                         </StackPanel>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type local:CardPurchased}">
+                    <DataTemplate DataType="{x:Type history:CardPurchased}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding GetTimestamp}" Margin="0, 0, 10, 0"/>
                             <TextBlock Text="{Binding Player.Name}" FontWeight="Bold" />
+                            <TextBlock Text=" purchased " />
                             <TextBlock Text="{Binding Card.Color}" />
                             <TextBlock Text=" card  " />
                             <TextBlock Text="{Binding Card.VictoryPoints}" FontWeight="Bold"/>
@@ -146,7 +148,7 @@
                             <TextBlock Text="{Binding Card.Cost.Black}" Padding="3, 0, 3, 0" FontWeight="Bold"  Background="Black" Foreground="White"/>
                         </StackPanel>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type local:CardReserved}">
+                    <DataTemplate DataType="{x:Type history:CardReserved}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding GetTimestamp}" Margin="0, 0, 10, 0"/>
                             <TextBlock Text="{Binding Player.Name}" FontWeight="Bold" />
@@ -162,14 +164,24 @@
                             <TextBlock Text="{Binding Card.Cost.Black}" Padding="3, 0, 3, 0" FontWeight="Bold"  Background="Black" Foreground="White"/>
                         </StackPanel>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type local:GameEnded}">
+                    <DataTemplate DataType="{x:Type history:GameEnded}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding GetTimestamp}" Margin="0, 0, 10, 0"/>
                             <TextBlock Text="Game has ended" />
                         </StackPanel>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type history:ChatEntry}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding GetTimestamp}" Margin="0, 0, 10, 0"/>
+                            <TextBlock Text="{Binding Player.Name}" FontWeight="Bold" />
+                            <TextBlock Text=": " />
+                            <TextBlock Text="{Binding Message}" />
+                        </StackPanel>
+                    </DataTemplate>
                 </ListBox.Resources>
             </ListBox>
+            <TextBox x:Name="ChatMessage" HorizontalAlignment="Left" Height="23" Margin="573,524,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="251" IsEnabled="{Binding IsActive, Mode=OneWay}"/>
+            <Button Content="Send" HorizontalAlignment="Left" Margin="829,524,0,0" VerticalAlignment="Top" Width="61" Height="23" Click="SendChatButtonClick" IsEnabled="{Binding IsActive, Mode=OneWay}"/>
         </Grid>
     </Viewbox>
 </Window>
