@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTests", "SplendorCore.Tests\CoreTests.csproj", "{3C47387B-44B1-4C49-ACFC-B890BB851803}"
 EndProject
@@ -10,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsClient", "SplendorWindowsFormsClient\WindowsFormsClient.csproj", "{3F8C8959-748E-47FE-A81E-2208420AAA6B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplendorWpfClient", "SplendorWpfClient\SplendorWpfClient.csproj", "{0E04EAA6-5DE1-41AB-AB88-F1CDEF402007}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebsocketServer", "WebsocketServer\WebsocketServer.csproj", "{06600C69-1BFD-4F2D-AD56-E280B49AA5D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerModels", "ServerDto\ServerModels.csproj", "{32089D18-688D-46B4-858F-8970A6B5A94A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{0E04EAA6-5DE1-41AB-AB88-F1CDEF402007}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E04EAA6-5DE1-41AB-AB88-F1CDEF402007}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E04EAA6-5DE1-41AB-AB88-F1CDEF402007}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06600C69-1BFD-4F2D-AD56-E280B49AA5D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06600C69-1BFD-4F2D-AD56-E280B49AA5D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06600C69-1BFD-4F2D-AD56-E280B49AA5D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06600C69-1BFD-4F2D-AD56-E280B49AA5D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32089D18-688D-46B4-858F-8970A6B5A94A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32089D18-688D-46B4-858F-8970A6B5A94A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32089D18-688D-46B4-858F-8970A6B5A94A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32089D18-688D-46B4-858F-8970A6B5A94A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

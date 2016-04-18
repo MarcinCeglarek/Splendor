@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="splendorApp">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="splendor.js"></script>
+</head>
+<body style="font-size:xx-large" ng-controller="GameController as server">
+    <div>
+        <input name="playername" ng-model="server.playerName"/>
+        <button ng-click="showGames()">Show games</button>
+        <button ng-click="createGame()">Create game</button>
+        <button ng-click="joinGame()">Join game as {{server.playerName}}</button>
+    </div>
+    <ul>
+        <li ng-repeat="game in server.games">
+            {{game.GameId}}  {{ game.IsStarted }} {{ game.Players }}            
+        </li>
+    </ul>
+</body>
+</html>

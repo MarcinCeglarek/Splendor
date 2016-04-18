@@ -84,7 +84,7 @@
                     }
                 }
 
-                this.OnPropertyChanged("IsCardPresent");
+                this.OnPropertyChanged(nameof(this.IsCardPresent));
                 this.OnPropertyChanged("IsVictoryPointsPresent");
                 this.OnPropertyChanged("VictoryPoints");
                 this.OnPropertyChanged("VisibleCost");

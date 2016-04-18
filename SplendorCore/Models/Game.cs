@@ -1,6 +1,6 @@
 ﻿namespace SplendorCore.Models
 {
-    #region
+    #region Usings
 
     using System;
     using System.Collections.Generic;
@@ -22,6 +22,12 @@
 
     public class Game : IGameActions
     {
+        #region Properties
+
+        private Deck Deck { get; }
+
+        #endregion
+
         #region Fields
 
         private readonly List<HistoryEntry> history;
@@ -37,6 +43,11 @@
         #endregion
 
         #region Constructors and Destructors
+
+        public Game()
+            : this(CoreConstants.DeckFilePath, CoreConstants.AristocratesFilePath)
+        {
+        }
 
         public Game(string deckFilePath, string aristocratesFilePath)
         {
@@ -103,12 +114,6 @@
 
         #endregion
 
-        #region Properties
-
-        private Deck Deck { get; set; }
-
-        #endregion
-
         #region Public Methods and Operators
 
         public void AddPlayer(Player player)
@@ -166,7 +171,7 @@
             }
         }
 
-        public void ChatMessage(Player player, string message)
+        public void SendMessage(Player player, string message)
         {
             if (this.players.Contains(player))
             {

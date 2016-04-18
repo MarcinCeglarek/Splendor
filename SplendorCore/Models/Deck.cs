@@ -10,7 +10,7 @@
 
     using Newtonsoft.Json;
 
-    using SplendorCore.Helpers;
+    using Helpers;
     using SplendorCore.Models.Exceptions.AristocrateExceptions;
     using SplendorCore.Models.Exceptions.FileExceptions;
 
@@ -30,8 +30,6 @@
         private readonly List<Card> allCards;
 
         private readonly Game game;
-
-        private List<Aristocrate> allAristocrates;
 
         private List<Aristocrate> aristocratesInBank;
 

@@ -1,6 +1,6 @@
 ﻿namespace SplendorCore.Interfaces
 {
-    #region
+    #region Usings
 
     using SplendorCore.Models;
 
@@ -21,6 +21,8 @@
         void ReserveCard(Player player, Card card);
 
         void TakeChips(Player player, Chips chips);
+
+        void SendMessage(Player player, string message);
 
         #endregion
     }

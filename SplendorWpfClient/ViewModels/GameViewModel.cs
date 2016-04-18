@@ -1,6 +1,6 @@
 ﻿namespace SplendorWpfClient.ViewModels
 {
-    #region
+    #region Usings
 
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -19,20 +19,6 @@
 
     internal class GameViewModel : AbstractViewModel
     {
-        #region Fields
-
-        private readonly List<CardViewModel> availableCards;
-
-        private readonly ObservableCollection<PlayerViewModel> players;
-
-        private readonly CardsHeapViewModel tier1 = new CardsHeapViewModel() { Count = 0, Background = new RadialGradientBrush(Colors.LimeGreen, Colors.DarkGreen) };
-
-        private readonly CardsHeapViewModel tier2 = new CardsHeapViewModel() { Count = 0, Background = new RadialGradientBrush(Colors.Orange, Colors.SaddleBrown) };
-
-        private readonly CardsHeapViewModel tier3 = new CardsHeapViewModel() { Count = 0, Background = new RadialGradientBrush(Colors.DodgerBlue, Colors.Blue) };
-
-        #endregion
-
         #region Constructors and Destructors
 
         public GameViewModel()
@@ -47,7 +33,7 @@
             this.AllCards = new ObservableCollection<Card>(this.Game.AllCards);
             this.AllCards.CollectionChanged += this.AllCardsCollectionChanged;
 
-            this.availableCards = this.Game.AvailableCards.Select(card => new CardViewModel() { Card = card }).ToList();
+            this.availableCards = this.Game.AvailableCards.Select(card => new CardViewModel { Card = card }).ToList();
             this.AvailableCards = new ObservableCollection<CardViewModel>(this.availableCards);
             this.AvailableCards.CollectionChanged += this.AvailableCardsCollectionChanged;
 
@@ -56,6 +42,20 @@
             this.BankChipsToShow = new Chips();
             this.BankChipsToTake = new Chips();
         }
+
+        #endregion
+
+        #region Properties
+
+        private Game Game { get; }
+
+        #endregion
+
+        #region Fields
+
+        private readonly List<CardViewModel> availableCards;
+
+        private readonly ObservableCollection<PlayerViewModel> players;
 
         #endregion
 
@@ -109,17 +109,11 @@
 
         public ReadOnlyObservableCollection<PlayerViewModel> Players { get; set; }
 
-        public CardsHeapViewModel Tier1 { get { return this.tier1; } }
+        public CardsHeapViewModel Tier1 { get; } = new CardsHeapViewModel { Count = 0, Background = new RadialGradientBrush(Colors.LimeGreen, Colors.DarkGreen) };
 
-        public CardsHeapViewModel Tier2 { get { return this.tier2; } }
+        public CardsHeapViewModel Tier2 { get; } = new CardsHeapViewModel { Count = 0, Background = new RadialGradientBrush(Colors.Orange, Colors.SaddleBrown) };
 
-        public CardsHeapViewModel Tier3 { get { return this.tier3; } }
-
-        #endregion
-
-        #region Properties
-
-        private Game Game { get; set; }
+        public CardsHeapViewModel Tier3 { get; } = new CardsHeapViewModel { Count = 0, Background = new RadialGradientBrush(Colors.DodgerBlue, Colors.Blue) };
 
         #endregion
 
@@ -131,7 +125,7 @@
             if (!this.Game.HasStarted)
             {
                 this.Game.AddPlayer(player);
-                this.players.Add(new PlayerViewModel() { Player = player });
+                this.players.Add(new PlayerViewModel { Player = player });
                 this.OnPropertyChanged("CanGameBeStarted");
                 this.OnPropertyChanged("CanPlayerBeAdded");
                 this.UpdateHistory();
@@ -272,7 +266,7 @@
 
         public void SendChat(string message)
         {
-            this.Game.ChatMessage(this.Game.CurrentPlayer, message);
+            this.Game.SendMessage(this.Game.CurrentPlayer, message);
             this.UpdateHistory();
         }
 
@@ -308,7 +302,7 @@
             this.players.Clear();
             foreach (var player in this.Game.Players)
             {
-                this.players.Add(new PlayerViewModel() { Player = player });
+                this.players.Add(new PlayerViewModel { Player = player });
             }
 
             this.NotifyGameStarts();
