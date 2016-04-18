@@ -45,6 +45,8 @@
     <Compile Include="Abstract\Request.cs" />
     <Compile Include="CreateGameRequest.cs" />
     <Compile Include="CreateGameResponse.cs" />
+    <Compile Include="DeleteGameRequest.cs" />
+    <Compile Include="DeleteGameResponse.cs" />
     <Compile Include="Enums\MessageType.cs" />
     <Compile Include="Abstract\Response.cs" />
     <Compile Include="ChatMessage.cs" />

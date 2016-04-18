@@ -44,11 +44,16 @@ app.controller('GameController', [ '$scope', '$http', '$log', function($scope, $
                     $log.log("GameJoined")
                     controller.GameId = data.GameId;
                     controller.PlayerId = data.PlayerId;
-                    $scope.$apply();
+                    controller.showGames();
                     break;
                  case "GameCreated": 
                     $log.log("GameCreated");
                     controller.showGames();
+                    break;
+                 case "GameDeleted": 
+                    $log.log("GameDeleted");
+                    controller.showGames();
+                    break;
             }
         };
         
@@ -72,6 +77,11 @@ app.controller('GameController', [ '$scope', '$http', '$log', function($scope, $
         this.ws.send("{ 'MessageType' : 'JoinGame', GameId : '" + this.GameId  + "', PlayerName: '" + this.playerName  + "' }");
     }
     
+    this.deleteGame = function(game) {
+        $log.debug("deleteGame");
+        this.ws.send("{ 'MessageType': 'DeleteGame', GameId : '" + game.GameId  + "' }");
+    }
+    
     this.selectGame = function(id) {
         $log.debug("selectGame " + id);
         this.GameId = id;
@@ -79,6 +89,18 @@ app.controller('GameController', [ '$scope', '$http', '$log', function($scope, $
     
     this.isGameSelected = function(game) {
         return game.GameId === this.GameId;
+    }
+    
+    this.canJoin = function() {
+        if (this.GameId) {
+            if (this.playerName) {
+                if (!this.PlayerId) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
     
     this.connect();

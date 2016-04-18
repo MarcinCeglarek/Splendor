@@ -18,6 +18,10 @@
         CanTakeChips,
 
         GameCreated,
-        GameJoined
+        GameJoined,
+
+        GameDeleted,
+
+        DeleteGame
     }
 }

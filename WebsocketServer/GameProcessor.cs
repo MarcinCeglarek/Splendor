@@ -48,6 +48,10 @@
                     response = this.CreateGame();
                     break;
 
+                case MessageType.DeleteGame:
+                    response = await this.DeleteGame(request);
+                    break;
+
                 case MessageType.JoinGame:
                     response = await this.Connect(request);
                     break;
@@ -64,6 +68,18 @@
             var game = new Game();
             this.games.Add(game);
             return new CreateGameResponse { GameId = game.Id, MessageType = MessageType.GameCreated };
+        }
+
+        private async Task<Response> DeleteGame(string request)
+        {
+            var message = await JsonConvert.DeserializeObjectAsync<DeleteGameRequest>(request);
+            var game = this.games.Single(g => g.Id == message.GameId);
+            if (!game.HasStarted && game.Players.Count == 0)
+            {
+                this.games.Remove(game);
+            }
+
+            return new DeleteGameResponse { MessageType = MessageType.GameDeleted };
         }
 
         private async Task<JoinGameResponse> Connect(string request)

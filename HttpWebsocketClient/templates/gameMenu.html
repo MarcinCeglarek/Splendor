@@ -1,6 +1,13 @@
-<div>
-    <input name="playername" ng-model="server.playerName"/>
-    <button class="waves-effect waves-light btn" ng-click="server.showGames()">Show games</button>
-    <button class="waves-effect waves-light btn" ng-click="server.createGame()">Create game</button>
-    <button class="waves-effect waves-light btn" ng-click="server.joinGame()" ng-disabled="!server.GameId">Join game as {{server.playerName}}</button>
-</div>
+<form class="col s12">
+    <div class="row">
+        <div class="input-field col s4">
+            <input id="playerName" ng-model="server.playerName">
+            <label class="active" for="playerName">Player name</label>
+        </div>
+        <div class="input-field col s8">
+            <button class="waves-effect waves-light btn" ng-click="server.showGames()">Show games</button>
+            <button class="waves-effect waves-light btn" ng-click="server.createGame()">Create game</button>
+            <button class="waves-effect waves-light btn purple" ng-click="server.joinGame()" ng-class="{ disabled: !server.canJoin() }" ng-disabled="!server.canJoin()">Join game as {{server.playerName}}</button>
+        </div>
+    </div>
+</form>
