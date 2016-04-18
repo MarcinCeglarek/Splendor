@@ -74,7 +74,7 @@
             var player = new Player { Name = message.PlayerName };
             game.AddPlayer(player);
 
-            return new JoinGameResponse { GameId = game.Id, MessageType = MessageType.JoinGame, PlayerId = player.Id };
+            return new JoinGameResponse { GameId = game.Id, MessageType = MessageType.GameJoined, PlayerId = player.Id };
         }
 
         private ShowGamesResponse ShowGames()

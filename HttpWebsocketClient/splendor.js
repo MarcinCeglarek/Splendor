@@ -1,41 +1,60 @@
 var app = angular.module('splendorApp', [])
-app.controller('GameController', function() {
+app.controller('GameController', function($scope) {
+    var controller = this;
     this.games = [];
     this.playerName = "";
-    this.SelectedGameId = "";
+    this.GameId = "";
+    this.PlayerId = "";
     
     this.connect = function() {
         console.log("server.connect");
         var ws = new WebSocket("ws://localhost:8181");
         this.ws = ws;
             
-        ws.onopen = function () {
+        this.ws.onopen = function () {
             console.log("Connection established");
         };
 
-        ws.onmessage = function (evt) {
-            var received_msg = evt.data;
-            console.log("Message received = "+received_msg);
+        this.ws.onmessage = function (evt) {
+            var data = JSON.parse(evt.data);
+            console.log("Message received = " + evt.data);
+            
+            switch(data.MessageType) {
+                case "ShowGames":
+                    controller.games = data.Games;
+                    $scope.$apply();
+                    break;
+                case "GameJoined":
+                    controller.GameId = data.GameId;
+                    controller.PlayerId = data.PlayerId;
+                    controller.$apply();
+                    break;
+            }
         };
         
-        ws.onclose = function () {
+        this.ws.onclose = function () {
             console.log("Connection is closed...");
         };
     }
     
     this.showGames = function() {
         console.log("ShowGames");
-        ws.send("{ 'MessageType': 'ShowGames' }");
+        this.ws.send("{ 'MessageType': 'ShowGames' }");
     }
         
     this.createGame = function() {
         console.log("CreateGame");
-        ws.send("{ 'MessageType' : 'CreateGame' }")
+        this.ws.send("{ 'MessageType' : 'CreateGame' }")
     }
 
     this.joinGame = function() {
         console.log("JoinGame");
-        ws.send("{ 'MessageType' : 'JoinGame', PlayerName: '" + this.playerName + "' }")
+        this.ws.send("{ 'MessageType' : 'JoinGame', GameId : '" + this.GameId +  "', PlayerName: '" + this.playerName + "' }")
+    }
+    
+    this.selectGame = function(id) {
+        console.log("selectGame:" + id);
+        this.GameId = id;
     }
     
     this.connect();

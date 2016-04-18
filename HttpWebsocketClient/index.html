@@ -5,16 +5,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="splendor.js"></script>
 </head>
-<body style="font-size:xx-large" ng-controller="GameController as server">
+<body ng-controller="GameController as server">
     <div>
         <input name="playername" ng-model="server.playerName"/>
-        <button ng-click="showGames()">Show games</button>
-        <button ng-click="createGame()">Create game</button>
-        <button ng-click="joinGame()">Join game as {{server.playerName}}</button>
+        <button ng-click="server.showGames()">Show games</button>
+        <button ng-click="server.createGame()">Create game</button>
+        <button ng-click="server.joinGame()" ng-disabled="!server.GameId">Join game as {{server.playerName}}</button>
     </div>
-    <ul>
-        <li ng-repeat="game in server.games">
-            {{game.GameId}}  {{ game.IsStarted }} {{ game.Players }}            
+    <div ng-hide="server.games">
+        No games present
+    </div>
+    <ul ng-show="server.games">
+        <li ng-repeat="game in server.games" ng-click="server.selectGame(game.GameId)">
+            [{{$index + 1}}] ID: {{game.GameId}} Started:{{ game.IsStarted }} {{ game.Players }}            
         </li>
     </ul>
 </body>
