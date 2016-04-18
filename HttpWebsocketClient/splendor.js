@@ -1,5 +1,20 @@
 var app = angular.module('splendorApp', [])
-app.controller('GameController', function($scope) {
+
+app.directive("gamesList", function() {
+    return {
+        restrict: 'E',
+        templateUrl: './templates/gamesList.html'
+    }
+})
+
+app.directive("gameMenu", function() {
+    return {
+        restrict: 'E',
+        templateUrl: './templates/gameMenu.html'
+    }
+})
+
+app.controller('GameController', [ '$scope', '$http', '$log', function($scope, $http, $log) {
     var controller = this;
     this.games = [];
     this.playerName = "";
@@ -7,17 +22,18 @@ app.controller('GameController', function($scope) {
     this.PlayerId = "";
     
     this.connect = function() {
-        console.log("server.connect");
+        $log.debug("server.connect");
         var ws = new WebSocket("ws://localhost:8181");
         this.ws = ws;
             
         this.ws.onopen = function () {
-            console.log("Connection established");
+            $log.log("Connection established");
+            controller.showGames();
         };
 
         this.ws.onmessage = function (evt) {
             var data = JSON.parse(evt.data);
-            console.log("Message received = " + evt.data);
+            $log.log(evt.data);
             
             switch(data.MessageType) {
                 case "ShowGames":
@@ -25,37 +41,45 @@ app.controller('GameController', function($scope) {
                     $scope.$apply();
                     break;
                 case "GameJoined":
+                    $log.log("GameJoined")
                     controller.GameId = data.GameId;
                     controller.PlayerId = data.PlayerId;
-                    controller.$apply();
+                    $scope.$apply();
                     break;
+                 case "GameCreated": 
+                    $log.log("GameCreated");
+                    controller.showGames();
             }
         };
         
         this.ws.onclose = function () {
-            console.log("Connection is closed...");
+            $log.log("Connection is closed...");
         };
     }
     
     this.showGames = function() {
-        console.log("ShowGames");
+        $log.debug("showGames");
         this.ws.send("{ 'MessageType': 'ShowGames' }");
     }
         
     this.createGame = function() {
-        console.log("CreateGame");
-        this.ws.send("{ 'MessageType' : 'CreateGame' }")
+        $log.debug("createGame");
+        this.ws.send("{ 'MessageType' : 'CreateGame' }");
     }
 
     this.joinGame = function() {
-        console.log("JoinGame");
-        this.ws.send("{ 'MessageType' : 'JoinGame', GameId : '" + this.GameId +  "', PlayerName: '" + this.playerName + "' }")
+        $log.debug("joinGame");
+        this.ws.send("{ 'MessageType' : 'JoinGame', GameId : '" + this.GameId  + "', PlayerName: '" + this.playerName  + "' }");
     }
     
     this.selectGame = function(id) {
-        console.log("selectGame:" + id);
+        $log.debug("selectGame " + id);
         this.GameId = id;
     }
     
+    this.isGameSelected = function(game) {
+        return game.GameId === this.GameId;
+    }
+    
     this.connect();
-  });
+}]);

@@ -1,0 +1,8 @@
+<div ng-hide="server.games">
+    No games present
+</div>
+<ul class="collection" ng-show="server.games | filter: ">
+    <li class="collection-item" ng-repeat="game in server.games" ng-click="server.selectGame(game.GameId)" ng-class="{ active: server.isGameSelected(game) }">
+        {{game.GameId}} {{game.Players}}/4            
+    </li>
+</ul>

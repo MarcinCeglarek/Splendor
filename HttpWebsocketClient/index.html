@@ -2,23 +2,17 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="splendorApp">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="splendor.js"></script>
 </head>
 <body ng-controller="GameController as server">
-    <div>
-        <input name="playername" ng-model="server.playerName"/>
-        <button ng-click="server.showGames()">Show games</button>
-        <button ng-click="server.createGame()">Create game</button>
-        <button ng-click="server.joinGame()" ng-disabled="!server.GameId">Join game as {{server.playerName}}</button>
+    <div class="container">
+        <game-menu></game-menu>
+        <games-list></games-list>
     </div>
-    <div ng-hide="server.games">
-        No games present
-    </div>
-    <ul ng-show="server.games">
-        <li ng-repeat="game in server.games" ng-click="server.selectGame(game.GameId)">
-            [{{$index + 1}}] ID: {{game.GameId}} Started:{{ game.IsStarted }} {{ game.Players }}            
-        </li>
-    </ul>
 </body>
 </html>
