@@ -4,9 +4,9 @@ This is my private repository, where I try new technologies in some basic busine
 
 ### What is this repository for? ###
 
-- C# Splendor library (Core)
-- Windows Forms Client (up to 4 hot-seat players capable) 
-- MVVM Client 
-- TODO: WebSockets Host (C#) and Client (javascript)
-
-// This line checks integration with our slack - https://splendorteam.slack.com ;)
+* C# Splendor library (Core)
+* Windows Forms Client (up to 4 hot-seat players capable) 
+* MVVM Client 
+* WebSockets Host (C#) and Clients 
+    * Angular
+    * Sails
