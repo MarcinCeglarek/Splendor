@@ -10,8 +10,11 @@
     using Newtonsoft.Json;
 
     using ServerDto;
-    using ServerDto.Abstract;
     using ServerDto.Enums;
+    using ServerDto.Requests;
+    using ServerDto.Requests.Basic;
+    using ServerDto.Responses;
+    using ServerDto.Responses.Basic;
 
     using SplendorCore.Models;
 
@@ -56,11 +59,41 @@
                     response = await this.Connect(request);
                     break;
 
+                case MessageType.CanTakeChips:
+                    response = await this.CanTakeChips(request);
+                    break;
+
+                case MessageType.TakeChips:
+                    response = await this.TakeChips(request);
+                    break;
+                
+                case MessageType.GameStatus:
+                    response = await this.GameStatus(request);
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }
 
             return await JsonConvert.SerializeObjectAsync(response);
+        }
+
+        private async Task<Response> CanTakeChips(string request)
+        {
+            var message = await JsonConvert.DeserializeObjectAsync<CanTakeChipsRequest>(request);
+            var game = this.games.Single(g => g.Id == message.GameId);
+
+            var result = game.CanTakeChips(game.Players.Single(p => p.Id == message.PlayerId), message.Chips);
+            return new CanTakeChipsResponse() { MessageType = MessageType.CanTakeChips, CanTakeChips = result };
+        }
+
+        private async Task<Response> TakeChips(string request)
+        {
+            var message = await JsonConvert.DeserializeObjectAsync<CanTakeChipsRequest>(request);
+            var game = this.games.Single(g => g.Id == message.GameId);
+
+            game.TakeChips(game.Players.Single(p => p.Id == message.PlayerId), message.Chips);
+            return new Response() { MessageType = MessageType.TakeChips };
         }
 
         private Response CreateGame()
@@ -101,6 +134,27 @@
             {
                 retVal.Games.Add(new ShowGamesResponse.GameInfo { GameId = game.Id, IsStarted = game.HasStarted, Players = game.Players.Count });
             }
+
+            return retVal;
+        }
+
+        private async Task<GameStatusResponse> GameStatus(string request)
+        {
+            var message = await JsonConvert.DeserializeObjectAsync<GameRequest>(request);
+            var game = this.games.Single(g => g.Id == message.GameId);
+
+            var retVal = new GameStatusResponse()
+                         {
+                             Aristocrates = game.AvailableAristocrates.ToList(),
+                             Id = game.Id,
+                             Cards = game.AvailableCards.ToList(),
+                             CurrentPlayer = game.CurrentPlayer.Id,
+                             FirstPlayer = game.FirstPlayer.Id,
+                             HasFinished = game.HasFinished,
+                             HasStarted = game.HasStarted,
+                             MessageType = MessageType.GameStatus,
+                             Players = game.Players.ToList()
+                         };
 
             return retVal;
         }

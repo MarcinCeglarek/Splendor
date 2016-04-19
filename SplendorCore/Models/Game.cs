@@ -36,8 +36,6 @@
 
         private Chips bank;
 
-        private Player firstPlayer;
-
         private List<Player> players;
 
         #endregion
@@ -81,6 +79,8 @@
         public ReadOnlyCollection<ChatEntry> Chat { get; private set; }
 
         public Player CurrentPlayer { get { return this.players.FirstOrDefault(); } }
+
+        public Player FirstPlayer { get; private set; }
 
         public bool HasFinished { get; private set; }
 
@@ -269,7 +269,7 @@
             this.HasStarted = true;
             this.Deck.Initialize();
             this.players = this.players.Shuffle().ToList();
-            this.firstPlayer = this.players.First();
+            this.FirstPlayer = this.players.First();
 
             var chipCount = this.TotalNumberOfNormalChips;
             this.bank = new Chips { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = CoreConstants.Game.NumberOfGoldChips };
@@ -322,7 +322,7 @@
 
         private void CheckEndGameCondition()
         {
-            if (this.players.Any(p => p.VictoryPoints >= 15) && this.firstPlayer == this.CurrentPlayer)
+            if (this.players.Any(p => p.VictoryPoints >= 15) && this.FirstPlayer == this.CurrentPlayer)
             {
                 this.EndGame();
             }
