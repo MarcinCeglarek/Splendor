@@ -6,7 +6,7 @@
 
     #endregion
 
-    public class ChatMessage 
+    public class ChatMessage
     {
         public Guid GameId { get; set; }
 

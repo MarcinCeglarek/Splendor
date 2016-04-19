@@ -1,10 +1,10 @@
-﻿namespace ServerDto
+﻿namespace ServerDto.Responses
 {
     #region Usings
 
     using System;
 
-    using ServerDto.Abstract;
+    using ServerDto.Responses.Basic;
 
     #endregion
 

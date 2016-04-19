@@ -1,8 +1,8 @@
-﻿namespace ServerDto
+﻿namespace ServerDto.Requests
 {
     #region Usings
 
-    using ServerDto.Abstract;
+    using ServerDto.Requests.Basic;
 
     #endregion
 

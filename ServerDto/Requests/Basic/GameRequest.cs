@@ -1,14 +1,12 @@
-﻿namespace ServerDto
+﻿namespace ServerDto.Requests.Basic
 {
     #region Usings
 
     using System;
 
-    using ServerDto.Abstract;
-
     #endregion
 
-    public class DeleteGameRequest : Request
+    public class GameRequest : Request
     {
         public Guid GameId { get; set; }
     }

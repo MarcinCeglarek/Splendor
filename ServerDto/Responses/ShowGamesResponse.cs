@@ -1,12 +1,11 @@
-﻿namespace ServerDto
+﻿namespace ServerDto.Responses
 {
     #region Usings
 
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
 
-    using ServerDto.Abstract;
+    using ServerDto.Responses.Basic;
 
     #endregion
 
