@@ -19,9 +19,9 @@
 
         public bool HasFinished { get; set; }
 
-        public Guid FirstPlayer { get; set; }
+        public Guid? FirstPlayer { get; set; }
 
-        public Guid CurrentPlayer { get; set; }
+        public Guid? CurrentPlayer { get; set; }
 
         public List<Aristocrate> Aristocrates { get; set; }
 

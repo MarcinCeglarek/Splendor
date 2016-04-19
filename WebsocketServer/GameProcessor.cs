@@ -145,15 +145,15 @@
 
             var retVal = new GameStatusResponse()
                          {
-                             Aristocrates = game.AvailableAristocrates.ToList(),
+                             Aristocrates = game.AvailableAristocrates?.ToList(),
                              Id = game.Id,
-                             Cards = game.AvailableCards.ToList(),
-                             CurrentPlayer = game.CurrentPlayer.Id,
-                             FirstPlayer = game.FirstPlayer.Id,
+                             Cards = game.AvailableCards?.ToList(),
+                             CurrentPlayer = game.CurrentPlayer?.Id,
+                             FirstPlayer = game.FirstPlayer?.Id,
                              HasFinished = game.HasFinished,
                              HasStarted = game.HasStarted,
                              MessageType = MessageType.GameStatus,
-                             Players = game.Players.ToList()
+                             Players = game.Players?.ToList()
                          };
 
             return retVal;

@@ -9,10 +9,11 @@ app.factory('websocket', function($rootScope) {
         
         this.ws.onopen = function () {
             Materialize.toast("Connected", 5000)
-            $rootScope.$boradcast('websocketReady')
+            $rootScope.$broadcast('websocketReady')
         };
 
         this.ws.onmessage = function (evt) {
+            console.log("<<< " + evt.data);
             service.data = data = JSON.parse(evt.data);
             $rootScope.$broadcast('websocketMessage');
         };
@@ -27,8 +28,12 @@ app.factory('websocket', function($rootScope) {
     }
 
     this.send = function(request) {
-        this.ws.send(request);
+        var data = JSON.stringify(request);
+        console.log(">>> " + data);
+        this.ws.send(data);
     }
     
     this.connect();
+    
+    return this;
 });
