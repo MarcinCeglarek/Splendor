@@ -9,7 +9,6 @@
 
     using Newtonsoft.Json;
 
-    using ServerDto;
     using ServerDto.Enums;
     using ServerDto.Requests;
     using ServerDto.Requests.Basic;
@@ -38,7 +37,7 @@
 
         public async Task<string> ProcessMessage(string request)
         {
-            var message = await JsonConvert.DeserializeObjectAsync<Request>(request);
+            var message = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<Request>(request));
             Response response;
 
             switch (message.MessageType)
@@ -66,7 +65,7 @@
                 case MessageType.TakeChips:
                     response = await this.TakeChips(request);
                     break;
-                
+
                 case MessageType.GameStatus:
                     response = await this.GameStatus(request);
                     break;
@@ -75,25 +74,25 @@
                     throw new NotImplementedException();
             }
 
-            return await JsonConvert.SerializeObjectAsync(response);
+            return await Task.Factory.StartNew(() => JsonConvert.SerializeObject(response));
         }
 
         private async Task<Response> CanTakeChips(string request)
         {
-            var message = await JsonConvert.DeserializeObjectAsync<CanTakeChipsRequest>(request);
+            var message = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<CanTakeChipsRequest>(request));
             var game = this.games.Single(g => g.Id == message.GameId);
 
             var result = game.CanTakeChips(game.Players.Single(p => p.Id == message.PlayerId), message.Chips);
-            return new CanTakeChipsResponse() { MessageType = MessageType.CanTakeChips, CanTakeChips = result };
+            return new CanTakeChipsResponse { MessageType = MessageType.CanTakeChips, CanTakeChips = result };
         }
 
         private async Task<Response> TakeChips(string request)
         {
-            var message = await JsonConvert.DeserializeObjectAsync<CanTakeChipsRequest>(request);
+            var message = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<CanTakeChipsRequest>(request));
             var game = this.games.Single(g => g.Id == message.GameId);
 
             game.TakeChips(game.Players.Single(p => p.Id == message.PlayerId), message.Chips);
-            return new Response() { MessageType = MessageType.TakeChips };
+            return new Response { MessageType = MessageType.TakeChips };
         }
 
         private Response CreateGame()
@@ -105,7 +104,7 @@
 
         private async Task<Response> DeleteGame(string request)
         {
-            var message = await JsonConvert.DeserializeObjectAsync<DeleteGameRequest>(request);
+            var message = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<DeleteGameRequest>(request));
             var game = this.games.Single(g => g.Id == message.GameId);
             if (!game.HasStarted && game.Players.Count == 0)
             {
@@ -117,7 +116,7 @@
 
         private async Task<JoinGameResponse> Connect(string request)
         {
-            var message = await JsonConvert.DeserializeObjectAsync<JoinGameRequest>(request);
+            var message = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<JoinGameRequest>(request));
 
             var game = this.games.Single(g => g.Id == message.GameId);
             var player = new Player { Name = message.PlayerName };
@@ -140,10 +139,10 @@
 
         private async Task<GameStatusResponse> GameStatus(string request)
         {
-            var message = await JsonConvert.DeserializeObjectAsync<GameRequest>(request);
+            var message = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<GameRequest>(request));
             var game = this.games.Single(g => g.Id == message.GameId);
 
-            var retVal = new GameStatusResponse()
+            var retVal = new GameStatusResponse
                          {
                              Aristocrates = game.AvailableAristocrates?.ToList(),
                              Id = game.Id,
