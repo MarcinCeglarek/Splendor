@@ -142,17 +142,21 @@
             var message = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<GameRequest>(request));
             var game = this.games.Single(g => g.Id == message.GameId);
 
+            var players = game.Players.ToList();
+            var cards = game.AvailableCards.ToList();
+            var aristocrates = game.AvailableAristocrates.ToList();
+
             var retVal = new GameStatusResponse
                          {
-                             Aristocrates = game.AvailableAristocrates?.ToList(),
+                             Aristocrates = aristocrates,
                              Id = game.Id,
-                             Cards = game.AvailableCards?.ToList(),
+                             Cards = cards,
                              CurrentPlayer = game.CurrentPlayer?.Id,
                              FirstPlayer = game.FirstPlayer?.Id,
                              HasFinished = game.HasFinished,
                              HasStarted = game.HasStarted,
                              MessageType = MessageType.GameStatus,
-                             Players = game.Players?.ToList()
+                             Players = players
                          };
 
             return retVal;

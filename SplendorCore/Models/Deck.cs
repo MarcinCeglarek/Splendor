@@ -16,7 +16,6 @@
 
     #endregion
 
-    [DataContract]
     public class Deck
     {
         #region Constants
@@ -61,10 +60,8 @@
 
         public ReadOnlyCollection<Card> AllCards { get; private set; }
 
-        [DataMember]
         public ReadOnlyCollection<Aristocrate> AvailableAristocrates { get; private set; }
 
-        [DataMember]
         public ReadOnlyCollection<Card> AvailableCards
         {
             get

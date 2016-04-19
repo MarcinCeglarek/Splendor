@@ -1,31 +1,19 @@
 ﻿namespace SplendorCore.Models
 {
-    #region
+    #region Usings
 
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using System.Runtime.Serialization;
 
     using SplendorCore.Models.Exceptions.CardExceptions;
     using SplendorCore.Models.Exceptions.CardOperationExceptions;
 
     #endregion
 
-    [DataContract]
     public class Player
     {
-        #region Fields
-
-        private readonly List<Aristocrate> ownedAristocrates;
-
-        private readonly List<Card> ownedCards;
-
-        private readonly List<Card> reservedCards;
-
-        #endregion
-
         #region Constructors and Destructors
 
         public Player()
@@ -44,6 +32,16 @@
 
         #endregion
 
+        #region Fields
+
+        private readonly List<Aristocrate> ownedAristocrates;
+
+        private readonly List<Card> ownedCards;
+
+        private readonly List<Card> reservedCards;
+
+        #endregion
+
         #region Public Properties
 
         public Chips Cards
@@ -51,11 +49,11 @@
             get
             {
                 return new Chips(
-                    this.OwnedCards.Count(o => o.Color == Color.White), 
-                    this.OwnedCards.Count(o => o.Color == Color.Blue), 
-                    this.OwnedCards.Count(o => o.Color == Color.Green), 
-                    this.OwnedCards.Count(o => o.Color == Color.Red), 
-                    this.OwnedCards.Count(o => o.Color == Color.Black), 
+                    this.OwnedCards.Count(o => o.Color == Color.White),
+                    this.OwnedCards.Count(o => o.Color == Color.Blue),
+                    this.OwnedCards.Count(o => o.Color == Color.Green),
+                    this.OwnedCards.Count(o => o.Color == Color.Red),
+                    this.OwnedCards.Count(o => o.Color == Color.Black),
                     0);
             }
         }
@@ -73,13 +71,13 @@
 
         public Game Game { get; set; }
 
-        public Guid Id { get; private set; }
+        public Guid Id { get; }
 
         public string Name { get; set; }
 
-        public ReadOnlyCollection<Aristocrate> OwnedAristocrates { get; private set; }
+        public ReadOnlyCollection<Aristocrate> OwnedAristocrates { get; }
 
-        public ReadOnlyCollection<Card> OwnedCards { get; private set; }
+        public ReadOnlyCollection<Card> OwnedCards { get; }
 
         public ReadOnlyCollection<Card> ReservedCards { get; private set; }
 

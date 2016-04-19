@@ -8,6 +8,7 @@ var game = app.controller('GameController', [ '$scope', '$log', 'websocket', fun
         switch(data.MessageType) {
             case "GameStatus":
                 controller.game = data;
+                console.log(data);
                 $scope.$apply();
                 break;
         }

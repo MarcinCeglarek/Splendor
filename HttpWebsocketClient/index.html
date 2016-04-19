@@ -16,12 +16,12 @@
 </head>
 <body>
     <div class="container">
-        <div ng-controller="ServerController as server">
+        <div ng-controller="ServerController as server" ng-show="server.inGame">
             <game-menu></game-menu>
             <games-list></games-list>
             
          </div>
-         <div ng-controller="GameController as game">
+         <div ng-controller="GameController as game" ng-show="game.game">
              <game-board></game-board>
          </div>
     </div>
