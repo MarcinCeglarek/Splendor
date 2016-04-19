@@ -30,7 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -42,18 +45,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\Request.cs" />
-    <Compile Include="CreateGameRequest.cs" />
-    <Compile Include="CreateGameResponse.cs" />
-    <Compile Include="DeleteGameRequest.cs" />
-    <Compile Include="DeleteGameResponse.cs" />
+    <Compile Include="Requests\Basic\GameRequest.cs" />
+    <Compile Include="Requests\Basic\Request.cs" />
+    <Compile Include="Requests\CanTakeChipsRequest.cs" />
+    <Compile Include="Responses\CanTakeChipsResponse.cs" />
+    <Compile Include="Requests\CreateGameRequest.cs" />
+    <Compile Include="Responses\CreateGameResponse.cs" />
+    <Compile Include="Requests\DeleteGameRequest.cs" />
+    <Compile Include="Responses\DeleteGameResponse.cs" />
     <Compile Include="Enums\MessageType.cs" />
-    <Compile Include="Abstract\Response.cs" />
+    <Compile Include="Responses\Basic\Response.cs" />
     <Compile Include="ChatMessage.cs" />
-    <Compile Include="JoinGameRequest.cs" />
-    <Compile Include="JoinGameResponse.cs" />
+    <Compile Include="Responses\GameStatusResponse.cs" />
+    <Compile Include="Requests\JoinGameRequest.cs" />
+    <Compile Include="Responses\JoinGameResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShowGamesResponse.cs" />
+    <Compile Include="Responses\ShowGamesResponse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SplendorCore\Core.csproj">
+      <Project>{D36F7689-E5C6-4628-A9D5-329E955BD2EF}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
