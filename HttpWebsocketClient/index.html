@@ -3,17 +3,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="splendorApp">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="splendor.js"></script>
+    <script src="services/websocket.js"></script>
+    <script src="controllers/serverController.js"></script>
+    <script src="controllers/gameController.js"></script>
+    
 </head>
-<body ng-controller="GameController as server">
+<body>
     <div class="container">
-        <game-menu></game-menu>
-        <games-list></games-list>
+        <div ng-controller="ServerController as server"  ng-hide="server.inGame">
+            <game-menu></game-menu>
+            <games-list></games-list>
+            
+         </div>
+         <div ng-controller="GameController as game">
+             <game-board></game-board>
+         </div>
     </div>
 </body>
 </html>

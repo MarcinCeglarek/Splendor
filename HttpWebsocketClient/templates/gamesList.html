@@ -2,7 +2,9 @@
     No games present
 </div>
 <ul class="collection" ng-show="server.games">
-    <li class="collection-item" ng-repeat="game in server.games | filter:{IsStarted: false}" ng-click="server.selectGame(game.GameId)" ng-class="{ active: server.isGameSelected(game) }">
-        {{game.GameId}} {{game.Players}}/4 <a href ng-click="server.deleteGame(game)"><i class="material-icons right md-light">delete</i></a>
+    <li class="collection-item row" ng-repeat="game in server.games | filter:{IsStarted: false}" ng-click="server.selectGame(game.GameId)" ng-class="{ active: server.isGameSelected(game) }">
+        <span class="col s8">{{game.GameId}}</span>
+        <span class="col s3">{{game.Players}}/4</span>
+        <span class="col s1"><a href ng-click="server.deleteGame(game)"><i class="material-icons right md-light">delete</i></a></span>
     </li>
 </ul>

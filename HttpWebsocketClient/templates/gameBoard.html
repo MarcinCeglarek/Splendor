@@ -1,0 +1,15 @@
+<div>
+     <ul>
+         <li ng-repeat="player in game.players">{{player.Name}}</li>
+     </ul>
+     <ul>
+         <li ng-repeat="aristocrate in game.aristocrates">{{aristocrate.id}}</li>
+     </ul>
+     <ul>
+         <li ng-repeat="tier in [1,2,3]">
+             <ul>
+                 <li ng-repeat="card in game.cards | filter: card.tier == tier">{{card.id}}</li>
+             </ul>
+         </li>
+     </ul>
+</div>
