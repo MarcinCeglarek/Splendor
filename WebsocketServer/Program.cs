@@ -77,7 +77,10 @@
             {
                 Console.WriteLine(message);
                 var response = await ProcessMessage(socket, message);
-                await socket.Send(response);
+                if (response != null)
+                {
+                    await socket.Send(response);
+                }
             }
             catch (Exception e)
             {

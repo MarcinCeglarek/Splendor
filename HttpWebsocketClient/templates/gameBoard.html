@@ -8,17 +8,32 @@
          <div class="col xs3" ng-repeat="aristocrate in game.game.Aristocrates">
              <div class="card">
                  <div class="card-content">
-                    {{aristocrate.Id}}
+                    <div class="col xs4" ng-repeat="(key, value) in aristocrate.RequiredCards" ng-show="value > 0">
+                        <span class="btn-floating btn-round" ng-class="key | lowercase">{{value}}</span>
+                    </div>
+                    {{aristocrate.VictoryPoints}}
                  </div>
              </div>
          </div>
      </div>
      
     <div class="row" ng-repeat="tier in [1,2,3]">
-        <div class="col xs3"  ng-repeat="card in game.game.Cards | filter: card.Tier == tier">
+        <div class="col xs3">
             <div class="card">
                 <div class="card-content">
-                    {{card.Id}}
+                    {{tier}}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col xs3"  ng-repeat="card in game.game.Cards" ng-show="card.Tier === tier">
+            <div class="card" ng-class="{ card.Color | lowercase }">
+                <div class="card-content">
+                    <p>{{card.Tier}}
+                    <p>{{card.VictoryPoints}}
+                    <div class="col xs4" ng-repeat="(key, value) in card.Cost" ng-show="value > 0">
+                        <span class="btn-floating btn-round" ng-class="key | lowercase">{{value}}</span>
+                    </div>
                 </div>
             </div>
         </div>
