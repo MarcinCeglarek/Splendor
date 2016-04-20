@@ -10,6 +10,8 @@
     [JsonConverter(typeof(StringEnumConverter))]
     public enum MessageType
     {
+        Unset,
+
         ShowGames,
 
         CreateGame,
@@ -38,6 +40,18 @@
 
         DeleteGame,
 
-        GameStatus
+        GameStatus,
+
+        Subscribe,
+
+        Unsubscribe,
+
+        PlayerJoined,
+
+        PlayerLeft,
+
+        GameStarted,
+
+        GameFinished
     }
 }

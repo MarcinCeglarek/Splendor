@@ -1,4 +1,4 @@
-﻿namespace ServerDto.Requests
+﻿namespace ServerDto.Messages
 {
     #region Usings
 
@@ -6,7 +6,7 @@
 
     #endregion
 
-    public class CreateGameRequest : Message
+    public class PlayerLeftMessage : GamePlayerMessage
     {
     }
 }

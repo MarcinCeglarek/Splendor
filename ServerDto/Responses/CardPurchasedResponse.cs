@@ -1,12 +1,12 @@
 ﻿namespace ServerDto.Responses
 {
-    #region Usings
-
     using ServerDto.Messages.Basic;
+
+    #region Usings
 
     #endregion
 
-    public class CreateGameResponse : GameMessage
+    public class CardPurchasedMessage : GamePlayerCardMessage
     {
     }
 }

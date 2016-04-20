@@ -5,16 +5,14 @@
     using System;
     using System.Collections.Generic;
 
-    using ServerDto.Responses.Basic;
+    using ServerDto.Messages.Basic;
 
     using SplendorCore.Models;
 
     #endregion
 
-    public class GameStatusResponse : Response
+    public class GameStatusResponse : GameMessage
     {
-        public Guid Id { get; set; }
-
         public bool HasStarted { get; set; }
 
         public bool HasFinished { get; set; }

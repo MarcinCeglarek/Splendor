@@ -1,4 +1,4 @@
-﻿namespace ServerDto.Requests
+﻿namespace ServerDto.Messages
 {
     #region Usings
 
@@ -8,7 +8,7 @@
 
     #endregion
 
-    public class CanTakeChipsRequest : GamePlayerMessage
+    public class ChipsTakenMessage : GamePlayerMessage
     {
         public Chips Chips { get; set; }
     }

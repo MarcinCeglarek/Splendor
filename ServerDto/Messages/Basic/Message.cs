@@ -1,4 +1,4 @@
-﻿namespace ServerDto.Responses.Basic
+﻿namespace ServerDto.Messages.Basic
 {
     #region Usings
 
@@ -6,7 +6,7 @@
 
     #endregion
 
-    public class Response
+    public class Message
     {
         public MessageType MessageType { get; set; }
     }

@@ -45,8 +45,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Requests\Basic\GameRequest.cs" />
-    <Compile Include="Requests\Basic\Request.cs" />
+    <Compile Include="Messages\Basic\GameMessage.cs" />
+    <Compile Include="Messages\Basic\GamePlayerCardMessage.cs" />
+    <Compile Include="Messages\Basic\GamePlayerMessage.cs" />
+    <Compile Include="Messages\Basic\Message.cs" />
+    <Compile Include="Messages\CanPurchaseCardMessage.cs" />
+    <Compile Include="Messages\CanReserveCardMessage.cs" />
+    <Compile Include="Responses\CardPurchasedResponse.cs" />
+    <Compile Include="Responses\CardReservedResponse.cs" />
+    <Compile Include="Messages\ChipsTakenMessage.cs" />
+    <Compile Include="Messages\PlayerJoinedMessage.cs" />
+    <Compile Include="Messages\PlayerLeftMessage.cs" />
     <Compile Include="Requests\CanTakeChipsRequest.cs" />
     <Compile Include="Responses\CanTakeChipsResponse.cs" />
     <Compile Include="Requests\CreateGameRequest.cs" />
@@ -54,7 +63,6 @@
     <Compile Include="Requests\DeleteGameRequest.cs" />
     <Compile Include="Responses\DeleteGameResponse.cs" />
     <Compile Include="Enums\MessageType.cs" />
-    <Compile Include="Responses\Basic\Response.cs" />
     <Compile Include="ChatMessage.cs" />
     <Compile Include="Responses\GameStatusResponse.cs" />
     <Compile Include="Requests\JoinGameRequest.cs" />

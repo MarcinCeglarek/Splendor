@@ -1,4 +1,4 @@
-﻿namespace ServerDto.Requests.Basic
+﻿namespace ServerDto.Messages.Basic
 {
     #region Usings
 
@@ -6,7 +6,7 @@
 
     #endregion
 
-    public class GameRequest : Request
+    public class GameMessage : Message
     {
         public Guid GameId { get; set; }
     }

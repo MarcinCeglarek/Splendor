@@ -2,11 +2,11 @@
 {
     #region Usings
 
-    using ServerDto.Responses.Basic;
+    using ServerDto.Messages.Basic;
 
     #endregion
 
-    public class CanTakeChipsResponse : Response
+    public class CanTakeChipsResponse : GamePlayerMessage
     {
         public bool CanTakeChips { get; set; }
     }

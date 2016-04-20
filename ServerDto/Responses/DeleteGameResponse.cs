@@ -2,11 +2,11 @@
 {
     #region Usings
 
-    using ServerDto.Responses.Basic;
+    using ServerDto.Messages.Basic;
 
     #endregion
 
-    public class DeleteGameResponse : Response
+    public class DeleteGameResponse : GameMessage
     {
     }
 }

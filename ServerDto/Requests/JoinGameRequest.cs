@@ -2,7 +2,7 @@
 {
     #region Usings
 
-    using ServerDto.Requests.Basic;
+    using ServerDto.Messages.Basic;
 
     #endregion
 
@@ -10,7 +10,7 @@
 
     #endregion
 
-    public class JoinGameRequest : GameRequest
+    public class JoinGameRequest : GameMessage
     {
         public string PlayerName { get; set; }
     }

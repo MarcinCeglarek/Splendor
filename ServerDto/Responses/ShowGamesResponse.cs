@@ -5,11 +5,11 @@
     using System;
     using System.Collections.Generic;
 
-    using ServerDto.Responses.Basic;
+    using ServerDto.Messages.Basic;
 
     #endregion
 
-    public class ShowGamesResponse : Response
+    public class ShowGamesResponse : Message
     {
         public List<GameInfo> Games { get; set; }
 

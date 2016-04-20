@@ -2,16 +2,11 @@
 {
     #region Usings
 
-    using System;
-
-    using ServerDto.Responses.Basic;
+    using ServerDto.Messages.Basic;
 
     #endregion
 
-    public class JoinGameResponse : Response
+    public class JoinGameResponse : GamePlayerMessage
     {
-        public Guid GameId { get; set; }
-
-        public Guid PlayerId { get; set; }
     }
 }
