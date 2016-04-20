@@ -47,7 +47,6 @@
     </Compile>
     <Compile Include="Interfaces\IBroadcastMessages.cs" />
     <Compile Include="Models\Aristocrate.cs" />
-    <Compile Include="Helpers\CardCostConverter.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\Chips.cs" />

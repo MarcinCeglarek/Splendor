@@ -43,7 +43,6 @@
         [JsonConverter(typeof(StringEnumConverter))]
         public Color Color { get { return this.color; } }
 
-        [JsonConverter(typeof(CardCostConverter))]
         public Chips Cost { get { return new Chips(this.cost); } }
 
         public Guid Id { get; private set; }

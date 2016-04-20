@@ -11,17 +11,21 @@
     {
         #region Public Methods and Operators
 
-        void CardPurchased(Game game);
+        void CardPurchased(Game game, Player player, Card card);
 
-        void CardReserved(Game game);
+        void CardReserved(Game game, Player player, Card card);
 
-        void ChatMessage(ChatEntry chatEntry);
+        void ChatMessage(Game game, ChatEntry chatEntry);
 
-        void ChipsTaken(Game game);
+        void ChipsTaken(Game game, Player player, Chips chips);
 
         void GameEnded(Game game);
 
         void GameStarted(Game game);
+
+        void PlayerJoined(Game game, Player player);
+
+        void PlayerLeft(Game game, Player player);
 
         #endregion
     }

@@ -130,6 +130,7 @@
 
             this.players.Add(player);
             this.history.Add(new PlayerJoined(player));
+            this.subscribers.ForEach(subscriber => subscriber.PlayerJoined(this, player));
         }
 
         public bool CanPurchaseCard(Player player, Card card)
@@ -177,7 +178,7 @@
             {
                 var entry = new ChatEntry(player, message);
                 this.history.Add(entry);
-                this.subscribers.ForEach(subscriber => subscriber.ChatMessage(entry));
+                this.subscribers.ForEach(subscriber => subscriber.ChatMessage(this, entry));
             }
             else
             {
@@ -198,9 +199,9 @@
             this.bank += cost;
             this.CurrentPlayer.AddOwnedCard(card);
             this.history.Add(new CardPurchased(this.CurrentPlayer, card));
+            this.subscribers.ForEach(subscriber => subscriber.CardPurchased(this, player, card));
 
             this.PlayerFinished();
-            this.subscribers.ForEach(subscriber => subscriber.CardPurchased(this));
         }
 
         public int RemainingCardsOfTier(int i)
@@ -219,6 +220,8 @@
             {
                 this.players.Remove(player);
                 this.history.Add(new PlayerLeft(player));
+                this.subscribers.ForEach(subscriber => subscriber.PlayerLeft(this, player));
+
                 return;
             }
 
@@ -239,9 +242,9 @@
             }
 
             this.history.Add(new CardReserved(this.CurrentPlayer, card));
+            this.subscribers.ForEach(subscriber => subscriber.CardReserved(this, player, card));
 
             this.PlayerFinished();
-            this.subscribers.ForEach(subscriber => subscriber.CardReserved(this));
         }
 
         public void Start()
@@ -274,7 +277,6 @@
             var chipCount = this.TotalNumberOfNormalChips;
             this.bank = new Chips { White = chipCount, Blue = chipCount, Green = chipCount, Red = chipCount, Black = chipCount, Gold = CoreConstants.Game.NumberOfGoldChips };
             this.history.Add(new GameStarted());
-
             this.subscribers.ForEach(subscriber => subscriber.GameStarted(this));
         }
 
@@ -291,9 +293,9 @@
             this.bank -= diff;
             this.CurrentPlayer.Chips += diff;
             this.history.Add(new ChipsTaken(this.CurrentPlayer, diff));
+            this.subscribers.ForEach(subscriber => subscriber.ChipsTaken(this, player, chips));
 
             this.PlayerFinished();
-            this.subscribers.ForEach(subscriber => subscriber.ChipsTaken(this));
         }
 
         public void Unsubscribe(IBroadcastMessages subscriber)
