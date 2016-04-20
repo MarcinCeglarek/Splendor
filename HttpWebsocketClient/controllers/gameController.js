@@ -11,8 +11,34 @@ var game = app.controller('GameController', [ '$scope', '$log', 'websocket', fun
                 console.log(data);
                 $scope.$apply();
                 break;
+                
+            case "PlayerJoined":
+                controller.refreshGame();
+                break;
+            
+            case "PlayerLeft":
+                controller.refreshGame();
+                break;
+                
+            case "GameStarted":
+                controller.refreshGame();
+                break;
         }
     })
+    
+    this.refreshGame = function() {
+        if (controller.game.GameId) {
+            websocket.send({ MessageType: "GameStatus", GameId: controller.game.GameId });
+        }
+        
+    }
+    
+    this.startGame = function() {
+        debugger;
+        if (controller.game.GameId) {
+            websocket.send({ MessageType: "GameStarted", GameId: controller.game.GameId });
+        }
+    }
     
     return this;
 }]);
