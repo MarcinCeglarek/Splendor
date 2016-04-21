@@ -75,6 +75,9 @@ var server = app.controller('ServerController', [ '$scope', '$log', 'websocket',
                     controller.showGames();
                     websocket.send({ MessageType: "GameStatus", GameId: controller.GameId });
                     break;
+                 case "PlayerJoined":
+                    $log.log("PlayerJoined");
+                    controller.showGames();
                  case "GameCreated": 
                     $log.log("GameCreated");
                     controller.showGames();

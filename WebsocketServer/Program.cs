@@ -88,11 +88,21 @@
             }
         }
 
-        public static Message CreateGame()
+        public static async Task CreateGame()
         {
             var game = new Game();
             games.Add(game);
-            return new CreateGameResponse { GameId = game.Id, MessageType = MessageType.GameCreated };
+            await BroadcastMessage(new CreateGameResponse { GameId = game.Id, MessageType = MessageType.GameCreated });
+        }
+
+        private static async Task BroadcastMessage(Message message)
+        {
+            var messageString = await Task.Factory.StartNew(() => JsonConvert.SerializeObject(message));
+
+            foreach (var connection in socketClients)
+            {
+                await connection.Send(messageString);
+            }
         }
 
         public static bool DeleteGame(Guid id)
@@ -120,11 +130,11 @@
                     break;
 
                 case MessageType.CreateGame:
-                    response = CreateGame();
+                    await CreateGame();
                     break;
 
                 case MessageType.DeleteGame:
-                    response = await DeleteGame(request);
+                    await DeleteGame(request);
                     break;
 
                 case MessageType.JoinGame:
@@ -155,7 +165,6 @@
                     response = await TakeChips(request);
                     break;
 
-
                 default:
                     throw new NotImplementedException();
             }
@@ -168,7 +177,12 @@
             var message = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<GameMessage>(request));
             var game = GetGame(message.GameId);
 
+
             game?.Start();
+            if (game != null && game.HasStarted)
+            {
+                await BroadcastMessage(new CreateGameResponse { GameId = message.GameId, MessageType = MessageType.GameStarted });
+            }
         }
 
         private static async void Unsubscribe(IWebSocketConnection socket, string request)
@@ -204,12 +218,13 @@
             return new ChipsTakenMessage { MessageType = MessageType.TakeChips, GameId = game.Id, PlayerId = message.PlayerId };
         }
 
-        private static async Task<Message> DeleteGame(string request)
+        private static async Task DeleteGame(string request)
         {
             var message = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<DeleteGameRequest>(request));
-            var result = DeleteGame(message.GameId);
-
-            return result ? new DeleteGameResponse { MessageType = MessageType.GameDeleted } : null;
+            if (DeleteGame(message.GameId))
+            {
+                await BroadcastMessage(new CreateGameResponse { GameId = message.GameId, MessageType = MessageType.GameDeleted });
+            }
         }
 
         private static async Task<JoinGameResponse> JoinGame(IWebSocketConnection socket, string request)
@@ -227,7 +242,9 @@
             var player = new Player { Name = message.PlayerName };
             game.AddPlayer(player);
 
-            return new JoinGameResponse { GameId = game.Id, MessageType = MessageType.GameJoined, PlayerId = player.Id };
+            await BroadcastMessage(new CreateGameResponse { GameId = message.GameId, MessageType = MessageType.PlayerJoined });
+
+            return new JoinGameResponse { GameId = game.Id, MessageType = MessageType.GameJoined };
         }
 
         private static ShowGamesResponse ShowGames()
