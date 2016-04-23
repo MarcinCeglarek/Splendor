@@ -1,4 +1,6 @@
-﻿namespace WebsocketServer
+﻿using ServerDto;
+
+namespace WebsocketServer
 {
     #region Usings
 
@@ -49,6 +51,12 @@
 
         public async void ChatMessage(Game game, ChatEntry chatEntry)
         {
+            var message =
+                await
+                Task.Factory.StartNew(
+                    () =>
+                    JsonConvert.SerializeObject(new ChatMessage { GameId = game.Id, PlayerId = chatEntry.Player.Id, Message = chatEntry.Message, Timestamp = chatEntry.DateTime, MessageType = MessageType.PurchaseCard }));
+            await this.SendMessage(message);
         }
 
         public async void ChipsTaken(Game game, Player player, Chips chips)
