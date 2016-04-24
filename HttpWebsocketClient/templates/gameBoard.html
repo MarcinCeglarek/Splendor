@@ -1,22 +1,45 @@
 <div>
-    <div class="row">
+    <div class="row" ng-hide="game.game.HasStarted" >
         <div class="col m12">
-            <button class="btn red" ng-hide="game.game.HasStarted" ng-click="game.startGame()">Start game</button>
+            <button class="btn red" ng-click="game.startGame()">Start game</button>
+            <button class="btn red" ng-click="game.leaveGame()">Leave game</button>
         </div>
     </div>
-     <div class="row">
-         <div class="col xs3" ng-repeat="aristocrate in game.game.Aristocrates">
-             <div class="Aristocrate card">
-                 <div class="card-content">
+    
+    <div class="row">
+        <div class="col m12">
+            <div>
+                Bank: <button ng-repeat="(key, value) in game.game.Bank" class="Chip btn" ng-class="[key, { hidden: value === 0 }]" ng-click="game.takeChip(key)">{{value}}</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m12">
+            <div>
+                To take: <button ng-repeat="(key, value) in game.ChipsToTake" class="Chip btn" ng-class="[key, { hidden: value === 0 }]" ng-click="game.untakeChip(key)">{{value}}</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m12">
+            <div>
+                <button class="btn" ng-click="game.takeChips()">Take chips</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col xs3" ng-repeat="aristocrate in game.game.Aristocrates">
+            <div class="Aristocrate card">
+                <div class="card-content">
                     <div class="VictoryPoints">{{aristocrate.VictoryPoints}}</div>
                     <div ng-repeat="(key, value) in aristocrate.RequiredCards" ng-show="value > 0">
                         <span class="Chip btn" ng-class="key">{{value}}</span>
                     </div>
-                    
-                 </div>
-             </div>
-         </div>
-     </div>
+                </div>
+            </div>
+        </div>
+    </div>
      
     <div class="row" ng-repeat="tier in [1,2,3]">
         <div class="col xs3">
@@ -26,7 +49,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="col xs3"  ng-repeat="card in game.game.Cards" ng-show="card.Tier === tier">
             <div class="Card card" ng-class="card.Color">
                 <div class="card-content">
@@ -45,10 +67,10 @@
                  <div class="card-content">
                     <span class="card-title">{{player.Name}}</span>
                     <div>
-                        <button ng-repeat="(key, value) in player.Chips" class="Chip btn" ng-class="key">{{value}}</button>
+                        <button ng-repeat="(key, value) in player.Chips" class="Chip btn" ng-class="[key, { hidden: value === 0 }]">{{value}}</button>
                     </div>
                     <div>
-                        <button ng-repeat="(key, value) in player.Cards" class="btn btn-round" ng-class="key" >{{value}}</button>
+                        <button ng-repeat="(key, value) in player.Cards" class="btn btn-round" ng-class="[key, { hidden: value === 0 }]" >{{value}}</button>
                     </div>
                     </p>
                     <div class="row">

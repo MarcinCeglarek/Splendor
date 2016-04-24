@@ -1,10 +1,9 @@
-var server = app.controller('ServerController', [ '$scope', '$log', 'websocket', function($scope, $log, websocket) {
+var server = app.controller('ServerController', [ '$scope', '$log', 'websocket', 'player', function($scope, $log, websocket, player) {
     var controller = this;
     this.games = [];
-    this.playerName = "";
     this.GameId = "";
-    this.PlayerId = "";
-       
+    this.playerName;
+    
     this.showGames = function() {
         $log.debug("showGames");
         websocket.send({ MessageType: 'ShowGames' });
@@ -34,9 +33,21 @@ var server = app.controller('ServerController', [ '$scope', '$log', 'websocket',
         return game.GameId === this.GameId;
     }
     
+    this.getPlayerName = function() {
+        return player.getName();
+    }
+    
+    this.setPlayerName = function(value) {
+        player.setName(value);
+    }
+    
+    this.getPlayerId = function() {
+        return player.getId();
+    }
+    
     this.inGame = function() {
         if (this.GameId) {
-            if (this.PlayerId) {
+            if (player.getId()) {
                 return true;
             }
         }
@@ -47,7 +58,7 @@ var server = app.controller('ServerController', [ '$scope', '$log', 'websocket',
     this.canJoin = function() {
         if (this.GameId) {
             if (this.playerName) {
-                if (!this.PlayerId) {
+                if (!player.getId()) {
                     return true;
                 }
             }
@@ -71,7 +82,8 @@ var server = app.controller('ServerController', [ '$scope', '$log', 'websocket',
                 case "GameJoined":
                     $log.log("GameJoined")
                     controller.GameId = data.GameId;
-                    controller.PlayerId = data.PlayerId;
+                    player.setId(data.PlayerId);
+                    player.setName(this.playerName);
                     controller.showGames();
                     websocket.send({ MessageType: "GameStatus", GameId: controller.GameId });
                     break;

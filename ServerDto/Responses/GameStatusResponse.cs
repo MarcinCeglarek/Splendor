@@ -13,15 +13,17 @@
 
     public class GameStatusResponse : GameMessage
     {
-        public bool HasStarted { get; set; }
+        public List<Aristocrate> Aristocrates { get; set; }
 
-        public bool HasFinished { get; set; }
-
-        public Guid? FirstPlayer { get; set; }
+        public Chips Bank { get; set; }
 
         public Guid? CurrentPlayer { get; set; }
 
-        public List<Aristocrate> Aristocrates { get; set; }
+        public Guid? FirstPlayer { get; set; }
+
+        public bool HasStarted { get; set; }
+
+        public bool HasFinished { get; set; }
 
         public List<Card> Cards { get; set; }
 

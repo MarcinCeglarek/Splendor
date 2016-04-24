@@ -248,6 +248,7 @@
             var retVal = new GameStatusResponse
             {
                 Aristocrates = aristocrates,
+                Bank = game.Bank,
                 GameId = game.Id,
                 Cards = cards,
                 CurrentPlayer = game.CurrentPlayer?.Id,
